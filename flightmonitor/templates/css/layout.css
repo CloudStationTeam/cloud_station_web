@@ -1,0 +1,47 @@
+
+
+#LoginInfo{
+    padding-top: 30px;
+}
+
+#LayoutInfo{
+    padding-top: 30px;
+}
+
+#telemetry-log{
+    width: 800px;
+    height: 320px;
+}
+
+#commandContainer{
+    padding-left: 30px;
+    align-content: center;
+    border-spacing: 15x;
+}
+
+#command{
+    padding-left: 25px;
+    padding-right: 25px;
+}
+#commandContent{
+    width: 500px;
+    height: 40px;
+}
+#commandSubmit{
+    align-content: center;
+    padding-left: 50px;
+    padding-right: 25px;
+}
+
+#sendbtn{
+    width: 100px;
+    height: 40px;
+}
+
+
+
+.SideDisplay{
+    color:purple;
+    font-size: 20px;
+    font-weight: bold;
+}

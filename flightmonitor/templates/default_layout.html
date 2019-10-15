@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link  rel="stylesheet" type="text/css" href="css/layout.css">
 
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
@@ -24,13 +25,13 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <div class="col-sm-3">
+      <div id="LoginInfo" class="col-sm-3">
         <ul class="sidebar-nav">
           <!-- Login/User block -->
-          <a href="">User: </a>
-          <br>Steven Hu<br>
-          <a href="">Login/Logoutt </a><br>
-          <a href="">All Vehicles </a><br><br><br>
+          <a class="SideDisplay" href="">User: </a>
+          Steven Hu<br>
+          <a class="SideDisplay" href="">Login/Logout </a><br>
+          <a class="SideDisplay" href="">All Vehicles </a><br><br><br>
           <!-- Connect/Disconnect vehicle -->
           <input id="connect-submit" type="button" value="Connect Vehicle" onClick='connectVehicle()'/>
           <input id="connect-message-input" type="text" size="15" />
@@ -40,13 +41,20 @@
       </div>
 
       <!-- Monitor -->
-      <div class="col-sm-9 ">
+      <div id="LayoutInfo" class="col-sm-9 ">
         <!-- <div class="row"> -->
         <h1>Default Layout</h1>
         <p>Welcome to Web-based Ground Monitoring Station</em>!</p>
         <p>Received telemetry data: </p>
         <p><textarea id="telemetry-log" cols="100" rows="20"></textarea><br /></p>
-        <p><textarea id="command" cols="80" rows="1"></textarea><input id="command-submit" type="button" value="Send" /></p>
+        <div class="row" id="commandContainer">
+          <div class="column" id="command">
+            <input type="text" class="form-control" id="commandContent" placeholder="COMMAND LINE" name="command">
+          </div>
+          <div class="column" id="commandSubmit">
+            <button type="submit" id="sendbtn">Send</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
