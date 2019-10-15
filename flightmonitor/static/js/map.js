@@ -1,4 +1,4 @@
-mapboxgl.accessToken = '';  // TODO add your API key
+mapboxgl.accessToken = mapbox_public_key;  // TODO add your API public access token to .env
 
 var map = new mapboxgl.Map({
     container: 'map',
