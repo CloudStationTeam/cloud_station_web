@@ -17,7 +17,6 @@
   <style>
     /* body {margin:0; padding:0;} */
     /* #terminal{position:absolute;top:0; bottom:10; width:100%} */
-    #map { position:absolute; top:10; bottom:0; width:100%; }
   </style>
 </head>
 
@@ -42,29 +41,61 @@
 
       <!-- Monitor -->
       <div id="LayoutInfo" class="col-sm-9 ">
-        <!-- <div class="row"> -->
-        <h1>Default Layout</h1>
-        <p>Welcome to Web-based Ground Monitoring Station</em>!</p>
-        <p>Received telemetry data: </p>
-        <p><textarea id="telemetry-log" cols="100" rows="20"></textarea><br /></p>
-        <div class="row" id="commandContainer">
-          <div class="column" id="command">
-            <input type="text" class="form-control" id="commandContent" placeholder="COMMAND LINE" name="command">
+
+        <div class = "col-md-9">
+          <div class ="row" id="layoutTop">
+            <div class ="row">
+             <h1>Default Layout</h1>
+            </div>
+            <div class ="row">
+            <h4 id="welcome">Welcome to Web-based Ground Monitoring Station</em>!<br>Received telemetry data: </h4>
+            </div>
           </div>
-          <div class="column" id="commandSubmit">
-            <button type="submit" id="sendbtn">Send</button>
+          <div class ="row" id = "map" >
+          </div>
+          <div class ="row" id="commandContainer">
+            <div class="column" id="command">
+              <input type="text" class="form-control" id="commandContent" placeholder="COMMAND LINE" name="command">
+            </div>
+            <div class="column" id="commandSubmit">
+              <button type="submit" id="sendbtn">Send</button>
           </div>
         </div>
+        </div>
       </div>
-    </div>
-  </div>
+        <!-- <div class="row"> -->
+        <!--
+                <div class = "row">
+                <h1>Default Layout</h1>
+                <p>Welcome to Web-based Ground Monitoring Station</em>!</p>
+                <p>Received telemetry data: </p>
+                </div>
+                <div class = "row" id="map">
+                </div>
+                <div class="row" id="commandContainer">
+                  <div class="column" id="command">
+                    <input type="text" class="form-control" id="commandContent" placeholder="COMMAND LINE" name="command">
+                  </div>
+                  <div class="column" id="commandSubmit">
+                    <button type="submit" id="sendbtn">Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
+    var map = new mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+      center: [-117.8443, 33.6405], // starting position [lng, lat]
+      zoom: 9 // starting zoom
+    });
 
-  <div class='container-fluid'>
-      <div id="map"></div>
-      <script type='text/javascript' src="{% static 'js/map.js' %}"></script>
-  </div>
+  </script>
+
   
 </body>
-<script type='text/javascript' src="{% static 'js/common.js' %}"></script>
 
 </html>

@@ -5,15 +5,26 @@
 }
 
 #LayoutInfo{
-    padding-top: 30px;
+    padding-top: 5px;
 }
-
-#telemetry-log{
-    width: 800px;
+#layoutTop{
+    padding: 25px;
+}
+#map{
+    position: absolute;
+    width: 600px;
     height: 320px;
+}
+.mapboxgl-canvas {
+    left: 0;
+}
+#welcome{
+    font-weight: normal;
+    font-size: 20px;
 }
 
 #commandContainer{
+    padding-top: 10px;
     padding-left: 30px;
     align-content: center;
     border-spacing: 15x;
