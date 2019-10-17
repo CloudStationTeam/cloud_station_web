@@ -13,25 +13,25 @@ Docker
 > Tutorial to setup Python Django development environment: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/development_environment
 
 ## Getting started
-  1. Install libraries 
-    ``` 
-    pip3 install django  
+  1. Install libraries    
+    ```   
+    pip3 install django     
     pip3 install -U channels  
-    pip3 install django-background-tasks
+    pip3 install django-background-tasks  
     pip install pymavlink  
     git clone https://github.com/lyuyangh/cloud-station.git   
     ```
   2. Install and run docker: https://www.docker.com/get-started
-    ```
+    ```  
     docker run -p 6379:6379 -d redis:2.8
     ```
   3. Register for MapBox and generate a public access token https://account.mapbox.com/
   4. Add mapbox public access token (public key) to .env of your environment
     Note: Please do not push your pk to GitHub. In production env, this key should ideally
-    be temporary and change from session to session.    
-    ```
-    ubuntu
-      export MAPBOX_PUBLIC_KEY=pk.xxxxxxxxxxxxxxxxxxxxxxxxxx
+    be temporary and change from session to session.      
+    ```   
+    ubuntu   
+      export MAPBOX_PUBLIC_KEY=pk.xxxxxxxxxxxxxxxxxxxxxxxxxx  
 
     windows  
       setx MAPBOX_PUBLIC_KEY "pk.xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
