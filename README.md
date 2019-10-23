@@ -16,9 +16,13 @@ Docker
   1. Install libraries    
     ```   
     pip3 install django
+   
     pip3 install channels_redis
+    
     pip3 install django-background-tasks
+    
     pip3 install pymavlink
+    
     git clone https://github.com/lyuyangh/cloud-station.git   
     ```
   2. Install and run docker: https://www.docker.com/get-started
