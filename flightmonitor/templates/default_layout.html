@@ -190,7 +190,12 @@
         <div class="col-sm-12" id = "map" >
         </div>
       </div>
-      <div class="row" id = "commandLine">
+      <div class="row" >
+        <div class = "col-sm-6">
+          <p>Received telemetry data: </p>
+          <p><textarea id="telemetry-log" cols="60" rows="5"></textarea><br /></p>
+        </div>
+        <div class = "col-sm-6" id = "commandLine">
         <div class="form-group" >
           <label for="commandID">Command Line</label>
           <input type="text" class="form-control" id="commandID">
@@ -199,6 +204,7 @@
           <div class="col-sm-10" id = "commandbtn">
             <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
           </div>
+        </div>
         </div>
         </div>
 
@@ -235,5 +241,7 @@
   }
 
 </script>
+
 </body>
+<script type='text/javascript' src="{% static 'js/common.js' %}"></script>
 </html>
