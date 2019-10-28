@@ -34,3 +34,4 @@ webgms/__pycache__/wsgi.cpython-37.pyc
 db.sqlite3
 .pydevproject
 .project
+.idea

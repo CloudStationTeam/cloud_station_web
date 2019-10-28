@@ -1,65 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
-    
-    {% block title %}<title>Web-based Ground Monitoring Station</title>{% endblock %}
-    <meta charset="utf-8">
-    
-    {% load static %}
+<head>
+  <title>Bootstrap Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
+  {% load static %}
   <style>
-    /* body {margin:0; padding:0;} */
-    /* #terminal{position:absolute;top:0; bottom:10; width:100%} */
-    #map { position:absolute; top:10; bottom:0; width:100%; }
+    body {
+      font-family: "Lato", sans-serif;
+    }
+    #MeanTitle{
+      height:150px;
+    }
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    .openbtn {
+      font-size: 50px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      border: none;
+    }
+
+    .openbtn:hover {
+      background-color: #444;
+    }
+    #connectbtn{
+      position: center;
+      padding-left: 0px;
+      padding-bottom: 20px;
+    }
+
+    #commandbtn{
+      position: center;
+      padding-left: 0px;
+      padding-bottom: 10px;
+    }
+
+    #disconnectbtn{
+      position: center;
+      padding-left: 0px;
+      padding-bottom: 20px;
+    }
+    #connectV{
+      position: center;
+      padding-left: 0px;
+      padding-bottom: 20px;
+    }
+
+    #main {
+      transition: margin-left;
+      padding: 20px;
+    }
+    #map{
+      position: relative;
+      width: 960px;
+      height: 320px;
+      padding-bottom: 50px;
+
+    }
+    #mapLayout{
+      width: 960px;
+      height: 320px;
+      padding-bottom: 50px;
+    }
+    #commandLine{
+      padding-left: 15px;
+      padding-top:10px;
+      padding-bottom: 10px;
+    }
+    #commandID{
+      width:480px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+      .sidebar {padding-top: 15px;}
+      .sidebar a {font-size: 18px;}
+    }
   </style>
 </head>
-
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-sm-3">
-        <ul class="sidebar-nav">
-          <!-- Login/User block -->
-          <a href="">User: </a>
-          <br>Steven Hu<br>
-          <a href="">Login/Logout </a><br>
-          <a href="">All Vehicles </a><br><br><br>
-          <!-- Connect/Disconnect vehicle -->
-          <input id="connect-submit" type="button" value="Connect Vehicle" onClick='connectVehicle()'/>
-          <input id="connect-message-input" type="text" size="15" />
-          Connected Vehicles:<br><br>
-          <input id="disconnect-submit" type="button" value="Disconnect Vehicle" onClick='disconnectVehicle()'/>
-        </ul>
-      </div>
 
-      <!-- Monitor -->
-      <div class="col-sm-9 ">
-        <!-- <div class="row"> -->
-        <h1>Default Layout</h1>
-        <p>Welcome to Web-based Ground Monitoring Station</em>!</p>
-        <p>Received telemetry data: </p>
-        <p><textarea id="telemetry-log" cols="100" rows="20"></textarea><br /></p>
-        <p><textarea id="command" cols="80" rows="1"></textarea><input id="command-submit" type="button" value="Send" /></p>
+
+<div class = "container">
+  <div class = "row">
+    <div class = "col-sm-2">
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="#">Steven He</a>
+        <a href="#">Login</a>
+        <a href="#">Logout</a>
+      </div>
+      <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
+
+      </div>
+    </div>
+    <div class = "col-sm-10" >
+      <div class="jumbotron text-center" id = "MeanTitle"><!--- content --->
+        <h2>Cloud Station</h2>
+        <p>Welcome to Web-based Ground Monitoring Station!</p>
       </div>
     </div>
   </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group">
+        <label for="vehicleID">Connect to Vehicle via ID:</label>
+        <input type="text" class="form-control" id="vehicleID">
+      </div>
+      <div class="form-group">
+        <div class="col-sm-10" id = "connectbtn">
+          <button type="button" class="btn btn-success" onclick="connectResult()">Connect</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="disVID">Disconnect Vehicle via ID:</label>
+        <input type="text" class="form-control" id="disVID">
 
-  <script>
-    var mapbox_public_key = "{{mapbox_public_key}}";
-  </script>
-  <div class='container-fluid'>
-      <div id="map"></div>
-      <script type='text/javascript' src="{% static 'js/map.js' %}"></script>
+      </div>
+      <div class="col-sm-10" id = "disconnectbtn">
+        <button type="button" class="btn btn-danger" onclick="disconnectResult()">Disconnect</button>
+      </div>
+
+      <div class="col-sm-10" id = "connectV">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Connected Vehicles</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>IDXXXXXXXX1</td>
+          </tr>
+          <tr>
+            <td>IDXXXXXXXX2</td>
+          </tr>
+          <tr>
+            <td>IDXXXXXXXX3</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="col-sm-10">
+      <div class="row" id = "mapLayout">
+        <div class="col-sm-12" id = "map" >
+        </div>
+      </div>
+      <div class="row" >
+        <div class = "col-sm-6">
+          <p>Received telemetry data: </p>
+          <p><textarea id="telemetry-log" cols="60" rows="5"></textarea><br /></p>
+        </div>
+        <div class = "col-sm-6" id = "commandLine">
+        <div class="form-group" >
+          <label for="commandID">Command Line</label>
+          <input type="text" class="form-control" id="commandID">
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10" id = "commandbtn">
+            <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
+          </div>
+        </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-  
-</body>
+</div>
+<script>
+  function openNav() {
+    document.getElementById("mySidebar").style.width = "275px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
+  mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
+  var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: [-117.8443, 33.6405], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+  });
+  function connectResult() {
+    alert("Connected Successfully!");
+  }
+  function disconnectResult() {
+    alert("Disconnected Successfully!");
+  }
+  function sendingResult() {
+    alert("Successfully Sent!");
+  }
+
+</script>
 <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
 
+
+</body>
 </html>
