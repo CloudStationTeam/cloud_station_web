@@ -63,7 +63,7 @@
     .openbtn:hover {
       background-color: #444;
     }
-    #connectbtn{
+    #connectbtnDIS{
       position: center;
       padding-left: 0px;
       padding-bottom: 20px;
@@ -151,8 +151,8 @@
         <input type="text" class="form-control" id="vehicleID">
       </div>
       <div class="form-group">
-        <div class="col-sm-10" id = "connectbtn">
-          <button type="button" class="btn btn-success" onclick="connectResult()">Connect</button>
+        <div class="col-sm-10" id = "connectbtnDIS" >
+          <button type="button" class="btn btn-success" id = "connectbtn" onclick=" connectVehicle()">Connect</button>
         </div>
       </div>
       <div class="form-group">
@@ -231,14 +231,20 @@
     center: [-117.8443, 33.6405], // starting position [lng, lat]
     zoom: 9 // starting zoom
   });
-  function connectResult() {
-    alert("Connected Successfully!");
-  }
+
   function disconnectResult() {
     alert("Disconnected Successfully!");
   }
   function sendingResult() {
     alert("Successfully Sent!");
+  }
+
+function connectResult() {
+    alert("Connected Successfully!");
+  }
+
+  function FailConnection() {
+      alert("Fail to Connect!");
   }
 
 </script>
