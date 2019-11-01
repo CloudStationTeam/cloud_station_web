@@ -10,6 +10,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
   {% load static %}
   <style>
     body {
@@ -225,12 +227,42 @@
     document.getElementById("main").style.marginLeft= "0";
   }
   mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
+  var drone_location = [-117.8443, 33.6405];
   var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-    center: [-117.8443, 33.6405], // starting position [lng, lat]
+    center: drone_location, // starting position [lng, lat]
     zoom: 9 // starting zoom
   });
+
+//import myImage from 'plane.png';
+  map.on('load', function() {
+map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {
+if (error) throw error;
+map.addImage('cat', image);
+map.addLayer({
+"id": "points",
+"type": "symbol",
+"source": {
+"type": "geojson",
+"data": {
+"type": "FeatureCollection",
+"features": [{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": drone_location
+}
+}]
+}
+},
+"layout": {
+"icon-image": "cat",
+"icon-size": 0.04
+}
+});
+});
+});
 
   function disconnectResult() {
     alert("Disconnected Successfully!");
