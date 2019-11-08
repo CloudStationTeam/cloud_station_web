@@ -2,7 +2,7 @@ from background_task import background
 from pymavlink import mavutil
 from datetime import datetime
 from flight_data_collect.models import Telemetry_log, Location_log
-import flight_data_collect.drone_communication.mavlink_constants 
+from flight_data_collect.drone_communication import mavlink_constants 
 mavlink = None
 
 def connect_mavlink(connect_address: str)->bool:
