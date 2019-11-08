@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
-from .mavlinkUtils import connect_mavlink, get_mavlink_messages_periodically
+from flight_data_collect.drone_communication.mavlink_utils import connect_mavlink, get_mavlink_messages_periodically
 
 TIME_INTERVAL = 2.5  # second(s)
 ANGLE_INTERVAL = 4  # degree(s)
