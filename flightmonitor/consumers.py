@@ -24,20 +24,6 @@ class UserActionsConsumer(WebsocketConsumer):
         )
         # self.send(text_data='connection closed')
 
-    # def receive(self, text_data):
-        
-    #     if msg and msg.get_type() != 'BAD_DATA':
-    #         Telemetry_log.objects.create(
-
-    #     # Send message to room group
-    #     async_to_sync(self.channel_layer.group_send)(
-    #         self.room_group_name,
-    #         {
-    #             'type': 'chat_message',
-    #             'message': message
-    #         }
-    #     )
-
     def send_message(self, event):
         # Send message to WebSocket
         message = event['message']
@@ -46,7 +32,7 @@ class UserActionsConsumer(WebsocketConsumer):
             'message': message
         })) 
 
-    # send flight log update to user (browser)
+    # send flight log update to client (browser)
     @staticmethod
     @receiver(post_save, sender=Telemetry_log)
     def telemetryLogUpdate_observer(sender, instance, **kwargs):
