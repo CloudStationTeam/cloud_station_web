@@ -10,6 +10,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
   {% load static %}
   <style>
     body {
@@ -63,7 +65,7 @@
     .openbtn:hover {
       background-color: #444;
     }
-    #connectbtn{
+    #connectbtnDIS{
       position: center;
       padding-left: 0px;
       padding-bottom: 20px;
@@ -128,7 +130,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <a href="#">Steven He</a>
         <a href="#">Login</a>
-        <a href="#">Logout</a>
+        <a href="login.html">Logout</a>
       </div>
       <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
@@ -151,8 +153,8 @@
         <input type="text" class="form-control" id="vehicleID">
       </div>
       <div class="form-group">
-        <div class="col-sm-10" id = "connectbtn">
-          <button type="button" class="btn btn-success" onclick="connectResult()">Connect</button>
+        <div class="col-sm-10" id = "connectbtnDIS" >
+          <button type="button" class="btn btn-success" id = "connectbtn" onclick=" connectVehicle()">Connect</button>
         </div>
       </div>
       <div class="form-group">
@@ -225,20 +227,56 @@
     document.getElementById("main").style.marginLeft= "0";
   }
   mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
+  var drone_location = [-117.8443, 33.6405];
   var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-    center: [-117.8443, 33.6405], // starting position [lng, lat]
+    center: drone_location, // starting position [lng, lat]
     zoom: 9 // starting zoom
   });
-  function connectResult() {
-    alert("Connected Successfully!");
-  }
+
+//import myImage from 'plane.png';
+  map.on('load', function() {
+map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {
+if (error) throw error;
+map.addImage('cat', image);
+map.addLayer({
+"id": "points",
+"type": "symbol",
+"source": {
+"type": "geojson",
+"data": {
+"type": "FeatureCollection",
+"features": [{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": drone_location
+}
+}]
+}
+},
+"layout": {
+"icon-image": "cat",
+"icon-size": 0.04
+}
+});
+});
+});
+
   function disconnectResult() {
     alert("Disconnected Successfully!");
   }
   function sendingResult() {
     alert("Successfully Sent!");
+  }
+
+function connectResult() {
+    alert("Connected Successfully!");
+  }
+
+  function FailConnection() {
+      alert("Fail to Connect!");
   }
 
 </script>

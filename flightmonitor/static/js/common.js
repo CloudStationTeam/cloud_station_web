@@ -14,22 +14,22 @@ browserSocket.onclose = function (e) {
 };
 
 
-document.querySelector('#connect-message-input').focus();
-document.querySelector('#connect-message-input').onkeyup = function (e) {
+document.querySelector('#vehicleID').focus();
+document.querySelector('#vehicleID').onkeyup = function (e) {
     if (e.keyCode === 13) {  // enter, return
-        document.querySelector('#connect-submit').click();
+        document.querySelector('#connectbtn').click();
     }
 };
 
 function connectVehicle() {
-    var message = document.getElementById("connect-message-input").value;
+    var message = document.getElementById("vehicleID").value;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
     var url = '/flight_data_collect/connect/' + message + '/';
-    xmlHttp.open("GET", url, true); // true for asynchronous 
+    xmlHttp.open("GET", url, true); // true for asynchronous
     xmlHttp.send(null);
 }
 
