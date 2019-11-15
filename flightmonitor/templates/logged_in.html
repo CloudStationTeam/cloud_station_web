@@ -24,7 +24,7 @@
     <div class = "col-sm-2">
       <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="#">Steven He</a>
+        <a href="#">{{name}}</a>
         <a href="http://127.0.0.1:8000/accounts/login/">Login</a>
         <a href="http://127.0.0.1:8000/accounts/logout/">Logout</a>
       </div>
@@ -122,6 +122,7 @@
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
   }
+document.getElementById("myName") = name;
   mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
   var drone_location = [-117.8443, 33.6405];
   var map = new mapboxgl.Map({
