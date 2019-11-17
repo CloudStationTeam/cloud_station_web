@@ -289,32 +289,28 @@ input[type=text]:placeholder {
   <div id="formContent">
     <!-- Tabs Titles -->
 
-    <!-- Icon -->
+    <!-- Icon 
     <div class="fadeIn first">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png" id="icon" alt="User Icon" />
-    </div>
+    </div> -->
+    <h1  class="text-center">CloudStation</h1>
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Username">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="****************">
-      <input type="button" class="fadeIn fourth" value="Log In" onclick="login_determine()">
+    <form method="post">
+      {% csrf_token %}
+      <!--input type="text" id="login" class="fadeIn second" name="login" placeholder="Username", value = "{{ login }}"-->
+      <!--input type="password" id="password" class="fadeIn third" name="login" placeholder="****************", value = "{{ login }}"-->
+      
+      {{form.as_p}}
+      <!--input type="button" class="fadeIn fourth" value="Log In"-->
+      <button type="submit" class="btn btn-primary btn-block">Log in</button>
     </form>
 
-    <!-- Remind Passowrd -->
+    <!-- Remind Passowrd
     <div id="formFooter">
       <a class="underlineHover" href="#">Forgot Password?</a>
     </div>
+    -->
 
   </div>
 </div>
 
-<script>
-    function login_determine() {
-        var u = document.getElementById("login").value;
-        var p = document.getElementById("password").value;
-        if (u == "steven" && p == "123")
-            window.location.href = "http://ec2-52-52-195-170.us-west-1.compute.amazonaws.com/";
-        else
-            alert("Wrong Username or Password!");
-    }
-</script>

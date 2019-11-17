@@ -13,124 +13,19 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
   {% load static %}
-  <style>
-    body {
-      font-family: "Lato", sans-serif;
-    }
-    #MeanTitle{
-      height:150px;
-    }
-    .sidebar {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      background-color: #111;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 60px;
-    }
+<link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
 
-    .sidebar a {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 25px;
-      color: #818181;
-      display: block;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover {
-      color: #f1f1f1;
-    }
-
-    .sidebar .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-    }
-
-    .openbtn {
-      font-size: 50px;
-      cursor: pointer;
-      background-color: #111;
-      color: white;
-      border: none;
-    }
-
-    .openbtn:hover {
-      background-color: #444;
-    }
-    #connectbtnDIS{
-      position: center;
-      padding-left: 0px;
-      padding-bottom: 20px;
-    }
-
-    #commandbtn{
-      position: center;
-      padding-left: 0px;
-      padding-bottom: 10px;
-    }
-
-    #disconnectbtn{
-      position: center;
-      padding-left: 0px;
-      padding-bottom: 20px;
-    }
-    #connectV{
-      position: center;
-      padding-left: 0px;
-      padding-bottom: 20px;
-    }
-
-    #main {
-      transition: margin-left;
-      padding: 20px;
-    }
-    #map{
-      position: relative;
-      width: 960px;
-      height: 320px;
-      padding-bottom: 50px;
-
-    }
-    #mapLayout{
-      width: 960px;
-      height: 320px;
-      padding-bottom: 50px;
-    }
-    #commandLine{
-      padding-left: 15px;
-      padding-top:10px;
-      padding-bottom: 10px;
-    }
-    #commandID{
-      width:480px;
-    }
-
-    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-    @media screen and (max-height: 450px) {
-      .sidebar {padding-top: 15px;}
-      .sidebar a {font-size: 18px;}
-    }
-  </style>
 </head>
 <body>
-
+{% if user.is_authenticated %}
 
 <div class = "container">
   <div class = "row">
     <div class = "col-sm-2">
       <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="#">Steven He</a>
-        <a href="#">Login</a>
-        <a href="login.html">Logout</a>
+        <a href="#">Welcome {{user.username}}!</a>
+        <a href="http://127.0.0.1:8000/accounts/logout/">Log out</a>
       </div>
       <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
@@ -280,8 +175,81 @@ function connectResult() {
   }
 
 </script>
+
+
+{% else %}
+<div class = "container">
+  <div class = "row">
+    <div class = "col-sm-2">
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="#">Welcome!</a>
+        <a href="http://127.0.0.1:8000/accounts/login/">Log in</a>
+        <a href="http://127.0.0.1:8000/flightmonitor/signup/">Sign up</a>
+      </div>
+      <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
+
+      </div>
+    </div>
+    <div class = "col-sm-10" >
+      <div class="jumbotron text-center" id = "MeanTitle"><!--- content --->
+        <h2>Cloud Station</h2>
+        <p>Welcome to Web-based Ground Monitoring Station!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+      <div class="col-sm-2">
+      </div>
+    <div class="col-sm-10">
+      <div class="row" id = "mapLayout">
+        <div class="col-sm-12" id = "map" >
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  function openNav() {
+    document.getElementById("mySidebar").style.width = "275px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
+  mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
+  var drone_location = [-117.8443, 33.6405];
+  var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: drone_location, // starting position [lng, lat]
+    zoom: 9 // starting zoom
+  });
+
+  function disconnectResult() {
+    alert("Disconnected Successfully!");
+  }
+  function sendingResult() {
+    alert("Successfully Sent!");
+  }
+
+function connectResult() {
+    alert("Connected Successfully!");
+  }
+
+  function FailConnection() {
+      alert("Fail to Connect!");
+  }
+</script>
+
+{% endif %}
+</script>
 <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
-
-
 </body>
 </html>

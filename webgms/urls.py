@@ -23,5 +23,5 @@ urlpatterns = [
     path('flightmonitor/', include('flightmonitor.urls')),
     path('flight_data_collect/', include('flight_data_collect.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', RedirectView.as_view(url='/flightmonitor/', permanent=True)),
+    path('', RedirectView.as_view(url='/flightmonitor/', permanent=True), name = 'home'),
 ]
