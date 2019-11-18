@@ -50,13 +50,13 @@ python3 manage.py runserver
 - [x] Deploy on AWS (10/15/19) We are online!!!
 - [x] Build hardware stack with Omnibus F4 and Raspberry Pi (10/30/19)
 - [x] Two way communication between vehicle and the server (11/5/19)
-- [ ] User authentication (IP)
+- [x] User authentication (11/16/19)
 - [ ] Mark drone location on map (IP)
 - [ ] Migrate to AWS RDS
 - [ ] Communicate with multiple drones at the same time
 ## Authors
   * Lyuyang Hu - Software architecture design, prototyping, project management, backend development
-  * 
+  * Mina Bedwany - Front-end, back-end development
   * 
   * 
   * 
