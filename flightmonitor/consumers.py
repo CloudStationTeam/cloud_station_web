@@ -44,4 +44,15 @@ class UserActionsConsumer(WebsocketConsumer):
                 'message': str(instance)
             }
         )
+    
+    @staticmethod
+    def send_message_to_clients(msg):
+        channel_layer = channels.layers.get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'users_group',
+            {
+                'type': 'send.message',
+                'message': msg
+            }
+        )
 
