@@ -10,8 +10,9 @@ browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
-    long = data['message'][2];
-    lat = data['message'][3];
+    var temp = JSON.parse(data['message'])
+    long = temp[2];
+    lat = temp[3];
     console(long, lat);
 };
 
