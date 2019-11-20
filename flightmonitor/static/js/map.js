@@ -16,42 +16,46 @@ var map = new mapboxgl.Map({
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
   }
-  var drone_location = [long, lat];
+  var drone_location = [124, -56];
   var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
     center: drone_location, // starting position [lng, lat]
-    zoom: 9 // starting zoom
+    zoom: 0// starting zoom
   });
 
 //import myImage from 'plane.png';
   map.on('load', function() {
-map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {
-if (error) throw error;
-map.addImage('cat', image);
-map.addLayer({
-"id": "points",
-"type": "symbol",
-"source": {
-"type": "geojson",
-"data": {
-"type": "FeatureCollection",
-"features": [{
-"type": "Feature",
-"geometry": {
-"type": "Point",
-"coordinates": drone_location
-}
-}]
-}
-},
-"layout": {
-"icon-image": "cat",
-"icon-size": 0.04
-}
-});
-});
-});
+      window.setInterval(function() {
+          drone_location = [long, lat];
+          }, 2000);
+      console.log(long,lat);
+      map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {
+          if (error) throw error;
+          map.addImage('cat', image);
+            map.addLayer({
+                "id": "points",
+                "type": "symbol",
+                "source": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features": [{
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": drone_location
+                            }
+                        }]
+                    }
+                    },
+                "layout": {
+                    "icon-image": "cat",
+                    "icon-size": 0.04
+                }
+            });
+      });
+  });
 
   function disconnectResult() {
     alert("Disconnected Successfully!");

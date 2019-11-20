@@ -1,5 +1,5 @@
-var long;
-var lat;
+var long = 32;
+var lat = 96;
 
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
@@ -9,11 +9,12 @@ document.querySelector('#telemetry-log').value += ('Successfully connected to se
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
-    document.querySelector('#telemetry-log').value += (message + '\n');
-    var temp = JSON.parse(data['message'])
-    long = temp[2];
-    lat = temp[3];
-    console(long, lat);
+    document.querySelector('#telemetry-log').value += (message + 'sadfdsafsadf\n');
+    var temp = JSON.parse(data['message']);
+    long = temp['longitude'];
+    lat = temp['latitude'];
+    console.log(long, lat);
+    
 };
 
 browserSocket.onclose = function (e) {
