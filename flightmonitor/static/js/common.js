@@ -1,3 +1,6 @@
+var long;
+var lat;
+
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
     '/ws/flightmonitor/');
@@ -7,6 +10,9 @@ browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
+    long = data['message'][2];
+    lat = data['message'][3];
+    console(long, lat);
 };
 
 browserSocket.onclose = function (e) {

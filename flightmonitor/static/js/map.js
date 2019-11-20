@@ -16,7 +16,7 @@ var map = new mapboxgl.Map({
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
   }
-  var drone_location = [-117.8443, 33.6405];
+  var drone_location = [long, lat];
   var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
