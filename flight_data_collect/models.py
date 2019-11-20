@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User 
 import uuid
+import json
 
 class Vehicle(models.Model):
     vid = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for the Vehicle')
@@ -39,7 +40,15 @@ class Location_log(models.Model):
     heading = models.IntegerField()
     
     def __str__(self):
-        return f'location_log <{self.timestamp}>'
+        location_dict = {
+            "type": "location",
+            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "altitude": self.altitude,
+            "heading": self.heading
+        }
+        return json.dumps(location_dict)
 
 class Telemetry_log(models.Model):
     #vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
@@ -52,5 +61,12 @@ class Telemetry_log(models.Model):
     # yawspeed = models.DecimalField(decimal_places=2, max_digits=5)
     
     def __str__(self):
-        return f'<{self.timestamp}>\tr:{self.roll}\tp:{self.pitch}\ty:{self.yaw}'
+        altitude_dict = {
+            "type": "altitude",
+            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "roll": self.roll,
+            "pitch": self.pitch,
+            "yaw": self.yaw
+        }
+        return json.dumps(altitude_dict)
     

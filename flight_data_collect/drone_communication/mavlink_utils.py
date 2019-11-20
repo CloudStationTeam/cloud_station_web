@@ -16,7 +16,8 @@ def connect_mavlink(connect_address: str)->str:
         else:
             return ''
     except OSError as e:
-        return e
+        print(e)
+        return ''
 
 @background(schedule=0)
 def get_mavlink_messages_periodically(connect_address):
@@ -42,8 +43,8 @@ def _log_latest_location(mavlink):
 
 def _get_mavlink_message(mavlink, message_name)->dict:
     try:
-        msg = mavlink.recv_match(blocking=True, timeout=5)
+        msg = mavlink.recv_match(message_name, blocking=True, timeout=5)
         if msg.get_type() != 'BAD_DATA':
             return msg
     except Exception as e:
-        return e
+        print(e)
