@@ -9,12 +9,12 @@ document.querySelector('#telemetry-log').value += ('Successfully connected to se
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
-    document.querySelector('#telemetry-log').value += (message + 'sadfdsafsadf\n');
+    document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
     long = temp['longitude'];
     lat = temp['latitude'];
     console.log(long, lat);
-    
+
 };
 
 browserSocket.onclose = function (e) {
