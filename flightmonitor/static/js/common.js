@@ -21,9 +21,11 @@ browserSocket.onmessage = function (e) {
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
-    geojsonFeature['geometry']["coordinates"][0] = temp['longitude'];
-    geojsonFeature['geometry']["coordinates"][1] = temp['latitude'];
-
+    try{
+        geojsonFeature['geometry']["coordinates"][0] = temp['longitude'];
+        geojsonFeature['geometry']["coordinates"][1] = temp['latitude'];
+    }
+    catch(e) {}
 };
 
 browserSocket.onclose = function (e) {
