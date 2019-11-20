@@ -1,5 +1,15 @@
-var long = 32;
-var lat = 96;
+var geojsonFeature = {
+   "type": "Feature",
+   "properties": {
+       "name": "Coors Field",
+       "amenity": "Baseball Stadium",
+       "popupContent": "This is where the Rockies play!"
+   },
+   "geometry": {
+       "type": "Point",
+       "coordinates": [-12, 3]
+   }
+};
 
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
@@ -11,9 +21,8 @@ browserSocket.onmessage = function (e) {
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
-    long = temp['longitude'];
-    lat = temp['latitude'];
-    console.log(long, lat);
+    geojsonFeature['geometry']["coordinates"][0] = temp['longitude'];
+    geojsonFeature['geometry']["coordinates"][1] = temp['latitude'];
 
 };
 
