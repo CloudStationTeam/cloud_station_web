@@ -64,9 +64,9 @@ class Telemetry_log(models.Model):
         altitude_dict = {
             "type": "altitude",
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-            "roll": self.roll,
-            "pitch": self.pitch,
-            "yaw": self.yaw
+            "roll": float(self.roll),
+            "pitch": float(self.pitch),
+            "yaw": float(self.yaw)
         }
         return json.dumps(altitude_dict)
     
