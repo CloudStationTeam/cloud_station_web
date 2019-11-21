@@ -1,4 +1,4 @@
-mapboxgl.accessToken = mapbox_public_key;  // TODO add your API public access token to .env
+mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';  // TODO add your API public access token to .env
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -6,6 +6,71 @@ var map = new mapboxgl.Map({
     center: [-74.5,40],
     zoom:9
 });
+
+  function openNav() {
+    document.getElementById("mySidebar").style.width = "275px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
+  var drone_location = [-12, 3];
+  var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: drone_location, // starting position [lng, lat]
+    zoom: 9// starting zoom
+  });
+
+//import myImage from 'plane.png';
+  map.on('load', function() {
+      window.setInterval(function() {
+          // drone_location = [long, lat]; //try to retrive data from server or local file
+          map.getSource('points').setData(geojsonFeature);
+          }, 20);
+      map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {
+          if (error) throw error;
+          map.addImage('cat', image);
+            map.addLayer({
+                "id": "points",
+                "type": "symbol",
+                "source": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features": [{
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": drone_location
+                            }
+                        }]
+                    }
+                    },
+                "layout": {
+                    "icon-image": "cat",
+                    "icon-size": 0.04
+                }
+            });
+      });
+  });
+
+  function disconnectResult() {
+    alert("Disconnected Successfully!");
+  }
+  function sendingResult() {
+    alert("Successfully Sent!");
+  }
+
+function connectResult() {
+    alert("Connected Successfully!");
+  }
+
+  function FailConnection() {
+      alert("Fail to Connect!");
+  }
 
 // var size = 200;
 
