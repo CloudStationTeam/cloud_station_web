@@ -1,4 +1,5 @@
 django
+channels
 channels_redis
 django-background-tasks
 pymavlink
