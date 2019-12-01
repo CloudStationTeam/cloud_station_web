@@ -2,6 +2,8 @@
 [![LICENSE](https://img.shields.io/badge/license-GPL--3.0-brightgreen)](https://github.com/lyuyangh/cloud-station/blob/master/LICENSE)
 ## Our website
 A deployed [CloudStation](http://ec2-52-52-195-170.us-west-1.compute.amazonaws.com/)
+[Deploying instructions](https://github.com/CloudStationTeam/cloud_station_deployment)
+
 ## Prerequisite 
 ```
 Python 3.6+
@@ -18,12 +20,7 @@ Docker
 ## Getting started
   1. Install libraries    
       ```
-      pip3 install django   
-      pip3 install channels_redis
-      pip3 install django-background-tasks
-      pip3 install pymavlink
-      pip3 install pyserial
-      git clone https://github.com/lyuyangh/cloud-station.git   
+      pip3 install -r requirements.txt  
       ```
   2. Install and run docker: https://www.docker.com/get-started
       ```  
@@ -40,7 +37,10 @@ Docker
         
 ### Run server
 ```
+python3 manage.py makemigrations
+python3 manage.py migrate
 python3 manage.py runserver
+python3 manage.py process_tasks
 ```
 ## Architecture
 ## Milestones
@@ -51,9 +51,10 @@ python3 manage.py runserver
 - [x] Build hardware stack with Omnibus F4 and Raspberry Pi (10/30/19)
 - [x] Two way communication between vehicle and the server (11/5/19)
 - [x] User authentication (11/16/19)
-- [ ] Mark drone location on map (IP)
+- [x] Mark drone location on map (11/24)
 - [ ] Migrate to AWS RDS
 - [ ] Communicate with multiple drones at the same time
+- [ ] Distinguish different users. Only send vehicle updates to authorized users.
 ## Authors
   * Lyuyang Hu - Software architecture design, prototyping, project management, backend development
   * Mina Bedwany - Front-end, back-end development
