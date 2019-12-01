@@ -34,19 +34,19 @@ class Vehicle(models.Model):
 class Location_log(models.Model):
     #vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
-    latitude = models.IntegerField()
-    longitude = models.IntegerField()
-    altitude = models.IntegerField()
-    heading = models.IntegerField()
+    latitude = models.DecimalField(decimal_places=6, max_digits=9)
+    longitude = models.DecimalField(decimal_places=6, max_digits=9)
+    altitude = models.DecimalField(decimal_places=4, max_digits=9)
+    heading = models.DecimalField(decimal_places=4, max_digits=9)
     
     def __str__(self):
         location_dict = {
             "type": "location",
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "altitude": self.altitude,
-            "heading": self.heading
+            "latitude": float(self.latitude),
+            "longitude": float(self.longitude),
+            "altitude": float(self.altitude),
+            "heading": float(self.heading)
         }
         return json.dumps(location_dict)
 
