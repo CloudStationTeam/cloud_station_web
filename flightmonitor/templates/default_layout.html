@@ -186,8 +186,8 @@
       <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <a href="#">Welcome!</a>
-        <a href="http://127.0.0.1:8000/accounts/login/">Log in</a>
-        <a href="http://127.0.0.1:8000/flightmonitor/signup/">Sign up</a>
+        <a href="/accounts/login">Log in</a>
+        <a href="{% url 'signup' %}">Sign up</a>
       </div>
       <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
