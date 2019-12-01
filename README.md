@@ -1,8 +1,13 @@
 # Web-based Ground Control Station
-[![LICENSE](https://img.shields.io/badge/license-GPL--3.0-brightgreen)](https://github.com/lyuyangh/cloud-station/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/badge/license-GPL--3.0-brightgreen)](https://github.com/lyuyangh/cloud-station/blob/master/LICENSE)  
+The goal of this project is to develop a cloud-based ground control station for Ardupilot drones. The web app is designed to be easily scalable so users can control multiple drones at the same time.   
+>The project is still under development and we would love to have more developers joining us!
+
+**System architecture**:
+![System architecture diagram](system_diagram.png "System Architecture")
 ## Our website
-A deployed [CloudStation](http://ec2-52-52-195-170.us-west-1.compute.amazonaws.com/)
-[Deploying instructions](https://github.com/CloudStationTeam/cloud_station_deployment)
+A deployed [CloudStation](http://ec2-52-52-195-170.us-west-1.compute.amazonaws.com/)  
+> [Deployment instructions](https://github.com/CloudStationTeam/cloud_station_deployment)
 
 ## Prerequisite 
 ```
@@ -18,6 +23,7 @@ Docker
 > Tutorial to setup Python Django development environment: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/development_environment
 
 ## Getting started
+**These steps can be used to set up a local development environment for this web app. Please follow deployment instructions instead if you want to deploy it on a web server.**
   1. Install libraries    
       ```
       pip3 install -r requirements.txt  
@@ -43,7 +49,7 @@ python3 manage.py runserver
 python3 manage.py process_tasks
 ```
 ## Architecture
-## Milestones
+## Milestones & Backlogs
 - [x] System architecture and prototype (8/31/19)
 - [x] Rewrite mavlink streaming code (9/5/19)
 - [x] Add map to html (10/15/19)
@@ -55,6 +61,9 @@ python3 manage.py process_tasks
 - [ ] Migrate to AWS RDS
 - [ ] Communicate with multiple drones at the same time
 - [ ] Distinguish different users. Only send vehicle updates to authorized users.
+- [ ] Develop an improved UI for telemetry data.
+- [ ] Use a more robust background tasks solution.
+
 ## Authors
   * Lyuyang Hu - Software architecture design, prototyping, project management, backend development
   * Mina Bedwany - Front-end, back-end development
