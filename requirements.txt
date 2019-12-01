@@ -1,0 +1,5 @@
+django
+channels_redis
+django-background-tasks
+pymavlink
+pyserial
