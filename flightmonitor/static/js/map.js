@@ -27,7 +27,6 @@ var map = new mapboxgl.Map({
 //import myImage from 'plane.png';
   map.on('load', function() {
       window.setInterval(function() {
-          // drone_location = [long, lat]; //try to retrive data from server or local file
           map.getSource('points').setData(geojsonFeature);
           }, 20);
       map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {
