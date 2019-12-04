@@ -4,7 +4,9 @@ The goal of this project is to develop a cloud-based ground control station for 
 >The project is still under development and we would love to have more developers joining us!
 
 **System architecture**:
-![System architecture diagram](system_diagram.png "System Architecture")
+![CloudStation diagram](diagrams/cloud_station_diagram.png "System Architecture")  
+![System architecture diagram](diagrams/system_diagram.png "System Architecture")
+
 ## Our website
 A deployed [CloudStation](http://ec2-52-52-195-170.us-west-1.compute.amazonaws.com/)  
 > [Deployment instructions](https://github.com/CloudStationTeam/cloud_station_deployment)
