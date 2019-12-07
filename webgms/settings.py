@@ -25,7 +25,7 @@ SECRET_KEY = 'mmb@uth-#6-t)pi$_2)1!5x*91-#kdqzx)l8-*s-764i3l*mi1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []  # TODO add server IP address
+ALLOWED_HOSTS = []  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xxx.us-west-1.compute.amazonaws.com")
 
 
 # Application definition
