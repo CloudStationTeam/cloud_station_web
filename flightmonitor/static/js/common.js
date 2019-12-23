@@ -1,16 +1,3 @@
-var geojsonFeature = {
-   "type": "Feature",
-   "properties": {
-       "name": "Coors Field",
-       "amenity": "Baseball Stadium",
-       "popupContent": "This is where the Rockies play!"
-   },
-   "geometry": {
-       "type": "Point",
-       "coordinates": [-12, 3]
-   }
-};
-
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
     '/ws/flightmonitor/');
@@ -22,8 +9,7 @@ browserSocket.onmessage = function (e) {
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
     try{
-        geojsonFeature['geometry']["coordinates"][0] = temp['longitude'];
-        geojsonFeature['geometry']["coordinates"][1] = temp['latitude'];
+        updateDroneLoactionGeoJson(temp["longitude"], temp["latitude"]);
     }
     catch(e) {}
 };

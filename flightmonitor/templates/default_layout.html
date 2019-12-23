@@ -1,258 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>CloudStation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
   {% load static %}
-<link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
+  <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
 
 </head>
-<body>
-{% if user.is_authenticated %}
 
-<div class = "container">
-  <div class = "row">
-    <div class = "col-sm-2">
-      <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="#">Welcome {{user.username}}!</a>
-        <a href="/accounts/logout/">Log out</a>
-      </div>
-      <div id="main">
-        <button class="openbtn" onclick="openNav()">☰</button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-      </div>
-    </div>
-    <div class = "col-sm-10" >
-      <div class="jumbotron text-center" id = "MeanTitle"><!--- content --->
-        <h2>Cloud Station</h2>
-        <p>Welcome to Web-based Ground Monitoring Station!</p>
-      </div>
-    </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/flightmonitor">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/doc">Doc</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+      </li>
+      <li class="nav-item dropdown ">
+        {% if user.is_authenticated %}
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{user.username}}
+        </a>
+        {% else %}
+        <a class="nav-link dropdown-toggle" href="/accounts/login" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Log in/Sign up
+        </a>
+        {% endif %}
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Account</a>
+          <a class="dropdown-item" href="/accounts/login">Log in</a>
+          <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/accounts/logout">Log out</a>
+        </div>
+      </li>
+    </ul>
+
   </div>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-2">
-      <div class="form-group">
-        <label for="vehicleID">Connect to Vehicle via ID:</label>
-        <input type="text" class="form-control" id="vehicleID">
-      </div>
-      <div class="form-group">
-        <div class="col-sm-10" id = "connectbtnDIS" >
-          <button type="button" class="btn btn-success" id = "connectbtn" onclick=" connectVehicle()">Connect</button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="disVID">Disconnect Vehicle via ID:</label>
-        <input type="text" class="form-control" id="disVID">
+</nav>
 
-      </div>
-      <div class="col-sm-10" id = "disconnectbtn">
-        <button type="button" class="btn btn-danger" onclick="disconnectResult()">Disconnect</button>
-      </div>
-
-      <div class="col-sm-10" id = "connectV">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Connected Vehicles</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>IDXXXXXXXX1</td>
-          </tr>
-          <tr>
-            <td>IDXXXXXXXX2</td>
-          </tr>
-          <tr>
-            <td>IDXXXXXXXX3</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-    <div class="col-sm-10">
-      <div class="row" id = "mapLayout">
-        <div class="col-sm-12" id = "map" >
-        </div>
-      </div>
-      <div class="row" >
-        <div class = "col-sm-6">
-          <p>Received telemetry data: </p>
-          <p><textarea id="telemetry-log" cols="60" rows="5"></textarea><br /></p>
-        </div>
-        <div class = "col-sm-6" id = "commandLine">
-        <div class="form-group" >
-          <label for="commandID">Command Line</label>
-          <input type="text" class="form-control" id="commandID">
+<body>
+  {% if user.is_authenticated %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label for="vehicleID">Connect to Vehicle via ID:</label>
+          <input type="text" class="form-control" id="vehicleID">
         </div>
         <div class="form-group">
-          <div class="col-sm-10" id = "commandbtn">
-            <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
+          <div class="col-sm-10" id="connectbtnDIS">
+            <button type="button" class="btn btn-success" id="connectbtn" onclick=" connectVehicle()">Connect</button>
           </div>
         </div>
+        <div class="form-group">
+          <label for="disVID">Disconnect Vehicle via ID:</label>
+          <input type="text" class="form-control" id="disVID">
+
         </div>
+        <div class="col-sm-10" id="disconnectbtn">
+          <button type="button" class="btn btn-danger" onclick="disconnectResult()">Disconnect</button>
+        </div>
+
+        <div class="col-sm-10" id="connectV">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Connected Vehicles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>IDXXXXXXXX1</td>
+              </tr>
+              <tr>
+                <td>IDXXXXXXXX2</td>
+              </tr>
+              <tr>
+                <td>IDXXXXXXXX3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="col-sm-10">
+        <div class="row" id="mapLayout">
+          <div class="col-sm-12" id="map">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <p>Received telemetry data: </p>
+            <p><textarea id="telemetry-log" cols="60" rows="8"></textarea><br /></p>
+          </div>
+          <div class="col-sm-6" id="commandLine">
+            <div class="form-group">
+              <label for="commandID">Command Line</label>
+              <input type="text" class="form-control" id="commandID">
+            </div>
+            <div class="form-group">
+              <div class="col-sm-10" id="commandbtn">
+                <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
 
   </div>
-</div>
-
-
-{#<script>#}
-{#  function openNav() {#}
-{#    document.getElementById("mySidebar").style.width = "275px";#}
-{#    document.getElementById("main").style.marginLeft = "250px";#}
-{#  }#}
-{##}
-{#  function closeNav() {#}
-{#    document.getElementById("mySidebar").style.width = "0";#}
-{#    document.getElementById("main").style.marginLeft= "0";#}
-{#  }#}
-{#  mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';#}
-{#  var drone_location = [-117.8368, 33.6487];#}
-{#  var map = new mapboxgl.Map({#}
-{#    container: 'map', // container id#}
-{#    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location#}
-{#    center: drone_location, // starting position [lng, lat]#}
-{#    zoom: 9 // starting zoom#}
-{#  });#}
-{##}
-{#//import myImage from 'plane.png';#}
-{#  map.on('load', function() {#}
-{#map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function(error, image) {#}
-{#if (error) throw error;#}
-{#map.addImage('cat', image);#}
-{#map.addLayer({#}
-{#"id": "points",#}
-{#"type": "symbol",#}
-{#"source": {#}
-{#"type": "geojson",#}
-{#"data": {#}
-{#"type": "FeatureCollection",#}
-{#"features": [{#}
-{#"type": "Feature",#}
-{#"geometry": {#}
-{#"type": "Point",#}
-{#"coordinates": drone_location#}
-{#}#}
-{#}]#}
-{#}#}
-{#},#}
-{#"layout": {#}
-{#"icon-image": "cat",#}
-{#"icon-size": 0.04#}
-{#}#}
-{#});#}
-{#});#}
-{#});#}
-{##}
-{#  function disconnectResult() {#}
-{#    alert("Disconnected Successfully!");#}
-{#  }#}
-{#  function sendingResult() {#}
-{#    alert("Successfully Sent!");#}
-{#  }#}
-{##}
-{#function connectResult() {#}
-{#    alert("Connected Successfully!");#}
-{#  }#}
-{##}
-{#  function FailConnection() {#}
-{#      alert("Fail to Connect!");#}
-{#  }#}
-{##}
-{#</script>#}
-
-
-{% else %}
-<div class = "container">
-  <div class = "row">
-    <div class = "col-sm-2">
-      <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="#">Welcome!</a>
-        <a href="/accounts/login">Log in</a>
-        <a href="{% url 'signup' %}">Sign up</a>
-      </div>
-      <div id="main">
-        <button class="openbtn" onclick="openNav()">☰</button>
-
-      </div>
-    </div>
-    <div class = "col-sm-10" >
-      <div class="jumbotron text-center" id = "MeanTitle"><!--- content --->
-        <h2>Cloud Station</h2>
-        <p>Welcome to Web-based Ground Monitoring Station!</p>
-      </div>
-    </div>
   </div>
-</div>
-<div class="container">
-  <div class="row">
-      <div class="col-sm-2">
-      </div>
-    <div class="col-sm-10">
-      <div class="row" id = "mapLayout">
-        <div class="col-sm-12" id = "map" >
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<script>
-  function openNav() {
-    document.getElementById("mySidebar").style.width = "275px";
-    document.getElementById("main").style.marginLeft = "250px";
-  }
-
-  function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-  }
-  mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';
-  var drone_location = [-117.8443, 33.6405];
-  var map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-    center: drone_location, // starting position [lng, lat]
-    zoom: 9 // starting zoom
-  });
-
-  function disconnectResult() {
-    alert("Disconnected Successfully!");
-  }
-  function sendingResult() {
-    alert("Successfully Sent!");
-  }
-
-function connectResult() {
-    alert("Connected Successfully!");
-  }
-
-  function FailConnection() {
-      alert("Fail to Connect!");
-  }
-</script>
-
-{% endif %}
-</script>
-<script type='text/javascript' src="{% static 'js/common.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+  {% else %}
+  <div id='map'></div>
+  {% endif %}
+  </script>
+  <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
