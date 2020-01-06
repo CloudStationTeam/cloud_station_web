@@ -1,7 +1,8 @@
 # Web-based Ground Control Station
 [![LICENSE](https://img.shields.io/badge/license-GPL--3.0-brightgreen)](https://github.com/lyuyangh/cloud-station/blob/master/LICENSE)  
 The goal of this project is to develop a cloud-based ground control station for Ardupilot drones. The web app is designed to be easily scalable so users can control multiple drones at the same time.   
->The project is still under development and we would love to have more developers joining us!
+> The project is still under development and we would love to have more developers joining us!  
+> Docs: https://cloud-station-docs.readthedocs.io/en/latest/
 
 **System architecture**:
 ![CloudStation diagram](diagrams/cloud_station_diagram.png "System Architecture")  
