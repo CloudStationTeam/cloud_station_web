@@ -87,12 +87,21 @@ body {
     padding-bottom: 10px;
 }
 #commandLine{
-    padding-left: 15px;
+    padding-left: 40px;
     padding-top:10px;
     padding-bottom: 0px;
 }
 #commandID{
-    width:480px;
+    width:260px;
+}
+
+#infobox {
+    color: #56baed;
+  background: #0d0d0d;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

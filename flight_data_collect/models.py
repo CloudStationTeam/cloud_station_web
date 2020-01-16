@@ -38,7 +38,7 @@ class Location_log(models.Model):
     longitude = models.DecimalField(decimal_places=6, max_digits=9)
     altitude = models.DecimalField(decimal_places=4, max_digits=9)
     heading = models.DecimalField(decimal_places=4, max_digits=9)
-    vid = models.DecimalField(decimal_places=4, max_digits=9)
+    droneid = models.DecimalField(decimal_places=4, max_digits=9)
     
     def __str__(self):
         location_dict = {
@@ -48,7 +48,7 @@ class Location_log(models.Model):
             "longitude": float(self.longitude),
             "altitude": float(self.altitude),
             "heading": float(self.heading),
-            "vid": float(self.vid)
+            "droneid": float(self.droneid)
         }
         return json.dumps(location_dict)
 
