@@ -28,6 +28,7 @@ var droneLocationGeoJson = {
 
 function updateDroneLoactionGeoJson(longitude, latitude) {
   droneLocationGeoJson["geometry"]["coordinates"] = [longitude, latitude];
+
 }
 
 map.on('load', function () {

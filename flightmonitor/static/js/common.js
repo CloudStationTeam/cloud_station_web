@@ -12,7 +12,28 @@ browserSocket.onmessage = function (e) {
         updateDroneLoactionGeoJson(temp["longitude"], temp["latitude"]);
     }
     catch(e) {}
+    try{
+        updateInfo(temp);
+
+    }
+    catch (e) {
+        console.log("info pack wrong");
+    }
 };
+function updateInfo(infopack) {
+  $("#altitude").text(infopack['altitude']);
+  $("#groundspeed").text(infopack['groundspeed']);
+  $("#Roll").text(infopack['Roll']);
+  $("#Yaw").text(infopack['Yaw']);
+  $("#DistoDest").text(infopack['DistoDest']);
+  $("#Pitch").text(infopack['Pitch']);
+  $("#Longitude").text(infopack['Longitude']);
+  $("#Latitude").text(infopack['Latitude']);
+
+  // console.log("www");
+
+
+}
 
 browserSocket.onclose = function (e) {
     document.querySelector('#telemetry-log').value += ('Error: connection to server has been disconnected\n');
