@@ -14,25 +14,49 @@ browserSocket.onmessage = function (e) {
     catch(e) {}
     try{
         updateInfo(temp);
-
     }
     catch (e) {
         console.log("info pack wrong");
     }
 };
 function updateInfo(infopack) {
-  $("#altitude").text(infopack['altitude']);
-  $("#groundspeed").text(infopack['groundspeed']);
-  $("#Roll").text(infopack['Roll']);
-  $("#Yaw").text(infopack['Yaw']);
-  $("#DistoDest").text(infopack['DistoDest']);
-  $("#Pitch").text(infopack['Pitch']);
-  $("#Longitude").text(infopack['Longitude']);
-  $("#Latitude").text(infopack['Latitude']);
+    try {
+        updateLocations(infopack['altitude'], infopack['longitude'], infopack['latitude']);
+
+    }
+    catch (e) {
+        console.log("update location!")
+    }
+
+    try{
+        updateTel(infopack['yaw'], infopack['roll'], infopack['pitch'])
+    }
+    catch (e) {
+        console.log("update tel!")
+    }
+
+  // $("#altitude").text(infopack['altitude']);
+  // $("#groundspeed").text(infopack['groundspeed']);
+  // $("#Roll").text(infopack['roll']);
+  // $("#Yaw").text(infopack['yaw']);
+  // $("#DistoDest").text(infopack['DistoDest']);
+  // $("#Pitch").text(infopack['pitch']);
+  // $("#Longitude").text(infopack['longitude']);
+  // $("#Latitude").text(infopack['latitude']);
 
   // console.log("www");
+}
+function updateLocations(al, long, lat){
+    $("#altitude").text(al);
+    $("#longitude").text(long);
+    $("#latitude").text(lat);
+    // console.log(long);
 
-
+}
+function updateTel(yaw, roll, pit){
+    $("#Yaw").text(yaw);
+    $("#Roll").text(roll);
+    $("#Pitch").text(pit);
 }
 
 browserSocket.onclose = function (e) {
