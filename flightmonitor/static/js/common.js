@@ -32,7 +32,7 @@ browserSocket.onmessage = function (e) {
     storeTodroneMap(temp);
 
     try{
-        updateDroneLoactionGeoJson(droneMap.get(temp["droneide"])["geojson"]["coordinates"]);
+        updateDroneLoactionGeoJson(droneMap.get(temp["droneid"])["geojson"]["coordinates"]);
     }
     catch(e) {}
     try{
