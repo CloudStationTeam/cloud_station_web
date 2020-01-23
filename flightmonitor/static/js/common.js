@@ -3,11 +3,34 @@ var browserSocket = new WebSocket(
     '/ws/flightmonitor/');
 document.querySelector('#telemetry-log').value += ('Successfully connected to server.\n');
 
+var droneMap = new Map(); // initialize an empty map
+
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
+    if (!droneMap.has(temp["droneid"])) {
+        var tempInfo = {
+            "longitude":"NULL",
+            "latitude":"NULL",
+            "yaw":"NULL",
+            "pitch":"NULL",
+            "roll":"NULL",
+            "speed":"NULL",
+            "geojson":{
+            "type": "Feature",
+                "properties": {},
+              "geometry": {
+                "type": "Point",
+                "coordinates": ["NULL","NULL"]
+            }
+            }
+        };
+        droneMap.set(temp["droneid"],tempInfo);
+        }
+    storeTodroneMap(temp);
+
     try{
         updateDroneLoactionGeoJson(temp["longitude"], temp["latitude"]);
     }
@@ -19,6 +42,59 @@ browserSocket.onmessage = function (e) {
         console.log("info pack wrong");
     }
 };
+
+function storeTodroneMap(temp){
+    var droneid = temp["droneid"];
+    if (temp["type"] == "location"){
+        console.log(droneMap.get(droneid));
+        if (droneMap.get(droneid)["latitude"] == "NULL")
+            droneMap.get(droneid)["latitude"] = temp["latitude"];
+        else{
+            var difference = droneMap.get(droneid)["latitude"]-temp["latitude"];
+            if (Math.abs(difference)<= 1)
+                droneMap.get(droneid)["latitude"] = temp["latitude"];
+            else
+                document.querySelector('#telemetry-log').value += "error in latitude.\n";
+        }
+        if (droneMap.get(droneid)["longitude"] == "NULL")
+            droneMap.get(droneid)["longitude"] = temp["longitude"];
+        else{
+            var difference = droneMap.get(droneid)["longitude"] - temp["longitude"];
+            if (Math.abs(difference) < 1)
+                droneMap.get(droneid)["longitude"] = temp["longitude"];
+            else
+                document.querySelector('#telemetry-log').value += "error in longitude.\n";
+        }
+        droneMap.get(droneid)["altitude"]= temp["altitude"];
+        droneMap.get(droneid)["geojson"]["coordinates"] = [droneMap.get(droneid)["longitude"], droneMap.get(droneid)["latitude"]];
+    }
+    if (temp["type"] == "altitude") {
+        droneMap.get(droneid)["yaw"] = temp["yaw"];
+        droneMap.get(droneid)["row"] = temp["row"];
+        droneMap.get(droneid)["pitch"] = temp["pitch"];
+    }
+
+
+}
+
+function newJSON(droneid){ // update geojson by using obj["geojson"]["coordinates"] = [long, lat]
+    return {"droneid":droneid,
+        "longitude":"NULL",
+        "latitude":"NULL",
+        "yaw":"NULL",
+        "pitch":"NULL",
+        "roll":"NULL",
+        "speed":"NULL",
+        "geojson":{
+        "type": "Feature",
+            "properties": {},
+          "geometry": {
+            "type": "Point",
+            "coordinates": ["NULL","NULL"]
+        }
+    }
+    };
+}
 function updateInfo(infopack) {
     try {
         updateLocations(infopack['altitude'], infopack['longitude'], infopack['latitude']);
