@@ -32,11 +32,12 @@ browserSocket.onmessage = function (e) {
     storeTodroneMap(temp);
 
     try{
-        updateDroneLoactionGeoJson(temp["longitude"], temp["latitude"]);
+        updateDroneLoactionGeoJson(droneMap.get(temp["droneide"])["geojson"]["coordinates"]);
     }
     catch(e) {}
     try{
-        updateInfo(temp);
+        console.log(droneMap.get(temp["droneid"]))
+        updateInfo(droneMap.get(temp["droneid"]));
     }
     catch (e) {
         console.log("info pack wrong");
@@ -70,32 +71,34 @@ function storeTodroneMap(temp){
     }
     if (temp["type"] == "altitude") {
         droneMap.get(droneid)["yaw"] = temp["yaw"];
-        droneMap.get(droneid)["row"] = temp["row"];
+        droneMap.get(droneid)["roll"] = temp["roll"];
         droneMap.get(droneid)["pitch"] = temp["pitch"];
     }
 
 
 }
 
-function newJSON(droneid){ // update geojson by using obj["geojson"]["coordinates"] = [long, lat]
-    return {"droneid":droneid,
-        "longitude":"NULL",
-        "latitude":"NULL",
-        "yaw":"NULL",
-        "pitch":"NULL",
-        "roll":"NULL",
-        "speed":"NULL",
-        "geojson":{
-        "type": "Feature",
-            "properties": {},
-          "geometry": {
-            "type": "Point",
-            "coordinates": ["NULL","NULL"]
-        }
-    }
-    };
-}
+// function newJSON(droneid){ // update geojson by using obj["geojson"]["coordinates"] = [long, lat]
+//     return {"droneid":droneid,
+//         "longitude":"NULL",
+//         "latitude":"NULL",
+//         "yaw":"NULL",
+//         "pitch":"NULL",
+//         "roll":"NULL",
+//         "speed":"NULL",
+//         "geojson":{
+//         "type": "Feature",
+//             "properties": {},
+//           "geometry": {
+//             "type": "Point",
+//             "coordinates": ["NULL","NULL"]
+//         }
+//     }
+//     };
+// }
+
 function updateInfo(infopack) {
+    console.log(infopack);
     try {
         updateLocations(infopack['altitude'], infopack['longitude'], infopack['latitude']);
 
