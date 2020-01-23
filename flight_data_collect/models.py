@@ -38,6 +38,7 @@ class Location_log(models.Model):
     longitude = models.DecimalField(decimal_places=6, max_digits=9)
     altitude = models.DecimalField(decimal_places=4, max_digits=9)
     heading = models.DecimalField(decimal_places=4, max_digits=9)
+    droneid = models.IntegerField()
     
     def __str__(self):
         location_dict = {
@@ -46,7 +47,8 @@ class Location_log(models.Model):
             "latitude": float(self.latitude),
             "longitude": float(self.longitude),
             "altitude": float(self.altitude),
-            "heading": float(self.heading)
+            "heading": float(self.heading),
+            "droneid": int(self.droneid)
         }
         return json.dumps(location_dict)
 
@@ -56,6 +58,7 @@ class Telemetry_log(models.Model):
     roll = models.DecimalField(decimal_places=2, max_digits=5)
     pitch = models.DecimalField(decimal_places=2, max_digits=5)
     yaw = models.DecimalField(decimal_places=2, max_digits=5)
+    droneid = models.IntegerField()
     # rollspeed = models.DecimalField(decimal_places=2, max_digits=5)
     # pitchspeed = models.DecimalField(decimal_places=2, max_digits=5)
     # yawspeed = models.DecimalField(decimal_places=2, max_digits=5)
@@ -66,7 +69,8 @@ class Telemetry_log(models.Model):
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
             "roll": float(self.roll),
             "pitch": float(self.pitch),
-            "yaw": float(self.yaw)
+            "yaw": float(self.yaw),
+            "droneid": int(self.droneid)
         }
         return json.dumps(altitude_dict)
     

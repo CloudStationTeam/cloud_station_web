@@ -46,13 +46,20 @@
           Log in/Sign up
         </a>
         {% endif %}
+          {% if user.is_authenticated %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Account</a>
-          <a class="dropdown-item" href="/accounts/login">Log in</a>
-          <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/accounts/logout">Log out</a>
         </div>
+          {% else %}
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Account</a>
+          <a class="dropdown-item" href="/accounts/login">Log in</a>
+          <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
+        </div>
+
+          {% endif %}
       </li>
     </ul>
 
@@ -104,20 +111,20 @@
         </div>
 
       </div>
-      <div class="col-sm-10">
+      <div class="col-sm-7">
         <div class="row" id="mapLayout">
           <div class="col-sm-12" id="map">
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-7">
             <p>Received telemetry data: </p>
-            <p><textarea id="telemetry-log" cols="60" rows="8"></textarea><br /></p>
+            <p><textarea id="telemetry-log" cols="50" rows="4"></textarea><br /></p>
           </div>
-          <div class="col-sm-6" id="commandLine">
+          <div class="col-sm-5" id="commandLine">
             <div class="form-group">
               <label for="commandID">Command</label>
-              <input type="text" class="form-control" id="commandID">
+              <input type="text" class="form-control" id="commandID" >
             </div>
             <div class="form-group">
               <div class="col-sm-10" id="commandbtn">
@@ -128,6 +135,45 @@
         </div>
 
       </div>
+        <div class="col-sm-3">
+        <table id = "infobox">
+          <tr>
+
+              <th>Altitude (m)</th>
+              <th>Ground Speed (m/s)</th>
+
+          </tr>
+          <tr>
+              <td><var id = "altitude"></var></td>
+            <td><var id = "groundspeed"></var></td>
+          </tr>
+          <tr>
+              <th>Roll (deg/s)</th>
+              <th>Yaw (deg)</th>
+          </tr>
+            <tr>
+              <td><var id = "Roll"></var></td>
+              <td><var id = "Yaw"></var></td>
+          </tr>
+            <tr>
+              <th>Distance to Destination (m)</th>
+              <th>Pitch </th>
+          </tr>
+            <tr>
+              <td><var id = "DistoDest"></var></td>
+              <td><var id = "Pitch"></var></td>
+          </tr>
+            <tr>
+                <th>Longitude</th>
+                <th>Latitude</th>
+            </tr>
+            <tr>
+              <td><var id = "longitude"></var></td>
+              <td><var id = "latitude"></var></td>
+          </tr>
+
+        </table>
+        </div>
     </div>
 
   </div>
