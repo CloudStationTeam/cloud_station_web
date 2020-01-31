@@ -31,25 +31,25 @@ function updateDroneLoactionGeoJson(longitude, latitude) {
 
 }
 
-map.on('load', function () {
-  window.setInterval(function () {
-    map.getSource('drone').setData(droneLocationGeoJson);
-  }, 20);
-  map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function (error, image) {
-    if (error) throw error;
-    map.addImage('cat', image);
-    map.addSource('drone', { type: 'geojson', data: droneLocationGeoJson });
-    map.addLayer({
-      "id": "drone",
-      "type": "symbol",
-      "source": "drone",
-      "layout": {
-        "icon-image": "cat",
-        "icon-size": 0.04
-      }
-    });
-  });
-});
+// map.on('load', function () {
+//   window.setInterval(function () {
+//     map.getSource('drone').setData(droneLocationGeoJson);
+//   }, 20);
+//   map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/BSicon_AIRCLUB.svg/1920px-BSicon_AIRCLUB.svg.png', function (error, image) {
+//     if (error) throw error;
+//     map.addImage('cat', image);
+//     map.addSource('drone', { type: 'geojson', data: droneLocationGeoJson });
+//     map.addLayer({
+//       "id": "drone",
+//       "type": "symbol",
+//       "source": "drone",
+//       "layout": {
+//         "icon-image": "cat",
+//         "icon-size": 0.04
+//       }
+//     });
+//   });
+// });
 map.addControl(new mapboxgl.NavigationControl());
 map.addControl(
   new mapboxgl.GeolocateControl({
