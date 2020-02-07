@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from flight_data_collect.drone_communication.mavlink_utils import connect_mavlink, get_mavlink_messages_periodically
 import datetime
 
-TIME_INTERVAL = 4  # second(s)
+TIME_INTERVAL = 3.5  # second(s)
 REPEAT_UNTIL = 60  
 
 def connect_vehicle(request, connect_address):
