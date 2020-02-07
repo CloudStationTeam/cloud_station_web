@@ -47,6 +47,7 @@ browserSocket.onmessage = function (e) {
         var row = dytable.insertRow(-1);
         var cell = row.insertCell(-1);
         cell.innerHTML = "ID: " + temp["droneid"];
+        addTab(temp["droneid"]); // add a new tab
         }
     else{
         storeTodroneMap(temp);
@@ -65,7 +66,7 @@ browserSocket.onmessage = function (e) {
     catch(e) {}
     try{
         // console.log(droneMap.get(temp["droneid"]))
-        updateInfo(droneMap.get(temp["droneid"]));
+        updateInfo(droneMap.get(temp["droneid"]),temp["droneid"]);
     }
     catch (e) {
         console.log("info pack wrong");
@@ -125,10 +126,10 @@ function storeTodroneMap(temp){
 //     };
 // }
 
-function updateInfo(infopack) {
+function updateInfo(infopack, droneID) {
     // console.log(infopack);
     try {
-        updateLocations(infopack['altitude'], infopack['longitude'], infopack['latitude']);
+        updateLocations(infopack['altitude'], infopack['longitude'], infopack['latitude'], droneID);
 
     }
     catch (e) {
@@ -136,7 +137,7 @@ function updateInfo(infopack) {
     }
 
     try{
-        updateTel(infopack['yaw'], infopack['roll'], infopack['pitch'])
+        updateTel(infopack['yaw'], infopack['roll'], infopack['pitch'], droneID)
     }
     catch (e) {
         console.log("update tel!")
@@ -153,17 +154,27 @@ function updateInfo(infopack) {
 
   // console.log("www");
 }
-function updateLocations(al, long, lat){
-    $("#altitude").text(al);
-    $("#longitude").text(long);
-    $("#latitude").text(lat);
+function updateLocations(al, long, lat, droneID){
+    var altitudeID = '#altitude' + droneID.toString();
+    var longitudeID = '#longitude' + droneID.toString();
+    var latitudeID = '#latitude' + droneID.toString();
+
+    // var groundID = '#GroundSpeed' + droneID.toString();
+    // var distanceID = '#Distance' + droneID.toString();
+
+    $(altitudeID).text(al);
+    $(longitudeID).text(long);
+    $(latitudeID).text(lat);
     // console.log(long);
 
 }
-function updateTel(yaw, roll, pit){
-    $("#Yaw").text(yaw);
-    $("#Roll").text(roll);
-    $("#Pitch").text(pit);
+function updateTel(yaw, roll, pit, droneID){
+    var yawID = '#Yaw'  + droneID.toString();
+    var rollID = '#Roll' + droneID.toString();
+    var pitchID ='#Pitch'  + droneID.toString();
+    $(yawID).text(yaw);
+    $(rollID).text(roll);
+    $(pitchID).text(pit);
 }
 
 browserSocket.onclose = function (e) {
@@ -200,3 +211,5 @@ function disconnectVehicle() {
     xmlHttp.open("GET", url, true); // true for asynchronous 
     xmlHttp.send(null);
 }
+
+

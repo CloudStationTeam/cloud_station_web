@@ -127,43 +127,57 @@
 
       </div>
         <div class="col-sm-3">
-        <table id = "infobox">
-          <tr>
+            <div class="row">
+            <div class="row-sm-7" id="tabcontent">
+                <ul id="tab-list" class="nav nav-tabs" role="tablist">
+                </ul>
 
-              <th>Altitude (m)</th>
-              <th>Ground Speed (m/s)</th>
+            <!-- Tab panes -->
+                <div id="tab-content" class="tab-content">
 
-          </tr>
-          <tr>
-              <td><var id = "altitude"></var></td>
-            <td><var id = "groundspeed"></var></td>
-          </tr>
-          <tr>
-              <th>Roll (deg/s)</th>
-              <th>Yaw (deg)</th>
-          </tr>
-            <tr>
-              <td><var id = "Roll"></var></td>
-              <td><var id = "Yaw"></var></td>
-          </tr>
-            <tr>
-              <th>Distance to Destination (m)</th>
-              <th>Pitch </th>
-          </tr>
-            <tr>
-              <td><var id = "DistoDest"></var></td>
-              <td><var id = "Pitch"></var></td>
-          </tr>
-            <tr>
-                <th>Longitude</th>
-                <th>Latitude</th>
-            </tr>
-            <tr>
-              <td><var id = "longitude"></var></td>
-              <td><var id = "latitude"></var></td>
-          </tr>
+                </div>
+{#        <table id = "infobox">#}
+{#          <tr>#}
+{##}
+{#              <th>Altitude (m)</th>#}
+{#              <th>Ground Speed (m/s)</th>#}
+{##}
+{#          </tr>#}
+{#          <tr>#}
+{#              <td><var id = "altitude"></var></td>#}
+{#            <td><var id = "groundspeed"></var></td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#              <th>Roll (deg/s)</th>#}
+{#              <th>Yaw (deg)</th>#}
+{#          </tr>#}
+{#            <tr>#}
+{#              <td><var id = "Roll"></var></td>#}
+{#              <td><var id = "Yaw"></var></td>#}
+{#          </tr>#}
+{#            <tr>#}
+{#              <th>Distance to Destination (m)</th>#}
+{#              <th>Pitch </th>#}
+{#          </tr>#}
+{#            <tr>#}
+{#              <td><var id = "DistoDest"></var></td>#}
+{#              <td><var id = "Pitch"></var></td>#}
+{#          </tr>#}
+{#            <tr>#}
+{#                <th>Longitude</th>#}
+{#                <th>Latitude</th>#}
+{#            </tr>#}
+{#            <tr>#}
+{#              <td><var id = "longitude"></var></td>#}
+{#              <td><var id = "latitude"></var></td>#}
+{#          </tr>#}
+{##}
+{#        </table>#}
+            </div>
+          <div class="row-sm-5">
 
-        </table>
+            <pre id="info"></pre>
+          </div>
         </div>
     </div>
 
@@ -175,6 +189,8 @@
   </script>
   <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>

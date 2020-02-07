@@ -127,3 +127,21 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
+
+#info {
+display: block;
+position: relative;
+margin: 0px auto;
+width: 50%;
+padding: 10px;
+border: none;
+border-radius: 3px;
+font-size: 12px;
+text-align: center;
+color: #222;
+background: #fff;
+}
+
+#tabcontent{
+    height: 300px;
+}
