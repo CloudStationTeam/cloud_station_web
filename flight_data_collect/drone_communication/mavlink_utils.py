@@ -9,33 +9,31 @@ SERVER_IP = socket.gethostbyname(socket.gethostname())
 
 TIME_INTERVAL = 3.5  # second(s)
 
-def connect_mavlink(connect_address: str)->str:
+def connect_mavlink(connect_address: str)->bool:
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP+':'+connect_address) # hackish fix for now
         msg = mavlink.wait_heartbeat(timeout=8)
-        if msg: # msg is of MAVLink_heartbeat_message type
-            return 'Heartbeat Received'
-        else:
-            return ''
+        return msg is not None
     except OSError as e:
         print(e)
-        return ''
+    return False
 
 @background(schedule=0)
 def get_mavlink_messages_periodically(connect_address):
     mavlink = mavutil.mavlink_connection(SERVER_IP+':'+connect_address)
     msg = mavlink.wait_heartbeat(timeout=8)
     if msg:
-        _log_latest_orientation(mavlink)
-        _log_latest_location(mavlink)
+        _log_latest_orientation(mavlink, connect_address)
+        _log_latest_location(mavlink, connect_address)
 
-def _log_latest_orientation(mavlink):
+def _log_latest_orientation(mavlink, drone_id):
     msg = _get_mavlink_message(mavlink, mavlink_constants.ORIENTATION_MESSAGE_NAME) 
     if msg:
         Telemetry_log.objects.create(timestamp = datetime.now(), \
-            roll = round(msg.roll,2), pitch = round(msg.pitch,2), yaw = round(msg.yaw,2))
+            roll = round(msg.roll,2), pitch = round(msg.pitch,2), yaw = round(msg.yaw,2), 
+            droneid=drone_id)
     
-def _log_latest_location(mavlink):
+def _log_latest_location(mavlink, drone_id):
     # FIXME
     # This seems to be a bug in pymavlink the message names are wrong
     # It could also be a problem of how we are using pymavlink (Dialect)
@@ -44,7 +42,7 @@ def _log_latest_location(mavlink):
     # global_position_int = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT)
     Location_log.objects.create(timestamp = datetime.now(), \
         latitude=global_position_int.lat/10**7, longitude=global_position_int.lon/10**7, \
-        altitude=global_position_int.alt, heading=global_position_int.hdg)
+        altitude=global_position_int.alt, heading=global_position_int.hdg, droneid=drone_id)
 
 def _get_mavlink_message(mavlink, message_name)->dict:
     try:

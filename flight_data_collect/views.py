@@ -4,16 +4,16 @@ from flight_data_collect.drone_communication.mavlink_utils import connect_mavlin
 import datetime
 
 TIME_INTERVAL = 4  # second(s)
-REPEAT_UNTIL = 20  
+REPEAT_UNTIL = 60  
 
 def connect_vehicle(request, connect_address):
-    heartbeat_msg = connect_mavlink(connect_address)
-    if heartbeat_msg:
-        msg = " Successully connected to " + connect_address + "\n" + heartbeat_msg
+    is_successful = connect_mavlink(connect_address)
+    if is_successful:
+        msg = "Successully connected to " + connect_address + "\n" + "> Heartbeat Received!"
         get_mavlink_messages_periodically(connect_address, repeat=TIME_INTERVAL, \
                     repeat_until=datetime.datetime.now()+datetime.timedelta(seconds=REPEAT_UNTIL))
     else:
-        msg = "Error: Failed to connect to " + connect_address
+        msg = "Error: Failed to connect to " + connect_address + "(timeout)"
     return HttpResponse(msg, content_type="text/plain")
 
 def disconnect_vehicle(request):
