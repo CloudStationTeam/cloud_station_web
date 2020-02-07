@@ -12,19 +12,19 @@ browserSocket.onmessage = function (e) {
     var temp = JSON.parse(data['message']);
     if (!droneMap.has(temp["droneid"])) {
         var tempInfo = {
-            "longitude":"NULL",
-            "latitude":"NULL",
-            "yaw":"NULL",
-            "pitch":"NULL",
-            "roll":"NULL",
-            "speed":"NULL",
+            "longitude":null,
+            "latitude":null,
+            "yaw":null,
+            "pitch":null,
+            "roll":null,
+            "speed":null,
             "geojson":{
             "type": "Feature",
                 "properties": {"Name":temp["droneid"]
                 },
               "geometry": {
                 "type": "Point",
-                "coordinates": ["NULL","NULL"]
+                "coordinates": [null,null]
             },
             },"markerTraker":null,
             "markerPopup":null
@@ -36,13 +36,14 @@ browserSocket.onmessage = function (e) {
         marker = droneMap.get(temp["droneid"]).geojson;
         var el = document.createElement('div');
         el.className = 'marker';
-        droneMap.get(temp["droneid"]).markerPopup = new mapboxgl.Popup({ offset: 25 });
-        droneMap.get(temp["droneid"]).markerTraker = new mapboxgl.Marker(el)
-            .setLngLat(marker.coordinates)
-            .setPopup(droneMap.get(temp["droneid"]).markerPopup
-                .setHTML('<h3>' + marker.properties.Name + "</h3><p>"+ "Longitude: " + marker.coordinates[0] + " Latitude: " + marker.coordinates[1]+ "</p>")
-            )
-            .addTo(map);
+        if (marker['geometry']['coordinates'][0] != null && marker['geometry']['coordinates'][1] != null){
+            droneMap.get(temp["droneid"]).markerPopup = new mapboxgl.Popup({ offset: 25 });
+            droneMap.get(temp["droneid"]).markerTraker = new mapboxgl.Marker(el)
+                .setLngLat(marker.coordinates)
+                .setPopup(droneMap.get(temp["droneid"]).markerPopup
+                    .setHTML('<h3>' + marker.properties.Name + "</h3><p>"+ "Longitude: " + marker.coordinates[0] + " Latitude: " + marker.coordinates[1]+ "</p>")
+                )
+                .addTo(map);}
         var dytable = document.getElementById("dyTable");
         var row = dytable.insertRow(-1);
         var cell = row.insertCell(-1);
@@ -51,10 +52,24 @@ browserSocket.onmessage = function (e) {
     else{
         storeTodroneMap(temp);
         marker = droneMap.get(temp["droneid"]).geojson;
-        droneMap.get(temp["droneid"]).markerPopup.setHTML('<h3>' + marker.properties.Name + "</h3><p>"+ "Longitude: " + marker.coordinates[0] + " Latitude: " + marker.coordinates[1]+ "</p>");
-        // droneMap.get(temp["droneid"]).markerTraker.setLngLat(marker.coordinates).setPopup(new mapboxgl.Popup({ offset: 25 })
-        //         .setHTML('<h3>' + marker.properties.Name + "</h3><p>"+ "Longitude: " + marker.coordinates[0] + " Latitude: " + marker.coordinates[1]+ "</p>")
-        //     );
+        var test = droneMap.get(temp["droneid"])["markerTraker"];
+        if (test == null){
+            if (marker['geometry']['coordinates'][0] != null && marker['geometry']['coordinates'][1] != null) {
+                var el = document.createElement('div');
+                el.className = 'marker';
+                droneMap.get(temp["droneid"]).markerPopup = new mapboxgl.Popup({ offset: 25 });
+                droneMap.get(temp["droneid"]).markerTraker = new mapboxgl.Marker(el)
+                    .setLngLat(marker.coordinates)
+                    .setPopup(droneMap.get(temp["droneid"]).markerPopup
+                        .setHTML('<h3>' + marker.properties.Name + "</h3><p>"+ "Longitude: " + marker.coordinates[0] + " Latitude: " + marker.coordinates[1]+ "</p>")
+                    )
+                    .addTo(map);
+            }
+        }
+        else {
+            droneMap.get(temp["droneid"]).markerPopup.setHTML('<h3>' + marker.properties.Name + "</h3><p>" + "Longitude: " + marker.coordinates[0] + " Latitude: " + marker.coordinates[1] + "</p>");
+        }
+        
         //update the map location
     }
 
@@ -64,7 +79,6 @@ browserSocket.onmessage = function (e) {
     }
     catch(e) {}
     try{
-        // console.log(droneMap.get(temp["droneid"]))
         updateInfo(droneMap.get(temp["droneid"]));
     }
     catch (e) {
@@ -75,8 +89,7 @@ browserSocket.onmessage = function (e) {
 function storeTodroneMap(temp){
     var droneid = temp["droneid"];
     if (temp["type"] == "location"){
-        // console.log(droneMap.get(droneid));
-        if (droneMap.get(droneid)["latitude"] == "NULL")
+        if (droneMap.get(droneid)["latitude"] == null)
             droneMap.get(droneid)["latitude"] = temp["latitude"];
         else{
             var difference = droneMap.get(droneid)["latitude"]-temp["latitude"];
@@ -85,7 +98,7 @@ function storeTodroneMap(temp){
             else
                 document.querySelector('#telemetry-log').value += "error in latitude.\n";
         }
-        if (droneMap.get(droneid)["longitude"] == "NULL")
+        if (droneMap.get(droneid)["longitude"] == null)
             droneMap.get(droneid)["longitude"] = temp["longitude"];
         else{
             var difference = droneMap.get(droneid)["longitude"] - temp["longitude"];
@@ -106,27 +119,7 @@ function storeTodroneMap(temp){
 
 }
 
-// function newJSON(droneid){ // update geojson by using obj["geojson"]["coordinates"] = [long, lat]
-//     return {"droneid":droneid,
-//         "longitude":"NULL",
-//         "latitude":"NULL",
-//         "yaw":"NULL",
-//         "pitch":"NULL",
-//         "roll":"NULL",
-//         "speed":"NULL",
-//         "geojson":{
-//         "type": "Feature",
-//             "properties": {},
-//           "geometry": {
-//             "type": "Point",
-//             "coordinates": ["NULL","NULL"]
-//         }
-//     }
-//     };
-// }
-
 function updateInfo(infopack) {
-    // console.log(infopack);
     try {
         updateLocations(infopack['altitude'], infopack['longitude'], infopack['latitude']);
 
@@ -142,22 +135,11 @@ function updateInfo(infopack) {
         console.log("update tel!")
     }
 
-  // $("#altitude").text(infopack['altitude']);
-  // $("#groundspeed").text(infopack['groundspeed']);
-  // $("#Roll").text(infopack['roll']);
-  // $("#Yaw").text(infopack['yaw']);
-  // $("#DistoDest").text(infopack['DistoDest']);
-  // $("#Pitch").text(infopack['pitch']);
-  // $("#Longitude").text(infopack['longitude']);
-  // $("#Latitude").text(infopack['latitude']);
-
-  // console.log("www");
 }
 function updateLocations(al, long, lat){
     $("#altitude").text(al);
     $("#longitude").text(long);
     $("#latitude").text(lat);
-    // console.log(long);
 
 }
 function updateTel(yaw, roll, pit){
