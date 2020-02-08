@@ -1,8 +1,9 @@
-class Information{
+class Drone{
     constructor(droneID) {
         this.droneID = droneID;
         this.longitude = null;
         this.latitude = null;
+        this.altitude = null;
         this.yaw = null;
         this.pitch = null;
         this.roll = null;
@@ -11,42 +12,57 @@ class Information{
         this.marker = null;
         this.popup = null;
     }
-    // Longitude
-    getLong(){
-        return this.longitude;
+    getID(){
+        return this.droneID;
     }
-    updateLong(long){
-        if (this.longitude == null){
-            this.longitude = long;
+
+    getLocation(){
+        if(this.longitude == null || this.latitude == null){
+            return null;
         }
         else{
-            var diff = Math.abs(long - this.longitude);
-            if(diff <= 1){
+            return new Array(this.longitude, this.latitude);
+        }
+    }
+
+    updateLocation(long, lat){
+        if (long == null || lat == null){
+            console.log("wrong data!");
+        }
+        else{
+            if (this.longitude == null && this.latitude == null){
                 this.longitude = long;
+                this.latitude = lat;
             }
             else{
-                console.log("long move too fast");
+                var diffLong = Math.abs(long - this.longitude);
+                var diffLat =  Math.abs(lat - this.latitude);
+                if (diffLong <= 1 && diffLat <= 1){
+                    this.longitude = long;
+                    this.latitude = lat;
+                }
+                else{
+                    console.log("move too fast");
+                }
             }
         }
     }
 
-    // Latitude
+    getLong(){
+        return this.longitude;
+    }
+
     getLat(){
         return this.latitude;
     }
-    updateLat(lat){
-        if (this.latitude == null){
-            this.latitude = lat;
-        }
-        else{
-            var diff = Math.abs(lat - this.latitude);
-            if (diff <= 1){
-                this.latitude = lat;
-            }
-            else{
-                console.log("lat move too fast");
-            }
-        }
+
+    //altitude
+    getAltitude(){
+        return this.altitude;
+    }
+
+    updateAlt(alt){
+        this.altitude = alt;
     }
 
     // yaw
@@ -96,6 +112,14 @@ class Information{
     createMarker(marker){
         this.marker = marker;
     }
+    hasMarker(){
+        if (this.marker == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     //popup
     getPopup(){
@@ -104,7 +128,5 @@ class Information{
     createPopup(pop){
         this.popup = pop;
     }
-
-
 
 }
