@@ -25,22 +25,24 @@ function addTab(droneID){
         '<tr><th>Distance to Destination (m)</th><th>Pitch </th></tr>' +
         '<tr><td>' + '<var id = '+ distanceID +'></var>' + '</td><td>' + '<var id = '+ pitchID +'></var>' + '</td></tr>'+
         '<tr><th>Longitude</th><th>Latitude</th></tr>' +
-        '<tr><td>' + '<var id = '+ longitudeID +'></var>' + '</td><td>' + '<var id = '+ latitudeID +'></var>' + '</td></tr></table></div>'
-    ));
+        '<tr><td>' + '<var id = '+ longitudeID +'></var>' + '</td><td>' + '<var id = '+ latitudeID +'></var>' + '</td></tr></table> <div class="dropdown">\n' +
+        '  <button class="dropbtn">Mode</button>\n' +
+        '  <div class="dropdown-content">\n' +
+        '    <a href="#">Track Mode</a>\n' +
+        '    <a href="#">Fly Mode</a>\n' +
+        '  </div>\n' +
+        '</div> </div>'));
     var contents = document.getElementsByClassName("tab"); // list of TabContent
     for(i = 0; i < contents.length; i++)
     {
         contents[i].className = "tab-pane";
     }
     document.getElementById("content" + droneID).className = "tab";
-    // document.getElementById("content").style.display = "block";
-    // tabContentMap.set(droneID, tabcontent);
-    // tabContentMap.get(droneID).style.display = "block";
-
 }
 //
 function showDrone(droneID){
     var currentContent = "content" + droneID;
+    currDrone = droneID;
     var i;
     droneID = parseInt(droneID);
     var contents = document.getElementsByClassName("tab"); // list of TabContent
@@ -49,21 +51,6 @@ function showDrone(droneID){
         contents[i].className = "tab-pane";
     }
     document.getElementById(currentContent).className = "tab";
-    // var i;
-    // var tabcontent = document.getElementsByClassName("tabcontent");
-    // for (i = 0; i < tabcontent.length; i++){
-    //     tabcontent[i].style.display = "none"
-    // }
-    // var tabTitle = document.getElementsByClassName("tabTitle");
-    // for (i = 0; i < tabTitle.length ; i++){
-    //     tabTitle[i].className = tabTitle[i].className.replace(" active", "");
-    // }
-    // var currentTabTitle = "title" + droneID.toString();
-    // var currentTabContent = "content" + droneID.toString();
-    // currentTabTitle = document.getElementById(currentTabTitle);
-    // currentTabContent = document.getElementById(currentTabContent);
-    // currentTabTitle.className += " active";
-    // currentTabContent.style.display = "block";
 }
 
 
