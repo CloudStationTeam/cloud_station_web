@@ -3,132 +3,102 @@ var browserSocket = new WebSocket(
     '/ws/flightmonitor/');
 document.querySelector('#telemetry-log').value += ('Successfully connected to server.\n');
 
-var drones = new Map(); // initialize an empty map
+var droneMap = new Map(); // initialize an empty map
 
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
-    var msg = JSON.parse(data['message']);
-    if (!msg.hasOwnProperty("droneid"))
-        return;
-    let droneid = msg['droneid'];
-    if (!drones.has(droneid)) {
-        var tempInfo = {
-            "longitude": null,
-            "latitude": null,
-            "yaw": null,
-            "pitch": null,
-            "roll": null,
-            "speed": null, 
-            "markerTracker": null,
-            "markerPopup": null
-        };
-        drones.set(droneid, tempInfo);
-        updateDroneIdTable(droneid)
-        addTab(droneid);
-    }
-    updateDrones(msg);
-    updateDroneLocation(droneid);
-    updateDroneTelemetry(droneid);
-}
-
-function updateDroneLocation(droneid) {
-    let droneProperty = drones.get(droneid);
-    if (droneProperty["latitude"]!=null && droneProperty["longitude"]!=null) {
-        if (!droneProperty["markerTracker"]) {
+    var temp = JSON.parse(data['message']);
+    var droneID = temp["droneid"];
+    let drone;
+    if (!droneMap.has(droneID)) {
+        drone = new Drone(droneID);
+        droneMap.set(droneID, drone); //add new drone to the map
+        storeTodroneMap(temp);
+        if (temp["type"] == "location") {//create html element for the new marker [only initialize if the first data has location]
             var el = document.createElement('div');
             el.className = 'marker';
-            droneProperty.markerPopup = new mapboxgl.Popup({ offset: 25 });
-            droneProperty.markerTracker = new mapboxgl.Marker(el)
-                .setLngLat([droneProperty["longitude"], droneProperty["latitude"]])
-                .setPopup(droneProperty.markerPopup
-                    .setHTML('<h3>' + droneid + "</h3><p>" + "Longitude: " + droneProperty["longitude"] + " Latitude: " + droneProperty["latitude"] + "</p>")
+            drone.createPopup(new mapboxgl.Popup({offset: 25}));
+            drone.createMarker(new mapboxgl.Marker(el)
+                .setLngLat(drone.getLocation())
+                .setPopup(drone.getPopup()
+                    .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>")
                 )
-                .addTo(map);
+                .addTo(map));
+        }
+        var dytable = document.getElementById("dyTable");
+        var row = dytable.insertRow(-1);
+        var cell = row.insertCell(-1);
+        cell.innerHTML = "ID: " + droneID;
+        addTab(droneID); // add a new tab
+    } else {
+        storeTodroneMap(temp);
+        drone = droneMap.get(droneID);
+        if (drone.hasMarker()) { // update on the previous marker
+            drone.getMarker().setLngLat(drone.getLocation()).setPopup(drone.getPopup()
+                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>")
+            );
         } else {
-            droneProperty.markerPopup.setHTML('<h3>' + droneid + "</h3><p>" + "Longitude: " + droneProperty["longitude"] + " Latitude: " + droneProperty["latitude"] + "</p>");
+            if (drone.getLocation() != null) { // make a new marker if the location has real data
+                var el = document.createElement('div');
+                el.className = 'marker';
+                drone.createPopup(new mapboxgl.Popup({offset: 25}));
+                drone.createMarker(new mapboxgl.Marker(el)
+                    .setLngLat(drone.getLocation())
+                    .setPopup(drone.getPopup()
+                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>")
+                    )
+                    .addTo(map));
+            }
         }
     }
-}
-        
-function updateDroneIdTable(droneid) {
-    var dytable = document.getElementById("dyTable");
-    var row = dytable.insertRow(-1);
-    var cell = row.insertCell(-1);
-    cell.innerHTML = "ID: " + droneid;
-    // addTab(droneid);
-}
 
-function genearteGeoJson(lng, lat) {
-    return {
-        "geojson": {
-            "type": "Feature",
-            "properties": {
-                "Name": msg["droneid"]
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [lng, lat]
-            },
-        }
+
+    if (drone.getLocation() != null) {
+        updateDroneLoactionGeoJson(drone.getLong(), drone.getLat());
     }
-}
+    updateInfo(droneID);
+};
 
-function updateDrones(msg) {
-    var droneid = msg["droneid"];
-    let droneProperty = drones.get(droneid);
-    if (msg["type"] == "location") {
-        // console.log(droneMap.get(droneid));
-        if (droneProperty["latitude"] == null)
-            droneProperty["latitude"] = msg["latitude"];
-        else {
-            var difference = droneProperty["latitude"] - msg["latitude"];
-            if (Math.abs(difference) <= 1)
-                droneProperty["latitude"] = msg["latitude"];
-            else
-                document.querySelector('#telemetry-log').value += "error in latitude.\n";
-        }
-        if (droneProperty["longitude"] == null)
-            droneProperty["longitude"] = msg["longitude"];
-        else {
-            var difference = droneProperty["longitude"] - msg["longitude"];
-            if (Math.abs(difference) < 1)
-                droneProperty["longitude"] = msg["longitude"];
-            else
-                document.querySelector('#telemetry-log').value += "error in longitude.\n";
-        }
-        droneProperty["altitude"] = msg["altitude"];
-    } else if (msg["type"] == "altitude") {
-        droneProperty["yaw"] = msg["yaw"];
-        droneProperty["roll"] = msg["roll"];
-        droneProperty["pitch"] = msg["pitch"];
+
+function storeTodroneMap(tempPack) {
+    let droneID = tempPack["droneid"];
+    let storeStruct = droneMap.get(droneID);
+    if (tempPack["type"] == "location") {
+        storeStruct.updateLocation(tempPack["longitude"], tempPack["latitude"]);
+        storeStruct.updateAlt(tempPack["altitude"]);
+    } else if (tempPack["type"] == "altitude") {
+        storeStruct.updateYaw(tempPack["yaw"]);
+        storeStruct.updateRoll(tempPack["roll"]);
+        storeStruct.updatePitch(tempPack["pitch"]);
     }
 }
 
 
-function updateDroneTelemetry(droneid) {
-    let droneProperty = drones.get(droneid);
-    updateLocations(droneProperty['altitude'], droneProperty['longitude'], droneProperty['latitude'], droneid);
-    updateTel(droneProperty['yaw'], droneProperty['roll'], droneProperty['pitch'], droneid)
+function updateInfo(droneID) {
+    let drone = droneMap.get(droneID);
+    updateLocations(drone.getAltitude(), drone.getLong(), drone.getLat(), droneID);
+    updateTel(drone.getYaw(), drone.getRoll(), drone.getPitch(), droneID)
+
+
 }
-function updateLocations(al, long, lat, droneID){
-    var altitudeID = '#altitude' + droneID.toString();
-    var longitudeID = '#longitude' + droneID.toString();
-    var latitudeID = '#latitude' + droneID.toString();
-    // var groundID = '#GroundSpeed' + droneID.toString();
-    // var distanceID = '#Distance' + droneID.toString();
+
+function updateLocations(al, long, lat, droneID) {
+    let altitudeID = '#altitude' + droneID.toString();
+    let longitudeID = '#longitude' + droneID.toString();
+    let latitudeID = '#latitude' + droneID.toString();
 
     $(altitudeID).text(al);
     $(longitudeID).text(long);
     $(latitudeID).text(lat);
-    // console.log(long);
 
 }
-function updateTel(yaw, roll, pit, droneID){
-    var yawID = '#Yaw'  + droneID.toString();
-    var rollID = '#Roll' + droneID.toString();
-    var pitchID ='#Pitch'  + droneID.toString();
+
+function updateTel(yaw, roll, pit, droneID) {
+    let yawID = '#Yaw' + droneID.toString();
+    let rollID = '#Roll' + droneID.toString();
+    let pitchID = '#Pitch' + droneID.toString();
     $(yawID).text(yaw);
     $(rollID).text(roll);
     $(pitchID).text(pit);

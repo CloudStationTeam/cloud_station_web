@@ -1,9 +1,11 @@
 body {
     font-family: "Lato", sans-serif;
 }
-#MeanTitle{
-    height:150px;
+
+#MeanTitle {
+    height: 150px;
 }
+
 .sidebar {
     height: 100%;
     width: 0;
@@ -49,24 +51,26 @@ body {
 .openbtn:hover {
     background-color: #444;
 }
-#connectbtnDIS{
+
+#connectbtnDIS {
     position: center;
     padding-left: 0px;
     padding-bottom: 20px;
 }
 
-#commandbtn{
+#commandbtn {
     position: center;
     padding-left: 0px;
     padding-bottom: 10px;
 }
 
-#disconnectbtn{
+#disconnectbtn {
     position: center;
     padding-left: 0px;
     padding-bottom: 20px;
 }
-#connectV{
+
+#connectV {
     position: center;
     padding-left: 0px;
     padding-bottom: 20px;
@@ -76,28 +80,32 @@ body {
     transition: margin-left;
     padding: 2px;
 }
-#map{
+
+#map {
     position: absolute;
     width: 100%;
     height: 100%;
 }
-#mapLayout{
+
+#mapLayout {
     width: 100%;
     height: 100%;
     padding-bottom: 10px;
 }
-#commandLine{
+
+#commandLine {
     padding-left: 40px;
-    padding-top:10px;
+    padding-top: 10px;
     padding-bottom: 0px;
 }
-#commandID{
-    width:260px;
+
+#commandID {
+    width: 260px;
 }
 
 #infobox {
     color: #56baed;
-  background: #0d0d0d;
+    background: #0d0d0d;
     padding-bottom: 0px;
     padding-top: 0px;
     padding-right: 0px;
@@ -106,42 +114,47 @@ body {
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-    .sidebar {padding-top: 15px;}
-    .sidebar a {font-size: 18px;}
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
 }
 
 .marker {
-  background-image: url('/static/img/plane2.png');
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
+    background-image: url('/static/img/plane2.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .mapboxgl-popup {
-  max-width: 200px;
+    max-width: 200px;
 }
 
 .mapboxgl-popup-content {
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #info {
-display: block;
-position: relative;
-margin: 0px auto;
-width: 50%;
-padding: 10px;
-border: none;
-border-radius: 3px;
-font-size: 12px;
-text-align: center;
-color: #222;
-background: #fff;
+    display: block;
+    position: relative;
+    margin: 0px auto;
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+    color: #222;
+    background: #fff;
 }
 
-#tabcontent{
+#tabcontent {
     height: 300px;
 }

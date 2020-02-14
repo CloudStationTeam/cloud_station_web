@@ -2,204 +2,172 @@
 <html lang="en">
 
 <head>
-  <title>CloudStation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
-  {% load static %}
-  <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
+    <title>CloudStation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet'/>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet'/>
+    {% load static %}
+    <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
 
 </head>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/flightmonitor">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="https://cloud-station-docs.readthedocs.io/en/latest/">Docs</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/about">About</a>
-      </li>
-      <li class="nav-item dropdown ">
-        {% if user.is_authenticated %}
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          {{user.username}}
-        </a>
-        {% else %}
-        <a class="nav-link dropdown-toggle" href="/accounts/login" id="navbarDropdown" role="button"
-          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Log in/Sign up
-        </a>
-        {% endif %}
-          {% if user.is_authenticated %}
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Account</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/accounts/logout">Log out</a>
-        </div>
-          {% else %}
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Account</a>
-          <a class="dropdown-item" href="/accounts/login">Log in</a>
-          <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
-        </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/flightmonitor">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://cloud-station-docs.readthedocs.io/en/latest/">Docs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item dropdown ">
+                {% if user.is_authenticated %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                {% else %}
+                    <a class="nav-link dropdown-toggle" href="/accounts/login" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Log in/Sign up
+                    </a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Account</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/accounts/logout">Log out</a>
+                    </div>
+                {% else %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Account</a>
+                        <a class="dropdown-item" href="/accounts/login">Log in</a>
+                        <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
+                    </div>
 
-          {% endif %}
-      </li>
-    </ul>
+                {% endif %}
+            </li>
+        </ul>
 
-  </div>
+    </div>
 </nav>
 
 <body>
-  {% if user.is_authenticated %}
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-2">
-        <div class="form-group">
-          <label for="vehicleID">Connect to Vehicle via ID:</label>
-          <input type="text" class="form-control" id="vehicleID">
-        </div>
-        <div class="form-group">
-          <div class="col-sm-10" id="connectbtnDIS">
-            <button type="button" class="btn btn-success" id="connectbtn" onclick=" connectVehicle()">Connect</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="disVID">Disconnect Vehicle via ID:</label>
-          <input type="text" class="form-control" id="disVID">
-
-        </div>
-        <div class="col-sm-10" id="disconnectbtn">
-          <button type="button" class="btn btn-danger" onclick="disconnectResult()">Disconnect</button>
-        </div>
-
-        <div class="col-sm-10" id="connectV">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Connected Vehicles</th>
-              </tr>
-            </thead>
-            <table id = "dyTable">
-            </table>
-          </table>
-        </div>
-
-      </div>
-      <div class="col-sm-7">
-        <div class="row" id="mapLayout">
-          <div class="col-sm-12" id="map">
-          </div>
-        </div>
+{% if user.is_authenticated %}
+    <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-7">
-            <p>Received telemetry data: </p>
-            <p><textarea id="telemetry-log" cols="50" rows="4"></textarea><br /></p>
-          </div>
-          <div class="col-sm-5" id="commandLine">
-            <div class="form-group">
-              <label for="commandID">Command</label>
-              <input type="text" class="form-control" id="commandID" >
-            </div>
-            <div class="form-group">
-              <div class="col-sm-10" id="commandbtn">
-                <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-        <div class="col-sm-3">
-            <div class="row">
-            <div class="row-sm-7" id="tabcontent">
-                <ul id="tab-list" class="nav nav-tabs" role="tablist">
-                </ul>
-
-            <!-- Tab panes -->
-                <div id="tab-content" class="tab-content">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="vehicleID">Connect to Vehicle via ID:</label>
+                    <input type="text" class="form-control" id="vehicleID">
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10" id="connectbtnDIS">
+                        <button type="button" class="btn btn-success" id="connectbtn" onclick=" connectVehicle()">
+                            Connect
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="disVID">Disconnect Vehicle via ID:</label>
+                    <input type="text" class="form-control" id="disVID">
 
                 </div>
-{#        <table id = "infobox">#}
-{#          <tr>#}
-{##}
-{#              <th>Altitude (m)</th>#}
-{#              <th>Ground Speed (m/s)</th>#}
-{##}
-{#          </tr>#}
-{#          <tr>#}
-{#              <td><var id = "altitude"></var></td>#}
-{#            <td><var id = "groundspeed"></var></td>#}
-{#          </tr>#}
-{#          <tr>#}
-{#              <th>Roll (deg/s)</th>#}
-{#              <th>Yaw (deg)</th>#}
-{#          </tr>#}
-{#            <tr>#}
-{#              <td><var id = "Roll"></var></td>#}
-{#              <td><var id = "Yaw"></var></td>#}
-{#          </tr>#}
-{#            <tr>#}
-{#              <th>Distance to Destination (m)</th>#}
-{#              <th>Pitch </th>#}
-{#          </tr>#}
-{#            <tr>#}
-{#              <td><var id = "DistoDest"></var></td>#}
-{#              <td><var id = "Pitch"></var></td>#}
-{#          </tr>#}
-{#            <tr>#}
-{#                <th>Longitude</th>#}
-{#                <th>Latitude</th>#}
-{#            </tr>#}
-{#            <tr>#}
-{#              <td><var id = "longitude"></var></td>#}
-{#              <td><var id = "latitude"></var></td>#}
-{#          </tr>#}
-{##}
-{#        </table>#}
-            </div>
-          <div class="row-sm-5">
+                <div class="col-sm-10" id="disconnectbtn">
+                    <button type="button" class="btn btn-danger" onclick="disconnectResult()">Disconnect</button>
+                </div>
 
-            <pre id="info"></pre>
-          </div>
+                <div class="col-sm-10" id="connectV">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Connected Vehicles</th>
+                        </tr>
+                        </thead>
+                        <table id="dyTable">
+                        </table>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-sm-7">
+                <div class="row" id="mapLayout">
+                    <div class="col-sm-12" id="map">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <p>Received telemetry data: </p>
+                        <p><textarea id="telemetry-log" cols="50" rows="4"></textarea><br/></p>
+                    </div>
+                    <div class="col-sm-5" id="commandLine">
+                        <div class="form-group">
+                            <label for="commandID">Command</label>
+                            <input type="text" class="form-control" id="commandID">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10" id="commandbtn">
+                                <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="row-sm-7" id="tabcontent">
+                        <ul id="tab-list" class="nav nav-tabs" role="tablist">
+                        </ul>
+
+                        <div id="tab-content" class="tab-content">
+
+                        </div>
+
+                    </div>
+                    <div class="row-sm-5">
+
+                        <pre id="info"></pre>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+{% else %}
+    <div id='map'></div>
+{% endif %}
 
-  </div>
-  </div>
-  {% else %}
-  <div id='map'></div>
-  {% endif %}
-  </script>
-  <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
-  <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/common.js' %}"></script>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
