@@ -3,6 +3,10 @@ var browserSocket = new WebSocket(
     '/ws/flightmonitor/');
 document.querySelector('#telemetry-log').value += ('Successfully connected to server.\n');
 
+
+var tempPin = new Map();
+var tempPop = new Map();
+var currDrone;
 var droneMap = new Map(); // initialize an empty map
 
 browserSocket.onmessage = function (e) {
@@ -11,9 +15,13 @@ browserSocket.onmessage = function (e) {
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
     var droneID = temp["droneid"];
+    currDrone = droneID;
     let drone;
     if (!droneMap.has(droneID)) {
         drone = new Drone(droneID);
+
+        tempPop.set(droneID, new mapboxgl.Popup({offset: 40}));
+
         droneMap.set(droneID, drone); //add new drone to the map
         storeTodroneMap(temp);
         if (temp["type"] == "location") {//create html element for the new marker [only initialize if the first data has location]
