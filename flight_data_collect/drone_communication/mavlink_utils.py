@@ -27,6 +27,7 @@ def get_mavlink_messages_periodically(connect_address):
             if msg.get("mavpackettype", "") == mavlink_constants.GPS_RAW_INT and _is_gps_fix(msg):
                 location_msg = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT, connect_address)
                 if location_msg:
+                    parse_mavlink_msg(msg, mavlink)
                     send_message_to_clients(json.dumps(location_msg))
                     # _log_latest_location(msg, connect_address)
             parse_mavlink_msg(msg, mavlink)
@@ -46,18 +47,20 @@ def parse_mavlink_msg(msg, mavlink):
     elif msg_type==mavlink_constants.HEARTBEAT:
         msg['flightmode'] = mavlink.flightmode
         msg['type'] = mavlink_constants.MAV_TYPE_MAP.get(mavlink.mav_type, 'UNKNOWN')
+    elif msg_type==mavlink_constants.GLOBAL_POSITION_INT:
+        msg['lon'], msg['lat'] = msg['lon']/10**7, msg['lat']/10**7
 
 def _log_latest_orientation(msg, drone_id):
     if msg:
         Telemetry_log.objects.create(timestamp = datetime.now(), \
-            roll = round(msg.roll,2), pitch = round(msg.pitch,2), yaw = round(msg.yaw,2), 
+            roll = round(msg['roll'],2), pitch = round(msg['pitch'],2), yaw = round(msg['yaw'],2), 
             droneid=drone_id)
     
 def _log_latest_location(msg, drone_id):
     if msg:
         Location_log.objects.create(timestamp = datetime.now(), \
-            latitude=msg.lat/10**7, longitude=msg.lon/10**7, \
-            altitude=msg.alt, heading=msg.hdg, droneid=drone_id)
+            latitude=msg['lat']/10**7, longitude=msg['lon']/10**7, \
+            altitude=msg['alt'], heading=msg['hdg'], droneid=drone_id)
 
 
 def _get_mavlink_message(mavlink, message_types, droneid:int)->dict:
