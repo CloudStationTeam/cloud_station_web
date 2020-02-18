@@ -28,6 +28,7 @@ def get_mavlink_messages_periodically(connect_address):
                 location_msg = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT)
                 if location_msg:
                     send_message_to_clients(json.dumps(location_msg))
+                    # _log_latest_location(msg, connect_address)
             parse_mavlink_msg(msg, mavlink)
             send_message_to_clients(json.dumps(msg))
             
@@ -42,24 +43,21 @@ def parse_mavlink_msg(msg, mavlink):
     msg_type = msg.get("mavpackettype", "")
     if msg_type==mavlink_constants.GPS_RAW_INT:
         msg["fix_type"] = mavlink_constants.GPS_FIX_TYPE.get(msg["fix_type"], "invalid_fix_type")
-    if msg_type==mavlink_constants.HEARTBEAT:
+    elif msg_type==mavlink_constants.HEARTBEAT:
         msg['flightmode'] = mavlink.flightmode
         msg['type'] = mavlink_constants.MAV_TYPE_MAP.get(mavlink.mav_type, 'UNKNOWN')
 
-def _log_latest_orientation(mavlink, drone_id):
-    msg = _get_mavlink_message(mavlink, mavlink_constants.ORIENTATION_MESSAGE_NAME) 
+def _log_latest_orientation(msg, drone_id):
     if msg:
         Telemetry_log.objects.create(timestamp = datetime.now(), \
             roll = round(msg.roll,2), pitch = round(msg.pitch,2), yaw = round(msg.yaw,2), 
             droneid=drone_id)
     
-def _log_latest_location(mavlink, drone_id):
-    global_position_int = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT)
-    gps_raw = _get_mavlink_message(mavlink, mavlink_constants.GPS_RAW_INT)
-    if gps_raw and gps_raw.fix_type >= mavlink_constants.GPS_2D_FIX and global_position_int:
+def _log_latest_location(msg, drone_id):
+    if msg:
         Location_log.objects.create(timestamp = datetime.now(), \
-            latitude=global_position_int.lat/10**7, longitude=global_position_int.lon/10**7, \
-            altitude=global_position_int.alt, heading=global_position_int.hdg, droneid=drone_id)
+            latitude=msg.lat/10**7, longitude=msg.lon/10**7, \
+            altitude=msg.alt, heading=msg.hdg, droneid=drone_id)
 
 
 def _get_mavlink_message(mavlink, message_name, droneid:int)->dict:

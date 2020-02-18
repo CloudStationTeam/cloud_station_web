@@ -42,11 +42,11 @@ class Location_log(models.Model):
     
     def __str__(self):
         location_dict = {
-            "type": "location",
+            "mavpackettype": "GLOBAL_POSITION_INT",
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-            "latitude": float(self.latitude),
-            "longitude": float(self.longitude),
-            "altitude": float(self.altitude),
+            "lat": float(self.latitude),
+            "lon": float(self.longitude),
+            "alt": float(self.altitude),
             "heading": float(self.heading),
             "droneid": int(self.droneid)
         }
@@ -65,7 +65,7 @@ class Telemetry_log(models.Model):
     
     def __str__(self):
         altitude_dict = {
-            "type": "altitude",
+            "mavpackettype": "ATTITUDE",
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
             "roll": float(self.roll),
             "pitch": float(self.pitch),
