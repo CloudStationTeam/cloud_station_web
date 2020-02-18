@@ -27,7 +27,7 @@ def get_mavlink_messages_periodically(connect_address):
             if msg.get("mavpackettype", "") == mavlink_constants.GPS_RAW_INT and _is_gps_fix(msg):
                 location_msg = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT, connect_address)
                 if location_msg:
-                    parse_mavlink_msg(msg, mavlink)
+                    parse_mavlink_msg(location_msg, mavlink)
                     send_message_to_clients(json.dumps(location_msg))
                     # _log_latest_location(msg, connect_address)
             parse_mavlink_msg(msg, mavlink)
