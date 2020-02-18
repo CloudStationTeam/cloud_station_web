@@ -137,12 +137,23 @@ function connectVehicle() {
 }
 
 function disconnectVehicle() {
-    var xmlHttp = new XMLHttpRequest();
+    let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    var url = '/flight_data_collect/disconnect/';
+    let url = '/flight_data_collect/disconnect/';
+    xmlHttp.open("GET", url, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
+function set_mode() {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    let url = '/flight_data_collect/control/setmode/'+'14550/'+'MANUAL/'; // for demo, hard coded drone id and mode type
     xmlHttp.open("GET", url, true); // true for asynchronous 
     xmlHttp.send(null);
 }
