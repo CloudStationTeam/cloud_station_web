@@ -8,6 +8,7 @@ def change_mode(connect_address:int, mode:str)->str:
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP+':'+connect_address)
         msg = mavlink.wait_heartbeat(timeout=6)
+        connect_address = int(connect_address)
         if not msg:
             return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid':connect_address}
         if mode not in mavlink.mode_mapping():
