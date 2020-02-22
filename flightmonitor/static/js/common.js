@@ -173,9 +173,11 @@ function set_mode(droneID, mode) {
     let url = '/flight_data_collect/control/setmode/' + droneID.toString()+ '/' + mode + '/'; // for demo, hard coded drone id and mode type
     xmlHttp.open("GET", url, true); // true for asynchronous 
     xmlHttp.send(null);
+    return false;
 }
 
 
 function set_mode_test(id, value){
     alert(id+value);
+    return false;
 }
