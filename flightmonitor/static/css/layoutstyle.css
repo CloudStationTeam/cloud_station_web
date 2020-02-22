@@ -93,15 +93,11 @@ body {
     padding-bottom: 10px;
 }
 
-#commandLine {
-    padding-left: 40px;
-    padding-top: 10px;
-    padding-bottom: 0px;
-}
-
-#commandID {
-    width: 260px;
-}
+/*#commandLine {*/
+/*    padding-left: 40px;*/
+/*    padding-top: 10px;*/
+/*    padding-bottom: 0px;*/
+/*}*/
 
 #infobox {
     color: #56baed;

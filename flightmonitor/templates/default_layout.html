@@ -111,14 +111,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-7">
-                        <p>Received telemetry data: </p>
-                        <p><textarea id="telemetry-log" cols="50" rows="4"></textarea><br/></p>
-                    </div>
-                    <div class="col-sm-5" id="commandLine">
+                    <div class="col-md-8">
                         <div class="form-group">
-                            <label for="commandID">Command</label>
-                            <input type="text" class="form-control" id="commandID">
+                            <label for="telemetry-log">Received telemetry data: </label>
+                            <p><textarea id="telemetry-log" class="form-control" rows="4"></textarea><br/></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="commandlineID">Command</label>
+                            <input type="text" class="form-control" id="commandlineID">
                         </div>
                         <div class="form-group">
                             <div class="col-sm-10" id="commandbtn">
@@ -127,7 +129,9 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-10" id="tempBtnForSetModeDemo">
-                                <button type="button" class="btn btn-success" onclick="set_mode()">TempBtnForSetModeDemo</button>
+                                <button type="button" class="btn btn-success" onclick="set_mode()">
+                                    TempBtnForSetModeDemo
+                                </button>
                             </div>
                         </div>
                     </div>
