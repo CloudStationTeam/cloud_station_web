@@ -1,3 +1,21 @@
+var SETMODE_CONST = '<select id = "mode">' +
+    '<option value="MANUAL">MANUAL</option>' +
+    '<option value="ACRO">ACRO</option>' +
+    '<option value="LEARNING">LEARNING</option>' +
+    '<option value="STEERING">STEERING</option>' +
+    '<option value="HOLD">HOLD</option>' +
+    '<option value="LOITER">LOITER</option>' +
+    '<option value="FOLLOW">FOLLOW</option>' +
+    '<option value="SIMPLE">SIMPLE</option>' +
+    '<option value="AUTO">AUTO</option>' +
+    '<option value="RTL">RTL</option>' +
+    '<option value="SMART_RTL">SMART_RTL</option>' +
+    '<option value="GUIDED">GUIDED</option>' +
+    '<option value="INITIALISING">INITIALISING</option>' +
+    '</select>' +
+    '<input type="submit" value="SET MODE">' +
+    '</form>';
+
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
     '/ws/flightmonitor/');
@@ -31,8 +49,7 @@ browserSocket.onmessage = function (e) {
             drone.createMarker(new mapboxgl.Marker(el)
                 .setLngLat(drone.getLocation())
                 .setPopup(drone.getPopup()
-                    .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>")
-                )
+                    .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>" + '<form action="javascript:set_mode('+ droneID+',mode.value)">'+SETMODE_CONST))
                 .addTo(map));
         }
         var dytable = document.getElementById("dyTable");
@@ -45,7 +62,7 @@ browserSocket.onmessage = function (e) {
         drone = droneMap.get(droneID);
         if (drone.hasMarker()) { // update on the previous marker
             drone.getMarker().setLngLat(drone.getLocation()).setPopup(drone.getPopup()
-                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>")
+                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + '<form action="javascript:set_mode('+ droneID+',mode.value)">'+SETMODE_CONST)
             );
         } else {
             if (drone.getLocation() != null) { // make a new marker if the location has real data
@@ -55,7 +72,7 @@ browserSocket.onmessage = function (e) {
                 drone.createMarker(new mapboxgl.Marker(el)
                     .setLngLat(drone.getLocation())
                     .setPopup(drone.getPopup()
-                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>")
+                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>" + '<form action="javascript:set_mode('+ droneID+',mode.value)">'+ SETMODE_CONST)
                     )
                     .addTo(map));
             }
@@ -147,15 +164,18 @@ function disconnectVehicle() {
     xmlHttp.send(null);
 }
 
-function set_mode() {
+function set_mode(droneID, mode) {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    let url = '/flight_data_collect/control/setmode/'+'14550/'+'MANUAL/'; // for demo, hard coded drone id and mode type
+    let url = '/flight_data_collect/control/setmode/' + droneID.toString()+ '/' + mode + '/'; // for demo, hard coded drone id and mode type
     xmlHttp.open("GET", url, true); // true for asynchronous 
     xmlHttp.send(null);
 }
 
 
+function set_mode_test(id, value){
+    alert(id+value);
+}

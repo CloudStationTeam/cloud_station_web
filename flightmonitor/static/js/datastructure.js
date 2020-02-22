@@ -1,4 +1,6 @@
-class Drone{
+
+
+class Drone {
     constructor(droneID) {
         this.droneID = droneID;
         this.longitude = null;
@@ -12,121 +14,127 @@ class Drone{
         this.marker = null;
         this.popup = null;
     }
-    getID(){
+
+    getID() {
         return this.droneID;
     }
 
-    getLocation(){
-        if(this.longitude == null || this.latitude == null){
+    getLocation() {
+        if (this.longitude == null || this.latitude == null) {
             return null;
-        }
-        else{
+        } else {
             return new Array(this.longitude, this.latitude);
         }
     }
 
-    updateLocation(long, lat){
-        if (long == null || lat == null){
+    updateLocation(long, lat) {
+        if (long == null || lat == null) {
             console.log("wrong data!");
-        }
-        else{
-            if (this.longitude == null && this.latitude == null){
+        } else {
+            if (this.longitude == null && this.latitude == null) {
                 this.longitude = long;
                 this.latitude = lat;
-            }
-            else{
+            } else {
                 var diffLong = Math.abs(long - this.longitude);
-                var diffLat =  Math.abs(lat - this.latitude);
-                if (diffLong <= 1 && diffLat <= 1){
+                var diffLat = Math.abs(lat - this.latitude);
+                if (diffLong <= 1 && diffLat <= 1) {
                     this.longitude = long;
                     this.latitude = lat;
-                }
-                else{
+                } else {
                     console.log("move too fast");
                 }
             }
         }
     }
 
-    getLong(){
+    getLong() {
         return this.longitude;
     }
 
-    getLat(){
+    getLat() {
         return this.latitude;
     }
 
     //altitude
-    getAltitude(){
+    getAltitude() {
         return this.altitude;
     }
 
-    updateAlt(alt){
+    updateAlt(alt) {
         this.altitude = alt;
     }
 
     // yaw
-    getYaw(){
+    getYaw() {
         return this.yaw;
     }
-    updateYaw(yaw){
+
+    updateYaw(yaw) {
         this.yaw = yaw;
     }
 
     // pitch
-    getPitch(){
+    getPitch() {
         return this.pitch;
     }
-    updatePitch(pitch){
+
+    updatePitch(pitch) {
         this.pitch = pitch;
     }
 
     // roll
-    getRoll(){
+    getRoll() {
         return this.roll;
     }
-    updateRoll(roll){
+
+    updateRoll(roll) {
         this.roll = roll;
     }
 
     //speed
-    getSpeed(){
+    getSpeed() {
         return this.speed;
     }
-    updateSpeed(speed){
+
+    updateSpeed(speed) {
         this.speed = speed;
     }
 
     //distance
-    getDistance(){
+    getDistance() {
         return this.distance;
     }
-    updateDistance(distance){
+
+    updateDistance(distance) {
         this.distance = distance;
     }
 
     //marker
-    getMarker(){
+    getMarker() {
         return this.marker;
     }
-    createMarker(marker){
+
+    createMarker(marker) {
         this.marker = marker;
     }
-    hasMarker(){
-        if (this.marker == null){
+
+    hasMarker() {
+        if (this.marker == null) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
 
     //popup
-    getPopup(){
+    getPopup() {
         return this.popup;
     }
-    createPopup(pop){
+
+    createPopup(pop) {
         this.popup = pop;
     }
 
 }
+
+
