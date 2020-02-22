@@ -25,13 +25,7 @@ function addTab(droneID){
         '<tr><th>Distance to Destination (m)</th><th>Pitch </th></tr>' +
         '<tr><td>' + '<var id = '+ distanceID +'></var>' + '</td><td>' + '<var id = '+ pitchID +'></var>' + '</td></tr>'+
         '<tr><th>Longitude</th><th>Latitude</th></tr>' +
-        '<tr><td>' + '<var id = '+ longitudeID +'></var>' + '</td><td>' + '<var id = '+ latitudeID +'></var>' + '</td></tr></table> <div class="dropdown">\n' +
-        '  <button class="dropbtn">Mode</button>\n' +
-        '  <div class="dropdown-content">\n' +
-        '    <a href="#">Track Mode</a>\n' +
-        '    <a href="#">Fly Mode</a>\n' +
-        '  </div>\n' +
-        '</div> </div>'));
+        '<tr><td>' + '<var id = '+ longitudeID +'></var>' + '</td><td>' + '<var id = '+ latitudeID +'></var>' + '</td></tr></table>'));
     var contents = document.getElementsByClassName("tab"); // list of TabContent
     for(i = 0; i < contents.length; i++)
     {
