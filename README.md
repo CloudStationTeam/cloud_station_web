@@ -61,7 +61,7 @@ python3 manage.py process_tasks
 - [x] Two way communication between vehicle and the server (11/5/19)
 - [x] User authentication (11/16/19)
 - [x] Mark drone location on map (11/24)
-- [ ] Migrate to AWS RDS
+- [X] Migrate to AWS RDS
 - [ ] Communicate with multiple drones at the same time
 - [ ] Distinguish different users. Only send vehicle updates to authorized users.
 - [ ] Develop an improved UI for telemetry data.
@@ -70,7 +70,7 @@ python3 manage.py process_tasks
 ## Authors
   * Lyuyang Hu - Software architecture design, prototyping, project management, backend development
   * Mina Bedwany - Front-end, back-end development
-  * 
+  * Omkar Pathak - Infrastructure development
   * 
   * 
   * 
