@@ -32,6 +32,7 @@ browserSocket.onmessage = function (e) {
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
+    console.log(temp);
     var droneID = temp["droneid"];
     currDrone = droneID;
     let drone;

@@ -53,41 +53,39 @@ map.addControl(
     })
 );
 
-map.on('mousemove', function (e) {
-    document.getElementById('info').innerHTML =
-// e.point is the x, y coordinates of the mousemove event relative
-// to the top-left corner of the map
-        JSON.stringify(e.point) +
-        '<br />' +
-        // e.lngLat is the longitude, latitude geographical position of the event
-        JSON.stringify(e.lngLat.wrap());
+// map.on('mousemove', function (e) {
+//     document.getElementById('info').innerHTML =
+// // e.point is the x, y coordinates of the mousemove event relative
+// // to the top-left corner of the map
+//         JSON.stringify(e.point) +
+//         '<br />' +
+//         // e.lngLat is the longitude, latitude geographical position of the event
+//         JSON.stringify(e.lngLat.wrap());
+//
+// });
 
-});
 
-
-map.on('contextmenu', function(e){ //right click
-    if (tempPop.size>0) {
+map.on('contextmenu', function (e) { //right click
+    if (tempPop.size > 0) {
         let longitude = e.lngLat["lng"].toFixed(2);
         let latitude = e.lngLat["lat"].toFixed(2);
         // alert(JSON.stringify(e.lngLat));
 
-        if(!tempPin.has(currDrone)){
+        if (!tempPin.has(currDrone)) {
             tempPin.set(currDrone, new mapboxgl.Marker().setLngLat(e.lngLat).setPopup(tempPop.get(currDrone)).addTo(map));
-        }
-        else
-           tempPin.get(currDrone).setLngLat(e.lngLat);
+        } else
+            tempPin.get(currDrone).setLngLat(e.lngLat);
         tempPop.get(currDrone).setHTML('Longitude: ' + longitude + '<br>Latitude: ' + latitude +
             '<br><button onclick="clearPin()">clear pin</button> <button>Fly To</button>');
     }
 })
 
-geocoder.on('result', function(e) {
-    if (tempPop.size>0){
+geocoder.on('result', function (e) {
+    if (tempPop.size > 0) {
         let coordinates = e.result.geometry["coordinates"];
-        if(!tempPin.has(currDrone)){
+        if (!tempPin.has(currDrone)) {
             tempPin.set(currDrone, new mapboxgl.Marker().setLngLat(coordinates).setPopup(tempPop.get(currDrone)).addTo(map));
-        }
-        else {
+        } else {
             tempPin.get(currDrone).setLngLat(coordinates);
         }
         let longitude = coordinates[0];
@@ -99,11 +97,11 @@ geocoder.on('result', function(e) {
         // let latitude = e.lngLat["lat"].toFixed(2);
     }
 
-  });
+});
 
 function clearPin() {
-    if (tempPin.size>0) {
-        if(tempPin.has(currDrone)) {
+    if (tempPin.size > 0) {
+        if (tempPin.has(currDrone)) {
             tempPin.get(currDrone).remove();
             tempPin.delete(currDrone);
         }
