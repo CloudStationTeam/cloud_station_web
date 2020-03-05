@@ -69,6 +69,12 @@
 
 <body>
 {% if user.is_authenticated %}
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+    <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
+            type="text/css"
+    />
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-2">
@@ -127,13 +133,13 @@
                                 <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
                             </div>
                         </div>
-{#                        <div class="form-group">#}
-{#                            <div class="col-sm-10" id="tempBtnForSetModeDemo">#}
-{#                                <button type="button" class="btn btn-success" onclick="set_mode()">#}
-{#                                    TempBtnForSetModeDemo#}
-{#                                </button>#}
-{#                            </div>#}
-{#                        </div>#}
+                        {#                        <div class="form-group">#}
+                        {#                            <div class="col-sm-10" id="tempBtnForSetModeDemo">#}
+                        {#                                <button type="button" class="btn btn-success" onclick="set_mode()">#}
+                        {#                                    TempBtnForSetModeDemo#}
+                        {#                                </button>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                     </div>
                 </div>
 

@@ -2,6 +2,11 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY
 
 var temparary_pin = null; // may be change to Array later
 var temparay_pop = new mapboxgl.Popup({offset: 40});
+var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+    accessToken: mapboxgl.accessToken, // Set the access token
+    mapboxgl: mapboxgl, // Set the mapbox-gl instance
+    marker: false, // Do not use the default marker style
+});
 
 function openNav() {
     document.getElementById("mySidebar").style.width = "275px";
@@ -20,6 +25,9 @@ var map = new mapboxgl.Map({
     center: droneLocation, // starting position [lng, lat]
     zoom: 13// starting zoom
 });
+
+
+map.addControl(geocoder);
 
 var droneLocationGeoJson = {
     "type": "Feature",
@@ -73,6 +81,25 @@ map.on('contextmenu', function(e){ //right click
     }
 })
 
+geocoder.on('result', function(e) {
+    if (tempPop.size>0){
+        let coordinates = e.result.geometry["coordinates"];
+        if(!tempPin.has(currDrone)){
+            tempPin.set(currDrone, new mapboxgl.Marker().setLngLat(coordinates).setPopup(tempPop.get(currDrone)).addTo(map));
+        }
+        else {
+            tempPin.get(currDrone).setLngLat(coordinates);
+        }
+        let longitude = coordinates[0];
+        let latitude = coordinates[1];
+        tempPop.get(currDrone).setHTML('Longitude: ' + longitude + '<br>Latitude: ' + latitude +
+            '<br><button onclick="clearPin()">clear pin</button> <button>Fly To</button>');
+        // console.log(coordinates);
+        // let longitude = e.lngLat["lng"].toFixed(2);
+        // let latitude = e.lngLat["lat"].toFixed(2);
+    }
+
+  });
 
 function clearPin() {
     if (tempPin.size>0) {

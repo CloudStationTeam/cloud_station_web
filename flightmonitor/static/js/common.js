@@ -61,9 +61,9 @@ browserSocket.onmessage = function (e) {
         storeTodroneMap(temp);
         drone = droneMap.get(droneID);
         if (drone.hasMarker()) { // update on the previous marker
-            drone.getMarker().setLngLat(drone.getLocation()).setPopup(drone.getPopup()
+            drone.getMarker().setLngLat(drone.getLocation());
+            drone.getPopup()
                 .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST)
-            );
         } else {
             if (drone.getLocation() != null) { // make a new marker if the location has real data
                 var el = document.createElement('div');
