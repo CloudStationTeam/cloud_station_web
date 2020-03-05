@@ -49,20 +49,20 @@ browserSocket.onmessage = function (e) {
             drone.createMarker(new mapboxgl.Marker(el)
                 .setLngLat(drone.getLocation())
                 .setPopup(drone.getPopup()
-                    .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>" + '<form action="javascript:set_mode('+ droneID+',mode.value)">'+SETMODE_CONST))
+                    .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>" + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST))
                 .addTo(map));
         }
         var dytable = document.getElementById("dyTable");
         var row = dytable.insertRow(-1);
         var cell = row.insertCell(-1);
-        cell.innerHTML = "ID: " + droneID;
+        cell.innerHTML = "<div id = 'dyTableID" + droneID.toString()+ "'>ID: " + droneID +"</div>";
         addTab(droneID); // add a new tab
     } else {
         storeTodroneMap(temp);
         drone = droneMap.get(droneID);
         if (drone.hasMarker()) { // update on the previous marker
             drone.getMarker().setLngLat(drone.getLocation()).setPopup(drone.getPopup()
-                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + '<form action="javascript:set_mode('+ droneID+',mode.value)">'+SETMODE_CONST)
+                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST)
             );
         } else {
             if (drone.getLocation() != null) { // make a new marker if the location has real data
@@ -72,7 +72,7 @@ browserSocket.onmessage = function (e) {
                 drone.createMarker(new mapboxgl.Marker(el)
                     .setLngLat(drone.getLocation())
                     .setPopup(drone.getPopup()
-                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>" + '<form action="javascript:set_mode('+ droneID+',mode.value)">'+ SETMODE_CONST)
+                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() + "</p>" + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST)
                     )
                     .addTo(map));
             }
@@ -154,14 +154,34 @@ function connectVehicle() {
 }
 
 function disconnectVehicle() {
-    let xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
-    };
-    let url = '/flight_data_collect/disconnect/';
-    xmlHttp.open("GET", url, true); // true for asynchronous 
-    xmlHttp.send(null);
+    var message = document.getElementById("disVID").value;
+    let removeId = parseInt(message);
+    if (droneMap.has(removeId)) {
+        droneMap.get(removeId).getMarker().remove();
+        droneMap.delete(removeId);
+        // remove tablist on the right and set another drone info if delete the current displayed drone
+        var titleID = document.getElementById('title'+message);
+        var contentID = document.getElementById('content'+message);
+        $(titleID).parents('li').remove();
+        $(contentID).remove();
+        setDefaultTab(removeId);
+        // remove the connected ID list left bottom
+        let dyID = document.getElementById('dyTableID'+message);
+        $(dyID).remove();
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+        };
+        let url = '/flight_data_collect/disconnect/' + message + '/';
+        xmlHttp.open("GET", url, true); // true for asynchronous
+        xmlHttp.send(null);
+    } else {
+        alert("The drone " + message + " has not been connected!")
+    }
+    return false;
+
+
 }
 
 function set_mode(droneID, mode) {
@@ -170,14 +190,14 @@ function set_mode(droneID, mode) {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    let url = '/flight_data_collect/control/setmode/' + droneID.toString()+ '/' + mode + '/'; // for demo, hard coded drone id and mode type
+    let url = '/flight_data_collect/control/setmode/' + droneID.toString() + '/' + mode + '/'; // for demo, hard coded drone id and mode type
     xmlHttp.open("GET", url, true); // true for asynchronous 
     xmlHttp.send(null);
     return false;
 }
 
 
-function set_mode_test(id, value){
-    alert(id+value);
+function set_mode_test(id, value) {
+    alert(id + value);
     return false;
 }
