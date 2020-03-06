@@ -117,7 +117,8 @@ function flyTo(droneID, long, lat, alt) {
     let url = '/flight_data_collect/control/setwaypoint/' + droneID.toString() + '/' + lat.toString() + '/' + long.toString() + '/' + alt.toString() + '/'; // for demo, hard coded drone id and mode type
     xmlHttp.open("GET", url, true); // true for asynchronous
     xmlHttp.send(null);
-    console.log(url);
+    console.log(xmlHttp);
+
     return false;
 }
 
