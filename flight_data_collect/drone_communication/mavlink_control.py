@@ -81,5 +81,7 @@ def set_arm(connect_address:int, is_disarm=False):
         if not msg:
             return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid':connect_address}
         print(mavlink.motors_armed)
-        
+    except Exception as e:
+        print(e)
+
 

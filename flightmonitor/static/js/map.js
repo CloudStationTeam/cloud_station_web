@@ -75,8 +75,8 @@ map.on('contextmenu', function (e) { //right click
             tempPin.set(currDrone, new mapboxgl.Marker().setLngLat(e.lngLat).setPopup(tempPop.get(currDrone)).addTo(map));
         } else
             tempPin.get(currDrone).setLngLat(e.lngLat);
-        tempPop.get(currDrone).setHTML('Longitude: ' + longitude + '<br>Latitude: ' + latitude +
-            '<br><button onclick="clearPin()">clear pin</button> <button>Fly To</button>');
+        tempPop.get(currDrone).setHTML(currDrone.toString() + '<br>Longitude: ' + longitude + '<br>Latitude: ' + latitude +
+            '<br><button onclick="clearPin()">clear pin</button> <button onclick="flyTo(' + currDrone + ',' + longitude + ',' + latitude + ',' + 0 + ')">Fly To</button>');
     }
 })
 
@@ -107,3 +107,17 @@ function clearPin() {
         }
     }
 }
+
+function flyTo(droneID, long, lat, alt) {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    let url = '/flight_data_collect/control/setwaypoint/' + droneID.toString() + '/' + lat.toString() + '/' + long.toString() + '/' + alt.toString() + '/'; // for demo, hard coded drone id and mode type
+    xmlHttp.open("GET", url, true); // true for asynchronous
+    xmlHttp.send(null);
+    console.log(url);
+    return false;
+}
+
