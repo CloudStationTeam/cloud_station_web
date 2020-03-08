@@ -34,6 +34,8 @@ browserSocket.onmessage = function (e) {
     var temp = JSON.parse(data['message']);
     console.log(temp);
     var droneID = temp["droneid"];
+    if(currDrone!=null &&droneMap.size>0 &&currDrone!=droneID)
+        document.getElementById("title" + currDrone.toString()).style.background = "palevioletred";
     currDrone = droneID;
     let drone;
     if (!droneMap.has(droneID)) {
@@ -92,7 +94,7 @@ function storeTodroneMap(tempPack) {
     let droneID = tempPack["droneid"];
     let storeStruct = droneMap.get(droneID);
     if (tempPack["mavpackettype"] == "GLOBAL_POSITION_INT") {
-        storeStruct.updateLocation(tempPack["lon"], tempPack["lat"]);
+        storeStruct.updateLocation(tempPack["lon"].toFixed(5), tempPack["lat"].toFixed(5));
         storeStruct.updateAlt(tempPack["alt"]);
     }
     else if (tempPack["mavpackettype"] == "ATTITUDE") {
@@ -195,7 +197,8 @@ function disconnectVehicle() {
     var message = document.getElementById("disVID").value;
     let removeId = parseInt(message);
     if (droneMap.has(removeId)) {
-        droneMap.get(removeId).getMarker().remove();
+        if(droneMap.get(removeId).hasMarker())
+            droneMap.get(removeId).getMarker().remove();
         droneMap.delete(removeId);
         // remove tablist on the right and set another drone info if delete the current displayed drone
         var titleID = document.getElementById('title'+message);
