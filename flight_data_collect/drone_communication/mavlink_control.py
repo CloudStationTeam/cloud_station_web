@@ -6,13 +6,17 @@ from flightmonitor.consumers import send_message_to_clients
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
-def get_ack_msg(connect_address:int, mavlink, message_type):
+def get_ack_msg(connect_address:int, mavlink, message_type, should_send=False, command_name=None):
     ack_msg = mavlink.recv_match(type=message_type, timeout=6, blocking=True)
     if ack_msg:
         ack_msg = ack_msg.to_dict()
         ack_msg["droneid"] = connect_address
-        ack_msg['result_description'] = mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description
-        send_message_to_clients(json.dumps(ack_msg))       
+        if 'result' in ack_msg:
+            ack_msg['result_description'] = mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description
+        if command_name:
+            ack_msg['command'] = command_name
+        if should_send:
+            send_message_to_clients(json.dumps(ack_msg))       
     return ack_msg  
 
 def change_mode(connect_address:int, mode:str)->str:
@@ -50,6 +54,7 @@ def set_waypoints(connect_address:int, waypoints:list)->bool:
         seq = 1
         frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT
         radius = 1
+        waypoints = [(0,0,0)]+waypoints
         for i, waypoint in enumerate(waypoints):                  
             wp.add(mavutil.mavlink.MAVLink_mission_item_message(mavlink.target_system,
                             mavlink.target_component,
@@ -61,16 +66,16 @@ def set_waypoints(connect_address:int, waypoints:list)->bool:
             seq += 1                                                                       
 
         mavlink.waypoint_clear_all_send()
-        ack_msg = get_ack_msg(connect_address, mavlink, ['MISSION_REQUEST_INT', 'WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])               
+        ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'], should_send=True, command_name='WAYPOINT_CLEAR_ALL')               
         mavlink.waypoint_count_send(wp.count())   
         for i in range(wp.count()):
-            ack_msg = get_ack_msg(connect_address, mavlink, ['MISSION_REQUEST_INT', 'WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])        
-            ack_msg.mav.send(wp.wp(ack_msg.seq))                                                                      
-        ack_msg = get_ack_msg(connect_address, mavlink, ['MISSION_REQUEST_INT', 'WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])
+            ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'], should_send=True)        
+            mavlink.mav.send(wp.wp(ack_msg['seq']))                                                                      
+        ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])
         return ack_msg
     except Exception as e:
         print(e)
-    return {'ERROR': 'Set waypoint failed!', 'droneid':connect_address}
+        return {'ERROR': 'Set waypoint failed!'+str(e), 'droneid':connect_address}
 
 
 def set_arm(connect_address:int, is_disarm=False):
@@ -94,7 +99,9 @@ def set_arm(connect_address:int, is_disarm=False):
                 0,
                 0, 0, 0, 0, 0, 0, 0)
         ack_msg = get_ack_msg(connect_address, mavlink, 'COMMAND_ACK')
-        if not ack_msg:
+        if ack_msg:
+            return ack_msg
+        else:
             return {'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address}
     except Exception as e:
         print(e)

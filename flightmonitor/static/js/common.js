@@ -30,8 +30,7 @@ var droneMap = new Map(); // initialize an empty map
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     var message = data['message'];
-    if (message != 'null')
-        document.querySelector('#telemetry-log').value += (message + '\n');
+    document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
     console.log(temp);
     var droneID = temp["droneid"];
