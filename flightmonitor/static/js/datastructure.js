@@ -13,6 +13,12 @@ class Drone {
         this.distance = null;
         this.marker = null;
         this.popup = null;
+        this.type = null;
+        this.flymode = null;
+        this.fixType = null;
+        this.satellitesVisible = null;
+        this.vcc = null;
+        this.vservo = null;
     }
 
     getID() {
@@ -135,6 +141,59 @@ class Drone {
         this.popup = pop;
     }
 
+    //type
+    getType(){
+        return this.type;
+    }
+
+    updateType(type){
+        this.type = type;
+    }
+
+    //flymode
+    getFlyMode(){
+        return this.flymode;
+    }
+
+    updateFlyMode(mode){
+        this.flymode = mode;
+    }
+
+    //fixType
+    getFixType(){
+        return this.fixType;
+    }
+
+    updateFixType(fix){
+        this.fixType = fix;
+    }
+
+    //satellitesVisible
+    getSatellitesVisible(){
+        return this.satellitesVisible;
+    }
+
+    updateSatellitesVisible(sat){
+        this.satellitesVisible = sat;
+    }
+
+    //vcc
+    getVcc(){
+        return this.vcc;
+    }
+
+    updateVcc(vcc){
+        this.vcc = vcc;
+    }
+
+    //vservo
+    getVservo(){
+        return this.vservo;
+    }
+
+    updateVservo(vser){
+        this.vservo = vser;
+    }
 }
 
 

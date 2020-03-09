@@ -35,6 +35,8 @@ browserSocket.onmessage = function (e) {
     var temp = JSON.parse(data['message']);
     console.log(temp);
     var droneID = temp["droneid"];
+    if(currDrone!=null &&droneMap.size>0 &&currDrone!=droneID)
+        document.getElementById("title" + currDrone.toString()).style.background = "palevioletred";
     currDrone = droneID;
     let drone;
     if (!droneMap.has(droneID)) {
@@ -101,12 +103,25 @@ function storeTodroneMap(tempPack) {
     let droneID = tempPack["droneid"];
     let storeStruct = droneMap.get(droneID);
     if (tempPack["mavpackettype"] == "GLOBAL_POSITION_INT") {
-        storeStruct.updateLocation(tempPack["lon"], tempPack["lat"]);
+        storeStruct.updateLocation(tempPack["lon"].toFixed(5), tempPack["lat"].toFixed(5));
         storeStruct.updateAlt(tempPack["alt"]);
-    } else if (tempPack["mavpackettype"] == "ATTITUDE") {
+    }
+    else if (tempPack["mavpackettype"] == "ATTITUDE") {
         storeStruct.updateYaw(tempPack["yaw"]);
         storeStruct.updateRoll(tempPack["roll"]);
         storeStruct.updatePitch(tempPack["pitch"]);
+    }
+    else if (tempPack["mavpackettype"] == "HEARTBEAT"){
+        storeStruct.updateType(tempPack["type"]);
+        storeStruct.updateFlyMode(tempPack["flightmode"]);
+    }
+    else if(tempPack["mavpackettype"] == "GPS_RAW_INT"){
+        storeStruct.updateFixType(tempPack["fix_type"]);
+        storeStruct.updateSatellitesVisible(tempPack["satellites_visible"]);
+    }
+    else if(tempPack["mavpackettype"] == "POWER_STATUS"){
+        storeStruct.updateVcc(tempPack["Vcc"]);
+        storeStruct.updateVservo(tempPack["Vservo"]);
     }
 }
 
@@ -114,8 +129,10 @@ function storeTodroneMap(tempPack) {
 function updateInfo(droneID) {
     let drone = droneMap.get(droneID);
     updateLocations(drone.getAltitude(), drone.getLong(), drone.getLat(), droneID);
-    updateTel(drone.getYaw(), drone.getRoll(), drone.getPitch(), droneID)
-
+    updateTel(drone.getYaw(), drone.getRoll(), drone.getPitch(), droneID);
+    updateHeartBeat(drone.getType(), drone.getFlyMode(), droneID);
+    updateGPS(drone.getFixType(), drone.getSatellitesVisible(), droneID);
+    updatePower(drone.getVcc(), drone.getVservo(), droneID);
 
 }
 
@@ -138,6 +155,28 @@ function updateTel(yaw, roll, pit, droneID) {
     $(rollID).text(roll);
     $(pitchID).text(pit);
 }
+
+function updateHeartBeat(type, flyMode, droneID){
+    let typeID = '#Type' + droneID.toString();
+    let flyModeID = '#FlyModeID' + droneID.toString();
+    $(typeID).text(type);
+    $(flyModeID).text(flyMode);
+}
+
+function updateGPS(fixType, sat, droneID){
+    let fixTypeID = '#FixTypeID' + droneID.toString();
+    let satellitesID = '#SatellitesID' + droneID.toString();
+    $(fixTypeID).text(fixType);
+    $(satellitesID).text(sat);
+}
+
+function updatePower(vcc, vservo, droneID){
+    let vccID = '#VccID' + droneID.toString();
+    let vservoID = '#VservoID' + droneID.toString();
+    $(vccID).text(vcc);
+    $(vservoID).text(vservo);
+}
+
 
 browserSocket.onclose = function (e) {
     document.querySelector('#telemetry-log').value += ('Error: connection to server has been disconnected\n');
@@ -167,7 +206,8 @@ function disconnectVehicle() {
     var message = document.getElementById("disVID").value;
     let removeId = parseInt(message);
     if (droneMap.has(removeId)) {
-        droneMap.get(removeId).getMarker().remove();
+        if(droneMap.get(removeId).hasMarker())
+            droneMap.get(removeId).getMarker().remove();
         droneMap.delete(removeId);
         // remove tablist on the right and set another drone info if delete the current displayed drone
         var titleID = document.getElementById('title'+message);

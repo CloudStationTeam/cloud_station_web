@@ -100,5 +100,4 @@ def set_arm(connect_address:int, is_disarm=False):
         print(e)
         return {'ERROR': 'Arm/Disarm command failed!'+str(e), 'droneid':connect_address}
         
-        
 
