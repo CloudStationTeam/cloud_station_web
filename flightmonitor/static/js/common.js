@@ -32,7 +32,6 @@ browserSocket.onmessage = function (e) {
     var message = data['message'];
     document.querySelector('#telemetry-log').value += (message + '\n');
     var temp = JSON.parse(data['message']);
-    console.log(temp);
     var droneID = temp["droneid"];
     if(currDrone!=null &&droneMap.size>0 &&currDrone!=droneID)
         document.getElementById("title" + currDrone.toString()).style.background = "palevioletred";
@@ -86,6 +85,7 @@ browserSocket.onmessage = function (e) {
                         + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneID+', true)">')
                     )
                     .addTo(map));
+                map.flyTo({center: drone.getLocation()});
             }
         }
     }
@@ -103,12 +103,12 @@ function storeTodroneMap(tempPack) {
     let storeStruct = droneMap.get(droneID);
     if (tempPack["mavpackettype"] == "GLOBAL_POSITION_INT") {
         storeStruct.updateLocation(tempPack["lon"].toFixed(5), tempPack["lat"].toFixed(5));
-        storeStruct.updateAlt(tempPack["alt"]);
+        storeStruct.updateAlt(tempPack["alt"].toFixed(2));
     }
     else if (tempPack["mavpackettype"] == "ATTITUDE") {
-        storeStruct.updateYaw(tempPack["yaw"]);
-        storeStruct.updateRoll(tempPack["roll"]);
-        storeStruct.updatePitch(tempPack["pitch"]);
+        storeStruct.updateYaw(tempPack["yaw"].toFixed(2));
+        storeStruct.updateRoll(tempPack["roll"].toFixed(2));
+        storeStruct.updatePitch(tempPack["pitch"].toFixed(2));
     }
     else if (tempPack["mavpackettype"] == "HEARTBEAT"){
         storeStruct.updateType(tempPack["type"]);
