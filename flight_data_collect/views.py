@@ -2,7 +2,7 @@ from django.shortcuts import render
 import json
 from django.http import HttpResponse, HttpResponseNotFound
 from flight_data_collect.drone_communication.mavlink_utils import connect_mavlink, get_mavlink_messages_periodically
-from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints
+from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm
 import datetime
 
 TIME_INTERVAL = 1  # second(s)
@@ -27,6 +27,14 @@ def set_mode(request, droneid, mode):
 
 def set_waypoint(request, droneid, lat, lon, alt):
     msg = set_waypoints(int(droneid), [(float(lat), float(lon), float(alt))])
+    return HttpResponse(json.dumps(msg), content_type="text/plain")
+
+def arm(request, droneid):
+    msg = set_arm(int(droneid))
+    return HttpResponse(json.dumps(msg), content_type="text/plain")
+
+def disarm(request, droneid):
+    msg = set_arm(int(droneid), is_disarm=True)
     return HttpResponse(json.dumps(msg), content_type="text/plain")
 
     
