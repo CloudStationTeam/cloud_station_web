@@ -55,6 +55,7 @@ browserSocket.onmessage = function (e) {
                     + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneID+')">'
                     + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneID+', true)">'))
                 .addTo(map));
+            map.flyTo({center: drone.getLocation()});
         }
         var dytable = document.getElementById("dyTable");
         var row = dytable.insertRow(-1);
