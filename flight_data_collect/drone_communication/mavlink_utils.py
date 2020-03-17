@@ -29,7 +29,7 @@ def get_mavlink_messages(connect_address):
         for msg_type in mavlink_constants.USEFUL_MESSAGES:
             msg = _get_mavlink_message(mavlink, msg_type, connect_address)
             if msg and 'ERROR' not in msg:
-                timeout_count -= 1
+                timeout_count = max(0, timeout_count-1) # decrement by 1 if timeout_count > 0
                 if msg.get("mavpackettype", "") == mavlink_constants.GPS_RAW_INT and _is_gps_fix(msg):
                     location_msg = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT, connect_address)
                     if location_msg:
@@ -41,7 +41,9 @@ def get_mavlink_messages(connect_address):
             send_message_to_clients(json.dumps(msg))            
             if timeout_count > 6:
                 send_message_to_clients(json.dumps({'ERROR': 'Disconnected because of continous timeout.', 'droneid': int(connect_address)}))
-                Vehicle.objects.get(droneid=connect_address).is_connected = False
+                v = Vehicle.objects.get(droneid=connect_address)
+                v.is_connected = False
+                v.save()
                 break
             
             
