@@ -21,29 +21,35 @@ var browserSocket = new WebSocket(
     '/ws/flightmonitor/');
 document.querySelector('#telemetry-log').value += ('Successfully connected to server.\n');
 
-
 var tempPin = new Map();
 var tempPop = new Map();
-var currDrone;
+var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
+var disconnectedDrones = new Set(); //droneIds are text in this set
 
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
-    var message = data['message'];
-    document.querySelector('#telemetry-log').value += (message + '\n');
-    var temp = JSON.parse(data['message']);
-    var droneID = temp["droneid"];
-    if(currDrone!=null &&droneMap.size>0 &&currDrone!=droneID)
-        document.getElementById("title" + currDrone.toString()).style.background = "palevioletred";
-    currDrone = droneID;
+    document.querySelector('#telemetry-log').value += (data['message'] + '\n');
+    var msg = JSON.parse(data['message']);
+    if(!('droneid' in msg) || disconnectedDrones.has(parseInt(msg['droneid']))) {
+        return;
+    }
+    var droneId = msg["droneid"];
+    if(currSelectedDroneId==null) {
+        currSelectedDroneId = droneId;
+    }
+    
     let drone;
-    if (!droneMap.has(droneID)) {
-        drone = new Drone(droneID);
-
-        tempPop.set(droneID, new mapboxgl.Popup({offset: 40}));
-        droneMap.set(droneID, drone); //add new drone to the map
-        storeTodroneMap(temp);
-        if (temp["mavpackettype"] == "GLOBAL_POSITION_INT") {//create html element for the new marker [only initialize if the first data has location]
+    if (!droneMap.has(droneId)) {
+        if(droneMap.size>0 && currSelectedDroneId!=droneId) {
+            document.getElementById("title" + currSelectedDroneId.toString()).style.background = "rgba(246, 91, 2, 0.5)";
+            currSelectedDroneId = droneId;
+        }
+        drone = new Drone(droneId);
+        tempPop.set(droneId, new mapboxgl.Popup({offset: 40}));
+        droneMap.set(droneId, drone); //add new drone to the map
+        storeTodroneMap(msg);
+        if (msg["mavpackettype"] == "GLOBAL_POSITION_INT") {//create html element for the new marker [only initialize if the first data has location]
             var el = document.createElement('div');
             el.className = 'marker';
             drone.createPopup(new mapboxgl.Popup({offset: 25}));
@@ -51,27 +57,27 @@ browserSocket.onmessage = function (e) {
                 .setLngLat(drone.getLocation())
                 .setPopup(drone.getPopup()
                     .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
-                    + "</p>" + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST
-                    + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneID+')">'
-                    + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneID+', true)">'))
+                    + "</p>" + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
+                    + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
+                    + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">'))
                 .addTo(map));
             map.flyTo({center: drone.getLocation()});
         }
         var dytable = document.getElementById("dyTable");
         var row = dytable.insertRow(-1);
         var cell = row.insertCell(-1);
-        cell.innerHTML = "<div id = 'dyTableID" + droneID.toString()+ "'>ID: " + droneID +"</div>";
-        addTab(droneID); // add a new tab
+        cell.innerHTML = "<div id = 'dyTableID" + droneId+ "'>ID: " + droneId +"</div>";
+        addTab(droneId); // add a new tab
     } else {
-        storeTodroneMap(temp);
-        drone = droneMap.get(droneID);
+        storeTodroneMap(msg);
+        drone = droneMap.get(droneId);
         if (drone.hasMarker()) { // update on the previous marker
             drone.getMarker().setLngLat(drone.getLocation());
             drone.getPopup()
                 .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
-                + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST
-                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneID+')">'
-                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneID+', true)">')
+                + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
+                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
+                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
         } else {
             if (drone.getLocation() != null) { // make a new marker if the location has real data
                 var el = document.createElement('div');
@@ -81,9 +87,9 @@ browserSocket.onmessage = function (e) {
                     .setLngLat(drone.getLocation())
                     .setPopup(drone.getPopup()
                         .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
-                        + "</p>" + '<form action="javascript:set_mode(' + droneID + ',mode.value)">' + SETMODE_CONST
-                        + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneID+')">'
-                        + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneID+', true)">')
+                        + "</p>" + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
+                        + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
+                        + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
                     )
                     .addTo(map));
                 map.flyTo({center: drone.getLocation()});
@@ -95,7 +101,7 @@ browserSocket.onmessage = function (e) {
     if (drone.getLocation() != null) {
         updateDroneLoactionGeoJson(drone.getLong(), drone.getLat());
     }
-    updateInfo(droneID);
+    updateInfo(droneId);
 };
 
 
@@ -133,7 +139,6 @@ function updateInfo(droneID) {
     updateHeartBeat(drone.getType(), drone.getFlyMode(), droneID);
     updateGPS(drone.getFixType(), drone.getSatellitesVisible(), droneID);
     updatePower(drone.getVcc(), drone.getVservo(), droneID);
-
 }
 
 function updateLocations(al, long, lat, droneID) {
@@ -193,28 +198,34 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 function connectVehicle() {
     var message = document.getElementById("vehicleID").value;
     var xmlHttp = new XMLHttpRequest();
+    let droneId = parseInt(message);
+    if(disconnectedDrones.has(droneId)) {
+        disconnectedDrones.delete(droneId);
+    }
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
     var url = '/flight_data_collect/connect/' + message + '/';
-    xmlHttp.open("GET", url, true); // true for asynchronous
+    xmlHttp.open("GET", url, true); // asynchronous
     xmlHttp.send(null);
 }
 
 function disconnectVehicle() {
     var message = document.getElementById("disVID").value;
-    let removeId = parseInt(message);
-    if (droneMap.has(removeId)) {
-        if(droneMap.get(removeId).hasMarker())
-            droneMap.get(removeId).getMarker().remove();
-        droneMap.delete(removeId);
+    let droneId = parseInt(message);
+    if (droneMap.has(droneId)) {
+        disconnectedDrones.add(droneId);
+
+        if(droneMap.get(droneId).hasMarker())
+            droneMap.get(droneId).getMarker().remove();
+        droneMap.delete(droneId);
         // remove tablist on the right and set another drone info if delete the current displayed drone
         var titleID = document.getElementById('title'+message);
         var contentID = document.getElementById('content'+message);
         $(titleID).parents('li').remove();
         $(contentID).remove();
-        setDefaultTab(removeId);
+        setDefaultTab(droneId);
         // remove the connected ID list left bottom
         let dyID = document.getElementById('dyTableID'+message);
         $(dyID).remove();
@@ -224,29 +235,27 @@ function disconnectVehicle() {
                 document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
         };
         let url = '/flight_data_collect/disconnect/' + message + '/';
-        xmlHttp.open("GET", url, true); // true for asynchronous
+        xmlHttp.open("GET", url, true); // asynchronize
         xmlHttp.send(null);
     } else {
-        alert("The drone " + message + " has not been connected!")
+        alert("Vehicle " + message + " does not exist!");
     }
     return false;
-
-
 }
 
-function set_mode(droneID, mode) {
+function set_mode(droneId, mode) {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    let url = '/flight_data_collect/control/setmode/' + droneID.toString() + '/' + mode + '/';
-    xmlHttp.open("GET", url, true); // true for asynchronous 
+    let url = '/flight_data_collect/control/setmode/' + droneId.toString() + '/' + mode + '/';
+    xmlHttp.open("GET", url, true); // asynchronous 
     xmlHttp.send(null);
     return false;
 }
 
-function set_arm(droneID, is_disarm=false) {
+function set_arm(droneId, is_disarm=false) {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -254,10 +263,10 @@ function set_arm(droneID, is_disarm=false) {
     };
     let url;
     if (is_disarm==true)
-        url = '/flight_data_collect/control/arm/' + droneID.toString() + '/'
+        url = '/flight_data_collect/control/arm/' + droneId.toString() + '/'
     else
-        url = '/flight_data_collect/control/disarm/' + droneID.toString() + '/'
-    xmlHttp.open("GET", url, true); // true for asynchronous 
+        url = '/flight_data_collect/control/disarm/' + droneId.toString() + '/'
+    xmlHttp.open("GET", url, true); // asynchronous 
     xmlHttp.send(null);
     return false;
 }

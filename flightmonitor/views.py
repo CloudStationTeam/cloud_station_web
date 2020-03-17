@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from webgms.settings import MAPBOX_PUBLIC_KEY
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.views.decorators.cache import never_cache
 
+@never_cache
 def default_layout(request):
-    return render(request, 'default_layout.html', context={'mapbox_public_key': MAPBOX_PUBLIC_KEY})
-
-
+    return render(request, 'default_layout.html')
 
 def signup(request):
     if request.method == 'POST':

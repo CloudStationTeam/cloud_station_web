@@ -29,10 +29,10 @@
                 <a class="nav-link" href="/flightmonitor">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="https://cloud-station-docs.readthedocs.io/en/latest/">Docs</a>
+                <a target="_blank" rel="noopener noreferrer" class="nav-link" href="https://cloud-station-docs.readthedocs.io/en/latest/">Docs</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
+                <a target="_blank" rel="noopener noreferrer" class="nav-link" href="/admin">Admin</a>
             </li>
             <li class="nav-item dropdown ">
                 {% if user.is_authenticated %}
@@ -117,21 +117,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="telemetry-log">Received telemetry data: </label>
-                            <p><textarea id="telemetry-log" class="form-control" rows="4"></textarea><br/></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="commandlineID">Command</label>
-                            <input type="text" class="form-control" id="commandlineID">
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-10" id="commandbtn">
-                                <button type="button" class="btn btn-success" onclick="sendingResult()">send</button>
-                            </div>
+                            <p><textarea id="telemetry-log" class="form-control" rows="8"></textarea><br/></p>
                         </div>
                     </div>
                 </div>

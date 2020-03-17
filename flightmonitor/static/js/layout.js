@@ -13,8 +13,6 @@ function addTab(droneID) {
     let yawID = 'Yaw' + droneID.toString();
     let rollID = 'Roll' + droneID.toString();
     let pitchID = 'Pitch' + droneID.toString();
-    let groundID = 'GroundSpeed' + droneID.toString();
-    let distanceID = 'Distance' + droneID.toString();
     let typeID = 'Type' + droneID.toString();
     let flyModeID = 'FlyModeID' + droneID.toString();
     let fixTypeID = 'FixTypeID' + droneID.toString();
@@ -22,16 +20,13 @@ function addTab(droneID) {
     let vccID = 'VccID' + droneID.toString();
     let vservoID = 'VservoID' + droneID.toString();
 
-// + '<button onclick = "showDrone(' + droneID.toString() + ')"></button>
     $('#tab-list').append($('<li><button class = "tabTitle" id="title' + droneID.toString() + '" role="tab" data-toggle="tab" onclick = "showDrone(' + droneID.toString() + ')"><span>Drone ' + droneID + '</span> <span class="glyphicon glyphicon-pencil text-muted edit"></span> </button></li>'));
     $('#tab-content').append($('<div class="tab" id = "content' + droneID.toString() + '">' +
         '<table id = "infobox">' +
-        '<tr><th>Altitude (m)</th> <th>Ground Speed (m/s)</th></tr>' +
-        '<tr><td>' + '<var class="contentValue" id = ' + altitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + groundID + '></var>' + '</td></tr>' +
-        '<tr><th>Roll (deg/s)</th><th>Yaw (deg)</th></tr>' +
+        '<tr><th>Altitude (m)</th><th>Pitch (deg)</th></tr>' +
+        '<tr><td>' + '<var class="contentValue" id = ' + altitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + pitchID + '></var>' + '</td></tr>'+
+        '<tr><th>Roll (deg)</th><th>Yaw (deg)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + rollID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + yawID + '></var>' + '</td></tr>' +
-        '<tr><th>Distance to Destination (m)</th><th>Pitch </th></tr>' +
-        '<tr><td>' + '<var class="contentValue" id = ' + distanceID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + pitchID + '></var>' + '</td></tr>' +
         '<tr><th>Longitude</th><th>Latitude</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + longitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + latitudeID + '></var>' + '</td></tr>' +
         '<tr><th>Type</th><th>Flight Mode</th></tr>' +
@@ -48,23 +43,22 @@ function addTab(droneID) {
     document.getElementById("content" + droneID).className = "tab";
 }
 
-//
+
 function showDrone(droneID) {
-    if (currDrone != droneID) {
-        if(currDrone!=null)
-            document.getElementById("title" + currDrone.toString()).style.background = "palevioletred";
+    if (currSelectedDroneId != droneID) {
+        if (currSelectedDroneId != null)
+            document.getElementById("title" + currSelectedDroneId.toString()).style.background = "rgba(246, 91, 2, 0.5)";
         var currentContent = "content" + droneID;
-        currDrone = droneID;
-        let i;
         droneID = parseInt(droneID);
+        currSelectedDroneId = droneID;
         let contents = document.getElementsByClassName("tab"); // list of TabContent
 
         for (i = 0; i < contents.length; i++) {
             contents[i].className = "tab-pane";
         }
         document.getElementById(currentContent).className = "tab";
-        document.getElementById("title" + droneID.toString()).style.background = "red";
-        map.flyTo({center: droneMap.get(droneID).getLocation()});
+        document.getElementById("title" + droneID.toString()).style.background =  'rgba(247, 18, 2, 0.836)';
+        map.flyTo({ center: droneMap.get(droneID).getLocation() });
     }
 }
 
@@ -73,7 +67,7 @@ function setDefaultTab(droneID) {
     tabID.delete(droneID);
     if (tabNum == 0) {
         return false;
-    } else if (droneID == currDrone) {
+    } else if (droneID == currSelectedDroneId) {
         let i = 0;
         let contents = document.getElementsByClassName("tab"); // list of TabContent
         for (i; i < contents.length; i++) {
@@ -82,8 +76,8 @@ function setDefaultTab(droneID) {
         let currentID = tabID.keys().next().value;
         let currentContent = "content" + currentID.toString();
         document.getElementById(currentContent).className = "tab";
-        document.getElementById("title" + currentID.toString()).style.background = "red";
-        currDrone = currentID;
-        map.flyTo({center: droneMap.get(currentID).getLocation()});
+        document.getElementById("title" + currentID.toString()).style.background =  'rgba(247, 18, 2, 0.836)';
+        currSelectedDroneId = currentID;
+        map.flyTo({ center: droneMap.get(currentID).getLocation() });
     }
 }

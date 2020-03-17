@@ -5,7 +5,7 @@ import uuid
 import json
 
 class Vehicle(models.Model):
-    vid = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for the Vehicle')
+    droneid = models.IntegerField(primary_key=True)
     
     VEHICLE_TYPES = (  # will need to include all vehicles
         ('c', 'Copter'),
@@ -16,20 +16,25 @@ class Vehicle(models.Model):
         ('o', 'Other')
     )
     
-    type = models.CharField(
+    vehicle_type = models.CharField(
         max_length=1,
         choices=VEHICLE_TYPES,
         blank=True,
         default='o',
         help_text='Vehicle type',
     )
-    
-    firmware = models.CharField(max_length=25,blank=True)
-    #owner = models.ManyToManyField('User', help_text='Users who have access to the vehicle data')
+    last_seen = models.DateTimeField(auto_now=True)    
+    # owner = models.ManyToManyField('User', help_text='Users who have access to the vehicle data')
+    is_connected = models.BooleanField(default=False)
     
     def __str__(self):
         """String for representing the Model object."""
-        return self.vid
+        data = {'droneid': self.droneid,
+                'is_connected': self.is_connected,
+                'vehicle_type': self.vehicle_type,
+                'last_seen': str(self.last_seen)
+        }
+        return json.dumps(data)
 
 class Location_log(models.Model):
     #vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
@@ -41,7 +46,7 @@ class Location_log(models.Model):
     droneid = models.IntegerField()
     
     def __str__(self):
-        location_dict = {
+        data = {
             "mavpackettype": "GLOBAL_POSITION_INT",
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
             "lat": float(self.latitude),
@@ -50,7 +55,7 @@ class Location_log(models.Model):
             "heading": float(self.heading),
             "droneid": int(self.droneid)
         }
-        return json.dumps(location_dict)
+        return json.dumps(data)
 
 class Telemetry_log(models.Model):
     #vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
@@ -64,7 +69,7 @@ class Telemetry_log(models.Model):
     # yawspeed = models.DecimalField(decimal_places=2, max_digits=5)
     
     def __str__(self):
-        altitude_dict = {
+        data = {
             "mavpackettype": "ATTITUDE",
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
             "roll": float(self.roll),
@@ -72,5 +77,5 @@ class Telemetry_log(models.Model):
             "yaw": float(self.yaw),
             "droneid": int(self.droneid)
         }
-        return json.dumps(altitude_dict)
+        return json.dumps(data)
     

@@ -1,25 +1,31 @@
 from django.shortcuts import render
 import json
 from django.http import HttpResponse, HttpResponseNotFound
-from flight_data_collect.drone_communication.mavlink_utils import connect_mavlink, get_mavlink_messages_periodically
+from flight_data_collect.models import Vehicle
+from flight_data_collect.drone_communication.mavlink_utils import check_vehicle_heartbeat, get_mavlink_messages
 from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm
 import datetime
 
-TIME_INTERVAL = 1  # second(s)
-REPEAT_UNTIL = 60  
-
 def connect_vehicle(request, connect_address):
-    is_successful = connect_mavlink(connect_address)
+    is_successful = check_vehicle_heartbeat(connect_address)
     if is_successful:
-        msg = "Successully connected to " + connect_address + "\n" + "> Heartbeat Received!"
-        get_mavlink_messages_periodically(connect_address, repeat=TIME_INTERVAL, \
-                    repeat_until=datetime.datetime.now()+datetime.timedelta(seconds=REPEAT_UNTIL))
+        v = Vehicle(droneid=connect_address, is_connected=True)
+        v.save()
+        get_mavlink_messages(connect_address)
+        msg = f'disconnected from {connect_address}'
     else:
-        msg = "Error: Failed to connect to " + connect_address + "(timeout)"
+        msg = "Error: Failed to connect to " + connect_address + "(timeout 6s)"
     return HttpResponse(msg, content_type="text/plain")
 
-def disconnect_vehicle(request):
-    return HttpResponse('disconnected', content_type="text/plain")
+def disconnect_vehicle(request, connect_address):
+    try:
+        vehicle = Vehicle.objects.get(droneid = connect_address)
+        vehicle.is_connected = False
+        vehicle.save()
+        response = {'msg': 'disconnected successfully'}
+    except Vehicle.DoesNotExist:
+        response = {'ERROR': f'Vehicle {connect_address} does not exist'}
+    return HttpResponse(json.dumps(response), content_type="text/plain")
 
 def set_mode(request, droneid, mode):
     msg = change_mode(droneid, mode)

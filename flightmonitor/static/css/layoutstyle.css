@@ -93,15 +93,9 @@ body {
     padding-bottom: 10px;
 }
 
-/*#commandLine {*/
-/*    padding-left: 40px;*/
-/*    padding-top: 10px;*/
-/*    padding-bottom: 0px;*/
-/*}*/
-
 #infobox {
     color: #56baed;
-    background: #0d0d0d;
+    background: whitesmoke;
     padding-bottom: 0px;
     padding-top: 0px;
     padding-right: 0px;
@@ -122,8 +116,8 @@ body {
 .marker {
     background-image: url('/static/img/plane2.png');
     background-size: cover;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -193,11 +187,11 @@ body {
 }
 
 .contentValue{
-    color: yellow;
-    font-size: 30px;
-    font-weight: initial;
+    color: rgb(0, 0, 0);
+    font-size: 17px;
+    font-weight: lighter;
 }
 
 .tabTitle{
-    background: red;
+    background: rgba(247, 18, 2, 0.836);
 }
