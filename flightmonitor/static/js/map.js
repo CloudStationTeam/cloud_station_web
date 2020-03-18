@@ -53,9 +53,8 @@ map.addControl(
 
 map.on('contextmenu', function (e) { //right click
     if (tempPop.size > 0) {
-        let longitude = e.lngLat["lng"].toFixed(2);
-        let latitude = e.lngLat["lat"].toFixed(2);
-        // alert(JSON.stringify(e.lngLat));
+        let longitude = e.lngLat["lng"];
+        let latitude = e.lngLat["lat"];
 
         if (!tempPin.has(currSelectedDroneId)) {
             tempPin.set(currSelectedDroneId, new mapboxgl.Marker().setLngLat(e.lngLat).setPopup(tempPop.get(currSelectedDroneId)).addTo(map));
@@ -78,9 +77,6 @@ geocoder.on('result', function (e) {
         let latitude = coordinates[1];
         tempPop.get(currSelectedDroneId).setHTML('Longitude: ' + longitude + '<br>Latitude: ' + latitude +
             '<br><button onclick="clearPin()">clear pin</button> <button>Fly To</button>');
-        // console.log(coordinates);
-        // let longitude = e.lngLat["lng"].toFixed(2);
-        // let latitude = e.lngLat["lat"].toFixed(2);
     }
 
 });
@@ -100,7 +96,7 @@ function flyTo(droneID, long, lat, alt) {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    let url = '/flight_data_collect/control/setwaypoint/' + droneID.toString() + '/' + lat.toString() + '/' + long.toString() + '/' + alt.toString() + '/'; // for demo, hard coded drone id and mode type
+    let url = '/flight_data_collect/control/flyto/' + droneID.toString() + '/' + lat.toString() + '/' + long.toString() + '/' + alt.toString() + '/';
     xmlHttp.open("GET", url, true); // true for asynchronous
     xmlHttp.send(null);
     console.log(xmlHttp);

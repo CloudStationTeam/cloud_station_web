@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'control/setwaypoint/(?P<droneid>[^/]+)/(?P<lat>[^/]+)/(?P<lon>[^/]+)/(?P<alt>[^/]+)/$', views.set_waypoint, name='set-waypoint'),
     url(r'control/arm/(?P<droneid>[^/]+)/$', views.arm, name='arm'),
     url(r'control/disarm/(?P<droneid>[^/]+)/$', views.disarm, name='arm'),
+    url(r'control/flyto/(?P<droneid>[^/]+)/(?P<lat>[^/]+)/(?P<lon>[^/]+)/(?P<alt>[^/]+)/$', views.fly_to, name='fly-to'),
 
 ]

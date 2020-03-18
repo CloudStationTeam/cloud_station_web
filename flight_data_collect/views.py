@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse, HttpResponseNotFound
 from flight_data_collect.models import Vehicle
 from flight_data_collect.drone_communication.mavlink_utils import check_vehicle_heartbeat, get_mavlink_messages
-from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm
+from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm, fly_to_point
 import datetime
 
 def connect_vehicle(request, connect_address):
@@ -31,7 +31,12 @@ def set_mode(request, droneid, mode):
     msg = change_mode(droneid, mode)
     return HttpResponse(json.dumps(msg), content_type="text/plain")
 
+def fly_to(request, droneid, lat, lon, alt):
+    msg = fly_to_point(int(droneid), float(lat), float(lon), float(alt))
+    return HttpResponse(json.dumps(msg), content_type="text/plain")
+
 def set_waypoint(request, droneid, lat, lon, alt):
+    '''this function should be changed to add multiple waypoints. currently it only adds one'''
     msg = set_waypoints(int(droneid), [(float(lat), float(lon), float(alt))])
     return HttpResponse(json.dumps(msg), content_type="text/plain")
 

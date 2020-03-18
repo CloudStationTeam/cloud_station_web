@@ -106,5 +106,25 @@ def set_arm(connect_address:int, is_disarm=False):
     except Exception as e:
         print(e)
         return {'ERROR': 'Arm/Disarm command failed!'+str(e), 'droneid':connect_address}
+
+def fly_to_point(connect_address:int, lat, lon, alt):
+    try :
+        mavlink = mavutil.mavlink_connection(SERVER_IP+':'+str(connect_address))
+        msg = mavlink.wait_heartbeat(timeout=6)
+        if not msg:
+            return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid':connect_address}
+        frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT
+        mavlink.mav.mission_item_send(
+            0, 0, 0, frame,
+            mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 2, 0, 0,
+            0, 0, 0, lat, lon, alt)
+        ack_msg = get_ack_msg(connect_address, mavlink, 'MISSION_ACK')
+        if ack_msg:
+            return ack_msg
+        else:
+            return {'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address}
+    except Exception as e:
+        print(e)
+        return {'ERROR': str(e), 'droneid': connect_address}
         
 
