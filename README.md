@@ -9,6 +9,7 @@ The goal of this project is to develop a cloud-based ground control station for 
 > [Docs](https://cloud-station-docs.readthedocs.io/en/latest/)
 
 **System architecture**:
+![UI](diagrams/web_app_screenshot.png "WebApp UI")
 ![CloudStation diagram](diagrams/cloud_station_diagram.png "System Architecture")  
 ![System architecture diagram](diagrams/system_diagram.png "System Architecture")
 
