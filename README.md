@@ -70,11 +70,11 @@ python3 manage.py process_tasks
 
 ## Authors
   * Lyuyang Hu - Software architecture design, prototyping, project management, backend development
+  * Steven He - Front-end, back-end development
   * Mina Bedwany - Front-end, back-end development
+  * Jace Mica - Front-end, back-end development
   * Omkar Pathak - Infrastructure development
-  * 
-  * 
-  * 
+  * Hunkyu Lee - Hardware design/development
 ## Advisor
   * Professor Peter Burke
 ## License
