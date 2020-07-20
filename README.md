@@ -11,7 +11,7 @@ The goal of this project is to develop a cloud-based ground control station for 
 **System architecture**:
 ![UI](diagrams/web_app_screenshot.png "WebApp UI")
 ![CloudStation diagram](diagrams/cloud_station_diagram.png "System Architecture")  
-![System architecture diagram](diagrams/system_diagram.png "System Architecture")
+![System architecture diagram](diagrams/CloudStation_system_diagram.png "System Architecture")
 
 ## Prerequisite 
 ```
@@ -63,13 +63,13 @@ python3 manage.py process_tasks
 - [x] User authentication (11/16/19)
 - [x] Mark drone location on map (11/24)
 - [X] Migrate to AWS RDS
-- [ ] Communicate with multiple drones at the same time
+- [x] Communicate with multiple drones at the same time
 - [ ] Distinguish different users. Only send vehicle updates to authorized users.
-- [ ] Develop an improved UI for telemetry data.
-- [ ] Use a more robust background tasks solution.
+- [x] Develop an improved UI for telemetry data.
+- [x] Use a more robust background tasks solution. (3/10/20)
 
 ## Authors
-  * Lyuyang Hu - Software architecture design, prototyping, project management, backend development
+  * Lyuyang Hu - PM, architecture design, back-end development
   * Steven He - Front-end, back-end development
   * Mina Bedwany - Front-end, back-end development
   * Jace Mica - Front-end, back-end development
