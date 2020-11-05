@@ -157,18 +157,6 @@ LOGGING = {
         'handlers': ['console'],
         'level': 'DEBUG',
     },
-    'loggers': {
-        'flight_data_collect': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-            'propagate': False,
-        },
-        'flightmonitor': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-            'propagate': False,
-        },
-    },
 }
 
 MAPBOX_PUBLIC_KEY = os.environ.get('MAPBOX_PUBLIC_KEY')
