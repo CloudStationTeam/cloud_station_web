@@ -10,6 +10,7 @@ SERVER_IP = socket.gethostbyname(socket.gethostname())
 
 def check_vehicle_heartbeat(connect_address: str)->bool:
     try:
+        push_log_to_client('Checking heartbeat')
         if connect_address[0].isdigit():
             mavlink = mavutil.mavlink_connection(SERVER_IP+':'+connect_address)
         else:
@@ -88,4 +89,7 @@ def _get_mavlink_message(mavlink, message_types, droneid:int)->dict:
     except Exception as e:
         print(e)
     return {"ERROR": str(e)}
-    
+
+
+def push_log_to_client(log_msg):
+    send_message_to_clients(json.dumps({'log_output': log_msg}))

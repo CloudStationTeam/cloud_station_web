@@ -31,6 +31,13 @@ browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     document.querySelector('#telemetry-log').value += (data['message'] + '\n');
     var msg = JSON.parse(data['message']);
+
+    // If logging message
+    if ('log_output' in msg) {
+        console.log(msg['log_output'])
+        return
+    }
+
     if(!('droneid' in msg) || disconnectedDrones.has(parseInt(msg['droneid']))) {
         return;
     }
