@@ -42,6 +42,7 @@ def get_mavlink_messages(connect_address):
                 parse_mavlink_msg(msg, mavlink)
             else:
                 timeout_count += 1
+                mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
             send_message_to_clients(json.dumps(msg))
             if timeout_count > 10:
                 send_message_to_clients(json.dumps(
