@@ -78,30 +78,30 @@ browserSocket.onmessage = function (e) {
     } else {
         storeTodroneMap(msg);
         drone = droneMap.get(droneId);
-        if (drone.hasMarker()) { // update on the previous marker
-            drone.getMarker().setLngLat(drone.getLocation());
-            drone.getPopup()
-                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
-                + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
-                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
-                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
-        } else {
-            if (drone.getLocation() != null) { // make a new marker if the location has real data
-                var el = document.createElement('div');
-                el.className = 'marker';
-                drone.createPopup(new mapboxgl.Popup({offset: 25}));
-                drone.createMarker(new mapboxgl.Marker(el)
-                    .setLngLat(drone.getLocation())
-                    .setPopup(drone.getPopup()
-                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
-                        + "</p>" + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
-                        + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
-                        + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
-                    )
-                    .addTo(map));
-                map.flyTo({center: drone.getLocation()});
-            }
-        }
+//        if (drone.hasMarker()) { // update on the previous marker
+//            drone.getMarker().setLngLat(drone.getLocation());
+//            drone.getPopup()
+//                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat()
+//                + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
+//                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
+//                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
+//        } else {
+//            if (drone.getLocation() != null) { // make a new marker if the location has real data
+//                var el = document.createElement('div');
+//                el.className = 'marker';
+//                drone.createPopup(new mapboxgl.Popup({offset: 25}));
+//                drone.createMarker(new mapboxgl.Marker(el)
+//                    .setLngLat(drone.getLocation())
+//                    .setPopup(drone.getPopup()
+//                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat()
+//                        + "</p>" + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
+//                        + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
+//                        + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
+//                    )
+//                    .addTo(map));
+//                map.flyTo({center: drone.getLocation()});
+//            }
+//        }
     }
 
 
