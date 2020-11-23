@@ -80,11 +80,11 @@ browserSocket.onmessage = function (e) {
         drone = droneMap.get(droneId);
         if (drone.hasMarker()) { // update on the previous marker
             drone.getMarker().setLngLat(drone.getLocation());
-            drone.getPopup()
-                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
-                + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
-                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
-                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
+//            drone.getPopup()
+//                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat()
+//                + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
+//                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
+//                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
         } else {
             if (drone.getLocation() != null) { // make a new marker if the location has real data
                 var el = document.createElement('div');
@@ -93,7 +93,7 @@ browserSocket.onmessage = function (e) {
                 drone.createMarker(new mapboxgl.Marker(el)
                     .setLngLat(drone.getLocation())
                     .setPopup(drone.getPopup()
-                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat() 
+                        .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat()
                         + "</p>" + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
                         + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
                         + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
