@@ -145,4 +145,4 @@ CHANNEL_LAYERS = {
     },
 }
 
-MAPBOX_PUBLIC_KEY = os.environ.get('MAPBOX_PUBLIC_KEY')
+MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here 
