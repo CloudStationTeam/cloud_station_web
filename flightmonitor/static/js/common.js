@@ -27,6 +27,8 @@ var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
+updateTelemetryFields("Update telemetry fields message")
+
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     document.querySelector('#telemetry-log').value += (data['message'] + '\n');
@@ -201,6 +203,18 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
         document.querySelector('#connectbtn').click();
     }
 };
+
+// param fields should be a JSON object representing the fields requested
+function updateTelemetryFields(fields) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    var url = '/flight_data_collect/update-fields/';
+    xmlHttp.open("POST", url, true); // asynchronous
+    xmlHttp.send(fields);
+}
 
 function connectVehicle() {
     var message = document.getElementById("vehicleID").value;
