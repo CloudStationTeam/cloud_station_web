@@ -27,7 +27,7 @@ var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
-updateTelemetryFields("Update telemetry fields message")
+updateTelemetryFields("{'fields': 'Update telemetry fields message'}")
 
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
@@ -226,7 +226,7 @@ function updateTelemetryFields(fields) {
     };
     xmlHttp.open("POST", url, true); // asynchronous
     xmlHttp.setRequestHeader("X-CSRFToken", csrftoken);
-    xmlHttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(fields);
 }
 
