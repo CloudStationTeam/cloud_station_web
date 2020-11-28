@@ -212,7 +212,7 @@ function updateTelemetryFields(fields) {
 
     var xmlHttpTest = new XMLHttpRequest();
     xmlHttpTest.onreadystatechange = function () {
-        if (xmlHttpTest.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttpTest.readyState == 4 && xmlHttpTest.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttpTest.responseText + '\n');
     };
     xmlHttpTest.open("GET", url, true); // asynchronous
