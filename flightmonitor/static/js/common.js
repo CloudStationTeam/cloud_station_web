@@ -27,7 +27,8 @@ var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
-updateTelemetryFields("{'fields': 'Update telemetry fields message'}")
+exampleTelemetryObject = {'fields': 'Update telemetry fields message'}
+updateTelemetryFields(JSON.stringify(exampleTelemetryObject))
 
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
