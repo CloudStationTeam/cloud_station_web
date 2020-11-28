@@ -146,30 +146,70 @@
 			      <h2>Modal Header</h2>
 			    </div>
 			    <div class="modal-body">
-				<ul>
-				   <li><label for="timeBootCheck">time_boot_ms</label>
-   				   <input type="checkBox" id="timeBootCheck"></li>
-				   <li><label for="latCheck">lat</label>
-				   <input type="checkBox" id="latCheck"></li>
-				   <li><label for="lonCheck">lon</label>
-				   <input type="checkBox" id="lonCheck"></li>
-				   <li><label for="altCheck">alt</label>
-				   <input type="checkBox" id="altCheck"></li>
-				   <li><label for="relativeAltCheck">relative_alt</label>
-                                   <input type="checkBox" id="altRelativeCheck"></li>
-				   <li><label for="vxCheck">vx</label>
-                                   <input type="checkBox" id="vxCheck"></li>
-				   <li><label for="vyCheck">vy</label>
-                                   <input type="checkBox" id="vyCheck"></li>
-				   <li><label for="vzCheck">vz</label>
-                                   <input type="checkBox" id="vzCheck"></li>
-				   <li><label for="hbgCheck">hdg</label>
-                                   <input type="checkBox" id="hdgCheck"></li>
-				</ul>
+				<div class ="row">
+					<div class="col">
+						<h3>Global Position Int</h3>
+						<ul>
+						   <li><label for="timeBootCheck">time_boot_ms</label>
+						   <input type="checkBox" id="timeBootCheck"></li>
+						   <li><label for="latCheck">lat</label>
+						   <input type="checkBox" id="latCheck"></li>
+						   <li><label for="lonCheck">lon</label>
+						   <input type="checkBox" id="lonCheck"></li>
+						   <li><label for="altCheck">alt</label>
+						   <input type="checkBox" id="altCheck"></li>
+						   <li><label for="relativeAltCheck">relative_alt</label>
+						   <input type="checkBox" id="altRelativeCheck"></li>
+						   <li><label for="vxCheck">vx</label>
+						   <input type="checkBox" id="vxCheck"></li>
+						   <li><label for="vyCheck">vy</label>
+						   <input type="checkBox" id="vyCheck"></li>
+						   <li><label for="vzCheck">vz</label>
+						   <input type="checkBox" id="vzCheck"></li>
+						   <li><label for="hbgCheck">hdg</label>
+						   <input type="checkBox" id="hdgCheck"></li>
+						</ul>
+					</div>
+					<div class="col">
+						<h3>Battery Status</h3>
+                                                <ul>
+                                                   <li><label for="idCheck">id</label>
+                                                   <input type="checkBox" id="idCheck"></li>
+						   <li><label for="batteryFunctionCheck">battery_function</label>
+                                                   <input type="checkBox" id="batteryFunctionCheck"></li>
+						   <li><label for="typeCheck">type</label>
+                                                   <input type="checkBox" id="typeCheck"></li>
+						   <li><label for="temperatureCheck">temperature</label>
+                                                   <input type="checkBox" id="temperatureCheck"></li>
+                                                   <li><label for="voltagesCheck">voltages</label>
+                                                   <input type="checkBox" id="voltageCheck"></li>
+                                                   <li><label for="currentBatteryCheck">current_battery</label>
+                                                   <input type="checkBox" id="currentBatteryCheck"></li>
+						   <li><label for="currentConsumedCheck">current_consumed</label>
+                                                   <input type="checkBox" id="currentConsumedCheck"></li>
+                                                   <li><label for="energyConsumedCheck">energy_consumed</label>
+                                                   <input type="checkBox" id="energyConsumedCheck"></li>
+                                                   <li><label for="batteryRemainingCheck">battery_remaining</label>
+                                                   <input type="checkBox" id="batteryRemainingCheck"></li>
+						   <li><label for="timeRemainingCheck">time_remaining</label>
+                                                   <input type="checkBox" id="timeRemainingCheck"></li>
+                                                   <li><label for="chargeStateCheck">charge_state</label>
+                                                   <input type="checkBox" id="chargeStateCheck"></li>
+                                                   <li><label for="voltagesExtCheck">voltages_ext</label>
+                                                   <input type="checkBox" id="voltagesExtCheck"></li>
+                                                   <li><label for="modeCheck">mode</label>
+                                                   <input type="checkBox" id="modeCheck"></li>
+                                                   <li><label for="fault_bitmaskCheck">fault_bitmask</label>
+                                                   <input type="checkBox" id="faultBitmaskCheck"></li>
+
+						</ul>
+
+					</div>
+				</div>
+				<button id="submitTelemetryBtn" onclick="submitTelemetry()">Submit</button>
 			    </div>
 			    <div class="modal-footer">
 			      <h3>Modal Footer</h3>
-			      <button id="submitTelemetryBtn" onclick="submitTelemetry()">Submit</button>
 			    </div>
 			  </div>
 
