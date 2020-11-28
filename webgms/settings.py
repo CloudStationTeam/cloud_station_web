@@ -25,7 +25,7 @@ SECRET_KEY = 'mmb@uth-#6-t)pi$_2)1!5x*91-#kdqzx)l8-*s-764i3l*mi1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["ec2-18-210-124-217.compute-1.amazonaws.com"]  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xxx.us-west-1.compute.amazonaws.com")
+ALLOWED_HOSTS = []  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xxx.us-west-1.compute.amazonaws.com")
 
 
 # Application definition
@@ -145,4 +145,4 @@ CHANNEL_LAYERS = {
     },
 }
 
-MAPBOX_PUBLIC_KEY = "pk.eyJ1IjoiaGpheXlhbmc5NCIsImEiOiJja2c1czBzdXcwd3NoMnFsdzhhYmJ1ZGJtIn0.8ganQuctv7u4WvfcGHV7kg"
+MAPBOX_PUBLIC_KEY = os.environ.get('MAPBOX_PUBLIC_KEY')
