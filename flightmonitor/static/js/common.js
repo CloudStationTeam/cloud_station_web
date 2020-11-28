@@ -27,6 +27,10 @@ var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
+// Example usage for updateTelemetryFields function
+exampleTelemetryObject = {'fields': 'Update telemetry fields message'}
+updateTelemetryFields(JSON.stringify(exampleTelemetryObject))
+
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     document.querySelector('#telemetry-log').value += (data['message'] + '\n');
@@ -202,6 +206,23 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
     }
 };
 
+/* HTTP REQUESTS TO BACKEND */
+
+// param fields should be a JSON object representing the fields requested
+function updateTelemetryFields(fields) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = '/flight_data_collect/update-fields/';
+    const csrftoken = getCookie('csrftoken')
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    xmlHttp.open("POST", url, true); // asynchronous
+    xmlHttp.setRequestHeader("X-CSRFToken", csrftoken);
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.send(fields);
+}
+
 function connectVehicle() {
     var message = document.getElementById("vehicleID").value;
     var xmlHttp = new XMLHttpRequest();
@@ -283,6 +304,27 @@ function set_mode_test(id, value) {
     alert(id + value);
     return false;
 }
+
+/* CSRF COOKIE RETRIEVAL (FOR POST REQUESTS) */
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+/* TELEMETRY DISPLAY FORM */
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -313,4 +355,3 @@ function submitTelemetry(){
 	document.getElementById("submitTelemetryBtn").innerHTML = x;
 
 }
-
