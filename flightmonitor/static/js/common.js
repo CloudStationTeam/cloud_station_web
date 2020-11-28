@@ -213,6 +213,8 @@ function updateTelemetryFields(fields) {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
+    console.log("Updating telemetry fields")
+    console.log(xmlHttp.toString())
     var url = '/flight_data_collect/update-fields/';
     xmlHttp.open("POST", url, true); // asynchronous
     xmlHttp.send(fields);
