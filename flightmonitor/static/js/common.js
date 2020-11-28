@@ -207,6 +207,8 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 // param fields should be a JSON object representing the fields requested
 function updateTelemetryFields(fields) {
     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+    xmlHttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
