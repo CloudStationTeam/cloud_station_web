@@ -209,9 +209,9 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 // param fields should be a JSON object representing the fields requested
 function updateTelemetryFields(fields) {
     var xmlHttpTest = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    xmlHttpTest.onreadystatechange = function () {
+        if (xmlHttpTest.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttpTest.responseText + '\n');
     };
     xmlHttpTest.open("GET", url, true); // asynchronous
     xmlHttpTest.send();
