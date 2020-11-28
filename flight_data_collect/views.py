@@ -58,5 +58,6 @@ def disarm(request, droneid):
 
 def update_fields(request):
     fields = json.loads(request.body.decode('utf-8'))
+    # Do something with fields. Update msg to some kind of reasonable confirmation message
     msg = str(fields)
     return HttpResponse(json.dumps(msg), content_type="text/plain")

@@ -27,6 +27,7 @@ var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
+// Example usage for updateTelemetryFields function
 exampleTelemetryObject = {'fields': 'Update telemetry fields message'}
 updateTelemetryFields(JSON.stringify(exampleTelemetryObject))
 
