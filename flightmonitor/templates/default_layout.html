@@ -7,6 +7,9 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet'/>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
@@ -15,7 +18,6 @@
     <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
 
 </head>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -72,11 +74,15 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link
             rel="stylesheet"
+    <link
+            rel="stylesheet"
             href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
             type="text/css"
     />
+    
     <div class="container-fluid">
-        <div class="row">
+	    <div class="row">
+		 
             <div class="col-sm-2">
                 <div class="form-group">
                     <label for="vehicleID">Connect to Vehicle via ID:</label>
@@ -84,7 +90,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-10" id="connectbtnDIS">
-                        <button type="button" class="btn btn-success" id="connectbtn" onclick=" connectVehicle()">
+                        <button type="button" class="btn btn-success" id="connectbtn" onclick="connectVehicle()">
                             Connect
                         </button>
                     </div>
@@ -129,7 +135,86 @@
             <div class="col-sm-3">
                 <div class="row">
                     <div class="row-sm-7" id="tabcontent">
-                        <ul id="tab-list" class="nav nav-tabs" role="tablist">
+			<button id="telemetryEditBtn">Edit</button>
+			<!-- The Modal--> 
+			<div id="myModal" class="modal">
+			  <!-- Modal content--> 
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <span class="close">&times;</span>
+			      <h2>Modal Header</h2>
+			    </div>
+			    <div class="modal-body">
+				<div class ="row">
+					<div class="col">
+						<h3>Global Position Int</h3>
+						<ul>
+						   <li><label for="timeBootCheck">time_boot_ms</label>
+						   <input type="checkBox" id="timeBootCheck"></li>
+						   <li><label for="latCheck">lat</label>
+						   <input type="checkBox" id="latCheck"></li>
+						   <li><label for="lonCheck">lon</label>
+						   <input type="checkBox" id="lonCheck"></li>
+						   <li><label for="altCheck">alt</label>
+						   <input type="checkBox" id="altCheck"></li>
+						   <li><label for="relativeAltCheck">relative_alt</label>
+						   <input type="checkBox" id="altRelativeCheck"></li>
+						   <li><label for="vxCheck">vx</label>
+						   <input type="checkBox" id="vxCheck"></li>
+						   <li><label for="vyCheck">vy</label>
+						   <input type="checkBox" id="vyCheck"></li>
+						   <li><label for="vzCheck">vz</label>
+						   <input type="checkBox" id="vzCheck"></li>
+						   <li><label for="hbgCheck">hdg</label>
+						   <input type="checkBox" id="hdgCheck"></li>
+						</ul>
+					</div>
+					<div class="col">
+						<h3>Battery Status</h3>
+                                                <ul>
+                                                   <li><label for="idCheck">id</label>
+                                                   <input type="checkBox" id="idCheck"></li>
+						   <li><label for="batteryFunctionCheck">battery_function</label>
+                                                   <input type="checkBox" id="batteryFunctionCheck"></li>
+						   <li><label for="typeCheck">type</label>
+                                                   <input type="checkBox" id="typeCheck"></li>
+						   <li><label for="temperatureCheck">temperature</label>
+                                                   <input type="checkBox" id="temperatureCheck"></li>
+                                                   <li><label for="voltagesCheck">voltages</label>
+                                                   <input type="checkBox" id="voltageCheck"></li>
+                                                   <li><label for="currentBatteryCheck">current_battery</label>
+                                                   <input type="checkBox" id="currentBatteryCheck"></li>
+						   <li><label for="currentConsumedCheck">current_consumed</label>
+                                                   <input type="checkBox" id="currentConsumedCheck"></li>
+                                                   <li><label for="energyConsumedCheck">energy_consumed</label>
+                                                   <input type="checkBox" id="energyConsumedCheck"></li>
+                                                   <li><label for="batteryRemainingCheck">battery_remaining</label>
+                                                   <input type="checkBox" id="batteryRemainingCheck"></li>
+						   <li><label for="timeRemainingCheck">time_remaining</label>
+                                                   <input type="checkBox" id="timeRemainingCheck"></li>
+                                                   <li><label for="chargeStateCheck">charge_state</label>
+                                                   <input type="checkBox" id="chargeStateCheck"></li>
+                                                   <li><label for="voltagesExtCheck">voltages_ext</label>
+                                                   <input type="checkBox" id="voltagesExtCheck"></li>
+                                                   <li><label for="modeCheck">mode</label>
+                                                   <input type="checkBox" id="modeCheck"></li>
+                                                   <li><label for="fault_bitmaskCheck">fault_bitmask</label>
+                                                   <input type="checkBox" id="faultBitmaskCheck"></li>
+
+						</ul>
+
+					</div>
+				</div>
+				<button id="submitTelemetryBtn" onclick="submitTelemetry()">Submit</button>
+			    </div>
+			    <div class="modal-footer">
+			      <h3>Modal Footer</h3>
+			    </div>
+			  </div>
+
+			</div>
+ 
+			<ul id="tab-list" class="nav nav-tabs" role="tablist">
                         </ul>
 
                         <div id="tab-content" class="tab-content">
