@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvYm9iY2F0IiwiYSI6ImNqejhveTZzNzFubzkzY20ya2ZlbHB0azEifQ.DB5so0XX0ddlaYkEVF0zSg';  // TODO add your API public access token to .env
+mapboxgl.accessToken = document.getElementById("mapboxId").value;  // TODO add your API public access token to .env
 
 var geocoder = new MapboxGeocoder({ // Initialize the geocoder
     accessToken: mapboxgl.accessToken, // Set the access token
