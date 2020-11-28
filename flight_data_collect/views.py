@@ -59,5 +59,5 @@ def disarm(request, droneid):
 def update_fields(request):
     if request.method == "GET":
         return HttpResponse("hello")
-    msg = str(request.POST)
+    msg = str(request.body)
     return HttpResponse(json.dumps(msg), content_type="text/plain")
