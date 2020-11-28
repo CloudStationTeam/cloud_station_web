@@ -4,11 +4,13 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.conf import settings
 
 @never_cache
 @ensure_csrf_cookie
 def default_layout(request):
-    return render(request, 'default_layout.html')
+    
+    return render(request, 'default_layout.html', {"MAPBOX_KEY":settings.MAPBOX_PUBLIC_KEY})
 
 def signup(request):
     if request.method == 'POST':
