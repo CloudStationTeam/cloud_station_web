@@ -204,9 +204,12 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
     }
 };
 
+/* HTTP REQUESTS TO BACKEND */
+
 // param fields should be a JSON object representing the fields requested
 function updateTelemetryFields(fields) {
     var xmlHttp = new XMLHttpRequest();
+    const csrftoken = getCookie('csrftoken')
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
@@ -215,7 +218,7 @@ function updateTelemetryFields(fields) {
     console.log(xmlHttp.toString())
     var url = '/flight_data_collect/update-fields/';
     xmlHttp.open("POST", url, true); // asynchronous
-    xmlHttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+    xmlHttp.setRequestHeader("X-CSRFToken", csrftoken);
     xmlHttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
     xmlHttp.send(fields);
 }
@@ -300,4 +303,20 @@ function set_arm(droneId, is_disarm=false) {
 function set_mode_test(id, value) {
     alert(id + value);
     return false;
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

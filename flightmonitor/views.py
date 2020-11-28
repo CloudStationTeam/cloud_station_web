@@ -3,8 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 @never_cache
+@ensure_csrf_cookie
 def default_layout(request):
     return render(request, 'default_layout.html')
 
