@@ -209,17 +209,8 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 
 // param fields should be a JSON object representing the fields requested
 function updateTelemetryFields(fields) {
-    var url = '/flight_data_collect/update-fields/';
-
-    var xmlHttpTest = new XMLHttpRequest();
-    xmlHttpTest.onreadystatechange = function () {
-        if (xmlHttpTest.readyState == 4 && xmlHttpTest.status == 200)
-            document.querySelector('#telemetry-log').value += (xmlHttpTest.responseText + '\n');
-    };
-    xmlHttpTest.open("GET", url, true); // asynchronous
-    xmlHttpTest.send();
-
     var xmlHttp = new XMLHttpRequest();
+    var url = '/flight_data_collect/update-fields/';
     const csrftoken = getCookie('csrftoken')
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
