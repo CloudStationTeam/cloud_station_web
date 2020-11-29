@@ -16,6 +16,7 @@ var SETMODE_CONST = '<select id = "mode">' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
 
+var TELEMETRY_CATEGORIES = ["GLOBAL_POSITION_INT","BATTERY_STATUS"]
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
     '/ws/flightmonitor/');
@@ -350,8 +351,32 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-function submitTelemetry(){
-	var x = document.getElementById("timeBootCheck").checked;
-	document.getElementById("submitTelemetryBtn").innerHTML = x;
 
+// Create JSON object using form data and send to Back-end
+function submitTelemetry(){
+	var dict = {};
+	var categories = document.getElementsByClassName("categoryName");
+	for (var i = 0; i < categories.length; ++i){
+		var category = categories[i].innerHTML;
+		var categoryCheckName = category+"Check";
+		var fields =  getCheckedFromCategory(categoryCheckName);
+		if(fields.length > 0){
+			dict[category] = getCheckedFromCategory(categoryCheckName);	
+		}	
+	}
+//	document.getElementById("testText").innerHTML = JSON.stringify(dict);
+	updateTelemetryFields(JSON.stringify(dict));
+}
+
+// Get value of checked inputs given Category check name 
+function getCheckedFromCategory(categoryCheckName){
+	var checkboxes = document.getElementsByName(categoryCheckName);
+	var listOfChecked = [];
+
+	for (var i=0; i < checkboxes.length; i++){
+		if(checkboxes[i].checked){
+			listOfChecked.push(checkboxes[i].value);
+		}
+	}	
+	return listOfChecked;
 }
