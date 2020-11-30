@@ -8,7 +8,7 @@ import socket
 import json
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
-
+test_dict={'GLOBAL_POSITION_INT': ['lat','lon','alt'],'BATTERY_STATUS': ['current_battery','battery_remaining','mode']}
 
 def check_vehicle_heartbeat(connect_address: str) -> bool:
     try:
@@ -34,15 +34,18 @@ def get_mavlink_messages(connect_address):
             msg = _get_mavlink_message(mavlink, msg_type, connect_address)
             if msg and 'ERROR' not in msg:
                 timeout_count = max(0, timeout_count - 1)  # decrement by 1 if timeout_count > 0
-                if msg.get("mavpackettype", "") == mavlink_constants.GPS_RAW_INT and _is_gps_fix(msg):
-                    location_msg = _get_mavlink_message(mavlink, mavlink_constants.GLOBAL_POSITION_INT, connect_address)
-                    if location_msg:
-                        parse_mavlink_msg(location_msg, mavlink)
-                        send_message_to_clients(json.dumps(location_msg))
+                requested_categories=test_dict.keys()
+                for requested_mes_type in requested_categories:
+                    requested_msg = _get_mavlink_message(mavlink, requested_mes_type, connect_address)
+                    if requested_msg:
+                        parse_mavlink_msg(requested_msg, mavlink)
+                        push_log_to_client('REQUESTED:')
+                        send_message_to_clients(json.dumps(requested_msg))
                 parse_mavlink_msg(msg, mavlink)
             else:
                 timeout_count += 1
                 mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
+            push_log_to_client('USEFUL MESSAGE:')
             send_message_to_clients(json.dumps(msg))
             if timeout_count > 10:
                 send_message_to_clients(json.dumps(
@@ -51,7 +54,6 @@ def get_mavlink_messages(connect_address):
                 v.is_connected = False
                 v.save()
                 break
-
 
 def _is_gps_fix(msg) -> bool:
     fix_type = int(msg.get("fix_type", "0"))
