@@ -1,14 +1,14 @@
 from pymavlink import mavutil
 from datetime import datetime
 from flight_data_collect.models import Vehicle, Telemetry_log, Location_log
-from flight_data_collect.drone_communication import mavlink_constants
+from flight_data_collect.drone_communication import mavlink_constants,mavlink_control
 from flight_data_collect.utils import push_log_to_client
 from flightmonitor.consumers import send_message_to_clients
 import socket
 import json
 
+REQUESTED_CATEGORIES=[]
 SERVER_IP = socket.gethostbyname(socket.gethostname())
-test_dict={'GLOBAL_POSITION_INT': ['lat','lon','alt'],'BATTERY_STATUS': ['current_battery','battery_remaining','mode']}
 
 def check_vehicle_heartbeat(connect_address: str) -> bool:
     try:
@@ -25,27 +25,35 @@ def check_vehicle_heartbeat(connect_address: str) -> bool:
         print(e)
     return False
 
+def update_telemetry_data(msg):
+    updated_msg=eval(msg)
+    keys=updated_msg.keys()
+    global REQUESTED_CATEGORIES
+    REQUESTED_CATEGORIES.clear()
+    for key in keys:
+        REQUESTED_CATEGORIES.append(key)
+        updated=str(REQUESTED_CATEGORIES)
+        push_log_to_client(updated)
+    return ['Fields Successfully Received']
 
 def get_mavlink_messages(connect_address):
+    USEFUL_MESSAGES=mavlink_constants.USEFUL_MESSAGES.copy()
     mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
     timeout_count = 0
     while (Vehicle.objects.get(droneid=connect_address).is_connected):
-        for msg_type in mavlink_constants.USEFUL_MESSAGES:
+        TELEMETRY_CATEGORIES=USEFUL_MESSAGES.copy()
+        for category in REQUESTED_CATEGORIES:
+            TELEMETRY_CATEGORIES.append(category)
+        for msg_type in TELEMETRY_CATEGORIES:
+            push_log_to_client(msg_type)
             msg = _get_mavlink_message(mavlink, msg_type, connect_address)
             if msg and 'ERROR' not in msg:
                 timeout_count = max(0, timeout_count - 1)  # decrement by 1 if timeout_count > 0
-                requested_categories=test_dict.keys()
-                for requested_mes_type in requested_categories:
-                    requested_msg = _get_mavlink_message(mavlink, requested_mes_type, connect_address)
-                    if requested_msg:
-                        parse_mavlink_msg(requested_msg, mavlink)
-                        push_log_to_client('REQUESTED:')
-                        send_message_to_clients(json.dumps(requested_msg))
                 parse_mavlink_msg(msg, mavlink)
             else:
                 timeout_count += 1
                 mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
-            push_log_to_client('USEFUL MESSAGE:')
+            #push_log_to_client('USEFUL MESSAGE:')
             send_message_to_clients(json.dumps(msg))
             if timeout_count > 10:
                 send_message_to_clients(json.dumps(
