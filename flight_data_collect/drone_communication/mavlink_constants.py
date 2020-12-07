@@ -7,7 +7,12 @@ GPS_RAW = 'GPS_RAW'
 GPS_FIX_TYPE = {
     1 : "GPS_NO_FIX",
     2 : "GPS_2D_FIX",
-    3 : "GPS_3D_FIX"
+    3 : "GPS_3D_FIX",
+    4 : "GPS_FIX_TYPE_DGPS",
+    5 : "GPS_FIX_TYPE_RTK_FLOAT",
+    6 : "GPS_FIX_TYPE_RTK_FIXED",
+    7 : "GPS_FIX_TYPE_STATIC",
+    8 : "GPS_FIX_TYPE_PPP"
 }
 MAV_MODE = {
     0 : "PREFLIGHT",
@@ -26,10 +31,39 @@ MAV_TYPE_MAP = {
     0 : "GENERIC",
     1 : "FIXED_WING",
     2 : "QUADROTOR",
+    3 : "COAXIAL",
     4 : "HELICOPTER",
+    5 : "ANTENNA_TRACKER",
     6 : "GCS",
+    7 : "AIRSHIP",
+    8 : "FREE_BALLOON",
+    9 : "ROCKET",
     10 : "ROVER",
     11 : "BOAT",
+    12 : "SUBMARINE",
+    13 : "HEXAROTOR",
+    14 : "OCTOROTOR",
+    15 : "TRICOPTER",
+    16 : "FLAPPING_WING",
+    17 : "KITE",
+    18 : "ONBOARD_CONTROLLER",
+    19 : "VTOL_DUOROTOR",
+    20 : "VTOL_QUADROTOR",
+    21 : "VTOL_TILTROTOR",
+    22 : "VRTOL_RESERVED2",
+    23 : "VTOL_RESERVED3",
+    24 : "VTOL_RESERVED4",
+    25 : "VTOL_RESERVED5",
+    26 : "GIMBAL",
+    27 : "ADSB",
+    28 : "PARAFOIL",
+    29 : "DODECAROTOR",
+    30 : "CAMERA",
+    31 : "CHARING_STATION",
+    32 : "FLARM",
+    33 : "SERVO",
+    34 : "ODID",
+    35 : "DECAROTOR"
 }
 HEARTBEAT = "HEARTBEAT"
 
