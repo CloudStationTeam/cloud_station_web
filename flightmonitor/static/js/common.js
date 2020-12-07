@@ -16,7 +16,6 @@ var SETMODE_CONST = '<select id = "mode">' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
 
-var TELEMETRY_CATEGORIES = ["GLOBAL_POSITION_INT","BATTERY_STATUS"]
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
     '/ws/flightmonitor/');
@@ -27,10 +26,6 @@ var tempPop = new Map();
 var currSelectedDroneId;
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
-
-// Example usage for updateTelemetryFields function
-exampleTelemetryObject = {'fields': 'Update telemetry fields message'}
-updateTelemetryFields(JSON.stringify(exampleTelemetryObject))
 
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
@@ -329,20 +324,14 @@ function getCookie(name) {
 // Get the modal
 var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("telemetryEditBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
+function openForm(){
+	modal.style.display="block";
+	document.getElementById('formBody').innerHTML = createForm(TELEMETRY_CONST);
+//	$("#formBody").html(createForm(TELEMETRY_CONST));
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
+function closeForm(){
+	modal.style.display="none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -379,4 +368,27 @@ function getCheckedFromCategory(categoryCheckName){
 		}
 	}	
 	return listOfChecked;
+}
+
+function createForm(telemetryDict){
+	var html = '<div class = "row">';
+	for(let category in telemetryDict){
+		html += '<div class="col">';
+		html += '<h3 class="categoryName">'+category+'</h3>';
+		html += '<ul>';
+		telemetryDict[category].forEach(function (field, index){
+
+			html += '<li><label for="'+field+'Check">'+field+'</label>';
+			html += '<input type="checkBox" name="'+category+'Check" value="'+field+'"></li>';
+		});
+		html += '</ul>';
+		html += '</div>';
+	}
+	html += '<div class="col">';
+	html += '<p id="testText">Ready for Test</p>';
+	html += '</div>';
+	html += '</div>';
+	html += '<button id="submitTelemetryBtn" onclick="submitTelemetry()">Submit</button>';
+
+	return html;
 }

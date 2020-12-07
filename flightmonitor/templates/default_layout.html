@@ -136,82 +136,16 @@
             <div class="col-sm-3">
                 <div class="row">
                     <div class="row-sm-7" id="tabcontent">
-			<button id="telemetryEditBtn">Edit</button>
+			<button id="telemetryEditBtn" onclick="openForm()">Edit</button>
 			<!-- The Modal--> 
 			<div id="myModal" class="modal">
 			  <!-- Modal content--> 
 			  <div class="modal-content">
 			    <div class="modal-header">
-			      <span class="close">&times;</span>
+			      <span class="close" onclick="closeForm()">&times;</span>
 			      <h2>Modal Header</h2>
 			    </div>
-			    <div class="modal-body">
-				<div class ="row">
-					<div class="col">
-						<h3 class="categoryName">GLOBAL_POSITION_INT</h3>
-						<ul>
-						   <li><label for="timeBootCheck">time_boot_ms</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="time_boot_ms"></li>
-						   <li><label for="latCheck">lat</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="lat"></li>
-						   <li><label for="lonCheck">lon</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="lon"></li>
-						   <li><label for="altCheck">alt</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="alt"></li>
-						   <li><label for="relativeAltCheck">relative_alt</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="relative_alt"></li>
-						   <li><label for="vxCheck">vx</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="vx"></li>
-						   <li><label for="vyCheck">vy</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="vy"></li>
-						   <li><label for="vzCheck">vz</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="vz"></li>
-						   <li><label for="hbgCheck">hdg</label>
-							   <input type="checkBox" name="GLOBAL_POSITION_INTCheck" value="hdg"></li>
-						</ul>
-					</div>
-					<div class="col">
-						<h3 class="categoryName">BATTERY_STATUS</h3>
-                                                <ul>
-                                                   <li><label for="idCheck">id</label>
-	                                                   <input type="checkBox" name="BATTERY_STATUSCheck" value="id"></li>
-						   <li><label for="batteryFunctionCheck">battery_function</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="battery_function"></li>
-						   <li><label for="typeCheck">type</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="type"></li>
-						   <li><label for="temperatureCheck">temperature</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="temperature"></li>
-                                                   <li><label for="voltagesCheck">voltages</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="voltages"></li>
-                                                   <li><label for="currentBatteryCheck">current_battery</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="current_battery"></li>
-						   <li><label for="currentConsumedCheck">current_consumed</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="current_consumed"></li>
-                                                   <li><label for="energyConsumedCheck">energy_consumed</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="energy_consumed"></li>
-                                                   <li><label for="batteryRemainingCheck">battery_remaining</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="battery_remaining"></li>
-						   <li><label for="timeRemainingCheck">time_remaining</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="time_remaining"></li>
-                                                   <li><label for="chargeStateCheck">charge_state</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="charge_state"></li>
-                                                   <li><label for="voltagesExtCheck">voltages_ext</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="voltages_ext"></li>
-                                                   <li><label for="modeCheck">mode</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="mode"></li>
-                                                   <li><label for="fault_bitmaskCheck">fault_bitmask</label>
-							   <input type="checkBox" name="BATTERY_STATUSCheck" value="fault_bitmask"></li>
-
-
-						</ul>
-
-					</div>
-<!--
-					<div class="col">
-						<p id="testText">Ready for Test</p>
-					</div>-->
-				</div>
-				<button id="submitTelemetryBtn" onclick="submitTelemetry()">Submit</button>
+			    <div class="modal-body" id="formBody">
 			    </div>
 			    <div class="modal-footer">
 			      <h3>Modal Footer</h3>
@@ -250,6 +184,7 @@
 <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/globalVariables.js' %}"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
