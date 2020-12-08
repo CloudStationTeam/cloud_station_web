@@ -194,10 +194,10 @@ function updatePower(vcc, vservo, droneID){
 }
 
 function updateOther(data, droneID){
-    for (const [category, values] of Object.entries(fields)) {
-        for (const [fieldname, data] of Object.entries(values)) {
+    for (const [category, values] of Object.entries(data)) {
+        for (const [fieldname, value] of Object.entries(values)) {
             cellId = '#' + getExtraDataCellName(fieldname, category, droneID);
-            $(cellId).text(data)
+            $(cellId).text(value)
         }
     }
 }

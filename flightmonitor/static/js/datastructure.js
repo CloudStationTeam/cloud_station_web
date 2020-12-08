@@ -217,7 +217,7 @@ class Drone {
 
     // update other_fields (data is a MAVLink message object), discard extra data
     updateOtherFieldsData(data) {
-        category = data["mavpackettype"]
+        let category = data["mavpackettype"]
         for (const [key, value] of Object.entries(data)) {
             if (this.other_fields.hasOwnProperty(category) && this.other_fields[category].hasOwnProperty(key)) {
                 this.other_fields[category][key] = value;
