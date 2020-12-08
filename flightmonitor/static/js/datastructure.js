@@ -198,6 +198,32 @@ class Drone {
     updateVservo(vser){
         this.vservo = vser;
     }
+
+    // Other fields
+    getOtherFields() {
+        return this.other_fields;
+    }
+
+    // change which properties are in other_fields
+    updateOtherFieldsKeys(fields){
+        this.other_fields = {}
+        for (const [key, value] of Object.entries(fields)) {
+            if (!this.other_fields.hasOwnProperty(key)) {
+                this.other_fields[key] = {}
+            }
+            this.other_fields[key][value] = null;
+        }
+    }
+
+    // update other_fields (data is a MAVLink message object), discard extra data
+    updateOtherFieldsData(data) {
+        category = data["mavpackettype"]
+        for (const [key, value] of Object.entries(data)) {
+            if (this.other_fields.hasOwnProperty(category) && this.other_fields[category].hasOwnProperty(key)) {
+                this.other_fields[category][key] = value;
+            }
+        }
+    }
 }
 
 

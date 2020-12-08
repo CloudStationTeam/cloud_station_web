@@ -136,6 +136,9 @@ function storeTodroneMap(tempPack) {
         storeStruct.updateVcc(tempPack["Vcc"]);
         storeStruct.updateVservo(tempPack["Vservo"]);
     }
+    else {
+        storeStruct.updateOtherFieldsData(tempPack);
+    }
 }
 
 
@@ -146,6 +149,7 @@ function updateInfo(droneID) {
     updateHeartBeat(drone.getType(), drone.getFlyMode(), droneID);
     updateGPS(drone.getFixType(), drone.getSatellitesVisible(), droneID);
     updatePower(drone.getVcc(), drone.getVservo(), droneID);
+    updateOther(drone.getOtherFields(), droneID)
 }
 
 function updateLocations(al, long, lat, droneID) {
@@ -189,9 +193,13 @@ function updatePower(vcc, vservo, droneID){
     $(vservoID).text(vservo);
 }
 
-function updateOther(data){
-    // Generic update function
-    return
+function updateOther(data, droneID){
+    for (const [category, values] of Object.entries(fields)) {
+        for (const [fieldname, data] of Object.entries(values)) {
+            cellId = '#' + getExtraDataCellName(fieldname, category, droneID);
+            $(cellId).text(data)
+        }
+    }
 }
 
 
