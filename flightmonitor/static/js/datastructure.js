@@ -217,7 +217,8 @@ class Drone {
         let category = data["mavpackettype"]
         for (const [key, value] of Object.entries(data)) {
             if (this.other_fields.hasOwnProperty(category) && this.other_fields[category].hasOwnProperty(key)) {
-                this.other_fields[category][key] = value;
+                console.log(value)
+                this.other_fields[category][key] = value.toString();
             }
         }
     }
