@@ -13,7 +13,7 @@ function getHtmlTabId(droneId) {
 }
 
 function getDroneIdFromTabName(tabName) {
-    return tabName[7:]
+    return tabName.slice(7)
 }
 
 // Id of "Extra Info" table for each drone
