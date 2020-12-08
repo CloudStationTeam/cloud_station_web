@@ -15,6 +15,7 @@ function addTab(droneID) {
     tabNum++;
     let tabid = getTabId(droneID);
     tabID.set(droneID, tabid)
+    let tabcontent = 'contentDrone' + droneID.toString();
     let tabContent = getHtmlTabId(droneID);
     let altitudeID = 'altitude' + droneID.toString();
     let longitudeID = 'longitude' + droneID.toString();
