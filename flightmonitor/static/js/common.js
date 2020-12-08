@@ -136,9 +136,6 @@ function storeTodroneMap(tempPack) {
         storeStruct.updateVcc(tempPack["Vcc"]);
         storeStruct.updateVservo(tempPack["Vservo"]);
     }
-    else {
-        // Generic case here
-    }
 }
 
 
