@@ -72,7 +72,6 @@ function getExtraDataCellName(field, category, droneId) {
 function updateExtraData(fields) {
     $('.tab, .tab-pane').each(function() {
         droneId = getDroneIdFromTabName($(this).prop('id'))
-        console.log(droneId);
         $('#' + getExtraInfoTableId(droneId)).empty()
         for (const [key, value] of Object.entries(fields)) {
             for (field of value) {
