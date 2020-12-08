@@ -72,9 +72,9 @@ function getExtraDataCellName(field, category, droneId) {
 function updateExtraData(fields) {
     console.log("Updating extra data fields")
     $('.tab, .tab-pane').each(function() {
-        $(this).empty()
         droneId = getDroneIdFromTabName($(this).prop('id'))
         console.log(droneId);
+        $('#' + getExtraInfoTableId(droneId)).empty()
         for (const [key, value] of Object.entries(fields)) {
             for (field of value) {
                 $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>' + field + ' (' + key + ')' + '</th></tr>' +
