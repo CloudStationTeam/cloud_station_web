@@ -63,14 +63,24 @@ function addTab(droneID) {
     document.getElementById("content" + droneID).className = "tab";
 }
 
-// Refresh fields in "extra data" for each drone
-function updateExtraData() {
-    console.log("Updating")
-    $('.tab').each(function(){console.log("tab")})
-    $('.tab').each(function() {
-        console.log($(this).prop('id'));
+function getExtraDataCellName(field, category, droneId) {
+    return field + "_" + category + "_" + droneId.toString()
+}
+
+// Refresh fields in "extra data" for each drone.
+// Removes existing elements and re-adds elements in "fields" param.
+function updateExtraData(fields) {
+    console.log("Updating extra data fields")
+    $('.tab, .tab-pane').each(function() {
+        $(this).empty()
         droneId = getDroneIdFromTabName($(this).prop('id'))
-        $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>Hello</th></tr>'))
+        console.log(droneId);
+        for (const [key, value] of Object.entries(fields)) {
+            for (field of value) {
+                $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>' + field + ' (' + key + ')' + '</th></tr>' +
+                                                                '<tr><td><var class="contentValue" id = ' + getExtraDataCellName(field, key, droneId) + '></var></td></tr>'));
+            }
+        }
     })
 }
 

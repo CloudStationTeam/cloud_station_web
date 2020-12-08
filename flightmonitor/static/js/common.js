@@ -359,8 +359,8 @@ function submitTelemetry(){
 			dict[category] = getCheckedFromCategory(categoryCheckName);	
 		}	
 	}
-//	document.getElementById("testText").innerHTML = JSON.stringify(dict);
 	updateTelemetryFields(JSON.stringify(dict));
+	updateExtraData(dict);
 }
 
 // Get value of checked inputs given Category check name 
