@@ -4,18 +4,17 @@ var tabContentMap = new Map();
 
 // Get tab ID based on drone ID
 function getTabId(droneId) {
-    return "tabDrone" + droneID.toString();
+    return "tabDrone" + droneId.toString();
 }
 
-function getHtmlTabId(droneID) {
-    return "content" + droneID.toString();
+function getHtmlTabId(droneId) {
+    return "content" + droneId.toString();
 }
 
 function addTab(droneID) {
     tabNum++;
     let tabid = getTabId(droneID);
     tabID.set(droneID, tabid)
-    let tabcontent = 'contentDrone' + droneID.toString();
     let tabContent = getHtmlTabId(droneID);
     let altitudeID = 'altitude' + droneID.toString();
     let longitudeID = 'longitude' + droneID.toString();
