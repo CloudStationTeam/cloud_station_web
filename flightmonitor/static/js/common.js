@@ -135,9 +135,7 @@ function storeTodroneMap(tempPack) {
         storeStruct.updateVcc(tempPack["Vcc"]);
         storeStruct.updateVservo(tempPack["Vservo"]);
     }
-    else {
-        storeStruct.updateOtherFieldsData(tempPack);
-    }
+    storeStruct.updateOtherFieldsData(tempPack);
 }
 
 
@@ -196,7 +194,7 @@ function updateOther(data, droneID){
     for (const [category, values] of Object.entries(data)) {
         for (const [fieldname, value] of Object.entries(values)) {
             cellId = '#' + getExtraDataCellName(fieldname, category, droneID);
-            $(cellId).text(value.toString())
+            $(cellId).text(value)
         }
     }
 }
