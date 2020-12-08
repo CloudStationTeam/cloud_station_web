@@ -19,6 +19,10 @@ class Drone {
         this.satellitesVisible = null;
         this.vcc = null;
         this.vservo = null;
+        this.other_fields={
+            "data1": null,
+            "data2": null
+        };
     }
 
     getID() {

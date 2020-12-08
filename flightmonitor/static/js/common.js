@@ -136,6 +136,9 @@ function storeTodroneMap(tempPack) {
         storeStruct.updateVcc(tempPack["Vcc"]);
         storeStruct.updateVservo(tempPack["Vservo"]);
     }
+    else {
+        // Generic case here
+    }
 }
 
 
@@ -187,6 +190,11 @@ function updatePower(vcc, vservo, droneID){
     let vservoID = '#VservoID' + droneID.toString();
     $(vccID).text(vcc);
     $(vservoID).text(vservo);
+}
+
+function updateOther(data){
+    // Generic update function
+    return
 }
 
 
