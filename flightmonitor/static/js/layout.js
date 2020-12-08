@@ -65,12 +65,11 @@ function addTab(droneID) {
 
 // Refresh fields in "extra data" for each drone
 function updateExtraData() {
-    var tabs = document.getElementsByClassName("tab");
-    for (i = 0; i < tabs.length; i++) {
-        console.log(tabs[i].attr('id'));
-        droneId = getDroneIdFromTabName(tabs[i].attr('id'))
+    $('#tab').each(function() {
+        console.log($(this).attr('id'));
+        droneId = getDroneIdFromTabName($(this).attr('id'))
         $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>Hello</th></tr>'))
-    }
+    })
 }
 
 
