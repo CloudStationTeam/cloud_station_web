@@ -15,7 +15,6 @@ function addTab(droneID) {
     tabNum++;
     let tabid = getTabId(droneID);
     tabID.set(droneID, tabid);
-    let tabcontent = 'contentDrone' + droneID.toString();
     let tabContent = getHtmlTabId(droneID);
     let altitudeID = 'altitude' + droneID.toString();
     let longitudeID = 'longitude' + droneID.toString();
@@ -45,13 +44,16 @@ function addTab(droneID) {
         '<tr><td>' + '<var class="contentValue" id = ' + fixTypeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + satellitesID + '></var>' + '</td></tr>' +
         '<tr><th>VCC</th><th>VSERVO</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + vccID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + vservoID + '></var>' + '</td></tr>' +
-        '</table>'));
+        '</table>' +
+        '<h4>Other Data</h4>' +
+        '<table id = "extra_info"></table">'));
     var contents = document.getElementsByClassName("tab"); // list of TabContent
     for (i = 0; i < contents.length; i++) {
         contents[i].className = "tab-pane";
     }
     document.getElementById("content" + droneID).className = "tab";
 
+    $('#extra_info').append($('<tr><th>Hello</th></tr>'))
 
 }
 
