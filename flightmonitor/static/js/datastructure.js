@@ -204,13 +204,15 @@ class Drone {
     // change which properties are in other_fields
     updateOtherFieldsKeys(fields){
         this.other_fields = {}
-        for (const [key, value] of Object.entries(fields)) {
-            if (!this.other_fields.hasOwnProperty(key)) {
-                this.other_fields[key] = {}
+        for (const [category, fieldList] of Object.entries(fields)) {
+            if (!this.other_fields.hasOwnProperty(category)) {
+                this.other_fields[category] = {}
             }
-            this.other_fields[key][value] = null;
+            for (let field of fieldList) {
+                this.other_fields[category][field] = null;
+            }
         }
-        console.log(this.other_fields.toString())
+        console.log(Object.entries(this.other_fields).toString())
     }
 
     // update other_fields (data is a MAVLink message object), discard extra data
