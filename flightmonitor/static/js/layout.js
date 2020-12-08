@@ -70,7 +70,6 @@ function getExtraDataCellName(field, category, droneId) {
 // Refresh fields in "extra data" for each drone.
 // Removes existing elements and re-adds elements in "fields" param.
 function updateExtraData(fields) {
-    console.log("Updating extra data fields")
     $('.tab, .tab-pane').each(function() {
         droneId = getDroneIdFromTabName($(this).prop('id'))
         console.log(droneId);
