@@ -366,8 +366,11 @@ function submitTelemetry(){
 			dict[category] = getCheckedFromCategory(categoryCheckName);	
 		}	
 	}
-	updateTelemetryFields(JSON.stringify(dict));
+	for (let drone of droneMap) {
+	    drone.updateOtherFieldsKeys(dict)
+	}
 	updateExtraData(dict);
+	updateTelemetryFields(JSON.stringify(dict));
 }
 
 // Get value of checked inputs given Category check name 
