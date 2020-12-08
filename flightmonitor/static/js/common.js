@@ -366,7 +366,7 @@ function submitTelemetry(){
 			dict[category] = getCheckedFromCategory(categoryCheckName);	
 		}	
 	}
-	for (let drone of droneMap) {
+	for (let [droneId, drone] of droneMap) {
 	    drone.updateOtherFieldsKeys(dict)
 	}
 	updateExtraData(dict);
