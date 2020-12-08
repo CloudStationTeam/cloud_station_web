@@ -7,15 +7,24 @@ function getTabId(droneId) {
     return "tabDrone" + droneId.toString();
 }
 
+// Id of tab for each drone
 function getHtmlTabId(droneId) {
     return "content" + droneId.toString();
+}
+
+function getDroneIdFromTabName(tabName) {
+    return tabName[7:]
+}
+
+// Id of "Extra Info" table for each drone
+function getExtraInfoTableId(droneId) {
+    return "extraInfo" + droneId.toString();
 }
 
 function addTab(droneID) {
     tabNum++;
     let tabid = getTabId(droneID);
     tabID.set(droneID, tabid);
-    let tabContent = getHtmlTabId(droneID);
     let altitudeID = 'altitude' + droneID.toString();
     let longitudeID = 'longitude' + droneID.toString();
     let latitudeID = 'latitude' + droneID.toString();
@@ -30,7 +39,7 @@ function addTab(droneID) {
     let vservoID = 'VservoID' + droneID.toString();
 
     $('#tab-list').append($('<li><button class = "tabTitle" id="title' + droneID.toString() + '" role="tab" data-toggle="tab" onclick = "showDrone(' + droneID.toString() + ')"><span>Drone ' + droneID + '</span> <span class="glyphicon glyphicon-pencil text-muted edit"></span> </button></li>'));
-    $('#tab-content').append($('<div class="tab" id = "' + tabContent + '">' +
+    $('#tab-content').append($('<div class="tab" id = "' + getHtmlTabId(droneID) + '">' +
         '<table id = "infobox">' +
         '<tr><th>Altitude (m)</th><th>Pitch (deg)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + altitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + pitchID + '></var>' + '</td></tr>'+
@@ -46,15 +55,22 @@ function addTab(droneID) {
         '<tr><td>' + '<var class="contentValue" id = ' + vccID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + vservoID + '></var>' + '</td></tr>' +
         '</table>' +
         '<h4>Other Data</h4>' +
-        '<table id = "extra_info"></table">'));
+        '<table id = "' + getExtraInfoTableId(droneID) + '"></table">'));
     var contents = document.getElementsByClassName("tab"); // list of TabContent
     for (i = 0; i < contents.length; i++) {
         contents[i].className = "tab-pane";
     }
     document.getElementById("content" + droneID).className = "tab";
+}
 
-    $('#extra_info').append($('<tr><th>Hello</th></tr>'))
-
+// Refresh fields in "extra data" for each drone
+function updateExtraData() {
+    var tabs = document.getElementsByClassName("tab");
+    for (i = 0; i < contents.length; i++) {
+        console.log(contents[i].attr('id'));
+        droneId = getDroneIdFromTabName(contents[i].attr('id'))
+        $('#' + getExtraInfoTableId(droneID)).append($('<tr><th>Hello</th></tr>'))
+    }
 }
 
 

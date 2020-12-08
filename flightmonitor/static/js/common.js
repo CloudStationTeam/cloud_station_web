@@ -75,6 +75,7 @@ browserSocket.onmessage = function (e) {
         var cell = row.insertCell(-1);
         cell.innerHTML = "<div id = 'dyTableID" + droneId+ "'>ID: " + droneId +"</div>";
         addTab(droneId); // add a new tab
+        updateExtraData();
     } else {
         storeTodroneMap(msg);
         drone = droneMap.get(droneId);
