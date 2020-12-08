@@ -77,8 +77,8 @@ browserSocket.onmessage = function (e) {
         cell.innerHTML = "<div id = 'dyTableID" + droneId+ "'>ID: " + droneId +"</div>";
         addTab(droneId); // add a new tab
         // Add extra data fields to new drone & new tab
-	    drone.updateOtherFieldsKeys(dict)
-	    updateExtraData(dict);
+	    drone.updateOtherFieldsKeys(currDisplayedExtraData)
+	    updateExtraData(currDisplayedExtraData);
     } else {
         storeTodroneMap(msg);
         drone = droneMap.get(droneId);
