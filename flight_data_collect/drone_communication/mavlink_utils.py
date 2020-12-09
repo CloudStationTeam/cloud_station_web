@@ -1,7 +1,7 @@
 from pymavlink import mavutil
 from datetime import datetime
 from flight_data_collect.models import Vehicle, Telemetry_log, Location_log
-from flight_data_collect.drone_communication import mavlink_constants, mavlink_control
+from flight_data_collect.drone_communication import mavlink_constants
 from flight_data_collect.utils import push_log_to_client
 from flightmonitor.consumers import send_message_to_clients
 import socket
@@ -41,10 +41,10 @@ def get_mavlink_messages(connect_address):
     mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
     timeout_count = 0
     while Vehicle.objects.get(droneid=connect_address).is_connected:
-        TELEMETRY_CATEGORIES = USEFUL_MESSAGES.copy()
+        telemetry_categories = set(USEFUL_MESSAGES)
         for category in REQUESTED_CATEGORIES:
-            TELEMETRY_CATEGORIES.append(category)
-        for msg_type in TELEMETRY_CATEGORIES:
+            telemetry_categories.add(category)
+        for msg_type in telemetry_categories:
             msg = _get_mavlink_message(mavlink, msg_type, connect_address)
             if msg and 'ERROR' not in msg:
                 timeout_count = max(0, timeout_count - 1)  # decrement by 1 if timeout_count > 0
