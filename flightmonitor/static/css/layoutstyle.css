@@ -93,7 +93,7 @@ body {
     padding-bottom: 10px;
 }
 
-#infobox {
+.infobox {
     color: #56baed;
     background: whitesmoke;
     padding-bottom: 0px;
@@ -147,6 +147,11 @@ body {
 
 #tabcontent {
     height: 300px;
+}
+
+.extra-info-header {
+     color: #2a2d75;
+     font-weight: bold;
 }
 
 .dropbtn {
@@ -207,10 +212,11 @@ body {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  -webkit-animation-name: fadeIn; /* Fade in the background */
-  -webkit-animation-duration: 0.4s;
+/*  -webkit-animation-name: fadeIn; /* Fade in the background */
+/*  -webkit-animation-duration: 0.4s;
   animation-name: fadeIn;
   animation-duration: 0.4s
+*/
 }
 
 /* Modal Content */
@@ -219,10 +225,11 @@ body {
   bottom: 0;
   background-color: #fefefe;
   width: 100%;
-  -webkit-animation-name: slideIn;
+/*  -webkit-animation-name: slideIn;
   -webkit-animation-duration: 0.4s;
   animation-name: slideIn;
   animation-duration: 0.4s
+*/
 }
 
 /* The Close Button */
@@ -274,3 +281,39 @@ body {
   from {opacity: 0} 
   to {opacity: 1}
 }
+
+#slideOut {
+    left:0;
+    width:268px;
+    -webkit-animation-name: slideOut;
+    -webkit-animation-iteration-count: once;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-duration: 1.5s;
+    animation-name: slideOut;
+    animation-iteration-count: once;
+    animation-timing-function: ease-out;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slideOut {
+  from {bottom: 0; opacity: 1}
+  to {bottom: -300; opacity: 0}
+}
+
+@keyframes slideOut {
+  from {bottom: 0; opacity: 1}
+  to {bottom: -300px; opacity: 0}
+}
+
+@-webkit-keyframes fadeOut {
+  from {opacity: 1}
+  to {opacity: 0}
+}
+
+@keyframes fadeOut {
+  from {opacity: 1}
+  to {opacity: 0}
+}
+
