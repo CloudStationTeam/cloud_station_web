@@ -33,7 +33,6 @@ def update_telemetry_data(msg):
     for key in keys:
         REQUESTED_CATEGORIES.append(key)
         updated=str(REQUESTED_CATEGORIES)
-        push_log_to_client(updated)
     return ['Fields Successfully Received']
 
 def get_mavlink_messages(connect_address):
@@ -45,7 +44,6 @@ def get_mavlink_messages(connect_address):
         for category in REQUESTED_CATEGORIES:
             TELEMETRY_CATEGORIES.append(category)
         for msg_type in TELEMETRY_CATEGORIES:
-            push_log_to_client(msg_type)
             msg = _get_mavlink_message(mavlink, msg_type, connect_address)
             if msg and 'ERROR' not in msg:
                 timeout_count = max(0, timeout_count - 1)  # decrement by 1 if timeout_count > 0

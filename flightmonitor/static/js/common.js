@@ -24,6 +24,7 @@ document.querySelector('#telemetry-log').value += ('Successfully connected to se
 var tempPin = new Map();
 var tempPop = new Map();
 var currSelectedDroneId;
+var currDisplayedExtraData = {};
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
@@ -75,16 +76,14 @@ browserSocket.onmessage = function (e) {
         var cell = row.insertCell(-1);
         cell.innerHTML = "<div id = 'dyTableID" + droneId+ "'>ID: " + droneId +"</div>";
         addTab(droneId); // add a new tab
+        // Add extra data fields to new drone & new tab
+	    drone.updateOtherFieldsKeys(currDisplayedExtraData)
+	    updateExtraData(currDisplayedExtraData);
     } else {
         storeTodroneMap(msg);
         drone = droneMap.get(droneId);
         if (drone.hasMarker()) { // update on the previous marker
             drone.getMarker().setLngLat(drone.getLocation());
-//            drone.getPopup()
-//                .setHTML('<h3>' + drone.getID() + "</h3><p>" + "Longitude: " + drone.getLong() + " Latitude: " + drone.getLat()
-//                + '<form action="javascript:set_mode(' + droneId + ',mode.value)">' + SETMODE_CONST
-//                + "</p>" + '<input type="button" value="arm" onclick="javascript:set_arm('+droneId+')">'
-//                + '<input type="button" value="disarm" onclick="javascript:set_arm('+droneId+', true)">')
         } else {
             if (drone.getLocation() != null) { // make a new marker if the location has real data
                 var el = document.createElement('div');
@@ -136,6 +135,7 @@ function storeTodroneMap(tempPack) {
         storeStruct.updateVcc(tempPack["Vcc"]);
         storeStruct.updateVservo(tempPack["Vservo"]);
     }
+    storeStruct.updateOtherFieldsData(tempPack);
 }
 
 
@@ -146,6 +146,7 @@ function updateInfo(droneID) {
     updateHeartBeat(drone.getType(), drone.getFlyMode(), droneID);
     updateGPS(drone.getFixType(), drone.getSatellitesVisible(), droneID);
     updatePower(drone.getVcc(), drone.getVservo(), droneID);
+    updateOther(drone.getOtherFields(), droneID)
 }
 
 function updateLocations(al, long, lat, droneID) {
@@ -187,6 +188,15 @@ function updatePower(vcc, vservo, droneID){
     let vservoID = '#VservoID' + droneID.toString();
     $(vccID).text(vcc);
     $(vservoID).text(vservo);
+}
+
+function updateOther(data, droneID){
+    for (const [category, values] of Object.entries(data)) {
+        for (const [fieldname, value] of Object.entries(values)) {
+            cellId = '#' + getExtraDataCellName(fieldname, category, droneID);
+            $(cellId).text(value)
+        }
+    }
 }
 
 
@@ -353,7 +363,11 @@ function submitTelemetry(){
 			dict[category] = getCheckedFromCategory(categoryCheckName);	
 		}	
 	}
-//	document.getElementById("testText").innerHTML = JSON.stringify(dict);
+	currDisplayedExtraData = dict
+	for (let [droneId, drone] of droneMap) {
+	    drone.updateOtherFieldsKeys(dict)
+	}
+	updateExtraData(dict);
 	updateTelemetryFields(JSON.stringify(dict));
 }
 

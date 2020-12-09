@@ -2,11 +2,29 @@ var tabNum = 0;
 var tabID = new Map();
 var tabContentMap = new Map();
 
+// Get tab ID based on drone ID
+function getTabId(droneId) {
+    return "tabDrone" + droneId.toString();
+}
+
+// Id of tab for each drone
+function getHtmlTabId(droneId) {
+    return "content" + droneId.toString();
+}
+
+function getDroneIdFromTabName(tabName) {
+    return tabName.slice(7)
+}
+
+// Id of "Extra Info" table for each drone
+function getExtraInfoTableId(droneId) {
+    return "extraInfo" + droneId.toString();
+}
+
 function addTab(droneID) {
     tabNum++;
-    let tabid = "tabDrone" + droneID.toString();
-    tabID.set(droneID, tabid)
-    let tabcontent = 'contentDrone' + droneID.toString();
+    let tabid = getTabId(droneID);
+    tabID.set(droneID, tabid);
     let altitudeID = 'altitude' + droneID.toString();
     let longitudeID = 'longitude' + droneID.toString();
     let latitudeID = 'latitude' + droneID.toString();
@@ -21,7 +39,7 @@ function addTab(droneID) {
     let vservoID = 'VservoID' + droneID.toString();
 
     $('#tab-list').append($('<li><button class = "tabTitle" id="title' + droneID.toString() + '" role="tab" data-toggle="tab" onclick = "showDrone(' + droneID.toString() + ')"><span>Drone ' + droneID + '</span> <span class="glyphicon glyphicon-pencil text-muted edit"></span> </button></li>'));
-    $('#tab-content').append($('<div class="tab" id = "content' + droneID.toString() + '">' +
+    $('#tab-content').append($('<div class="tab" id = "' + getHtmlTabId(droneID) + '">' +
         '<table id = "infobox">' +
         '<tr><th>Altitude (m)</th><th>Pitch (deg)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + altitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + pitchID + '></var>' + '</td></tr>'+
@@ -35,12 +53,33 @@ function addTab(droneID) {
         '<tr><td>' + '<var class="contentValue" id = ' + fixTypeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + satellitesID + '></var>' + '</td></tr>' +
         '<tr><th>VCC</th><th>VSERVO</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + vccID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + vservoID + '></var>' + '</td></tr>' +
-        '</table>'));
+        '</table>' +
+        '<h4>Other Data</h4>' +
+        '<table id = "' + getExtraInfoTableId(droneID) + '"></table">'));
     var contents = document.getElementsByClassName("tab"); // list of TabContent
     for (i = 0; i < contents.length; i++) {
         contents[i].className = "tab-pane";
     }
     document.getElementById("content" + droneID).className = "tab";
+}
+
+function getExtraDataCellName(field, category, droneId) {
+    return field + "_" + category + "_" + droneId.toString()
+}
+
+// Refresh fields in "extra data" for each drone.
+// Removes existing elements and re-adds elements in "fields" param.
+function updateExtraData(fields) {
+    $('.tab, .tab-pane').each(function() {
+        droneId = getDroneIdFromTabName($(this).prop('id'))
+        $('#' + getExtraInfoTableId(droneId)).empty()
+        for (const [key, value] of Object.entries(fields)) {
+            for (field of value) {
+                $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>' + field + ' (' + key + ')' + '</th></tr>' +
+                                                                '<tr><td><var class="contentValue" id = ' + getExtraDataCellName(field, key, droneId) + '></var></td></tr>'));
+            }
+        }
+    })
 }
 
 
