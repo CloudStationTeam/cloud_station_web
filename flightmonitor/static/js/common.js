@@ -220,7 +220,7 @@ function getAvailableTelemetry() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    var url = '/flight_data_collect/get-available-fields/;
+    var url = '/flight_data_collect/get-available-fields/';
     xmlHttp.open("GET", url, true); // asynchronous
     xmlHttp.send(null);
 }
