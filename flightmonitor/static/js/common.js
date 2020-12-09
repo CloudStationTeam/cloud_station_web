@@ -15,6 +15,7 @@ var SETMODE_CONST = '<select id = "mode">' +
     '</select>' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
+var AVAILABLE_TELEMETRY = {}
 
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
@@ -220,7 +221,8 @@ function getAvailableTelemetry() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+            document.querySelector('#telemetry-log').value += ('Retrieved available telemetry options:' + xmlHttp.responseText + '\n');
+            AVAILABLE_TELEMETRY = JSON.parse(xmlHttp.responseText);
     };
     var url = '/flight_data_collect/get-available-fields/';
     xmlHttp.open("GET", url, true); // asynchronous
@@ -349,7 +351,7 @@ var modal = document.getElementById("myModal");
 
 function openForm(){
 	modal.style.display="block";
-	document.getElementById('formBody').innerHTML = createForm(TELEMETRY_CONST);
+	document.getElementById('formBody').innerHTML = createForm(AVAILABLE_TELEMETRY);
 //	$("#formBody").html(createForm(TELEMETRY_CONST));
 }
 
