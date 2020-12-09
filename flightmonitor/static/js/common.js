@@ -28,6 +28,8 @@ var currDisplayedExtraData = {};
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
+getAvailableTelemetry();
+
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
     document.querySelector('#telemetry-log').value += (data['message'] + '\n');
