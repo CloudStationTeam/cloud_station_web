@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from flight_data_collect.models import Vehicle
 from flight_data_collect.drone_communication.mavlink_utils import check_vehicle_heartbeat, get_mavlink_messages,update_telemetry_data
 from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm, fly_to_point
+from flight_data_collect.drone_communication.mavlink_constants import AVAILABLE_TELEMETRY_DATA
 import datetime
 
 
@@ -64,5 +65,4 @@ def update_fields(request):
 
 
 def get_available_fields(request):
-    fields = {"hello": "hello"}
-    return HttpResponse(json.dumps(fields), content_type="text/plain")
+    return HttpResponse(json.dumps(AVAILABLE_TELEMETRY_DATA), content_type="text/plain")
