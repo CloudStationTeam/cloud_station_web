@@ -61,3 +61,8 @@ def update_fields(request):
     received_msg = str(fields)
     msg=update_telemetry_data(received_msg)
     return HttpResponse(json.dumps(msg), content_type="text/plain")
+
+
+def get_available_fields(request):
+    fields = {"hello": "hello"}
+    return HttpResponse(json.dumps(fields), content_type="text/plain")

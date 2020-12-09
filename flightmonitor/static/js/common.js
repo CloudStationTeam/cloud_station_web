@@ -214,6 +214,17 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 
 /* HTTP REQUESTS TO BACKEND */
 
+function getAvailableTelemetry() {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    var url = '/flight_data_collect/get-available-fields/;
+    xmlHttp.open("GET", url, true); // asynchronous
+    xmlHttp.send(null);
+}
+
 // param fields should be a JSON object representing the fields requested
 function updateTelemetryFields(fields) {
     var xmlHttp = new XMLHttpRequest();
