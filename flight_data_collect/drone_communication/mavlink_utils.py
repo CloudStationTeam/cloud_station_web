@@ -32,7 +32,9 @@ def update_telemetry_data(updated_msg):
     global REQUESTED_CATEGORIES
     REQUESTED_CATEGORIES.clear()
     for key in keys:
-        REQUESTED_CATEGORIES.add(key)
+        # Check to see that key is a valid supported category
+        if key in mavlink_constants.AVAILABLE_TELEMETRY_DATA:
+            REQUESTED_CATEGORIES.add(key)
     return 'Extra Telemetry Categories: ' + str(REQUESTED_CATEGORIES)
 
 
