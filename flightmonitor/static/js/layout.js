@@ -38,9 +38,9 @@ function addTab(droneID) {
     let vccID = 'VccID' + droneID.toString();
     let vservoID = 'VservoID' + droneID.toString();
 
-    $('#tab-list').append($('<li><button class = "tabTitle" id="title' + droneID.toString() + '" role="tab" data-toggle="tab" onclick = "showDrone(' + droneID.toString() + ')"><span>Drone ' + droneID + '</span> <span class="glyphicon glyphicon-pencil text-muted edit"></span> </button></li>'));
+    $('#tab-list').append($('<li><button class = "tabTitle" id="title' + droneID.toString() + '" role="tab" data-toggle="tab" onclick = "showDrone(' + droneID.toString() + ')"><span>Drone ' + droneID + '</span></button></li>'));
     $('#tab-content').append($('<div class="tab" id = "' + getHtmlTabId(droneID) + '">' +
-        '<table id = "infobox">' +
+        '<table class = "infobox">' +
         '<tr><th>Altitude (m)</th><th>Pitch (deg)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + altitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + pitchID + '></var>' + '</td></tr>'+
         '<tr><th>Roll (deg)</th><th>Yaw (deg)</th></tr>' +
@@ -55,7 +55,8 @@ function addTab(droneID) {
         '<tr><td>' + '<var class="contentValue" id = ' + vccID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + vservoID + '></var>' + '</td></tr>' +
         '</table>' +
         '<h4>Other Data</h4>' +
-        '<table id = "' + getExtraInfoTableId(droneID) + '"></table">'));
+	'<button id="telemetryEditBtn" onclick="openForm()">Edit Other Data <span class="glyphicon glyphicon-pencil text-muted edit"></span></button>' +
+        '<table class = "infobox" id = "' + getExtraInfoTableId(droneID) + '"></table">'));
     var contents = document.getElementsByClassName("tab"); // list of TabContent
     for (i = 0; i < contents.length; i++) {
         contents[i].className = "tab-pane";
@@ -74,8 +75,9 @@ function updateExtraData(fields) {
         droneId = getDroneIdFromTabName($(this).prop('id'))
         $('#' + getExtraInfoTableId(droneId)).empty()
         for (const [key, value] of Object.entries(fields)) {
+	    $('#' + getExtraInfoTableId(droneId)).append($('<h4 class="extra-info-header">'+key+'</h4>'));
             for (field of value) {
-                $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>' + field + ' (' + key + ')' + '</th></tr>' +
+                $('#' + getExtraInfoTableId(droneId)).append($('<tr><th>' + field +'</th></tr>' +
                                                                 '<tr><td><var class="contentValue" id = ' + getExtraDataCellName(field, key, droneId) + '></var></td></tr>'));
             }
         }

@@ -352,7 +352,6 @@ var modal = document.getElementById("myModal");
 function openForm(){
 	modal.style.display="block";
 	document.getElementById('formBody').innerHTML = createForm(AVAILABLE_TELEMETRY);
-//	$("#formBody").html(createForm(TELEMETRY_CONST));
 }
 
 function closeForm(){
@@ -384,6 +383,7 @@ function submitTelemetry(){
 	}
 	updateExtraData(dict);
 	updateTelemetryFields(JSON.stringify(dict));
+	closeForm();
 }
 
 // Get value of checked inputs given Category check name 
