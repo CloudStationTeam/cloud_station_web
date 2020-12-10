@@ -66,10 +66,12 @@ def set_waypoints(connect_address:int, waypoints:list)->bool:
             seq += 1                                                                       
 
         mavlink.waypoint_clear_all_send()
-        ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'], should_send=True, command_name='WAYPOINT_CLEAR_ALL')               
+        ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'],
+                              should_send=True, command_name='WAYPOINT_CLEAR_ALL')
         mavlink.waypoint_count_send(wp.count())   
         for i in range(wp.count()):
-            ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'], should_send=True)        
+            ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'],
+                                  should_send=True)
             mavlink.mav.send(wp.wp(ack_msg['seq']))                                                                      
         ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])
         return ack_msg
