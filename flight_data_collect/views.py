@@ -2,8 +2,10 @@ from django.shortcuts import render
 import json
 from django.http import HttpResponse, HttpResponseNotFound
 from flight_data_collect.models import Vehicle
-from flight_data_collect.drone_communication.mavlink_utils import check_vehicle_heartbeat, get_mavlink_messages,update_telemetry_data
+from flight_data_collect.drone_communication.mavlink_utils import check_vehicle_heartbeat, get_mavlink_messages, \
+    update_telemetry_data
 from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm, fly_to_point
+from flight_data_collect.drone_communication.mavlink_constants import AVAILABLE_TELEMETRY_DATA
 import datetime
 
 
@@ -58,6 +60,9 @@ def disarm(request, droneid):
 
 def update_fields(request):
     fields = json.loads(request.body.decode('utf-8'))
-    received_msg = str(fields)
-    msg=update_telemetry_data(received_msg)
+    msg = update_telemetry_data(fields)
     return HttpResponse(json.dumps(msg), content_type="text/plain")
+
+
+def get_available_fields(request):
+    return HttpResponse(json.dumps(AVAILABLE_TELEMETRY_DATA), content_type="text/plain")

@@ -15,6 +15,7 @@ var SETMODE_CONST = '<select id = "mode">' +
     '</select>' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
+var AVAILABLE_TELEMETRY = {}
 
 var browserSocket = new WebSocket(
     'ws://' + window.location.host +
@@ -27,6 +28,8 @@ var currSelectedDroneId;
 var currDisplayedExtraData = {};
 var droneMap = new Map(); // initialize an empty map
 var disconnectedDrones = new Set(); //droneIds are text in this set
+
+getAvailableTelemetry();
 
 browserSocket.onmessage = function (e) {
     var data = JSON.parse(e.data);
@@ -214,6 +217,19 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 
 /* HTTP REQUESTS TO BACKEND */
 
+function getAvailableTelemetry() {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            document.querySelector('#telemetry-log').value += ('Retrieved available telemetry options:' + xmlHttp.responseText + '\n');
+            AVAILABLE_TELEMETRY = JSON.parse(xmlHttp.responseText);
+        }
+    };
+    var url = '/flight_data_collect/get-available-fields/';
+    xmlHttp.open("GET", url, true); // asynchronous
+    xmlHttp.send(null);
+}
+
 // param fields should be a JSON object representing the fields requested
 function updateTelemetryFields(fields) {
     var xmlHttp = new XMLHttpRequest();
@@ -336,7 +352,7 @@ var modal = document.getElementById("myModal");
 
 function openForm(){
 	modal.style.display="block";
-	document.getElementById('formBody').innerHTML = createForm(TELEMETRY_CONST);
+	document.getElementById('formBody').innerHTML = createForm(AVAILABLE_TELEMETRY);
 }
 
 function closeForm(){
