@@ -23,14 +23,14 @@ def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, 
 
 def change_mode(connect_address: int, mode: str) -> str:
     try:
-        mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
+        mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         connect_address = int(connect_address)
         if not msg:
-            return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}
+            return str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address})
         if mode not in mavlink.mode_mapping():
-            return {'ERROR': f'{mode} is not a valid mode. Try: {list(mavlink.mode_mapping().keys())}',
-                    'droneid': connect_address}
+            return str({'ERROR': f'{mode} is not a valid mode. Try: {list(mavlink.mode_mapping().keys())}',
+                        'droneid': connect_address})
         mavlink.set_mode(mode)
         ack_msg = mavlink.recv_match(type='COMMAND_ACK', condition=f'COMMAND_ACK.command=={MAVLINK_MSG_ID_SET_MODE}',
                                      blocking=True, timeout=6)
@@ -41,10 +41,10 @@ def change_mode(connect_address: int, mode: str) -> str:
             ack_msg['droneid'] = connect_address
             return ack_msg
         else:
-            return {'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address}
+            return str({'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address})
     except Exception as e:
         print(e)
-        return {'ERROR': 'Set Mode command failed!', 'droneid': connect_address}
+        return str({'ERROR': 'Set Mode command failed!', 'droneid': connect_address})
 
 
 def set_waypoints(connect_address: int, waypoints: list) -> bool:
