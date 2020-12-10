@@ -220,9 +220,10 @@ document.querySelector('#vehicleID').onkeyup = function (e) {
 function getAvailableTelemetry() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             document.querySelector('#telemetry-log').value += ('Retrieved available telemetry options:' + xmlHttp.responseText + '\n');
             AVAILABLE_TELEMETRY = JSON.parse(xmlHttp.responseText);
+        }
     };
     var url = '/flight_data_collect/get-available-fields/';
     xmlHttp.open("GET", url, true); // asynchronous
