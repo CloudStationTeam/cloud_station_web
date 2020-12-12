@@ -2,6 +2,10 @@ body {
     font-family: "Lato", sans-serif;
 }
 
+td {
+    word-break: break-all;
+}
+
 #MeanTitle {
     height: 150px;
 }
@@ -93,9 +97,11 @@ body {
     padding-bottom: 10px;
 }
 
+
 .infobox {
     color: #56baed;
     background: whitesmoke;
+    max-width: 300px;
     padding-bottom: 0px;
     padding-top: 0px;
     padding-right: 0px;
@@ -200,6 +206,11 @@ body {
 .tabTitle{
     background: rgba(247, 18, 2, 0.836);
 }
+
+.contentValue{
+    word-wrap: break-word;
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -212,6 +223,8 @@ body {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  max-height: 450px; /*For Modal scrolling*/
+  overflow-y: auto;
 /*  -webkit-animation-name: fadeIn; /* Fade in the background */
 /*  -webkit-animation-duration: 0.4s;
   animation-name: fadeIn;
@@ -316,4 +329,5 @@ body {
   from {opacity: 1}
   to {opacity: 0}
 }
+
 
