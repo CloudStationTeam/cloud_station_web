@@ -85,7 +85,7 @@ def parse_mavlink_msg(msg, mavlink):
         msg['flightmode'] = mavlink.flightmode
         msg['type'] = mavlink_constants.MAV_TYPE_MAP.get(mavlink.mav_type, 'UNKNOWN')
     elif msg_type == mavlink_constants.GLOBAL_POSITION_INT:
-        msg['lon'], msg['lat'] = msg['lon'] / 10 ** 7, msg['lat'] / 10 ** 7
+        msg['lon'], msg['lat'], msg['alt'] = msg['lon'] / 10 ** 7, msg['lat'] / 10 ** 7, msg['alt'] / 10** 3
 
 
 def _log_latest_orientation(msg, drone_id):

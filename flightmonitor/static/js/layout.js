@@ -41,9 +41,9 @@ function addTab(droneID) {
     $('#tab-list').append($('<li><button class = "tabTitle" id="title' + droneID.toString() + '" role="tab" data-toggle="tab" onclick = "showDrone(' + droneID.toString() + ')"><span>Drone ' + droneID + '</span></button></li>'));
     $('#tab-content').append($('<div class="tab" id = "' + getHtmlTabId(droneID) + '">' +
         '<table class = "infobox">' +
-        '<tr><th>Altitude (m)</th><th>Pitch (deg)</th></tr>' +
+        '<tr><th>Altitude (m)</th><th>Pitch (rad)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + altitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + pitchID + '></var>' + '</td></tr>'+
-        '<tr><th>Roll (deg)</th><th>Yaw (deg)</th></tr>' +
+        '<tr><th>Roll (rad)</th><th>Yaw (rad)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + rollID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + yawID + '></var>' + '</td></tr>' +
         '<tr><th>Longitude</th><th>Latitude</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + longitudeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + latitudeID + '></var>' + '</td></tr>' +
@@ -51,7 +51,7 @@ function addTab(droneID) {
         '<tr><td>' + '<var class="contentValue" id = ' + typeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + flyModeID + '></var>' + '</td></tr>' +
         '<tr><th>Fix Type</th><th>Satellites Visible</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + fixTypeID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + satellitesID + '></var>' + '</td></tr>' +
-        '<tr><th>VCC</th><th>VSERVO</th></tr>' +
+        '<tr><th>VCC (mV)</th><th>VSERVO (mV)</th></tr>' +
         '<tr><td>' + '<var class="contentValue" id = ' + vccID + '></var>' + '</td><td>' + '<var class="contentValue" id = ' + vservoID + '></var>' + '</td></tr>' +
         '</table>' +
         '<h4>Other Data</h4>' +
