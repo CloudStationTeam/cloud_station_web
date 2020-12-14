@@ -413,11 +413,7 @@ function createForm(telemetryDict){
 		html += '</ul>';
 		html += '</div>';
 	}
-	html += '<div class="col">';
-	html += '<p id="testText">Ready for Test</p>';
-	html += '</div>';
 	html += '</div>';
 	html += '<button id="submitTelemetryBtn" onclick="submitTelemetry()">Submit</button>';
-
 	return html;
 }
