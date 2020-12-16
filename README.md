@@ -21,5 +21,11 @@ For deployment instructions and documentation, please visit:
   * Hunkyu Lee - Hardware design/development
 ## Advisor
   * Professor Peter Burke
+  
+## Reference
+[J78] Lyuyang Hu ; Omkar Pathak ; Zeyu He ; Hunkyu Lee ; Mina Bedwany ; Jace Mica ; Peter J. Burke
+“CloudStation”: A Cloud-based Ground Control Station for Drones ”
+IEEE Journal on Miniaturization for Air and Space Systems (2020)
+
 ## License
 GNU General Public License v3.0
