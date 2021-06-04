@@ -10,7 +10,7 @@ channels-redis==2.4.1
 constantly==15.1.0
 cryptography==2.8
 daphne==2.4.0
-Django==2.2.13
+Django==2.2.21
 django-background-tasks==1.2.0
 django-compat==1.0.15
 future==0.18.2
