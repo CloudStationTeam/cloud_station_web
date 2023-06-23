@@ -294,6 +294,7 @@ function disconnectVehicle() {
 }
 
 function set_mode(droneId, mode) {
+    alert("hello")
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
