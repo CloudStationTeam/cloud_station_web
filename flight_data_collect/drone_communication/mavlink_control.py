@@ -3,6 +3,7 @@ import socket
 import json
 from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MSG_ID_SET_MODE
 from flightmonitor.consumers import send_message_to_clients
+import time
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
@@ -100,13 +101,11 @@ def set_arm(connect_address: int, is_disarm=False):
             mavlink.motors_armed_wait()
             '''
             mavlink.arducopter_arm()
-            n=0;
-            while n<10000:
-                if not mavlink.motors_armed():
-                    n+=1
-                else:
-                    break
             #mavlink.motors_armed_wait()
+            start_time = time.time()
+            while True:
+                if time.time() - start_time >= 10 or mavlink.motors_armed():
+                    break
             if not mavlink.motors_armed():
                 return {'ERROR': 'Not.'}
         else:
