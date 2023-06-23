@@ -90,6 +90,7 @@ def set_arm(connect_address: int, is_disarm=False):
         if not msg:
             return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}
         if is_disarm:
+            '''
             mavlink.mav.command_long_send(
                 mavlink.target_system,
                 mavlink.target_component,
@@ -97,7 +98,12 @@ def set_arm(connect_address: int, is_disarm=False):
                 0,
                 1, 0, 0, 0, 0, 0, 0)
             mavlink.motors_armed_wait()
+            '''
+            mavlink.arducopter_arm()
+            mavlink.motors_armed()
         else:
+            return {'ERROR': 'No.'}
+            '''
             mavlink.mav.command_long_send(
                 mavlink.target_system,
                 mavlink.target_component,
@@ -105,6 +111,7 @@ def set_arm(connect_address: int, is_disarm=False):
                 0,
                 0, 0, 0, 0, 0, 0, 0)
             mavlink.motors_disarmed_wait()
+            '''
         ack_msg = get_ack_msg(connect_address, mavlink, 'COMMAND_ACK')
         if ack_msg:
             return ack_msg
