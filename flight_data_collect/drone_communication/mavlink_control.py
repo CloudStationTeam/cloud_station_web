@@ -100,7 +100,13 @@ def set_arm(connect_address: int, is_disarm=False):
             mavlink.motors_armed_wait()
             '''
             mavlink.arducopter_arm()
-            mavlink.motors_armed_wait()
+            n=0;
+            while n<10000:
+                if not mavlink.motors_armed():
+                    n+=1
+                else:
+                    break
+            #mavlink.motors_armed_wait()
             if not mavlink.motors_armed():
                 return {'ERROR': 'Not.'}
         else:
