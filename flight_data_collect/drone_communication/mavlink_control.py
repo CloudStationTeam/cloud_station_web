@@ -96,7 +96,7 @@ def set_arm(connect_address: int, is_disarm=False):
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
                 0,
                 1, 0, 0, 0, 0, 0, 0)
-            master.motors_armed_wait()
+            mavlink.motors_armed_wait()
         else:
             mavlink.mav.command_long_send(
                 mavlink.target_system,
@@ -104,7 +104,7 @@ def set_arm(connect_address: int, is_disarm=False):
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
                 0,
                 0, 0, 0, 0, 0, 0, 0)
-            master.motors_disarmed_wait()
+            mavlink.motors_disarmed_wait()
         ack_msg = get_ack_msg(connect_address, mavlink, 'COMMAND_ACK')
         if ack_msg:
             return ack_msg
