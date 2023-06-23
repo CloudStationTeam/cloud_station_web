@@ -48,6 +48,7 @@ def change_mode(connect_address: int, mode: str) -> str:
 
 
 def set_waypoints(connect_address: int, waypoints: list) -> bool:
+    print("D1")
     """waypoints should be given in this form:
         [(lat0,lon10,alt0), (lat1,lon1,alt1), ...]"""
     try:
