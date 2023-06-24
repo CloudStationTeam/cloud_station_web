@@ -48,7 +48,7 @@ def change_mode(connect_address: int, mode: str) -> str:
         return str({'ERROR': 'Set Mode command failed!', 'droneid': connect_address})
 
 
-def set_waypoints(connect_address: int, waypoints: list) -> bool:
+def set_waypoints(connect_address: int, waypoints: list) -> str: #bool: ???
     """waypoints should be given in this form:
         [(lat0,lon10,alt0), (lat1,lon1,alt1), ...]"""
     try:
@@ -78,14 +78,18 @@ def set_waypoints(connect_address: int, waypoints: list) -> bool:
                                   should_send=True)
             mavlink.mav.send(wp.wp(ack_msg['seq']))
         ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])
-        return ack_msg
+        return str(ack_msg)
     except Exception as e:
+        return("ERROR: "+str(e))
         print(e)
         return {'ERROR': 'Set waypoint failed!' + str(e), 'droneid': connect_address}
 
 
 def set_arm(connect_address: int, is_disarm=False):
     try:
+        str = set_waypoints(connect_address, [(0,11,0)])
+        if str[0] == "E":
+            return str
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
