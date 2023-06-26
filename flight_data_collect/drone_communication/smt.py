@@ -76,7 +76,7 @@ def upload_mission(the_connection, mission_items): #done.
 def set_return(the_connection): #done.
   print("Set Return To launch")
   
-  the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, mavutil.maviink.MAV_CMD_NAV_RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0, 0)
+  the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0, 0)
     
   ack(the_connection, "COMMAND_ACK")
 
@@ -87,7 +87,7 @@ def start_mission(the_connection): #done.
   print("Mission Start")
   
   the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
-mavutil.maviink.MAV_CMD_MISSION_START, 0, 0, 0, 0, 0, 0, 0, 0)
+mavutil.mavlink.MAV_CMD_MISSION_START, 0, 0, 0, 0, 0, 0, 0, 0)
         
   ack(the_connection, "COMMAND_ACK")
 
