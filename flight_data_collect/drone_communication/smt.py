@@ -95,11 +95,11 @@ def ack(the_connection, keyword): #done.
 
 # Main Function
 def main1(url): #done.
-  #return "???"
+  return "???"
   print("Program Started")
 
   the_connection = mavutil.mavlink_connection(url)
-  #return str(the_connection)
+  return str(the_connection)
 
   #the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
   #return str(SERVER_IP)+str(connect_address)
