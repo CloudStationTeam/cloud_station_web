@@ -134,6 +134,6 @@ if __name__ == "__main__":
   
   msg = set_return(the_connection)
 
-  return msg
+  #return msg
 
 #Ref: online webs.
