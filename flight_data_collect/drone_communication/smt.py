@@ -1,5 +1,5 @@
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
-#!/usr/bin/env python3
+#!/usr/bin/env python3 ?
 
 import math
 from pymavlink import mavutil
@@ -137,8 +137,10 @@ if __name__ == "__main__":
 
   start_mission(the_connection)
 
+  item_seq = 0
   for mission_item in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
+    item_seq += 1
   
   msg = set_return(the_connection)
 
