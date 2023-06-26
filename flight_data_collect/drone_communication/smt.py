@@ -4,6 +4,8 @@
 import math
 from pymavlink import mavutil
 
+import socket
+
 # Class for formating the Mission Item.
 class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
