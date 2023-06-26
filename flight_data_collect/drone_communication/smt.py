@@ -43,7 +43,7 @@ def upload_mission(the_connection, mission_items): #done.
   n=len(mission_items)
   print("Sending Message out")
 
-  the_connection.mav.mission_count_send(the_connection.target_system, the connection.target_component, n, 0)
+  the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
     
   ack(the_connection, "MISSION_REQUEST")
       
