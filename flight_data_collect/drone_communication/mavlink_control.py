@@ -5,7 +5,8 @@ from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MS
 from flightmonitor.consumers import send_message_to_clients
 import time
 
-import flight_data_collect.drone_communication.smt
+#import flight_data_collect.drone_communication.smt
+from . import smt
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
