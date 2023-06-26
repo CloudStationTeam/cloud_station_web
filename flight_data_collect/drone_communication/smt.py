@@ -99,7 +99,7 @@ if __name__ == "__main__":
   #return "???" + url
   print("Program Started")
 
-  the_connection = mavutil.mavlink_connection("34.194.163.6:14550") #url
+  the_connection = mavutil.mavlink_connection('udpin:0.0.0.0:14550') #("34.194.163.6:14550") #url
   #return str(the_connection)
 
   #the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
