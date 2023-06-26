@@ -11,7 +11,7 @@ class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
     self.seq = i
     self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT # Use Global Latitude and Longitude for position data
-    self.command = mavutil.maviink.MAV_CMD_NAV_WAYPOINT # Move to the waypoint
+    self.command = mavutil.mavlink.MAV_CMD_NAV_WAYPOINT # Move to the waypoint
     self.current = current
     self.auto = 1 #auto cont.
     self.param1 = 0 # arr. radius, etc.
@@ -107,7 +107,7 @@ if __name__ == "__main__":
   SERVER_IP = socket.gethostbyname(socket.gethostname())
   connect_address = 14550
   the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
-  print(str(SERVER_IP)+str(connect_address))
+  print(str(SERVER_IP)+" "+str(connect_address)) #dude it's private ip...
   
   while(the_connection.target_system == 0):
     print("Checking Heartbeat")
