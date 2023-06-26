@@ -91,7 +91,7 @@ def set_waypoints(connect_address: int, waypoints: list) -> str: #bool: ???
 def set_arm(connect_address: int, is_disarm=False):
     try:
         #return 
-        return "???    Hello? " #+ str(SERVER_IP) + ':' + str(connect_address)
+        return "???    Hello? " + "str(SERVER_IP)" + ':' + str(connect_address)
         #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = smt.main1() #just debug line by line.
         return "// // // // " + msg
