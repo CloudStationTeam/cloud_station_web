@@ -94,7 +94,7 @@ def ack(the_connection, keyword): #done.
   print("Message Read" + str(the_connection.recv_match(type=keyword, blocking =True)))
 
 # Main Function
-def main1(url): #done.
+def main1(): #done.
   #return "???" + url
   print("Program Started")
 
