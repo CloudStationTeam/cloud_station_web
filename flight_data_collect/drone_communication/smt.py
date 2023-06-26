@@ -101,7 +101,7 @@ def main1(SERVER_IP, connect_address): #done.
   #the_connection = url #mavutil.mavlink_connection(url)
   #return str(the_connection)
 
-  the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+  #the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
   return str(SERVER_IP)+str(connect_address)
   
   while(the_connection.target_system == 0):
