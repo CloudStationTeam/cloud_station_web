@@ -31,7 +31,7 @@ mavutil.maviink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm
     ack(the_connection, "COMMAND_ACK")
         
 #Takeoff the Drone
-def takeoff(the connection): #done.
+def takeoff(the_connection): #done.
   print("Takeoff Initaited")
   
   the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, mavutil.maviink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, math.nan, 0, 0, 10)
