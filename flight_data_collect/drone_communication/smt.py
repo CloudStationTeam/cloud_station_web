@@ -99,11 +99,13 @@ if __name__ == "__main__":
   #return "???" + url
   print("Program Started")
 
-  the_connection = mavutil.mavlink_connection('udpin:localhost:14550') #("34.194.163.6:14550") #url
+  #the_connection = mavutil.mavlink_connection('udpin:localhost:14550') #("34.194.163.6:14550") #url
   #return str(the_connection)
 
-  #the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
-  #return str(SERVER_IP)+str(connect_address)
+  SERVER_IP = socket.gethostbyname(socket.gethostname())
+  connect_address = 14550
+  the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+  print(str(SERVER_IP)+str(connect_address))
   
   while(the_connection.target_system == 0):
     print("Checking Heartbeat")
@@ -112,6 +114,7 @@ if __name__ == "__main__":
     msg = the_connection.wait_heartbeat(timeout=6)
     if msg:
       print(msg)
+      break
 
     print("heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
 
