@@ -89,10 +89,11 @@ def set_waypoints(connect_address: int, waypoints: list) -> str: #bool: ???
 
 def set_arm(connect_address: int, is_disarm=False):
     try:
-        return smt.main1(connect_address)
+        msg = smt.main1(connect_address)
+        return "// // // // " + msg
     except Exception as e:
         print(e)
-        return {'ERROR': 'Arm/Disarm command failed!' + str(e), 'droneid': connect_address}
+        return {'// // // // ERROR': 'Arm/Disarm command failed!' + str(e), 'droneid': connect_address}
 
     
     try:
