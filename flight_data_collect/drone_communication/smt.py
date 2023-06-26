@@ -28,7 +28,7 @@ def arm(the_connection): #done.
     print("Arming")
     
     the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
-mavutil.maviink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm, else irrelevant.
+mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm, else irrelevant.
     
     ack(the_connection, "COMMAND_ACK")
         
@@ -36,7 +36,7 @@ mavutil.maviink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm
 def takeoff(the_connection): #done.
   print("Takeoff Initaited")
   
-  the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, mavutil.maviink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, math.nan, 0, 0, 10)
+  the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, math.nan, 0, 0, 10)
 
   ack(the_connection, "COMMAND_ACK")
 
