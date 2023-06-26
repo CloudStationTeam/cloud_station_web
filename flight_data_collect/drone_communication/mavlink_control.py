@@ -5,6 +5,8 @@ from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MS
 from flightmonitor.consumers import send_message_to_clients
 import time
 
+import flight_data_collect.drone_communication.smt
+
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
 
@@ -86,6 +88,14 @@ def set_waypoints(connect_address: int, waypoints: list) -> str: #bool: ???
 
 
 def set_arm(connect_address: int, is_disarm=False):
+    try:
+        smt.main1(connect_address)
+        return
+    except Exception as e:
+        print(e)
+        return {'ERROR': 'Arm/Disarm command failed!' + str(e), 'droneid': connect_address}
+
+    
     try:
         str = set_waypoints(connect_address, [(0,11,0)])
         if str[0] == "E":
