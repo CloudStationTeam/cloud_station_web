@@ -99,6 +99,7 @@ def main1(url): #done.
   print("Program Started")
 
   the_connection = url #mavutil.mavlink_connection(url)
+  return str(the_connection)
   
   while(the_connection.target_system == 0):
     print("Checking Heartbeat")
