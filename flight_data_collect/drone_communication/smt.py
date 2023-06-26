@@ -22,7 +22,7 @@ class mission_item: #done.
     self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION
 
 #Arm the Drone
-def arm (the_connection): #done.
+def arm(the_connection): #done.
     print("Arming")
     
     the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
