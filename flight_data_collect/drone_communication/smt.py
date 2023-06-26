@@ -59,7 +59,7 @@ def upload_mission(the_connection, mission_items): #done.
                                          waypoint.param1, #Hold Time
                                          waypoint.param2, #Accept Radius
                                          waypoint.param3, #Pass Radius
-                                         waypoint.param4, Yaw
+                                         waypoint.param4, #Yaw
                                          waypoint.param5, #local X
                                          waypoint.param6, #Local Y
                                          waypoint.param7, #local 2
@@ -89,7 +89,7 @@ mavutil.maviink.MAV_CMD_MISSION_START, 0, 0, 0, 0, 0, 0, 0, 0)
 
 # Acknoledgement from the Drone
 def ack(the_connection, keyword): #done.
-print("Message Read" + str(the_connection.recv_match(type=keyword, blocking =True)))
+  print("Message Read" + str(the_connection.recv_match(type=keyword, blocking =True)))
 
 # Main Function
 def main1(url): #done.
