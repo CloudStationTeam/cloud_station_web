@@ -78,6 +78,8 @@ def set_return(the_connection): #done.
     
   ack(the_connection, "COMMAND_ACK")
 
+  return str(the_connection.recv_match(type="COMMAND_ACK", blocking =True))
+
 # Start mission
 def start_mission(the_connection): #done.
   print("Mission Start")
@@ -124,6 +126,8 @@ def main1(url): #done.
   for mission_item in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
   
-  set_return(the_connection)
+  msg = set_return(the_connection)
+
+  return msg
 
 #Ref: online webs.
