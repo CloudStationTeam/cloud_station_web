@@ -25,7 +25,7 @@ class mission_item: #done.
 def arm (the_connection): #done.
     print("Arming")
     
-    the_connection.mav.command_long send(the_connection.target_system, the_connection.target_component,
+    the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
 mavutil.maviink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm, else irrelevant.
     
     ack(the_connection, "COMMAND_ACK")
