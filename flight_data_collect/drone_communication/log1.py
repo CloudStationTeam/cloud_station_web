@@ -6,7 +6,8 @@ def log11():
   
   # Get a logger with the name 'myLogger'. Multiple calls to `getLogger('myLogger')` will always return a reference to the same Logger object.
   #logger = logging.getLogger('myLogger')
-  logger = logging.getLogger(__name__)
+  #logger = logging.getLogger(__name__)
+  logger = logging.getLogger("log111")
   
   # Log messages with various importance levels.
   logger.debug('1 This is a debug message')  # Not shown because the level is set to INFO
