@@ -7,6 +7,7 @@ import time
 
 #import flight_data_collect.drone_communication.smt
 from . import smt
+from . import log1
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
@@ -93,6 +94,7 @@ def set_arm(connect_address: int, is_disarm=False):
     try:
         #return "???    Hello? " + "str(SERVER_IP)" + ':' + str(connect_address)
         #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+        log1.log11()
         print("smt")
         msg = smt.main1() #just debug line by line.
         if not msg:
