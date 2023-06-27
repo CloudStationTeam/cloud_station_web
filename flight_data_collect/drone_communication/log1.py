@@ -9,11 +9,11 @@ def log11():
   logger = logging.getLogger(__name__)
   
   # Log messages with various importance levels.
-  logger.debug('This is a debug message')  # Not shown because the level is set to INFO
-  logger.info('This is an info message')
-  logger.warning('This is a warning message')
-  logger.error('This is an error message')
-  logger.critical('This is a critical message')
+  logger.debug('1 This is a debug message')  # Not shown because the level is set to INFO
+  logger.info('1 This is an info message')
+  logger.warning('1 This is a warning message')
+  logger.error('1 This is an error message')
+  logger.critical('1 This is a critical message')
 
   return "Log."
 
