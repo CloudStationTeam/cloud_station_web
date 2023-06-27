@@ -93,6 +93,7 @@ def set_arm(connect_address: int, is_disarm=False):
     try:
         #return "???    Hello? " + "str(SERVER_IP)" + ':' + str(connect_address)
         #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+        print("smt")
         msg = smt.main1() #just debug line by line.
         if not msg:
             msg = "None"
