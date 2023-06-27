@@ -33,5 +33,7 @@ if __name__ == '__main__':
     logger.error('This is an error message')
     logger.critical('This is a critical message')
 
+    print("done 111")
+    
     main()
 
