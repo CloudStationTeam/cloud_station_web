@@ -14,3 +14,5 @@ def log11():
   logger.error('This is an error message')
   logger.critical('This is a critical message')
 
+  return "Log."
+
