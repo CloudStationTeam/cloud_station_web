@@ -18,3 +18,9 @@ def log11():
 
   return "Log."
 
+def print1(s):
+  logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+  logger = logging.getLogger("log whatever")
+
+  logger.info(s)
+
