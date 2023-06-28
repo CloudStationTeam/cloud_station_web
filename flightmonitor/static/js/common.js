@@ -315,7 +315,8 @@ function set_arm(droneId, is_disarm=false) {
     if (is_disarm==true)
         url = '/flight_data_collect/control/arm/' + droneId.toString() + '/'
     else
-        url = '/flight_data_collect/control/disarm/' + droneId.toString() + '/'
+        //url = '/flight_data_collect/control/disarm/' + droneId.toString() + '/'
+	alert("do nothing")
     alert("hello???")
     xmlHttp.open("GET", url, true); // asynchronous 
     xmlHttp.send(null);
