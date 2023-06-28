@@ -6,6 +6,10 @@ from pymavlink import mavutil
 
 import socket
 
+#add logs
+from . import log1
+#log1.print1(s)
+
 # Class for formating the Mission Item.
 class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
