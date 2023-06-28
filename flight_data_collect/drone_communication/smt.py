@@ -164,6 +164,8 @@ def arm1(mavlink):
               print("Arming successful")
               return "itsdone"
             '''
+          
+            ack(the_connection, "COMMAND_ACK")
 
             if not mavlink.motors_armed():
               print("Arming failed")
@@ -180,7 +182,7 @@ def arm1(mavlink):
             while True:
                 time.sleep(1)  # Delay for 1 sec
                 curr_time = time.time()
-                if curr_time - start_time >= 3*60 or mavlink.motors_armed(): #wait for 1 min.
+                if curr_time - start_time >= 60 or mavlink.motors_armed(): #wait for 1 min. #3 mins do not work.
                     break
                 print(str(n1))
                 n1+=1
