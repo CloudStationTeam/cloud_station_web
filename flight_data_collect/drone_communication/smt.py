@@ -181,7 +181,7 @@ def arm1(mavlink):
             start_time = time.time()
             n1 = 1
             #while True:
-            while not mavlink.motors_armed()
+            while not mavlink.motors_armed():
                 #time.sleep(1)  # Delay for 1 sec
                 mavlink.arducopter_arm()
                 curr_time = time.time()
