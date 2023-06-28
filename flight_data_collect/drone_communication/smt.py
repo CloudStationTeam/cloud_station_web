@@ -180,10 +180,12 @@ def arm1(mavlink):
             #log1.print1("After arm")
             start_time = time.time()
             n1 = 1
-            while True:
-                time.sleep(1)  # Delay for 1 sec
+            #while True:
+            while not mavlink.motors_armed()
+                #time.sleep(1)  # Delay for 1 sec
+                mavlink.arducopter_arm()
                 curr_time = time.time()
-                if curr_time - start_time >= 60 or mavlink.motors_armed(): #wait for 1 min. #3 mins do not work.
+                if curr_time - start_time >= 40 or mavlink.motors_armed(): #wait for 1 min. #3 mins do not work.
                     break
                 print(str(n1))
                 n1+=1
