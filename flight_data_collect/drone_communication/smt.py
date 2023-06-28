@@ -140,7 +140,7 @@ def arm1(mavlink):
             while True:
                 time.sleep(1)  # Delay for 1 sec
                 curr_time = time.time()
-                if curr_time - start_time >= 60 or mavlink.motors_armed(): #wait for 1 min.
+                if curr_time - start_time >= 3*60 or mavlink.motors_armed(): #wait for 1 min.
                     break
                 print(str(n1))
                 n1+=1
