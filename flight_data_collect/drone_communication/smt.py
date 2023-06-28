@@ -109,12 +109,13 @@ def arm1(mavlink):
   try:
         msg = mavlink.wait_heartbeat(timeout=6)
         n=1;
-        while(the_connection.target_system == 0): #not msg:
+        while(the_connection.target_system == 0) or n>3: #not msg:
             connect_address = 14550
             log1.print1(str({'ERROR'+str(n): f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
             msg = mavlink.wait_heartbeat(timeout=6)
             log1.print1("whatever is "+str(n))
             n+=1
+        log1.print1("whatever. arm1 2.")
         #if is_disarm:
         if not mavlink.motors_armed():
             #'''
@@ -127,14 +128,14 @@ def arm1(mavlink):
                 #0,
                 21196, # force arming or disarming
                 0, 0, 0, 0, 0) # irrelevant.
-            mavlink.motors_armed_wait()
+            #mavlink.motors_armed_wait()
             #'''
             #mavlink.arducopter_arm()
 
             #wait to arm.
-            log1.print1("Before arm");
+            log1.print1("Before arm")
             #mavlink.motors_armed_wait() #too slow. timed out.
-            #log1.print1("After arm");
+            #log1.print1("After arm")
             start_time = time.time()
             n1 = 1
             while True:
@@ -144,15 +145,16 @@ def arm1(mavlink):
                     break
                 print(str(n1))
                 n1+=1
-            log1.print1("After arm");
+            log1.print1("After arm")
                   
             if not mavlink.motors_armed():
-                print("whatever Not.")
+                print("whatever. Not.")
                 return {'ERROR': 'Not.'}
         else:
-            print("whatever No.")
+            print("whatever. No.")
             return {'ERROR': 'No.'}
         ack(mavlink, "COMMAND_ACK")
+        print("whatever. itsdone.")
         return "itsdone"
   except Exception as e:
         print(e)
