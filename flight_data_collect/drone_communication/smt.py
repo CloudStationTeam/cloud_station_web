@@ -148,13 +148,16 @@ def arm1(mavlink):
                 21196, # force arming or disarming. else 0. # Delete later
                 0, 0, 0, 0, 0) # irrelevant.
             #mavlink.motors_armed_wait()
+            log1.print1("After arm")
             #'''
             #mavlink.arducopter_arm() #doesn't work.
 
             # Wait for acknowledgment
             ack1 = mavlink.recv_match(type='COMMAND_ACK', blocking=True)
+            log1.print1("whatever. 1. "+str(ack1.result))
             if ack1.result != mavutil.mavlink.MAV_RESULT_ACCEPTED:
               print("Arming failed: " + str(ack1.result))
+              return "not done"
             else:
               print("Arming successful")
               return "itsdone"
@@ -172,7 +175,7 @@ def arm1(mavlink):
                     break
                 print(str(n1))
                 n1+=1
-            log1.print1("After arm")
+            log1.print1("After wait arm")
                   
             if not mavlink.motors_armed():
                 print("whatever. Not.")
