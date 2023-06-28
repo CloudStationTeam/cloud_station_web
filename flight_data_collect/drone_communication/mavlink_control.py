@@ -104,10 +104,10 @@ def set_arm(connect_address: int, is_disarm=False):
         if not msg:
             msg = "None"
         print(msg)
-        return "// // // // " + msg
+        return "// // // // " + str(msg)
     except Exception as e:
         print(e)
-        return {'// // // // ERROR': 'Arm/Disarm command failed!' + str(e), 'droneid': connect_address}
+        return str({'// // // // ERROR': 'Arm/Disarm command failed!' + str(e), 'droneid': connect_address})
 
     
     try:
