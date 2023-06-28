@@ -101,6 +101,41 @@ mavutil.mavlink.MAV_CMD_MISSION_START, 0, 0, 0, 0, 0, 0, 0, 0)
 def ack(the_connection, keyword): #done.
   print("Message Read" + str(the_connection.recv_match(type=keyword, blocking =True)))
 
+#arm1. sitl shows arm failed.
+def arm1(mavlink):
+  try:
+        msg = mavlink.wait_heartbeat(timeout=6)
+        while not msg:
+            log1.print1(str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
+        if is_disarm:
+            '''
+            mavlink.mav.command_long_send(
+                mavlink.target_system,
+                mavlink.target_component,
+                mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+                0,
+                1, 0, 0, 0, 0, 0, 0)
+            mavlink.motors_armed_wait()
+            '''
+            mavlink.arducopter_arm()
+            #mavlink.motors_armed_wait()
+            start_time = time.time()
+            while True:
+                if time.time() - start_time >= 10 or mavlink.motors_armed():
+                    break
+            if not mavlink.motors_armed():
+                ack(the_connection, "COMMAND_ACK")
+                return {'ERROR': 'Not.'}
+        else:
+            ack(the_connection, "COMMAND_ACK")
+            return {'ERROR': 'No.'}
+        ack(the_connection, "COMMAND_ACK")
+        return "itsdone"
+    except Exception as e:
+        print(e)
+        stre = str(e)
+        return str({'// // // // ERROR': 'Arm/Disarm command failed!' + stre, 'droneid': connect_address})
+
 # Main Function
 #if __name__ == "__main__":
 def main1(): #done.
@@ -138,7 +173,8 @@ def main1(): #done.
 
   upload_mission(the_connection, mission_waypoints)
          
-  arm(the_connection)
+  #arm(the_connection)
+  arm1(the_connection)
          
   takeoff(the_connection)
 
