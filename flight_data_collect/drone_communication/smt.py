@@ -128,14 +128,16 @@ def arm1(mavlink):
             mavlink.motors_armed_wait()
             #'''
             #mavlink.arducopter_arm()
-          
+
+            #wait to arm.
             log1.print1("Before arm");
-            mavlink.motors_armed_wait()
-            log1.print1("After arm");
+            #mavlink.motors_armed_wait() #too slow. timed out.
+            #log1.print1("After arm");
             start_time = time.time()
             while True:
-                if time.time() - start_time >= 10 or mavlink.motors_armed():
+                if time.time() - start_time >= 60 or mavlink.motors_armed(): #wait for 1 min.
                     break
+            log1.print1("After arm");
                   
             if not mavlink.motors_armed():
                 print("whatever Not.")
