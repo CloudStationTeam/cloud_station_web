@@ -27,7 +27,7 @@ def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, 
 
 
 def change_mode(connect_address: int, mode: str) -> str:
-    print("1")
+    print("1 whatever")
     return "print"
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
