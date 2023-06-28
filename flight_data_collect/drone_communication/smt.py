@@ -133,7 +133,7 @@ def arm1(mavlink):
 
         # Delete later
         # Set the vehicle mode to GUIDED
-        mavlink.set_mode_guided()
+        #mavlink.set_mode_guided() #no such method.
     
         #if is_disarm:
         if not mavlink.motors_armed():
