@@ -22,7 +22,7 @@ class mission_item: #done.
     self.param6 = y
     self.param7 = z
     self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION 
-  def wt(s):
+  def wt(self, s):
     print(s)
 
 #Arm the Drone
