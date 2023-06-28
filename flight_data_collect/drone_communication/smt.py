@@ -118,7 +118,7 @@ def arm1(mavlink):
         log1.print1("whatever. arm1 2.")
         #if is_disarm:
         if not mavlink.motors_armed():
-            #'''
+            '''
             mavlink.mav.command_long_send( #doc. https://ardupilot.org/dev/docs/mavlink-arming-and-disarming.html
                 mavlink.target_system,
                 mavlink.target_component,
@@ -129,8 +129,8 @@ def arm1(mavlink):
                 21196, # force arming or disarming
                 0, 0, 0, 0, 0) # irrelevant.
             #mavlink.motors_armed_wait()
-            #'''
-            #mavlink.arducopter_arm()
+            '''
+            mavlink.arducopter_arm()
 
             #wait to arm.
             log1.print1("Before arm")
