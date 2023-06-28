@@ -157,6 +157,7 @@ def arm1(mavlink):
   except Exception as e:
         print(e)
         stre = str(e)
+        connect_address = 14550
         return str({'// // // // ERROR': 'Arm/Disarm command failed!' + stre, 'droneid': connect_address})
 
 # Main Function
