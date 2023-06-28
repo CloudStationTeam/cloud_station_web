@@ -6,6 +6,8 @@ from pymavlink import mavutil
 
 import socket 
 
+import time
+
 #add logs
 from . import log1
 #log1.print1(s)
