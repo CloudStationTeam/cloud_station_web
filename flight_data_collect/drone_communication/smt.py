@@ -197,12 +197,20 @@ def main1(): #done.
 
   upload_mission(the_connection, mission_waypoints)
          
+  log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
+  
   #arm(the_connection)
   arm1(the_connection)
+
+  log1.print1("whatever. arm1 done")
          
   takeoff(the_connection)
 
+  log1.print1("whatever. takeoff done")
+
   start_mission(the_connection)
+
+  log1.print1("whatever. start_mission done")
 
   item_seq = 0
   for mission_item1 in mission_waypoints:
@@ -210,6 +218,8 @@ def main1(): #done.
     item_seq += 1
   
   #msg = set_return(the_connection)
+
+  log1.print1("whatever. set_return done")
 
   #return msg
 
