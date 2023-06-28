@@ -133,7 +133,7 @@ def arm1(mavlink):
             return {'ERROR': 'No.'}
         ack(the_connection, "COMMAND_ACK")
         return "itsdone"
-    except Exception as e:
+  except Exception as e:
         print(e)
         stre = str(e)
         return str({'// // // // ERROR': 'Arm/Disarm command failed!' + stre, 'droneid': connect_address})
