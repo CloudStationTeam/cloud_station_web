@@ -109,7 +109,7 @@ def arm1(mavlink):
   try:
         msg = mavlink.wait_heartbeat(timeout=6)
         n=1
-        while(the_connection.target_system == 0) or n>3: #not msg:
+        while(mavlink.target_system == 0) or n>3: #not msg:
             connect_address = 14550
             log1.print1(str({'ERROR'+str(n): f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
             msg = mavlink.wait_heartbeat(timeout=6)
