@@ -152,12 +152,15 @@ def arm1(mavlink):
             #'''
             #mavlink.arducopter_arm() #doesn't work.
 
+            #bug. don't know why.
+            
             # Wait for acknowledgment
-            ack1 = mavlink.recv_match(type='COMMAND_ACK', blocking=True)
-            log1.print1("whatever. 1. "+str(ack1.result))
-            if ack1.result != mavutil.mavlink.MAV_RESULT_ACCEPTED:
+            #ack1 = mavlink.recv_match(type='COMMAND_ACK', blocking=True)
+            #log1.print1("whatever. 1. "+str(ack1.result))
+            #if ack1.result != mavutil.mavlink.MAV_RESULT_ACCEPTED:
+            if not mavlink.motors_armed():
               print("Arming failed: " + str(ack1.result))
-              return "not done"
+              #return "not done"
             else:
               print("Arming successful")
               return "itsdone"
