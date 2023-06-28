@@ -27,8 +27,8 @@ def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, 
 
 
 def change_mode(connect_address: int, mode: str) -> str:
-    print("1 whatever")
-    return "print"
+    #print("1 whatever") #done.
+    #return "print"
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
@@ -96,13 +96,14 @@ def set_arm(connect_address: int, is_disarm=False):
     try:
         #return "???    Hello? " + "str(SERVER_IP)" + ':' + str(connect_address)
         #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
-        msg = log1.log11()
-        return msg
+        msg = log1.log11() #done.
+        #return msg
         
         print("smt")
         msg = smt.main1() #just debug line by line.
         if not msg:
             msg = "None"
+        print(msg)
         return "// // // // " + msg
     except Exception as e:
         print(e)
