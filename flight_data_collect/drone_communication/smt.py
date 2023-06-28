@@ -165,7 +165,8 @@ def arm1(mavlink):
               return "itsdone"
             '''
           
-            ack(mavlink, "COMMAND_ACK")
+            #taking too long. don't know why.
+            #ack(mavlink, "COMMAND_ACK")
 
             if not mavlink.motors_armed():
               print("Arming failed")
