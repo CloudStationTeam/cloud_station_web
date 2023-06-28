@@ -187,8 +187,9 @@ def arm1(mavlink):
                 curr_time = time.time()
                 if curr_time - start_time >= 40 or mavlink.motors_armed(): #wait for 1 min. #3 mins do not work.
                     break
-                print(str(n1))
-                n1+=1
+                if curr_time - start_time >= n1:
+                  print(str(n1))
+                  n1+=1
             log1.print1("After wait arm")
                   
             if not mavlink.motors_armed():
