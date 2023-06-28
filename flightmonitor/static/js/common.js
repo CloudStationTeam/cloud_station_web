@@ -294,7 +294,7 @@ function disconnectVehicle() {
 }
 
 function set_mode(droneId, mode) {
-    alert("hello")
+    alert("hello");
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -313,11 +313,12 @@ function set_arm(droneId, is_disarm=false) {
     };
     let url;
     if (is_disarm==true)
-        url = '/flight_data_collect/control/arm/' + droneId.toString() + '/'
+	url = '/flight_data_collect/control/arm/' + droneId.toString() + '/';
     else
         //url = '/flight_data_collect/control/disarm/' + droneId.toString() + '/'
-	alert("do nothing")
-    alert("hello???")
+        //{ alert("do nothing"); return false; }
+	url = '/flight_data_collect/control/arm/' + droneId.toString() + '/';
+    alert("hello???");
     xmlHttp.open("GET", url, true); // asynchronous 
     xmlHttp.send(null);
     return false;
