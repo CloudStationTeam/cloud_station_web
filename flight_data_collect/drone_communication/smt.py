@@ -125,7 +125,7 @@ def arm1(mavlink):
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, #ex. https://www.ardusub.com/developers/pymavlink.html#armdisarm-the-vehicle
                 0, # conf.
                 1, # arm.
-                21196, # force arming or disarming
+                21196, # force arming or disarming. else 0.
                 0, 0, 0, 0, 0) # irrelevant.
             #mavlink.motors_armed_wait()
             '''
