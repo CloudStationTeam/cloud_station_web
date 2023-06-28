@@ -112,9 +112,9 @@ def set_arm(connect_address: int, is_disarm=False):
 
     
     try:
-        str = set_waypoints(connect_address, [(0,11,0)])
-        if str[0] == "E":
-            return str
+        str1 = set_waypoints(connect_address, [(0,11,0)])
+        if str1[0] == "E":
+            return str1 #Don't use str as a var name.
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
