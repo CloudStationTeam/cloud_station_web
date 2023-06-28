@@ -312,6 +312,13 @@ function set_arm(droneId, is_disarm=false) {
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
     let url;
+    
+    url = '/flight_data_collect/control/arm/' + droneId.toString() + '/';
+    alert("hello???");
+    xmlHttp.open("GET", url, true); // asynchronous 
+    xmlHttp.send(null);
+    return false;
+	
     if (is_disarm==true)
 	url = '/flight_data_collect/control/arm/' + droneId.toString() + '/';
     else
