@@ -113,12 +113,13 @@ def arm1(mavlink):
                 mavlink.target_system,
                 mavlink.target_component,
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
-                0,
-                1, 0, 0, 0, 0, 0, 0)
+                0, # conf.
+                1, # arm.
+                0, 0, 0, 0, 0, 0) # irrelevant.
             mavlink.motors_armed_wait()
             '''
             mavlink.arducopter_arm()
-            #mavlink.motors_armed_wait()
+            mavlink.motors_armed_wait()
             start_time = time.time()
             while True:
                 if time.time() - start_time >= 10 or mavlink.motors_armed():
