@@ -202,9 +202,12 @@ def main1(): #done.
   log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
   
   #arm(the_connection)
-  arm1(the_connection)
+  arm2 = arm1(the_connection)
 
   log1.print1("whatever. arm1 done")
+
+  if arm2 != "itsdone":
+    return "no arm1"  
          
   takeoff(the_connection)
 
