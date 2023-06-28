@@ -21,7 +21,9 @@ class mission_item: #done.
     self.param5 = x
     self.param6 = y
     self.param7 = z
-    self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION
+    self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION 
+  def wt(s):
+    print(s)
 
 #Arm the Drone
 def arm(the_connection): #done.
@@ -123,6 +125,7 @@ def main1(): #done.
   mission_waypoints = []
 
   #TODO: map pins.
+  mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10).wt("2 whatever")
   mission_waypoints.append(mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10)) # Above takeoff point
 
   mission_waypoints.append(mission_item(1, 0, 42.43432724637685, -83.98613425948624, 10)) # Above Destination Point
@@ -138,7 +141,7 @@ def main1(): #done.
   start_mission(the_connection)
 
   item_seq = 0
-  for mission_item in mission_waypoints:
+  for mission_item1 in mission_waypoints:
     #print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
   
@@ -147,3 +150,4 @@ def main1(): #done.
   #return msg
 
 #Ref: online webs.
+
