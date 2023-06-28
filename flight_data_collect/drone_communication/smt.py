@@ -106,10 +106,13 @@ def ack(the_connection, keyword): #done.
 def arm1(mavlink):
   try:
         msg = mavlink.wait_heartbeat(timeout=6)
+        n=1;
         while not msg:
             connect_address = 14550
-            log1.print1(str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
+            log1.print1(str({'ERROR'+str(n): f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
             msg = mavlink.wait_heartbeat(timeout=6)
+            log1.print1("whatever is "+str(n))
+            n+=1
         #if is_disarm:
         if not mavlink.motors_armed():
             '''
@@ -123,11 +126,15 @@ def arm1(mavlink):
             mavlink.motors_armed_wait()
             '''
             mavlink.arducopter_arm()
+          
+            log1.print1("Before arm");
             mavlink.motors_armed_wait()
+            log1.print1("After arm");
             start_time = time.time()
             while True:
                 if time.time() - start_time >= 10 or mavlink.motors_armed():
                     break
+                  
             if not mavlink.motors_armed():
                 ack(mavlink, "COMMAND_ACK")
                 return {'ERROR': 'Not.'}
