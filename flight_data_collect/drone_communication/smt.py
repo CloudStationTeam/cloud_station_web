@@ -136,10 +136,10 @@ def arm1(mavlink):
                     break
                   
             if not mavlink.motors_armed():
-                ack(mavlink, "COMMAND_ACK")
+                print("whatever Not.")
                 return {'ERROR': 'Not.'}
         else:
-            ack(mavlink, "COMMAND_ACK")
+            print("whatever No.")
             return {'ERROR': 'No.'}
         ack(mavlink, "COMMAND_ACK")
         return "itsdone"
