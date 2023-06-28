@@ -109,6 +109,7 @@ def arm1(mavlink):
         while not msg:
             connect_address = 14550
             log1.print1(str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
+            msg = mavlink.wait_heartbeat(timeout=6)
         #if is_disarm:
         if not mavlink.motors_armed():
             '''
