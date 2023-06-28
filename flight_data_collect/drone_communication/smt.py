@@ -136,9 +136,14 @@ def arm1(mavlink):
             #mavlink.motors_armed_wait() #too slow. timed out.
             #log1.print1("After arm");
             start_time = time.time()
+            n1 = 1
             while True:
-                if time.time() - start_time >= 60 or mavlink.motors_armed(): #wait for 1 min.
+                time.sleep(1)  # Delay for 1 sec
+                curr_time = time.time()
+                if curr_time - start_time >= 60 or mavlink.motors_armed(): #wait for 1 min.
                     break
+                print(str(n1))
+                n1+=1
             log1.print1("After arm");
                   
             if not mavlink.motors_armed():
