@@ -252,7 +252,8 @@ def main1(): #done.
   log1.print1("whatever. arm1 done")
 
   if arm2 != "itsdone":
-    return "no arm1" + str(arm2) 
+    #return "no arm1" + str(arm2) 
+    log1.print1("whatever. cont.")
          
   takeoff(the_connection)
 
