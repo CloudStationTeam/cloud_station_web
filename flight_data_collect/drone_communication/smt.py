@@ -9,6 +9,7 @@ import socket
 #add logs
 from . import log1
 #log1.print1(s)
+#read Error e in web first. then log in cmd line. then sitl in mavproxy.
 
 # Class for formating the Mission Item.
 class mission_item: #done.
@@ -106,6 +107,7 @@ def arm1(mavlink):
   try:
         msg = mavlink.wait_heartbeat(timeout=6)
         while not msg:
+            connect_address = 14550
             log1.print1(str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}))
         #if is_disarm:
         if not mavlink.motors_armed():
@@ -126,12 +128,12 @@ def arm1(mavlink):
                 if time.time() - start_time >= 10 or mavlink.motors_armed():
                     break
             if not mavlink.motors_armed():
-                ack(the_connection, "COMMAND_ACK")
+                ack(mavlink, "COMMAND_ACK")
                 return {'ERROR': 'Not.'}
         else:
-            ack(the_connection, "COMMAND_ACK")
+            ack(mavlink, "COMMAND_ACK")
             return {'ERROR': 'No.'}
-        ack(the_connection, "COMMAND_ACK")
+        ack(mavlink, "COMMAND_ACK")
         return "itsdone"
   except Exception as e:
         print(e)
