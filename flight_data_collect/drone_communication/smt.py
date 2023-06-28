@@ -116,23 +116,51 @@ def arm1(mavlink):
             log1.print1("whatever is "+str(n))
             n+=1
         log1.print1("whatever. arm1 2.")
+
+        # Delete later
+        # Set sensor health status manually. bypass all of them.
+        mavlink.mav.command_long_send(
+          mavlink.target_system,  # target_system
+          mavlink.target_component,  # target_component
+          mavutil.mavlink.MAV_CMD_PREFLIGHT_SET_SENSOR_OFFSETS,  # command
+          0,  # confirmation
+          0, 0, 0, 0, 0, 0, 0  # params 1-7 (set according to your sensor setup)
+        )
+         
+        # Delete later
+        # Set the ARMING_CHECK parameter to 0 to disable all checks. bypass it.
+        mavlink.param_set_send('ARMING_CHECK', 0)
+
+        # Delete later
+        # Set the vehicle mode to GUIDED
+        mavlink.set_mode_guided()
+    
         #if is_disarm:
         if not mavlink.motors_armed():
             #'''
+            log1.print1("Before arm")
             mavlink.mav.command_long_send( #doc. https://ardupilot.org/dev/docs/mavlink-arming-and-disarming.html
                 mavlink.target_system,
                 mavlink.target_component,
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, #ex. https://www.ardusub.com/developers/pymavlink.html#armdisarm-the-vehicle
                 0, # conf.
                 1, # arm.
-                21196, # force arming or disarming. else 0.
+                21196, # force arming or disarming. else 0. # Delete later
                 0, 0, 0, 0, 0) # irrelevant.
             #mavlink.motors_armed_wait()
             #'''
             #mavlink.arducopter_arm() #doesn't work.
 
+            # Wait for acknowledgment
+            ack1 = mavlink.recv_match(type='COMMAND_ACK', blocking=True)
+            if ack1.result != mavutil.mavlink.MAV_RESULT_ACCEPTED:
+              print("Arming failed: " + str(ack1.result))
+            else:
+              print("Arming successful")
+              return "itsdone"
+
             #wait to arm.
-            log1.print1("Before arm")
+            log1.print1("Before wait arm")
             #mavlink.motors_armed_wait() #too slow. timed out.
             #log1.print1("After arm")
             start_time = time.time()
