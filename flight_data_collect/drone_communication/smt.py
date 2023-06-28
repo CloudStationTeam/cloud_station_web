@@ -165,7 +165,7 @@ def arm1(mavlink):
               return "itsdone"
             '''
           
-            ack(the_connection, "COMMAND_ACK")
+            ack(mavlink, "COMMAND_ACK")
 
             if not mavlink.motors_armed():
               print("Arming failed")
