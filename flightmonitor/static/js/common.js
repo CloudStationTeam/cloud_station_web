@@ -306,6 +306,7 @@ function set_mode(droneId, mode) {
 }
 
 function set_arm(droneId, is_disarm=false) {
+    alert("set_arm called again.");
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
