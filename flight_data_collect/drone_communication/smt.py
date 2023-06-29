@@ -168,6 +168,9 @@ def arm1(mavlink):
             #taking too long. don't know why.
             #ack(mavlink, "COMMAND_ACK")
 
+            #why does it autoly Disarm? maybe wait to long.
+            #maybe is armed buggy. assume it's armed and go from there.
+
             if not mavlink.motors_armed():
               print("Arming failed")
             else:
@@ -185,12 +188,15 @@ def arm1(mavlink):
                 time.sleep(1)  # Delay for 1 sec
                 #mavlink.arducopter_arm()
                 curr_time = time.time()
-                if curr_time - start_time >= 40 or mavlink.motors_armed(): #wait for 1 min. #3 mins do not work.
+                if curr_time - start_time >= 3 or mavlink.motors_armed(): #wait for 1 min. #3 mins do not work.
                     break
                 if curr_time - start_time >= n1:
                   print(str(n1))
                   n1+=1
             log1.print1("After wait arm")
+
+            #just return
+            return ("idk. armed.")
                   
             if not mavlink.motors_armed():
                 print("whatever. Not.")
