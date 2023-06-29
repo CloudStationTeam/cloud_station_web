@@ -252,7 +252,8 @@ def main1(): #done.
          
   log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
   
-  #arm(the_connection)
+  arm(the_connection)
+  '''
   arm2 = arm1(the_connection)
 
   log1.print1("whatever. arm1 done")
@@ -260,7 +261,8 @@ def main1(): #done.
   if arm2 != "itsdone":
     #return "no arm1" + str(arm2) 
     log1.print1("whatever. cont.")
-         
+  '''
+  
   takeoff(the_connection)
 
   log1.print1("whatever. takeoff done")
