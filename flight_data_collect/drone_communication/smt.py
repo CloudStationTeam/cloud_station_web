@@ -283,12 +283,15 @@ def main1(): #done.
   for mission_item1 in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
-  
+
+  #don't do it. otherwise it won't move.
+  '''
   msg = set_return(the_connection)
 
   log1.print1("whatever. set_return done")
 
   return msg
+  '''
 
 #Ref: online webs.
 
