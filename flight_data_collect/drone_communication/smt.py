@@ -241,13 +241,21 @@ def main1(): #done.
   mission_waypoints = []
 
   #TODO: map pins.
+  '''
   mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10).wt("2 whatever")
   mission_waypoints.append(mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10)) # Above takeoff point
 
   mission_waypoints.append(mission_item(1, 0, 42.43432724637685, -83.98613425948624, 10)) # Above Destination Point
 
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
+  '''
 
+  mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
+
+  mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
+
+  #mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) 
+  
   upload_mission(the_connection, mission_waypoints)
          
   log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
