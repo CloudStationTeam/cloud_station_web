@@ -254,7 +254,7 @@ def main1(): #done.
 
   mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
 
-  #mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) 
+  mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
   
   upload_mission(the_connection, mission_waypoints)
          
