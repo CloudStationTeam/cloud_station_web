@@ -1,7 +1,7 @@
 from pymavlink import mavutil
 
 # Connect to the autopilot
-master = mavutil.mavlink_connection('udpout:localhost:9000')
+master = mavutil.mavlink_connection('udpout:localhost:14550')
 
 # Set AVOID_ENABLE to use all sources of barrier information
 master.mav.param_set_send(
