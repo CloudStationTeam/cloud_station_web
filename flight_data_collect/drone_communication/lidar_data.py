@@ -82,6 +82,6 @@ def main1():
     
     # Set RCx_OPTION to 40
     if n != -1:
-        find_switch_threshold(1master, n)
+        find_switch_threshold(master, n)
 
 
