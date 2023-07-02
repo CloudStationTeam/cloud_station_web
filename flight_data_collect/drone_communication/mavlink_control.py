@@ -8,6 +8,7 @@ import time
 #import flight_data_collect.drone_communication.smt
 from . import smt
 from . import log1
+from . import lidar_data
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
@@ -160,6 +161,9 @@ def set_arm(connect_address: int, is_disarm=False):
 
 def fly_to_point(connect_address: int, lat, lon, alt):
     try:
+        lidar_data.config_lidar()
+        return 
+        
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
