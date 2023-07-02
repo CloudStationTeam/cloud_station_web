@@ -63,14 +63,14 @@ def config_lidar(): #or other proximity sensors.
     #master = mavutil.mavlink_connection('udpout:localhost:14550')
     SERVER_IP = socket.gethostbyname(socket.gethostname())
     connect_address = 14550
-    the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+    master = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
     print(str(SERVER_IP)+" "+str(connect_address)) #dude it's private ip...
     
-    while(the_connection.target_system == 0):
+    while(master.target_system == 0):
         print("Checking Heartbeat")
         
         #the_connection.wait_heartbeat()
-        msg = the_connection.wait_heartbeat(timeout=6)
+        msg = master.wait_heartbeat(timeout=6)
         if msg:
             print(msg)
             break
