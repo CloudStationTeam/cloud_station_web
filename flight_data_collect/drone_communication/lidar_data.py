@@ -85,6 +85,8 @@ def config_lidar(): #or other proximity sensors.
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
 
+    print("Message Read" + str(master.recv_match(type="COMMAND_ACK", blocking =True))
+
     # Set PRX1_TYPE to enable using a 360-degree Lidar as a "proximity sensor"
     master.mav.param_set_send(
         target_system=1,
