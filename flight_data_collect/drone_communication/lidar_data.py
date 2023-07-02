@@ -94,7 +94,11 @@ def config_lidar(): #or other proximity sensors.
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
     
+    
     #No avoidance if switch_value is low. Optional.
+    #TODO.
+    #https://ardupilot.org/copter/docs/common-simple-object-avoidance.html
+    return 
     vacant_channel = find_vacant_channel(master)
     if vacant_channel == -1:
         return
