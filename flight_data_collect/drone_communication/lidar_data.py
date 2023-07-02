@@ -17,6 +17,24 @@ def find_vacant_channel(master):
     #if not len(vacant_channels):
     return -1
 
+def find_switch_threshold(master, channel_number):
+    # Monitor the state of the switch to determine the threshold value
+    initial_state = None
+
+    while initial_state is None:
+        msg = master.recv_match(type='RC_CHANNELS', blocking=True)
+        switch_value = getattr(msg, "chan{}_raw".format(channel_number), None)
+
+        if switch_value is not None:
+            initial_state = switch_value
+            print("Initial switch value:", initial_state)
+
+    # Determine the threshold value based on the initial state
+    threshold_value = initial_state - 100  # Adjust the threshold offset as needed
+    print("Threshold value:", threshold_value)
+
+    return threshold_value
+
 def toggle_avoidance_system(master, channel_number, threshold_value):
     # Set the RCx_OPTION parameter to 40 (replace x with the vacant channel number)
     rc_option_param = "RC{}_OPTION".format(channel_number)
@@ -80,7 +98,7 @@ def config_lidar(): #or other proximity sensors.
     if vacant_channel == -1:
         return
 
-    switch_threshold = find_switch_threshold(master, n)
+    switch_threshold = find_switch_threshold(master, vacant_channel)
     
     # Set RCx_OPTION to 40
     toggle_avoidance_system(master, vacant_channel, switch_threshold)
