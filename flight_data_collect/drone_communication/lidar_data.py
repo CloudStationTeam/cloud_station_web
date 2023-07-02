@@ -57,6 +57,24 @@ def toggle_avoidance_system(master, channel_number, threshold_value):
             print("Avoidance system deactivated")
             # Your code to deactivate the avoidance system goes here
 
+def format_param_message(param_name, param_value, success):
+    if success:
+        return f"Parameter {param_name} was successfully set to {param_value}"
+    else:
+        return f"Failed to set parameter {param_name}"
+
+def print_param(mav, param_name, param_value):
+    # Request the current value of the parameter
+    mav.param_fetch_one(param_name)
+
+    # Wait for the parameter value to be received
+    while mav.param(param_name) is None:
+        msg = mav.recv_match(type='PARAM_VALUE', blocking=True)
+
+    # Check if the parameter value matches the value we tried to set
+    success = mav.param(param_name) == param_value
+    print(format_param_message(param_name, param_value, success))
+
 def config_lidar(): #or other proximity sensors.
     print("D1")
     # Connect to the autopilot
@@ -85,7 +103,8 @@ def config_lidar(): #or other proximity sensors.
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
 
-    print("Message Read" + str(master.recv_match(type="COMMAND_ACK", blocking =True))
+    #print("Message Read" + str(master.recv_match(type="COMMAND_ACK", blocking =True))
+    print_param(master, "AVOID_ENABLE", 7)
 
     # Set PRX1_TYPE to enable using a 360-degree Lidar as a "proximity sensor"
     master.mav.param_set_send(
