@@ -17,28 +17,26 @@ def find_vacant_channel(master):
     #if not len(vacant_channels):
     return -1
 
-def find_switch_threshold(master, channel_number):
+def toggle_avoidance_system(master, channel_number, threshold_value):
     # Set the RCx_OPTION parameter to 40 (replace x with the vacant channel number)
     rc_option_param = "RC{}_OPTION".format(channel_number)
     master.param_set(rc_option_param, 40)
 
-    # Monitor the state of the switch and find the threshold value
-    threshold_value = None
-
-    print(f"Toggle the switch associated with channel {channel_number} to the HIGH position.")
-    while threshold_value is None:
+    # Monitor the state of the switch
+    while True:
         msg = master.recv_match(type='RC_CHANNELS', blocking=True)
-        threshold_value = msg.getattr(f"chan{channel_number}_raw")
-    print(f"Threshold value for HIGH position: {threshold_value}")
+        switch_value = getattr(msg, "chan{}_raw".format(channel_number), None)
 
-    print(f"Toggle the switch associated with channel {channel_number} to the LOW position.")
-    while threshold_value is not None:
-        msg = master.recv_match(type='RC_CHANNELS', blocking=True)
-        if msg.getattr(f"chan{channel_number}_raw") < threshold_value:
-            threshold_value = None
-    print(f"Threshold value for LOW position: {threshold_value}")
+        if switch_value is not None and switch_value > threshold_value:
+            # Activate the avoidance system
+            print("Avoidance system activated")
+            # Your code to activate the avoidance system goes here
+        else:
+            # Deactivate the avoidance system
+            print("Avoidance system deactivated")
+            # Your code to deactivate the avoidance system goes here
 
-def main1():
+def config_lidar(): #or other proximity sensors.
     # Connect to the autopilot
     master = mavutil.mavlink_connection('udpout:localhost:14550')
 
@@ -78,10 +76,12 @@ def main1():
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
 
-    n = find_vacant_channel(master)
+    vacant_channel = find_vacant_channel(master)
+    if vacant_channel == -1:
+        return
+
+    switch_threshold = find_switch_threshold(master, n)
     
     # Set RCx_OPTION to 40
-    if n != -1:
-        find_switch_threshold(master, n)
-
+    toggle_avoidance_system(master, vacant_channel, switch_threshold)
 
