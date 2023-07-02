@@ -107,7 +107,9 @@ def config_lidar(): #or other proximity sensors.
 #https://ardupilot.org/copter/docs/common-simple-object-avoidance.html
 #online webs.
 
-#This is to send fake distance data (note to use rand()). But could config. by sitl instead.
+#This is to send fake distance data (note to use rand()) from gcs to the drone. But could config. by sitl instead.
 #https://www.ardusub.com/developers/pymavlink.html
 #https://github.com/ArduPilot/ardupilot/blob/master/Tools/autotest/arducopter.py#L6881
+
+#could send data the other way. but may require concurrency.
 
