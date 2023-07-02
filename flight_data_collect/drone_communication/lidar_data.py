@@ -1,4 +1,5 @@
 from pymavlink import mavutil
+import time
 
 def find_vacant_channel(master):
     # Retrieve RC_CHANNELS message
