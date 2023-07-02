@@ -93,7 +93,8 @@ def config_lidar(): #or other proximity sensors.
         param_value=1,
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
-
+    
+    #below are optional.
     vacant_channel = find_vacant_channel(master)
     if vacant_channel == -1:
         return
