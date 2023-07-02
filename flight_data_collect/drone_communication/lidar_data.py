@@ -55,8 +55,10 @@ def toggle_avoidance_system(master, channel_number, threshold_value):
             # Your code to deactivate the avoidance system goes here
 
 def config_lidar(): #or other proximity sensors.
+    print("D1")
     # Connect to the autopilot
     master = mavutil.mavlink_connection('udpout:localhost:14550')
+    print("D2")
 
     # Set AVOID_ENABLE to use all sources of barrier information
     master.mav.param_set_send(
@@ -94,6 +96,7 @@ def config_lidar(): #or other proximity sensors.
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
 
+    print("D3")
     # Loop and listen for RANGEFINDER messages
     for _ in range(10):
         msg = mav.recv_match(type='RANGEFINDER', blocking=True)
