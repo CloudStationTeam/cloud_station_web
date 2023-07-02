@@ -1,5 +1,7 @@
 from pymavlink import mavutil
 import time
+import socket 
+
 
 def find_vacant_channel(master):
     # Retrieve RC_CHANNELS message
@@ -58,7 +60,20 @@ def toggle_avoidance_system(master, channel_number, threshold_value):
 def config_lidar(): #or other proximity sensors.
     print("D1")
     # Connect to the autopilot
-    master = mavutil.mavlink_connection('udpout:localhost:14550')
+    #master = mavutil.mavlink_connection('udpout:localhost:14550')
+    SERVER_IP = socket.gethostbyname(socket.gethostname())
+    connect_address = 14550
+    the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+    print(str(SERVER_IP)+" "+str(connect_address)) #dude it's private ip...
+    
+    while(the_connection.target_system == 0):
+        print("Checking Heartbeat")
+        
+        #the_connection.wait_heartbeat()
+        msg = the_connection.wait_heartbeat(timeout=6)
+        if msg:
+            print(msg)
+            break
     print("D2")
 
     # Set AVOID_ENABLE to use all sources of barrier information
