@@ -115,6 +115,8 @@ def config_lidar(): #or other proximity sensors.
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
 
+    print_param(master, "PRX1_TYPE", 15)
+
     # Set AVOID_MARGIN to control the distance from the barrier
     master.mav.param_set_send(
         target_system=1,
@@ -123,6 +125,8 @@ def config_lidar(): #or other proximity sensors.
         param_value=5,
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_REAL32
     )
+
+    print_param(master, "AVOID_MARGIN", 5)
 
     # Set AVOID_BEHAVE to control avoidance behavior
     master.mav.param_set_send(
@@ -133,6 +137,8 @@ def config_lidar(): #or other proximity sensors.
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
 
+    print_param(master, "AVOID_BEHAVE", 1)
+
     print("D3")
     # Loop and listen for LIDAR messages
     for _ in range(10):
@@ -140,6 +146,8 @@ def config_lidar(): #or other proximity sensors.
         formatted_distance = f"LIDAR distance: {msg.current_distance} meters"
         print(formatted_distance)
         time.sleep(1)  # Sleep for 1 second
+
+    print("lidar data done")
         
     #No avoidance if switch_value is low. Optional.
     #TODO.
