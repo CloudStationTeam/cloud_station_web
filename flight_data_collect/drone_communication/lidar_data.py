@@ -103,3 +103,11 @@ def config_lidar(): #or other proximity sensors.
     # Set RCx_OPTION to 40
     toggle_avoidance_system(master, vacant_channel, switch_threshold)
 
+#Refs.
+#https://ardupilot.org/copter/docs/common-simple-object-avoidance.html
+#online webs.
+
+#This is to send fake distance data (note to use rand()). But could config. by sitl instead.
+#https://www.ardusub.com/developers/pymavlink.html
+#https://github.com/ArduPilot/ardupilot/blob/master/Tools/autotest/arducopter.py#L6881
+
