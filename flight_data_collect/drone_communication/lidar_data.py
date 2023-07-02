@@ -134,10 +134,10 @@ def config_lidar(): #or other proximity sensors.
     )
 
     print("D3")
-    # Loop and listen for RANGEFINDER messages
+    # Loop and listen for LIDAR messages
     for _ in range(10):
-        msg = master.recv_match(type='RANGEFINDER', blocking=True)
-        formatted_distance = f"LiDAR distance: {msg.distance} meters"
+        msg = master.recv_match(type='DISTANCE_SENSOR', blocking=True)
+        formatted_distance = f"LIDAR distance: {msg.current_distance} meters"
         print(formatted_distance)
         time.sleep(1)  # Sleep for 1 second
         
