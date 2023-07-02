@@ -93,8 +93,14 @@ def config_lidar(): #or other proximity sensors.
         param_value=1,
         param_type=mavutil.mavlink.MAV_PARAM_TYPE_UINT8
     )
-    
-    
+
+    # Loop and listen for RANGEFINDER messages
+    for _ in range(10):
+        msg = mav.recv_match(type='RANGEFINDER', blocking=True)
+        formatted_distance = f"LiDAR distance: {msg.distance} meters"
+        print(formatted_distance)
+        time.sleep(1)  # Sleep for 1 second
+        
     #No avoidance if switch_value is low. Optional.
     #TODO.
     #https://ardupilot.org/copter/docs/common-simple-object-avoidance.html
