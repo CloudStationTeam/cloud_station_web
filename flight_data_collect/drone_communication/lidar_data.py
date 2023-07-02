@@ -145,7 +145,8 @@ def config_lidar(): #or other proximity sensors.
         msg = master.recv_match(type='DISTANCE_SENSOR', blocking=True)
         formatted_distance = f"LIDAR distance: {msg.current_distance} meters"
         print(formatted_distance)
-        time.sleep(1)  # Sleep for 1 second
+        #time.sleep(1)  # Sleep for 1 second
+        #if time.time()
 
     print("lidar data done")
         
