@@ -7,6 +7,7 @@ from flight_data_collect.drone_communication.mavlink_utils import check_vehicle_
 from flight_data_collect.drone_communication.mavlink_control import change_mode, set_waypoints, set_arm, fly_to_point
 from flight_data_collect.drone_communication.mavlink_constants import AVAILABLE_TELEMETRY_DATA
 import datetime
+from flight_data_collect.drone_communication.mavlink_control import update_waypoints 
 
 
 def connect_vehicle(request, connect_address):
@@ -66,3 +67,8 @@ def update_fields(request):
 
 def get_available_fields(request):
     return HttpResponse(json.dumps(AVAILABLE_TELEMETRY_DATA), content_type="text/plain")
+
+
+def waypoints(request, droneid, addrs):
+    msg = update_waypoints(int(droneid))
+    return HttpResponse(json.dumps(msg), content_type="text/plain")
