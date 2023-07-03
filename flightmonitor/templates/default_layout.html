@@ -16,8 +16,8 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet'/>
     {% load static %}
     <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
-
 </head>
+	
 <input type="hidden" id="mapboxId" name="mapbox" value="{{MAPBOX_KEY}}">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
@@ -118,6 +118,7 @@
                 </div>
 
             </div>
+	    <div id="waypoints"></div>
             <div class="col-sm-7">
                 <div class="row" id="mapLayout">
                     <div class="col-sm-12" id="map">
