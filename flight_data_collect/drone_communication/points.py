@@ -30,7 +30,7 @@ def get_lat_lon_alt(address):
     
     alt = data["results"][0]["elevation"]
     
-    return lat, lon, alt
+    return lat, lon, alt #returns a tuple 
 
 '''
 ex.
