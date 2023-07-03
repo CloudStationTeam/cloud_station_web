@@ -42,6 +42,7 @@ def send_waypoint(connection, lat, lon, alt, seq):
     """
     Send a waypoint to the drone.
 
+    #Ref. https://ardupilot.org/copter/docs/common-mavlink-mission-command-messages-mav_cmd.html
     For the altitude obtained from the Open Topo Data API,
     you should use MAV_FRAME_GLOBAL for your MAVLink commands.
     This frame uses the WGS84 coordinate system where altitude is relative to mean sea level.
