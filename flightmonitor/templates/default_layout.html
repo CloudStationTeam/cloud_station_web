@@ -118,7 +118,24 @@
                 </div>
 
             </div>
-	    <div id="waypoints"><div>WP</div></div>
+
+        <div id="waypoints">		    
+            <h3>Waypoint</h3>
+            <div id="waypoints-container">
+                <div class="address-input">
+                    <input type="text" id="address-input" placeholder="Enter address">
+                    <div id="suggested-addresses-container" class="suggested-addresses-container"></div>
+                    <button id="add-address">Add</button>
+                </div>
+            </div>
+
+            <div>
+                <h3>Waypoint List</h3>
+                <div id="waypoint-list-container"></div>
+                <button id="clear-all">Clear All</button>
+            </div>
+        </div>
+		    
             <div class="col-sm-7">
                 <div class="row" id="mapLayout">
                     <div class="col-sm-12" id="map">
