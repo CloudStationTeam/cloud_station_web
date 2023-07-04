@@ -86,7 +86,8 @@ addressInput.addEventListener("input", async () => {
 
 addAddressButton.addEventListener("click", () => {
   const address = addressInput.value; //ref.
-
+  send_waypoint(droneId, address);
+  
   // Add the address to the waypoint list
   waypointList.push(address);
 
@@ -132,3 +133,16 @@ function renderWaypointList(address) {
   // Append the <div> element to the container div_a
   waypointListContainer.appendChild(divElement);
 }
+
+function send_waypoint(droneId, addr) {
+    alert("wp");
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    let url = '/flight_data_collect/control/waypoints/' + droneId.toString() + '/' + addr.toString() + '/';
+    xmlHttp.open("GET", url, true); // asynchronous 
+    xmlHttp.send(null);
+}
+
