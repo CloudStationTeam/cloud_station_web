@@ -181,3 +181,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     except Exception as e:
         print(e)
         return {'ERROR': str(e), 'droneid': connect_address}
+
+def update_waypoints(connect_address: int, addr: str):
+    print("wp")
+
