@@ -14,5 +14,5 @@ urlpatterns = [
         name='fly-to'),
     url(r'update-fields/$', views.update_fields, name='update-fields'),
     url(r'get-available-fields/$', views.get_available_fields, name='get-available-fields')
-    url(r'control/waypoints/(?P<droneid>[^/]+)/(?P<addr>[^/]+)/$', views.waypoints, name='waypoints),
+    url(r'control/waypoints/(?P<droneid>[^/]+)/(?P<addr>[^/]+)/$', views.waypoints, name='waypoints'),
 ]
