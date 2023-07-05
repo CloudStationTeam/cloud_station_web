@@ -196,6 +196,7 @@ def update_waypoints(connect_address: int, addr: str):
         if len(addrList) < 3:
             return 
         msg = waypoints.main1(addrList) #just debug line by line.
+        addrList = []
         if not msg:
             msg = "None"
         print(msg)
