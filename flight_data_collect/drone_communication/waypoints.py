@@ -1,5 +1,5 @@
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
-#!/usr/bin/env python3 ?
+#!/usr/bin/env python3
 
 import math 
 from pymavlink import mavutil 
@@ -216,7 +216,7 @@ def arm1(mavlink):
 
 # Main Function
 #if __name__ == "__main__":
-def main1(addrList): #done.
+def main1(addrList=None): #done.
   #return "???" + url
   print("Program Started")
 
@@ -259,12 +259,13 @@ def main1(addrList): #done.
   mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
   """
 
-  """
+  #"""
   ex.
   address1 = '5200 Engineering Service Rd, Irvine, CA 92617'
   address2 = '5001 Newport Coast Dr, Irvine, CA 92603'
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
-  """
+  addrList = [address1, address2, address3]
+  #"""
   n = 0
   for addr in addrList:
     lat, lon, alt = points.get_lat_lon_alt(addrList)
