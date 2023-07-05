@@ -3,7 +3,7 @@ from pymavlink import mavutil
 import requests
 import urllib.parse
 
-def get_lat_lon_test(address):
+def get_lat_lon(address):
     url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address2) +'?format=json'
     #print(urllib.parse.quote(address))
 
