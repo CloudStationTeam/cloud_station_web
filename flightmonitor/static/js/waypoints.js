@@ -123,6 +123,7 @@ return;
 }
   address = (wpLists[droneid].length+1).toString() + ". " + address;
   wpLists[droneid].push(address);
+  send_waypoint(droneid, address);
 
   // Clear the input field
   addressInput.value = "";
@@ -189,5 +190,18 @@ function filterit(input) {
   var sanitizedInput = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return sanitizedInput;
 } //avoid xss.
-//Add it to py. avoid sql.
+//1. Add it to py. avoid sql.
+
+function send_waypoint(droneId, addr) {
+    alert("wp");
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
+    };
+    let url = '/flight_data_collect/control/waypoints/' + droneId.toString() + '/' + addr.toString() + '/';
+    xmlHttp.open("GET", url, true); // asynchronous 
+    xmlHttp.send(null);
+}
+//2. remove. clearall. todo.
 
