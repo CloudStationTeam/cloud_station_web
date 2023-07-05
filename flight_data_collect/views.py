@@ -69,6 +69,6 @@ def get_available_fields(request):
     return HttpResponse(json.dumps(AVAILABLE_TELEMETRY_DATA), content_type="text/plain")
 
 
-def waypoints(request, droneid, addrs):
-    msg = update_waypoints(int(droneid))
+def waypoints(request, droneid, addr):
+    msg = update_waypoints(int(droneid), str(addr))
     return HttpResponse(json.dumps(msg), content_type="text/plain")
