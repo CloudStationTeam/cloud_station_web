@@ -6,7 +6,7 @@ from flightmonitor.consumers import send_message_to_clients
 import time
 
 #import flight_data_collect.drone_communication.smt
-from . import smt
+from . import waypoints
 from . import log1
 from . import lidar_data
 
@@ -183,5 +183,23 @@ def fly_to_point(connect_address: int, lat, lon, alt):
         return {'ERROR': str(e), 'droneid': connect_address}
 
 def update_waypoints(connect_address: int, addr: str):
-    print("wp")
+    print("wp") #reached.
+    try:
+        #return "???    Hello? " + "str(SERVER_IP)" + ':' + str(connect_address)
+        #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+        msg = log1.log11() #done.
+        #return msg
+        
+        print("smt")
+        msg = waypoints.main1() #just debug line by line.
+        if not msg:
+            msg = "None"
+        print(msg)
+        return "// // // // " + str(msg)
+    except Exception as e:
+        print(e)
+        stre = str(e)
+        return str({'// // // // ERROR': 'Arm/Disarm command failed!' + stre, 'droneid': connect_address})
+
+    
 
