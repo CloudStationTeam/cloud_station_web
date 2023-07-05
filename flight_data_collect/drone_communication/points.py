@@ -1,24 +1,31 @@
 from pymavlink import mavutil
 
 import requests
+import urllib.parse
 
-def get_lat_lon_alt(address):
-    # Note that they have limited rates.
-    GEOCODE_API_URL = "https://geocode.maps.co/search?q={}"
-    OPENTOPO_API_URL = "https://api.opentopodata.org/v1/test-dataset?locations={},{}"
-    
+def get_lat_lon_test(address):
+    url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address2) +'?format=json'
+    #print(urllib.parse.quote(address))
+
+    response = requests.get(url).json()
+    lat = response[0]["lat"]
+    lon = response[0]["lon"]
+    return lar, lon
+
+def get_lat_lon_test(address):
     # Get latitude and longitude
-    response = requests.get(GEOCODE_API_URL.format(address))
-    if response.status_code != 200:
-        raise Exception("Error: Non-200 response from Geocoding API")
+    address1 = 'Shivaji Nagar, Bangalore, KA 560001'
+    address2 = '1 Shields Avenue, Davis, CA 95616'
+    #address3 = '401 E. Peltason Drive, Suite 3200, Irvine, CA 92617'
+    address3 = '401 E. Peltason Drive, Irvine, CA 92617'
     
-    data = response.json()
-    if "features" not in data or len(data["features"]) == 0:
-        raise Exception("Error: No features in Geocoding API response")
-    
-    lat = data["features"][0]["geometry"]["coordinates"][1]
-    lon = data["features"][0]["geometry"]["coordinates"][0]
-    
+    lat, lon = get_lat_lon_test(address2)
+    print(lat, lon)
+
+def get_alt(address):
+    # Note that they have limited rates.
+    OPENTOPO_API_URL = "https://api.opentopodata.org/v1/test-dataset?locations={},{}"
+       
     # Get altitude
     response = requests.get(OPENTOPO_API_URL.format(lat, lon))
     if response.status_code != 200:
@@ -30,6 +37,11 @@ def get_lat_lon_alt(address):
     
     alt = data["results"][0]["elevation"]
     
+    return alt
+
+def get_lat_lon_alt(address):
+    lat, lon = get_lat_lon(address)
+    alt = get_alt(address)
     return lat, lon, alt #returns a tuple 
 
 '''
