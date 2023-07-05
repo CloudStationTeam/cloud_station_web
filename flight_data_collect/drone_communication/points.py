@@ -71,7 +71,7 @@ def send_waypoint(connection, lat, lon, alt, seq):
         0, 0, 0, 0, # Parameters 1-4 not used
         lat, lon, alt) # Parameters 5-7 are latitude, longitude, altitude
 
-def test(the_connection):
+def main1(the_connection):
     lat, lon, alt = get_lat_lon_alt("1600 Pennsylvania Ave, Washington, DC")
     send_waypoint(the_connection, lat, lon, alt, seq=0)
 
