@@ -30,4 +30,5 @@ manage.py
 log1.py x
 commons.js
 con.py not the last one
+views.py not the last one
 """
