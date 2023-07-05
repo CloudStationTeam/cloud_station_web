@@ -29,7 +29,7 @@ pymavlink==2.4.1
 pyOpenSSL==19.1.0
 pyserial==3.4
 pytz==2019.3
-requests==2.31.0
+requests==2.27.1
 service-identity==18.1.0
 six==1.13.0
 sqlparse==0.3.0
