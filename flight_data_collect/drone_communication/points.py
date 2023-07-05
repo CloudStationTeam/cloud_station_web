@@ -22,11 +22,11 @@ def get_lat_lon_test(address):
     lat, lon = get_lat_lon(address2)
     print(lat, lon)
 
-def get_alt(address):
+def get_alt(lat, lon): #TODO. Google API maybe better, but it costs money.
+    # Get altitude
     # Note that they have limited rates.
     OPENTOPO_API_URL = "https://api.opentopodata.org/v1/test-dataset?locations={},{}"
        
-    # Get altitude
     response = requests.get(OPENTOPO_API_URL.format(lat, lon))
     if response.status_code != 200:
         raise Exception("Error: Non-200 response from Open Topo Data API")
@@ -41,7 +41,7 @@ def get_alt(address):
 
 def get_lat_lon_alt(address):
     lat, lon = get_lat_lon(address)
-    alt = get_alt(address)
+    alt = get_alt(lat, lon)
     return lat, lon, alt #returns a tuple 
 
 '''
