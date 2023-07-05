@@ -10,7 +10,7 @@ def get_lat_lon(address):
     response = requests.get(url).json()
     lat = response[0]["lat"]
     lon = response[0]["lon"]
-    return lar, lon
+    return lat, lon
 
 def get_lat_lon_test(address):
     # Get latitude and longitude
