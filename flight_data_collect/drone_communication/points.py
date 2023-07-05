@@ -19,7 +19,7 @@ def get_lat_lon_test(address):
     #address3 = '401 E. Peltason Drive, Suite 3200, Irvine, CA 92617'
     address3 = '401 E. Peltason Drive, Irvine, CA 92617'
     
-    lat, lon = get_lat_lon_test(address2)
+    lat, lon = get_lat_lon(address2)
     print(lat, lon)
 
 def get_alt(address):
