@@ -12,6 +12,7 @@ import time
 from . import log1
 #log1.print1(s)
 #read Error e in web first. then log in cmd line. then sitl in mavproxy.
+from . import points 
 
 # Class for formating the Mission Item.
 class mission_item: #done.
@@ -215,7 +216,7 @@ def arm1(mavlink):
 
 # Main Function
 #if __name__ == "__main__":
-def main1(): #done.
+def main1(addrList): #done.
   #return "???" + url
   print("Program Started")
 
@@ -250,12 +251,26 @@ def main1(): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
+  """
   mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
 
   mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
 
   mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
-  
+  """
+
+  """
+  ex.
+  address1 = '5200 Engineering Service Rd, Irvine, CA 92617'
+  address2 = '5001 Newport Coast Dr, Irvine, CA 92603'
+  address3 = '401 E. Peltason Drive, Irvine, CA 92617'
+  """
+  n = 0
+  for addr in addrList:
+    lat, lon, alt = points.get_lat_lon_alt(addrList)
+    mission_waypoints.append(mission_item(n, 0, lat, lon, alt))
+    n += 1
+    
   upload_mission(the_connection, mission_waypoints)
          
   log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
