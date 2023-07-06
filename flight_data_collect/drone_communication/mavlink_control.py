@@ -182,7 +182,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
         print(e)
         return {'ERROR': str(e), 'droneid': connect_address}
 
-addrList=[] #static 
+#addrList=[] #static 
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
     try:
@@ -192,13 +192,16 @@ def update_waypoints(connect_address: int, addr: str):
         #return msg
         
         print("smt")
+        """
         global addrList
         addrList.append(address)
         if len(addrList) < 3:
             return 
         print("addrList "+addrList)
+        """
+        addrList = [addr]
         msg = waypoints.main1(addrList) #just debug line by line.
-        addrList = []
+        #addrList = []
         if not msg:
             msg = "None"
         print(msg)
