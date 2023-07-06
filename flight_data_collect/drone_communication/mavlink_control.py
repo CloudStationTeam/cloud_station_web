@@ -101,7 +101,7 @@ def set_arm(connect_address: int, is_disarm=False):
         #return msg
         
         print("smt")
-        msg = smt.main1() #just debug line by line.
+        msg = waypoints.main1() #just debug line by line.
         if not msg:
             msg = "None"
         print(msg)
@@ -195,6 +195,7 @@ def update_waypoints(connect_address: int, addr: str):
         addrList.append(address)
         if len(addrList) < 3:
             return 
+        print("addrList "+addrList)
         msg = waypoints.main1(addrList) #just debug line by line.
         addrList = []
         if not msg:
