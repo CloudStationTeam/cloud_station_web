@@ -216,7 +216,7 @@ def arm1(mavlink):
 
 # Main Function
 #if __name__ == "__main__":
-def main1(addrList=None): #done.
+def main1(addrList): #done.
   #return "???" + url
   print("Program Started")
 
@@ -264,11 +264,12 @@ def main1(addrList=None): #done.
   address1 = '5200 Engineering Service Rd, Irvine, CA 92617'
   address2 = '5001 Newport Coast Dr, Irvine, CA 92603'
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
-  addrList = [address1, address2, address3]
+  #addrList = [address1, address2, address3]
   #"""
   n = 0
   for addr in addrList:
     lat, lon, alt = points.get_lat_lon_alt(addr)
+    print(lat, lon, alt)
     mission_waypoints.append(mission_item(n, 0, lat, lon, alt))
     n += 1
     
