@@ -268,7 +268,7 @@ def main1(addrList=None): #done.
   #"""
   n = 0
   for addr in addrList:
-    lat, lon, alt = points.get_lat_lon_alt(addrList)
+    lat, lon, alt = points.get_lat_lon_alt(addr)
     mission_waypoints.append(mission_item(n, 0, lat, lon, alt))
     n += 1
     
