@@ -4,7 +4,7 @@ import requests
 import urllib.parse
 
 def get_lat_lon(address):
-    address = address[3:]
+    
     url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
     print("addr "+urllib.parse.quote(address))
 
