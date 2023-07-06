@@ -192,6 +192,7 @@ def update_waypoints(connect_address: int, addr: str):
         #return msg
         
         print("smt")
+        global addrList
         addrList.append(address)
         if len(addrList) < 3:
             return 
