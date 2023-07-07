@@ -43,7 +43,7 @@ def set_auto(the_connection):
     0,    # Confirmation
     mavutil.mavlink.MAV_MODE_AUTO_ARMED, # Auto mode
     0,    # Custom mode (not used for auto mode)
-    0, 0, 0, 0 # Parameters (not used for auto mode)
+    0, 0, 0, 0, 0 # Parameters (not used for auto mode)
   )
   ack(the_connection, "COMMAND_ACK")
 
