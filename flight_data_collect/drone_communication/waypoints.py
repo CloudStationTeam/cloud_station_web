@@ -33,6 +33,20 @@ class mission_item: #done.
   def wt(self, s):
     print(s)
 
+#set it auto mode
+def set_auto(mav):
+  # Switch to auto mode
+  mav.command_long_send(
+    mav.target_system,    # Target system ID (can be 1 for the autopilot itself)
+    mav.target_component, # Target component ID (can be 1 for the autopilot itself)
+    mavutil.mavlink.MAV_CMD_DO_SET_MODE, # MAVLink command to set mode
+    0,    # Confirmation
+    mavutil.mavlink.MAV_MODE_AUTO_ARMED, # Auto mode
+    0,    # Custom mode (not used for auto mode)
+    0, 0, 0, 0 # Parameters (not used for auto mode)
+  )
+  ack(the_connection, "COMMAND_ACK")
+
 #Arm the Drone
 def arm(the_connection): #done.
     print("Arming")
@@ -276,7 +290,8 @@ def main1(addrList): #done.
   upload_mission(the_connection, mission_waypoints)
          
   log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
-  
+
+  set_auto(the_connection)
   arm(the_connection)
   '''
   arm2 = arm1(the_connection)
