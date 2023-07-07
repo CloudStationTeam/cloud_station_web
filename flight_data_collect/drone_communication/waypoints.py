@@ -34,11 +34,11 @@ class mission_item: #done.
     print(s)
 
 #set it auto mode
-def set_auto(mav):
+def set_auto(the_connection):
   # Switch to auto mode
-  mav.command_long_send(
-    mav.target_system,    # Target system ID (can be 1 for the autopilot itself)
-    mav.target_component, # Target component ID (can be 1 for the autopilot itself)
+  the_connection.mav.command_long_send(
+    the_connection.target_system,    # Target system ID (can be 1 for the autopilot itself)
+    the_connection.target_component, # Target component ID (can be 1 for the autopilot itself)
     mavutil.mavlink.MAV_CMD_DO_SET_MODE, # MAVLink command to set mode
     0,    # Confirmation
     mavutil.mavlink.MAV_MODE_AUTO_ARMED, # Auto mode
