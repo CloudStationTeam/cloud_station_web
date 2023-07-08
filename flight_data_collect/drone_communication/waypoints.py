@@ -291,7 +291,6 @@ def main1(addrList): #done.
          
   log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
 
-  set_auto(the_connection)
   arm(the_connection)
   '''
   arm2 = arm1(the_connection)
@@ -302,7 +301,8 @@ def main1(addrList): #done.
     #return "no arm1" + str(arm2) 
     log1.print1("whatever. cont.")
   '''
-  
+
+  set_auto(the_connection)
   takeoff(the_connection)
 
   log1.print1("whatever. takeoff done")
