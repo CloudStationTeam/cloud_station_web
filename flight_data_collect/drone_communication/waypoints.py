@@ -56,12 +56,14 @@ mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm
     
     ack(the_connection, "COMMAND_ACK")
 
+    """
     n = 1
     #while True:
     while not mavlink.motors_armed() and n<10:
       time.sleep(1)
       print("wait arm"+str(n))
       n+=1
+    """
         
 #Takeoff the Drone
 def takeoff(the_connection): #done.
