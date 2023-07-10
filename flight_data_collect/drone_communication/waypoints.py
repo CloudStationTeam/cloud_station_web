@@ -289,7 +289,7 @@ def main1(addrList): #done.
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
   #addrList = [address1, address2, address3]
   #"""
-  n = 0
+  n = 1 # ???
   for addr in addrList:
     lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     print(lat, lon, alt)
