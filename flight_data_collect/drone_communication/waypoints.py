@@ -290,6 +290,11 @@ def main1(addrList): #done.
   #addrList = [address1, address2, address3]
   #"""
   n = 1 # ???
+  """
+  Therefore, if you explicitly want to set the home position yourself, you would typically include a waypoint with sequence 0. If you don't include it, the system may automatically create one for you, depending on the specifics of your autopilot system.
+  
+  That's why it fights around.
+  """
   for addr in addrList:
     lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     print(lat, lon, alt)
@@ -320,7 +325,7 @@ def main1(addrList): #done.
 
   log1.print1("whatever. start_mission done")
 
-  item_seq = 0
+  item_seq = 1 # ???
   for mission_item1 in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
