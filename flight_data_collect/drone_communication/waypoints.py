@@ -275,13 +275,13 @@ def main1(addrList=None): #done.
   '''
 
   #"""
-  n=1
-  mission_waypoints.append(mission_item(1, 0, 33.643633, -117.841689, 10)) # Above takeoff point
+  #n=1
+  mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
   #mission_waypoints.append(mission_item(2
 
-  mission_waypoints.append(mission_item(2, 0, 33.642831,-117.841283, 10)) # Above Destination Point
+  mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
 
-  mission_waypoints.append(mission_item(3, 0, 33.642919,-117.839280, 5)) # Destination Point
+  mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
   #"""
 
   """
@@ -329,7 +329,7 @@ def main1(addrList=None): #done.
 
   log1.print1("whatever. start_mission done")
 
-  item_seq = 1 # ???
+  item_seq = 0 # ???
   for mission_item1 in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
