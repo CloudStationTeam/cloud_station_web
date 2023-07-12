@@ -275,11 +275,13 @@ def main1(addrList=None): #done.
   '''
 
   #"""
-  mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
+  n=1
+  mission_waypoints.append(mission_item(1, 0, 33.643633, -117.841689, 10)) # Above takeoff point
+  #mission_waypoints.append(mission_item(2
 
-  mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
+  mission_waypoints.append(mission_item(2, 0, 33.642831,-117.841283, 10)) # Above Destination Point
 
-  mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
+  mission_waypoints.append(mission_item(3, 0, 33.642919,-117.839280, 5)) # Destination Point
   #"""
 
   """
