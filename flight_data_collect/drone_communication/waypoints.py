@@ -274,7 +274,7 @@ def main1(addrList=None): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
-  #"""
+  """
   #n=1
   mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
   #mission_waypoints.append(mission_item(2
@@ -282,28 +282,28 @@ def main1(addrList=None): #done.
   mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
 
   mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
-  #"""
-
   """
+
+  #"""
   #ex.
   address1 = '5200 Engineering Service Rd, Irvine, CA 92617'
   address2 = '5001 Newport Coast Dr, Irvine, CA 92603'
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
   addrList = [address1, address2, address3]
-  """
+  #"""
   n = 1 # ???
   """
   Therefore, if you explicitly want to set the home position yourself, you would typically include a waypoint with sequence 0. If you don't include it, the system may automatically create one for you, depending on the specifics of your autopilot system.
   
   That's why it fights around.
   """
-  """
+  #"""
   for addr in addrList:
-    lat, lon, alt = points.get_lat_lon_alt(addr)#[3:])
+    lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     print(lat, lon, alt)
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
-  """
+  #"""
     
   upload_mission(the_connection, mission_waypoints)
          
@@ -329,7 +329,7 @@ def main1(addrList=None): #done.
 
   log1.print1("whatever. start_mission done")
 
-  item_seq = 0 # ???
+  item_seq = 1 # ???
   for mission_item1 in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
