@@ -199,7 +199,7 @@ def update_waypoints(connect_address: int, addr: str):
             return 
         print("addrList "+addrList)
         """
-        addrList = [addr]
+        addrList = []#[addr]
         msg = waypoints.main1(addrList) #just debug line by line.
         #addrList = []
         if not msg:
