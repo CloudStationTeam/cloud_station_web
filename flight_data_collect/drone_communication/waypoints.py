@@ -287,7 +287,7 @@ def main1(addrList): #done.
   address1 = '5200 Engineering Service Rd, Irvine, CA 92617'
   address2 = '5001 Newport Coast Dr, Irvine, CA 92603'
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
-  #addrList = [address1, address2, address3]
+  addrList = [address1, address2, address3]
   #"""
   n = 1 # ???
   """
@@ -296,7 +296,7 @@ def main1(addrList): #done.
   That's why it fights around.
   """
   for addr in addrList:
-    lat, lon, alt = points.get_lat_lon_alt(addr[3:])
+    lat, lon, alt = points.get_lat_lon_alt(addr)#[3:])
     print(lat, lon, alt)
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
