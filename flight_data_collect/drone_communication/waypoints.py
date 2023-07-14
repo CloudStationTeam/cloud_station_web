@@ -205,7 +205,7 @@ def add(addrList=None): #done.
     
   upload_mission(the_connection, mission_waypoints)
          
-  print1("wp. upload_mission done") #put whatever here, cuz log format didn't work.
+  print("wp. upload_mission done") #put whatever here, cuz log format didn't work.
 
   arm(the_connection)
   '''
