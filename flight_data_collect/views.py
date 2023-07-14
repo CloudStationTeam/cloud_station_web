@@ -11,7 +11,6 @@ from flight_data_collect.drone_communication.mavlink_control import update_waypo
 
 
 def connect_vehicle(request, connect_address):
-    print("wp1")
     is_successful = check_vehicle_heartbeat(connect_address)
     if is_successful:
         v = Vehicle(droneid=connect_address, is_connected=True)
@@ -71,6 +70,5 @@ def get_available_fields(request):
 
 
 def waypoints(request, droneid, addr):
-    print("wp2")
     msg = update_waypoints(int(droneid), str(addr))
     return HttpResponse(json.dumps(msg), content_type="text/plain")
