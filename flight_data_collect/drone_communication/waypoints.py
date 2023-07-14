@@ -291,15 +291,17 @@ def main1(addrList=None): #done.
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
   #addrList = [address1, address2, address3]
   if not addrList:
-    addrList = ["1"]
+    addrList = [address2]
   addrList = [address1] + addrList
   print(addrList)
   #"""
 
+  """
   tups = [(33.643633, -117.841689, 10),
           (33.642831,-117.841283, 10),
           (33.642919,-117.839280, 5)]
-  addrList = [address1, address2] #n=2
+  #addrList = [address1, address2] #n=2
+  """
   
   n = 1 # ???
   """
@@ -309,10 +311,10 @@ def main1(addrList=None): #done.
   """
   #"""
   for addr in addrList:
-    #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
-    #free map api timed out.
-    lat, lon, alt = tups[n-1]
-    print(lat, lon, alt)
+    lat, lon, alt = points.get_lat_lon_alt(addr[3:])
+    #free map api timed out. #No.
+    #lat, lon, alt = tups[n-1]
+    print("Now. ", lat, lon, alt)
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
   #"""
