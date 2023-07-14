@@ -289,7 +289,7 @@ def main1(addrList=None): #done.
   address1 = '5200 Engineering Service Rd, Irvine, CA 92617'
   address2 = '5001 Newport Coast Dr, Irvine, CA 92603'
   address3 = '401 E. Peltason Drive, Irvine, CA 92617'
-  addrList = [address1, address2, address3]
+  #addrList = [address1, address2, address3]
   #"""
   n = 1 # ???
   """
