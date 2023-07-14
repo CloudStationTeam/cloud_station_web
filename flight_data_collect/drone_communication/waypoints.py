@@ -191,7 +191,7 @@ def add(addrList=None): #done.
   """
   Therefore, if you explicitly want to set the home position yourself, you would typically include a waypoint with sequence 0. If you don't include it, the system may automatically create one for you, depending on the specifics of your autopilot system.
   
-  That's why it fights around.
+  That's why it flights around.
   """
   #"""
   for addr in addrList:
