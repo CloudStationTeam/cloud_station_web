@@ -47,11 +47,6 @@ def get_lat_lon_alt(address):
     alt = get_alt(lat, lon)
     return lat, lon, alt #returns a tuple 
 
-'''
-ex.
-lat, lon, alt = get_lat_lon_alt("1600 Amphitheatre Parkway, Mountain View, CA")
-print(f"Latitude: {lat}, Longitude: {lon}, Altitude: {alt}")
-'''
 
 def send_waypoint_example(connection, lat, lon, alt, seq):
     """
@@ -76,5 +71,7 @@ def send_waypoint_example(connection, lat, lon, alt, seq):
 
 def test(the_connection):
     lat, lon, alt = get_lat_lon_alt("1600 Pennsylvania Ave, Washington, DC")
+    #lat, lon, alt = get_lat_lon_alt("1600 Amphitheatre Parkway, Mountain View, CA")
+    print(f"Latitude: {lat}, Longitude: {lon}, Altitude: {alt}")
     send_waypoint(the_connection, lat, lon, alt, seq=0)
 
