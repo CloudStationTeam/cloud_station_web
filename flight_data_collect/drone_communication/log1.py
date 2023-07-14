@@ -25,10 +25,10 @@ def print1(s):
   logger.info(s)
   
 """
-reload
-manage.py
+reload X
+manage.py X
 log1.py x
-commons.js
+commons.js X
 con.py not the last one
-views.py not the last one
+views.py not the last one X
 """
