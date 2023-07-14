@@ -239,7 +239,7 @@ def arm1(mavlink):
 
 # Main Function
 #if __name__ == "__main__":
-def main1(addrList=None): #done.
+def add(addrList=None): #done.
   #return "???" + url
   print("Program Started")
 
