@@ -5,7 +5,7 @@ from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MS
 from flightmonitor.consumers import send_message_to_clients
 import time
 
-from . import waypoints, lidar_data
+from . import logs, waypoints, lidar_data
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
@@ -183,6 +183,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
     try:
+        logs.log(addr)
         addrList = [addr]
         msg = waypoints.add(addrList) #just debug line by line.
         if not msg:
