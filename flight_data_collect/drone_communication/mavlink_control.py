@@ -141,7 +141,7 @@ def update_waypoints(connect_address: int, addr: str):
     try:
         logs.log(addr)
         addrList = [addr]
-        msg = waypoints.add(addrList) #just debug line by line.
+        msg = waypoints.add(addrList) #TODO
         if not msg:
             msg = "None"
         print(msg)
