@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+import sys
+import logging.config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,13 +28,30 @@ SECRET_KEY = 'mmb@uth-#6-t)pi$_2)1!5x*91-#kdqzx)l8-*s-764i3l*mi1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-'loggers': {
-    '': {
-        'handlers': ['console'],
-    },
-
 ALLOWED_HOSTS = []  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xxx.us-west-1.compute.amazonaws.com")
 
+# Refs.
+#https://docs.djangoproject.com/en/4.2/howto/logging/#logging-how-to
+#https://stackoverflow.com/questions/38709115/why-doesnt-this-django-logging-work
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+        },
+    },
+    "loggers": {
+        "": { #all
+            "level": "INFO",
+            "handlers": ["console"],
+        },
+    },
+}
+logging.config.dictConfig(LOGGING)
+print("Logging configuration loaded")
 
 # Application definition
 
