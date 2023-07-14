@@ -9,7 +9,7 @@ import socket
 import time
 
 #add logs
-from . import log1
+from . import logs
 #log1.print1(s)
 #read Error e in web first. then log in cmd line. then sitl in mavproxy.
 from . import points 
