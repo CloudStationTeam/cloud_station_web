@@ -3,7 +3,6 @@ import socket
 import json
 from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MSG_ID_SET_MODE
 from flightmonitor.consumers import send_message_to_clients
-import time
 
 from . import logs, waypoints, lidar_data
 
@@ -25,8 +24,6 @@ def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, 
 
 
 def change_mode(connect_address: int, mode: str) -> str:
-    #print("1 whatever") #done. 
-    #return "print"
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
@@ -52,7 +49,7 @@ def change_mode(connect_address: int, mode: str) -> str:
         return str({'ERROR': 'Set Mode command failed!', 'droneid': connect_address})
 
 
-def set_waypoints(connect_address: int, waypoints: list) -> str: #bool: ???
+def set_waypoints(connect_address: int, waypoints: list) -> bool:
     """waypoints should be given in this form:
         [(lat0,lon10,alt0), (lat1,lon1,alt1), ...]"""
     try:
@@ -82,70 +79,32 @@ def set_waypoints(connect_address: int, waypoints: list) -> str: #bool: ???
                                   should_send=True)
             mavlink.mav.send(wp.wp(ack_msg['seq']))
         ack_msg = get_ack_msg(connect_address, mavlink, ['WAYPOINT_REQUEST', 'MISSION_ACK', 'MISSION_REQUEST'])
-        return str(ack_msg)
+        return ack_msg
     except Exception as e:
-        return("ERROR: "+str(e))
         print(e)
         return {'ERROR': 'Set waypoint failed!' + str(e), 'droneid': connect_address}
 
 
 def set_arm(connect_address: int, is_disarm=False):
-    #return {'ERROR': str(connect_address)}
     try:
-        #return "???    Hello? " + "str(SERVER_IP)" + ':' + str(connect_address)
-        #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
-        msg = log1.log11() #done.
-        #return msg
-        
-        print("smt")
-        msg = waypoints.main1() #just debug line by line.
-        if not msg:
-            msg = "None"
-        print(msg)
-        return "// // // // " + str(msg)
-    except Exception as e:
-        print(e)
-        stre = str(e)
-        return str({'// // // // ERROR': 'Arm/Disarm command failed!' + stre, 'droneid': connect_address})
-
-    
-    try:
-        str1 = set_waypoints(connect_address, [(0,11,0)])
-        if str1[0] == "E":
-            return str1 #Don't use str as a var name.
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
             return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}
         if is_disarm:
-            '''
             mavlink.mav.command_long_send(
                 mavlink.target_system,
                 mavlink.target_component,
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
                 0,
                 1, 0, 0, 0, 0, 0, 0)
-            mavlink.motors_armed_wait()
-            '''
-            mavlink.arducopter_arm()
-            #mavlink.motors_armed_wait()
-            start_time = time.time()
-            while True:
-                if time.time() - start_time >= 10 or mavlink.motors_armed():
-                    break
-            if not mavlink.motors_armed():
-                return {'ERROR': 'Not.'}
         else:
-            return {'ERROR': 'No.'}
-            '''
             mavlink.mav.command_long_send(
                 mavlink.target_system,
                 mavlink.target_component,
                 mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
                 0,
                 0, 0, 0, 0, 0, 0, 0)
-            mavlink.motors_disarmed_wait()
-            '''
         ack_msg = get_ack_msg(connect_address, mavlink, 'COMMAND_ACK')
         if ack_msg:
             return ack_msg
@@ -158,9 +117,6 @@ def set_arm(connect_address: int, is_disarm=False):
 
 def fly_to_point(connect_address: int, lat, lon, alt):
     try:
-        lidar_data.config_lidar()
-        return 
-        
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
@@ -193,5 +149,3 @@ def update_waypoints(connect_address: int, addr: str):
     except Exception as e:
         print(e)
         return str({'// // // // ERROR': str(e), 'droneid': connect_address})
-
-    
