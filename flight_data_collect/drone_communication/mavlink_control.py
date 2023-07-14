@@ -184,7 +184,7 @@ def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
     try:
         addrList = [addr]
-        msg = waypoints.main1(addrList) #just debug line by line.
+        msg = waypoints.add(addrList) #just debug line by line.
         if not msg:
             msg = "None"
         print(msg)
