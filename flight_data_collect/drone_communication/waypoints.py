@@ -10,8 +10,6 @@ import time
 
 #add logs
 from . import logs
-#log1.print1(s)
-#read Error e in web first. then log in cmd line. then sitl in mavproxy.
 from . import points 
 
 # Class for formating the Mission Item.
@@ -30,10 +28,8 @@ class mission_item: #done.
     self.param6 = y
     self.param7 = z
     self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION 
-  def wt(self, s):
-    print(s)
 
-#set it auto mode
+#set it to auto mode
 def set_auto(the_connection):
   # Switch to auto mode
   the_connection.mav.command_long_send(
@@ -240,16 +236,12 @@ def arm1(mavlink):
 # Main Function
 #if __name__ == "__main__":
 def add(addrList=None): #done.
-  #return "???" + url
   print("Program Started")
-
-  #the_connection = mavutil.mavlink_connection('udpin:localhost:14550') #("34.194.163.6:14550") #url
-  #return str(the_connection)
 
   SERVER_IP = socket.gethostbyname(socket.gethostname())
   connect_address = 14550
   the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
-  print(str(SERVER_IP)+" "+str(connect_address)) #dude it's private ip...
+  print(str(SERVER_IP)+" "+str(connect_address))
   
   while(the_connection.target_system == 0):
     print("Checking Heartbeat")
@@ -303,7 +295,7 @@ def add(addrList=None): #done.
   #addrList = [address1, address2] #n=2
   """
   
-  n = 1 # ???
+  n = 1 # ??? #TODO
   """
   Therefore, if you explicitly want to set the home position yourself, you would typically include a waypoint with sequence 0. If you don't include it, the system may automatically create one for you, depending on the specifics of your autopilot system.
   
@@ -321,27 +313,27 @@ def add(addrList=None): #done.
     
   upload_mission(the_connection, mission_waypoints)
          
-  log1.print1("whatever. upload_mission done") #put whatever here, cuz log format didn't work.
+  print1("wp. upload_mission done") #put whatever here, cuz log format didn't work.
 
   arm(the_connection)
   '''
-  arm2 = arm1(the_connection)
+  msg = arm1(the_connection)
 
-  log1.print1("whatever. arm1 done")
+  print("wp. arm1 done")
 
-  if arm2 != "itsdone":
-    #return "no arm1" + str(arm2) 
-    log1.print1("whatever. cont.")
+  if msg != "done":
+    #return "no arm1" + str(msg)) 
+    print("wp. cont.")
   '''
 
   set_auto(the_connection)
   takeoff(the_connection)
 
-  log1.print1("whatever. takeoff done")
+  print("wp. takeoff done")
 
   start_mission(the_connection)
 
-  log1.print1("whatever. start_mission done")
+  print("wp. start_mission done")
 
   item_seq = 1 # ???
   for mission_item1 in mission_waypoints:
@@ -352,7 +344,7 @@ def add(addrList=None): #done.
   '''
   msg = set_return(the_connection)
 
-  log1.print1("whatever. set_return done")
+  print("wp. set_return done")
 
   return msg
   '''
