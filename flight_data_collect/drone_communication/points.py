@@ -73,5 +73,5 @@ def test(the_connection):
     lat, lon, alt = get_lat_lon_alt("1600 Pennsylvania Ave, Washington, DC")
     #lat, lon, alt = get_lat_lon_alt("1600 Amphitheatre Parkway, Mountain View, CA")
     print(f"Latitude: {lat}, Longitude: {lon}, Altitude: {alt}")
-    send_waypoint(the_connection, lat, lon, alt, seq=0)
+    send_waypoint_example(the_connection, lat, lon, alt, seq=0)
 
