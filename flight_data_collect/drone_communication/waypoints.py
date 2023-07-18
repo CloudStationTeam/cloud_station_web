@@ -180,12 +180,12 @@ def add(addrList=None): #done.
   print(addrList)
   #"""
 
-  """
+  #"""
   tups = [(33.643633, -117.841689, 10),
           (33.642831,-117.841283, 10),
           (33.642919,-117.839280, 5)]
   #addrList = [address1, address2] #n=2
-  """
+  #"""
   
   n = 1 # ??? #TODO
   """
