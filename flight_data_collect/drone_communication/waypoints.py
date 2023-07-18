@@ -199,7 +199,7 @@ def add(addrList=None): #done.
     #free map api timed out. #No.
     #lat, lon, alt = tups[n-1]
     print("Now. ", lat, lon, alt)
-    mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
+    mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), 5)) #int(alt)))
     n += 1
   #"""
     
