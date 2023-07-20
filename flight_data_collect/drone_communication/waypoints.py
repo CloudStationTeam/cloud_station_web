@@ -197,7 +197,7 @@ def add(addrList=None): #done.
   for addr in addrList:
     #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     #free map api timed out. #No.
-    #lat, lon, alt = tups[n-1]
+    lat, lon, alt = tups[n-1]
     alt = 5
     print("Now. ", lat, lon, alt)
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
