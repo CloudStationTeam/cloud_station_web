@@ -16,7 +16,7 @@ from . import points
 class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
     self.seq = i
-    self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT # Use Global Latitude and Longitude for position data
+    self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL # MAV_FRAME_GLOBAL_RELATIVE_ALT # Use Global Latitude and Longitude for position data
     self.command = mavutil.mavlink.MAV_CMD_NAV_WAYPOINT # Move to the waypoint
     self.current = current
     self.auto = 1 #auto cont.
