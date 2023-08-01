@@ -194,15 +194,19 @@ def add(addrList=None): #done.
   That's why it flights around.
   """
   #"""
-  for addr in addrList:
-    """
+  #for addr in addrList:
+  for _ in range(3):
+    #"""
     #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     #free map api timed out. #No.
     lat, lon, alt = tups[n-1]
     alt = 5
+    #"""
+    
     """
     lat, lon = points.get_lat_lon(addr[3:])
     alt = 5
+    """
     
     print("Now. ", lat, lon, alt)
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
