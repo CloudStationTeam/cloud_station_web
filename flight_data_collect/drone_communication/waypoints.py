@@ -214,9 +214,9 @@ def add(addrList=None): #done.
 
     #arm it, then
     #def fly_to_point(connect_address: int, lat, lon, alt):
-    mc.fly_to_point(the_connection, lat, lon, alt)
+    #mc.fly_to_point(the_connection, lat, lon, alt)
   
-    #mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
+    mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
   #"""
   
