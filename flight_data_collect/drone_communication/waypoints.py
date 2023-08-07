@@ -160,7 +160,7 @@ def add(addrList=None): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
-  """
+  #"""
   #n=1
   mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
   #mission_waypoints.append(mission_item(2
@@ -168,7 +168,7 @@ def add(addrList=None): #done.
   mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
 
   mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
-  """
+  #"""
 
   #"""
   #ex.
@@ -216,11 +216,12 @@ def add(addrList=None): #done.
     #def fly_to_point(connect_address: int, lat, lon, alt):
     #mc.fly_to_point(the_connection, lat, lon, alt)
   
-    mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
+    #mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
   #"""
   
   #return
+  print("WTF")
     
   upload_mission(the_connection, mission_waypoints)
          
