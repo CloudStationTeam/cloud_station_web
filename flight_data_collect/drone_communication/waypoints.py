@@ -247,7 +247,7 @@ def add(addrList=None): #done.
 
   print("wp. start_mission done")
 
-  item_seq = 1 # ???
+  item_seq = 0 # ???
   for mission_item1 in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
