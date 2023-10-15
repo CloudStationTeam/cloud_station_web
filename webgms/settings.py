@@ -15,6 +15,8 @@ import os
 import sys
 import logging.config
 
+import environ
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -171,3 +173,8 @@ CHANNEL_LAYERS = {
 }
 
 MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here 
+
+env = environ.Env()
+Google_Map_API_KEY = env('Google_Map_API_KEY')
+
+
