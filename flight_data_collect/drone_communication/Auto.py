@@ -7,7 +7,8 @@ def autocomplete_view(query):
     return JsonResponse(response.json())
 
 def test_autocomplete_view():
+    print("test_autocomplete_view")
     query =  "1 Shields Ave., Davis, CA 95616"
     places = autocomplete_view(query)
-    print(places)
+    print(places, "???")
 
