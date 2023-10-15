@@ -176,6 +176,6 @@ MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here
 
 env = environ.Env()
 environ.Env.read_env(env_file='../.env')
-Google_Map_API_KEY = env('Google_Map_API_KEY')
+Google_Map_API_KEY = env('GOOGLE_MAP_API_KEY')
 
 
