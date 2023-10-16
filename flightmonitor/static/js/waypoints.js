@@ -99,6 +99,7 @@ addressInput.addEventListener("input", async () => {
         */
         alert(data)
         alert(2)
+        alert(data.predictions)
         suggestedAddresses = data.predictions; 
     } catch (error) {
         console.error(error);
