@@ -89,7 +89,7 @@ addressInput.addEventListener("input", async () => {
   try {
         alert("?")
         response = await autocomplete(String(value)); //a proms
-        alert(suggestedAddresses);
+        alert(response);
 
         if (!response.ok) {
             alert("???")
@@ -97,11 +97,12 @@ addressInput.addEventListener("input", async () => {
         }
         let data = await response.json();
         alert(data)
-        suggestedAddresses = data.predictions;  
+        suggestedAddresses = data.predictions; 
     } catch (error) {
         console.error(error);
   }
   alert(suggestedAddresses)
+  alert(1)
   
   // Create suggestion items and append them to the container
   suggestedAddresses.forEach(item => {
