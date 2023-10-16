@@ -41,6 +41,45 @@ async function getPoints(query) {
 }
 
 
+function getLocation() {
+    return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log('Latitude:', latitude, 'Longitude:', longitude);
+                    resolve({ latitude, longitude });  // Returning the values
+                },
+                function(error) {
+                    console.error('Error obtaining location:', error.message);
+                    reject(error);  // Rejecting with error in case of failure
+                },
+                {
+                    enableHighAccuracy: true, // Enables high-accuracy mode if available
+                    timeout: 10000,           // Maximum time to wait for a result (in milliseconds)
+                    maximumAge: 0             // Accept a cached position whose age is no greater than specified
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+            reject(new Error('Geolocation is not supported by this browser.'));
+        }
+    });
+}
+
+
+let loc = null;
+getClientLocation()
+    .then(location => {
+        console.log(location);  // Logs the object: { latitude: ..., longitude: ... }
+        loc = location;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+
 /*
 // Function to retrieve suggested addresses from the Nominatim API
 // Google Map API is probably better but it costs money.
