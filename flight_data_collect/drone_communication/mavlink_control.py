@@ -151,3 +151,14 @@ def update_waypoints(connect_address: int, addr: str):
     except Exception as e:
         print(e)
         return str({'// // // // ERROR': str(e), 'droneid': connect_address})
+
+def autocomplete_field(connect_address: int, addr: str):
+    print("auto") #reached.
+    from .Auto import autocomplete_view 
+    try:
+        msg = autocomplete_view(addr)
+        return msg
+    except Exception as e:
+        print(e)
+        return {'ERROR': str(e), 'droneid': connect_address}
+
