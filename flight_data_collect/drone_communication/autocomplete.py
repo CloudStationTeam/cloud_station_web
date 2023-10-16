@@ -2,13 +2,13 @@ import requests
 from django.conf import settings
 from django.http import JsonResponse
 
-def autocomplete_view(query, location=None):
+def autocomplete_view(query, lat=None, lon=None):
     params = {
         'input': query,
         'key': settings.GOOGLE_MAP_API_KEY,
     }
     if location:
-        params['location'] = location  # This biases the autocomplete predictions to the specified location
+        params['location'] = f'{lat},{lon}' # This biases the autocomplete predictions to the specified location
 
     response = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', params=params)
 
