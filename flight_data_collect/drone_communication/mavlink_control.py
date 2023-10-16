@@ -160,5 +160,5 @@ def autocomplete_field(addr: str):
         return msg
     except Exception as e:
         print(e)
-        return {'ERROR': str(e), 'droneid': connect_address}
+        return {'ERROR': str(e)}
 
