@@ -87,7 +87,7 @@ addressInput.addEventListener("input", async () => {
   //const suggestedAddresses = getAutocompleteResults('1 Shields Ave., Davis, CA 95616');
   let suggestedAddresses = null;
   try {
-        alert("?")
+        //alert("?")
         let data = await autocomplete(String(value)); //a proms of json
         //alert(response);
         /*
@@ -97,16 +97,16 @@ addressInput.addEventListener("input", async () => {
         }
         let data = await response.json();
         */
-        alert(data)
-        alert(2)
+        //alert(data)
+        //alert(2)
         //alert(data.predictions)
         data = JSON.parse(data) // Ref: https://www.w3schools.com/js/js_json_objects.asp
         suggestedAddresses = data.predictions; 
     } catch (error) {
         console.error(error);
   }
-  alert(suggestedAddresses[1].description)
-  alert(1)
+  //alert(suggestedAddresses[1].description)
+  //alert(1)
   
   // Create suggestion items and append them to the container
   suggestedAddresses.forEach(item => {
@@ -235,7 +235,7 @@ function send_waypoint(droneId, addr) {
 
 function autocomplete(addr) {
     return new Promise((resolve, reject) => {
-        alert("auto");
+        //alert("auto");
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4) {
