@@ -106,8 +106,10 @@ addressInput.addEventListener("input", async () => {
   
   // Get the suggested addresses from the Nominatim API
   //const suggestedAddresses = await getSuggestedAddresses(value);
+  
   // Call the function with a query
-  const suggestedAddresses = getAutocompleteResults('1 Shields Ave., Davis, CA 95616');
+  //const suggestedAddresses = getAutocompleteResults('1 Shields Ave., Davis, CA 95616');
+  const suggestedAddresses = getAutocompleteResults(value);
   
   // Create suggestion items and append them to the container
   suggestedAddresses.forEach(item => {
