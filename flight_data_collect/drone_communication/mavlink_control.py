@@ -138,8 +138,8 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 #addrList=[] #sql
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
-    #from .Auto import test_autocomplete_view 
-    #test_autocomplete_view()
+    from .points import test 
+    test()
     try:
         logs.log(addr)
         addrList = [addr]
