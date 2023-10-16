@@ -87,6 +87,7 @@ addressInput.addEventListener("input", async () => {
   //const suggestedAddresses = getAutocompleteResults('1 Shields Ave., Davis, CA 95616');
   let suggestedAddresses = null;
   try {
+        alert("?")
         suggestedAddresses = await autocomplete(String(value));
         console.log(suggestedAddresses);
     } catch (error) {
