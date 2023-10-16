@@ -72,7 +72,8 @@ let url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(que
 
 // Assume the URL that maps to the Django view is '/autocomplete/'
 function getAutocompleteResults(query) {
-  fetch('/autocomplete/?query=' + encodeURIComponent(query))
+  let url = '/flight_data_collect/control/autocomplete/' + query.toString() + '/';
+  fetch(url)
     .then(response => {
       if (!response.ok) {
         // Handle HTTP errors
