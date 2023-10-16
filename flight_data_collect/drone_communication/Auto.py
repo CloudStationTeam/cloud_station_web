@@ -15,7 +15,7 @@ def list_settings_keys():
 def autocomplete_view(query):
     list_settings_keys()
     print("wtf")
-    response = requests.get(f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={settings.Google_Map_API_KEY}')
+    response = requests.get(f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={settings.GOOGLE_MAP_API_KEY}')
     return JsonResponse(response.json())
 
 def test_autocomplete_view():
