@@ -70,31 +70,6 @@ let url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(que
 */
 
 
-// Assume the URL that maps to the Django view is '/autocomplete/'
-function getAutocompleteResults(query) {
-  let url = '/flight_data_collect/control/autocomplete/' + query.toString() + '/';
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        // Handle HTTP errors
-        console.error('HTTP error:', response.status, response.statusText);
-        return;
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data) {
-        // Process the autocomplete data
-        console.log(data);
-      }
-    })
-    .catch(error => {
-      // Handle fetch errors
-      console.error('Fetch error:', error);
-    });
-}
-
-
 addressInput.addEventListener("input", async () => {
   const value = addressInput.value.trim();
   
@@ -110,7 +85,13 @@ addressInput.addEventListener("input", async () => {
   
   // Call the function with a query
   //const suggestedAddresses = getAutocompleteResults('1 Shields Ave., Davis, CA 95616');
-  const suggestedAddresses = getAutocompleteResults(value);
+  let suggestedAddresses = null;
+  try {
+        suggestedAddresses = await autocomplete(String(value));
+        console.log(suggestedAddresses);
+    } catch (error) {
+        console.error(error);
+  }
   
   // Create suggestion items and append them to the container
   suggestedAddresses.forEach(item => {
@@ -235,4 +216,26 @@ function send_waypoint(droneId, addr) {
     xmlHttp.send(null);
 }
 //2. remove. clearall. todo.
+
+
+function autocomplete(addr) {
+    return new Promise((resolve, reject) => {
+        alert("auto");
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4) {
+                if (xmlHttp.status == 200) {
+                    let responseText = xmlHttp.responseText;
+                    document.querySelector('#telemetry-log').value += (responseText + '\n');
+                    resolve(responseText);
+                } else {
+                    reject(new Error(`HTTP error: ${xmlHttp.status}`));
+                }
+            }
+        };
+        let url = '/flight_data_collect/control/autocomplete/' + addr.toString() + '/';
+        xmlHttp.open("GET", url, true); // asynchronous 
+        xmlHttp.send(null);
+    });
+}
 
