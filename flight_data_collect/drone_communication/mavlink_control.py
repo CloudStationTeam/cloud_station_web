@@ -152,7 +152,7 @@ def update_waypoints(connect_address: int, addr: str):
         print(e)
         return str({'// // // // ERROR': str(e), 'droneid': connect_address})
 
-def autocomplete_field(connect_address: int, addr: str):
+def autocomplete_field(addr: str):
     print("auto") #reached.
     from .Auto import autocomplete_view 
     try:
