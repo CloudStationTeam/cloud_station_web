@@ -100,7 +100,7 @@ addressInput.addEventListener("input", async () => {
         alert(data)
         alert(2)
         //alert(data.predictions)
-        data = JSON.parse(data)
+        data = JSON.parse(data) // Ref: https://www.w3schools.com/js/js_json_objects.asp
         suggestedAddresses = data.predictions; 
     } catch (error) {
         console.error(error);
@@ -112,9 +112,9 @@ addressInput.addEventListener("input", async () => {
   suggestedAddresses.forEach(item => {
     const suggestion = document.createElement("div");
     suggestion.classList.add("suggested-address");
-    suggestion.textContent = item.display_name;
+    suggestion.textContent = item.description;
     suggestion.addEventListener("click", () => {
-      addressInput.value = item.display_name;
+      addressInput.value = item.description;
       suggestedAddressesContainer.innerHTML = "";
     });
     suggestedAddressesContainer.appendChild(suggestion);
