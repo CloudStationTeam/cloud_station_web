@@ -92,6 +92,7 @@ addressInput.addEventListener("input", async () => {
     } catch (error) {
         console.error(error);
   }
+  alert(suggestedAddresses)
   
   // Create suggestion items and append them to the container
   suggestedAddresses.forEach(item => {
