@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import JsonResponse
 
 def autocomplete_view(query):
-    response = requests.get(f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={settings.MAPBOX_PUBLIC_KEY}')
+    response = requests.get(f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={settings.Google_Map_API_KEY}')
     return JsonResponse(response.json())
 
 def test_autocomplete_view():
