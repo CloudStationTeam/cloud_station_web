@@ -5,4 +5,6 @@ def sanitize_text(text_input):
 
 def test(user_input):
     sanitized_text = sanitize_text(user_input)
+    print(sanitized_text)
+
 
