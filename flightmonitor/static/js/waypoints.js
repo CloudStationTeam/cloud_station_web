@@ -40,15 +40,15 @@ async function getPoints(query) {
   return points 
 }
 
+
+/*
 // Function to retrieve suggested addresses from the Nominatim API
 // Google Map API is probably better but it costs money.
 async function getSuggestedAddresses(query) {
   //const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=5`);
-  /*
-let points = await getPoints();
-let lat = points[0]
-let lon = points[1]
-*/
+//let points = await getPoints();
+//let lat = points[0]
+//let lon = points[1]
 
 let lat = 33.6431;
 let lon = -117.8419;
@@ -67,6 +67,32 @@ let url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(que
   }
 
 }
+*/
+
+
+// Assume the URL that maps to the Django view is '/autocomplete/'
+function getAutocompleteResults(query) {
+  fetch('/autocomplete/?query=' + encodeURIComponent(query))
+    .then(response => {
+      if (!response.ok) {
+        // Handle HTTP errors
+        console.error('HTTP error:', response.status, response.statusText);
+        return;
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data) {
+        // Process the autocomplete data
+        console.log(data);
+      }
+    })
+    .catch(error => {
+      // Handle fetch errors
+      console.error('Fetch error:', error);
+    });
+}
+
 
 addressInput.addEventListener("input", async () => {
   const value = addressInput.value.trim();
@@ -79,7 +105,9 @@ addressInput.addEventListener("input", async () => {
   }
   
   // Get the suggested addresses from the Nominatim API
-  const suggestedAddresses = await getSuggestedAddresses(value);
+  //const suggestedAddresses = await getSuggestedAddresses(value);
+  // Call the function with a query
+  const suggestedAddresses = getAutocompleteResults('1 Shields Ave., Davis, CA 95616');
   
   // Create suggestion items and append them to the container
   suggestedAddresses.forEach(item => {
