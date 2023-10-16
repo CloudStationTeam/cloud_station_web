@@ -4,7 +4,7 @@ import json
 from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MSG_ID_SET_MODE
 from flightmonitor.consumers import send_message_to_clients
 
-from . import logs, waypoints, lidar_data
+from . import logs, waypoints, autocomplete, lidar_data
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
@@ -138,8 +138,8 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 #addrList=[] #sql
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
-    from .Auto import test_autocomplete_view 
-    test_autocomplete_view()
+    #from .Auto import test_autocomplete_view 
+    #test_autocomplete_view()
     try:
         logs.log(addr)
         addrList = [addr]
@@ -154,7 +154,7 @@ def update_waypoints(connect_address: int, addr: str):
 
 def autocomplete_field(addr: str):
     print("auto") #reached.
-    from .Auto import autocomplete_view 
+    from .autocomplete import autocomplete_view 
     try:
         msg = autocomplete_view(addr)
         return msg
