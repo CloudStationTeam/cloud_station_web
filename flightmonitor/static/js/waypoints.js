@@ -92,6 +92,7 @@ addressInput.addEventListener("input", async () => {
         alert(suggestedAddresses);
 
         if (!response.ok) {
+            alert("???")
             throw new Error('Network response was not ok ' + response.statusText);
         }
         let data = await response.json();
