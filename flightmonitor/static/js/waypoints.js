@@ -88,14 +88,15 @@ addressInput.addEventListener("input", async () => {
   let suggestedAddresses = null;
   try {
         alert("?")
-        response = await autocomplete(String(value)); //a proms
-        alert(response);
-
+        let data = await autocomplete(String(value)); //a proms of json
+        //alert(response);
+        /*
         if (!response.ok) {
             alert("???")
-            //throw new Error('Network response was not ok ' + response.statusText);
+            throw new Error('Network response was not ok ' + response.statusText);
         }
         let data = await response.json();
+        */
         alert(data)
         alert(2)
         suggestedAddresses = data.predictions; 
