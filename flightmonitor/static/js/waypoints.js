@@ -93,7 +93,7 @@ addressInput.addEventListener("input", async () => {
 
         if (!response.ok) {
             alert("???")
-            throw new Error('Network response was not ok ' + response.statusText);
+            //throw new Error('Network response was not ok ' + response.statusText);
         }
         let data = await response.json();
         alert(data)
