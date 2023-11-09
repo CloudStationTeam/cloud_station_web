@@ -34,4 +34,5 @@ six==1.13.0
 sqlparse==0.3.0
 Twisted==20.3.0
 txaio==18.8.1
-zope.interface==4.7.1
+zope.interface==5.4.0
+
