@@ -13,6 +13,7 @@ daphne==2.4.0
 Django==2.2.24
 django-background-tasks==1.2.0
 django-compat==1.0.15
+django-environ==0.11.2
 future==0.18.2
 hiredis==1.0.1
 hyperlink>=20.0.1
@@ -28,6 +29,7 @@ pymavlink==2.4.40
 pyOpenSSL==19.1.0
 pyserial==3.4
 pytz==2019.3
+requests==2.27.1
 service-identity==18.1.0
 six==1.13.0
 sqlparse==0.3.0
