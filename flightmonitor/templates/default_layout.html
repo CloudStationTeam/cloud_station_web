@@ -11,16 +11,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!--
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet'/>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet'/>
-    -->
-
+    
+    <!--
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
-
+    -->
+	
     {% load static %}
     <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
     <link href="{% static 'css/waypoints.css' %}" rel="stylesheet">
@@ -80,7 +80,7 @@
 
 <body>
 {% if user.is_authenticated %}
-    <!--
+
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link
             rel="stylesheet"
@@ -89,8 +89,8 @@
             href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
             type="text/css"
     />
-    -->
 
+<!--
 <div id='map' style='width: 400px; height: 300px;'></div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obmRvZTEyMzIiLCJhIjoiY2xqM28wdnVmMHgzZTNwdDh0dm82dWEzZCJ9.koBoVVcil7qdwCkopz_dfg';
@@ -101,7 +101,8 @@ const map = new mapboxgl.Map({
     zoom: 9, // starting zoom
 });
 </script>
-    
+-->
+	
     <div class="container-fluid">
 	    <div class="row">
 		 
@@ -211,7 +212,7 @@ const map = new mapboxgl.Map({
         </div>
     </div>
 {% else %}
-    <!-- 
+    
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link
             rel="stylesheet"
@@ -219,8 +220,8 @@ const map = new mapboxgl.Map({
             type="text/css"
     />
     <div id='map'></div>
-    -->
-
+    
+<!-- 
 <div id='map' style='width: 400px; height: 300px;'></div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obmRvZTEyMzIiLCJhIjoiY2xqM28wdnVmMHgzZTNwdDh0dm82dWEzZCJ9.koBoVVcil7qdwCkopz_dfg';
@@ -231,15 +232,17 @@ const map = new mapboxgl.Map({
     zoom: 9, // starting zoom
 });
 </script>
+-->
+	
 	
 {% endif %}
-<script type='text/javascript' src="{% static 'js/waypoints.js' %}"></script>
+	
 <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/globalVariables.js' %}"></script>
-
+<script type='text/javascript' src="{% static 'js/waypoints.js' %}"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
