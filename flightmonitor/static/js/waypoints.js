@@ -68,7 +68,7 @@ function getClientLocation() {
     });
 }
 
-
+/*
 let loc = null;
 getClientLocation()
     .then(location => {
@@ -78,7 +78,7 @@ getClientLocation()
     .catch(error => {
         console.error(error);
     });
-
+*/
 
 /*
 // Function to retrieve suggested addresses from the Nominatim API
