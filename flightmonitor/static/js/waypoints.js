@@ -41,7 +41,7 @@ async function getPoints(query) {
 }
 
 
-function getLocation() {
+function getClientLocation() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
