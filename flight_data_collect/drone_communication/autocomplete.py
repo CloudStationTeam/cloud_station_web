@@ -7,7 +7,7 @@ def autocomplete_view(query, lat=None, lon=None):
         'input': query,
         'key': settings.GOOGLE_MAP_API_KEY,
     }
-    if location:
+    if lat and lon:
         params['location'] = f'{lat},{lon}' # This biases the autocomplete predictions to the specified location
 
     response = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', params=params)
