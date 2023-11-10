@@ -141,7 +141,9 @@ addressInput.addEventListener("input", async () => {
         //alert(data)
         //alert(2)
         //alert(data.predictions)
+        alert(data);
         data = JSON.parse(data) // Ref: https://www.w3schools.com/js/js_json_objects.asp
+        alert(data);
         suggestedAddresses = data.predictions; 
         alert(suggestedAddresses);
     } catch (error) {
