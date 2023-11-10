@@ -211,6 +211,7 @@ const map = new mapboxgl.Map({
         </div>
     </div>
 {% else %}
+    <!-- 
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link
             rel="stylesheet"
@@ -218,6 +219,19 @@ const map = new mapboxgl.Map({
             type="text/css"
     />
     <div id='map'></div>
+    -->
+
+<div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obmRvZTEyMzIiLCJhIjoiY2xqM28wdnVmMHgzZTNwdDh0dm82dWEzZCJ9.koBoVVcil7qdwCkopz_dfg';
+const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 9, // starting zoom
+});
+</script>
+	
 {% endif %}
 
 <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
