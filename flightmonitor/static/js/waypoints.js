@@ -111,7 +111,7 @@ let url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(que
 
 addressInput.addEventListener("input", async () => {
   const value = addressInput.value.trim();
-  alert(value);
+  //alert(value);
   console.log(value);
   
   // Clear the previous suggestions
@@ -141,11 +141,11 @@ addressInput.addEventListener("input", async () => {
         //alert(data)
         //alert(2)
         //alert(data.predictions)
-        alert(data);
+        //alert(data);
         data = JSON.parse(data) // Ref: https://www.w3schools.com/js/js_json_objects.asp
-        alert(data);
+        //alert(data);
         suggestedAddresses = data.predictions; 
-        alert(suggestedAddresses);
+        //alert(suggestedAddresses);
     } catch (error) {
         console.error(error);
   }
