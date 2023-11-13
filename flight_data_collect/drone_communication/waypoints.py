@@ -74,7 +74,7 @@ def takeoff(the_connection): #done.
 # Upload the mission items to the drone
 def upload_mission(the_connection, mission_items): #done.
   n=len(mission_items)
-  print(n)
+  print("wp. ", n)
   print("Sending Message out")
 
   the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
