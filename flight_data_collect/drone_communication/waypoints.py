@@ -80,7 +80,8 @@ def upload_mission(the_connection, mission_items): #done.
   
   num = 1
   for waypoint in mission_items: #Mission Item created based on the Mavlink Message protocol
-    print("wp. num=", num
+    print("wp. num=", num,
+          waypoint.seq,
           waypoint.param5, #local X
           waypoint.param6, #Local Y
           waypoint.param7) #local 2
