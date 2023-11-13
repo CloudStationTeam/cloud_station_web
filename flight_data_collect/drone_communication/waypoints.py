@@ -78,13 +78,13 @@ def upload_mission(the_connection, mission_items): #done.
 
   the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
     
-  req = ack(the_connection, "MISSION_REQUEST")
+  req = ack(the_connection, "MISSION_REQUEST_INT")
   if req:
-    print("wp. req.sep.", req.seq)
+    print("wp. req.seq.", req.seq)
   
   num = 1
   for waypoint in mission_items: #Mission Item created based on the Mavlink Message protocol
-    print(num
+    print("wp. num=", num
           waypoint.param5, #local X
           waypoint.param6, #Local Y
           waypoint.param7) #local 2
