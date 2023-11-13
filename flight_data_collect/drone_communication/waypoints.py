@@ -77,10 +77,6 @@ def upload_mission(the_connection, mission_items): #done.
   print("Sending Message out")
 
   the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
-    
-  req = ack(the_connection, "MISSION_REQUEST_INT")
-  if req:
-    print("wp. req.seq.", req.seq)
   
   num = 1
   for waypoint in mission_items: #Mission Item created based on the Mavlink Message protocol
@@ -89,6 +85,11 @@ def upload_mission(the_connection, mission_items): #done.
           waypoint.param6, #Local Y
           waypoint.param7) #local 2
     num += 1
+
+    req = ack(the_connection, "MISSION_REQUEST_INT")
+    if req:
+      print("wp. req.seq.", req.seq)
+
     print("Creating a waypoint")
     the_connection.mav.mission_item_send(the_connection.target_system, #Target System
                                          the_connection.target_component, #Target Component
@@ -107,6 +108,7 @@ def upload_mission(the_connection, mission_items): #done.
                                          waypoint.mission_type) #Mission Type
       
   if waypoint != mission_items[n-1]:
+    print("wp. Not num.")
     ack(the_connection, "MISSION_REQUEST")
 
   print("wp. num.", num)
