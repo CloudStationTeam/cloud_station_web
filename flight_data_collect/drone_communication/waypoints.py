@@ -89,7 +89,7 @@ def upload_mission(the_connection, mission_items): #done.
     num += 1
 
     req = None
-    req = the_connection.recv_match(type="MISSION_REQUEST_INT", timeout=6)
+    req = the_connection.recv_match(type="MISSION_REQUEST", timeout=6)
     #req = ack(the_connection, "MISSION_REQUEST_INT")
     if req:
       print("wp. req.seq.", req.seq)
