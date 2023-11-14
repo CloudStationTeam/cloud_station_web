@@ -89,7 +89,7 @@ def upload_mission(the_connection, mission_items): #done.
     num += 1
 
     req = None
-    req = the_connection.recv_match(type="MISSION_REQUEST_INT", blocking =True, timeout=6)
+    req = the_connection.recv_match(type="MISSION_REQUEST_INT", timeout=6)
     #req = ack(the_connection, "MISSION_REQUEST_INT")
     if req:
       print("wp. req.seq.", req.seq)
@@ -111,7 +111,7 @@ def upload_mission(the_connection, mission_items): #done.
                                          waypoint.param7, #local 2
                                          waypoint.mission_type) #Mission Type
       
-  if waypoint != mission_items[n-1]:
+  if num != n+1:
     print("wp. Not num.")
     ack(the_connection, "MISSION_REQUEST")
 
