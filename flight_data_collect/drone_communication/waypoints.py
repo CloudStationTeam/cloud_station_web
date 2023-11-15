@@ -1,5 +1,11 @@
-#try. seq 0. wp0123. wp3 not wp0. count 4.
+#try. seq 0. wp0123. wp3 not wp0. count 4. - goes to wp1. wp2. (no wp3)
 #try count 3.
+#seq 0. else invalid seq.
+#wp0123. else no wp1.
+
+
+
+
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
 #!/usr/bin/env python3
 
