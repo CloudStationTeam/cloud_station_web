@@ -135,7 +135,7 @@ def upload_mission(the_connection, mission_items):
           waypoint.param7) #local 2
       
         req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
-        if req and req.seq == waypoint.seq:
+        if req and req.seq+1 == waypoint.seq:
             print("wp. Sending waypoint", waypoint.seq)
             the_connection.mav.mission_item_send(
                 the_connection.target_system,
@@ -260,7 +260,7 @@ def add(addrList=None): #done.
   #"""
   count = 2
   
-  n = 0 # ??? #TODO
+  n = 1 # ??? #TODO
   """
   Therefore, if you explicitly want to set the home position yourself, you would typically include a waypoint with sequence 0. If you don't include it, the system may automatically create one for you, depending on the specifics of your autopilot system.
   
@@ -318,7 +318,7 @@ def add(addrList=None): #done.
 
   print("wp. start_mission done")
 
-  item_seq = 0 # ???
+  item_seq = 1 # ???
   for mission_item1 in mission_waypoints:
     print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq)))) #Ref: chatgpt.
     item_seq += 1
