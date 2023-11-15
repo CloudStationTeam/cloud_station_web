@@ -259,7 +259,7 @@ def add(addrList=None): #done.
           (33.642919,-117.839280, 5)]
   #addrList = [address1, address2] #n=2
   #"""
-  count = 2
+  count = len(tups)
   
   n = 0 # ??? #TODO
   """
