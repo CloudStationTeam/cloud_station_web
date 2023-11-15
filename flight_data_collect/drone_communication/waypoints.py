@@ -1,5 +1,5 @@
 #try. seq 0. wp0123. wp3 not wp0. count 4. - goes to wp1. wp2. (no wp3)
-#try count 3.
+#wp0123. try count 3. does not go.
 #seq 0. else invalid seq.
 #wp0123. else no wp1.
 
@@ -129,7 +129,7 @@ def upload_mission1(the_connection, mission_items): #done.
 
 
 def upload_mission(the_connection, mission_items):
-    n = len(mission_items)-1
+    n = len(mission_items)
     print("wp. Total waypoints: ", n)
     print("Sending Mission Count")
 
