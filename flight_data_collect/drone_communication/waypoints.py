@@ -255,14 +255,14 @@ def add(addrList=None): #done.
 
   #"""
   tups = [#(33.643335, -117.842163, 500), # a place 
-          (33.642919,-117.839280, 5),
+          (33.642831,-117.841283, 10),
           (33.643633, -117.841689, 10), #wp1
           (33.642831,-117.841283, 10), #wp2
           (33.642919,-117.839280, 5)] #wp3
   #try wp0. 2. 
   #seq 1 didn't work. - invalid seq num.
-  #3 wps. no wp0. - goes to wp2, wp3
-  #3 wps. wp0.
+  #3 wps. no wp0. - goes to wp2, wp3 (skips wp1)
+  #4 wps. wp0. - goes to wp1, wp2 
   #3 wps. count 2.
   #2 wps.
   #addrList = [address1, address2] #n=2
