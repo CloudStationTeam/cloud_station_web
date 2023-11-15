@@ -72,7 +72,7 @@ def takeoff(the_connection): #done.
   ack(the_connection, "COMMAND_ACK")
 
 # Upload the mission items to the drone
-def upload_mission(the_connection, mission_items): #done.
+def upload_mission1(the_connection, mission_items): #done.
   n=len(mission_items)
   print("wp. n. ", n)
   print("Sending Message out")
@@ -117,6 +117,55 @@ def upload_mission(the_connection, mission_items): #done.
 
   print("wp. num.", num)
   ack(the_connection, "MISSION_ACK")
+
+
+
+def upload_mission(the_connection, mission_items):
+    n = len(mission_items)
+    print("Total waypoints: ", n)
+    print("Sending Mission Count")
+
+    the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
+  
+    for waypoint in mission_items:
+        req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
+        if req and req.seq == waypoint.seq:
+            print("Sending waypoint", waypoint.seq)
+            the_connection.mav.mission_item_send(
+                the_connection.target_system,
+                the_connection.target_component,
+                waypoint.seq,
+                waypoint.frame,
+                waypoint.command,
+                waypoint.current,
+                waypoint.auto,
+                waypoint.param1,
+                waypoint.param2,
+                waypoint.param3,
+                waypoint.param4,
+                waypoint.param5,
+                waypoint.param6,
+                waypoint.param7,
+                waypoint.mission_type
+            )
+        else:
+            print("Error: Waypoint request mismatch or timeout.")
+            break
+
+    ack(the_connection, "MISSION_ACK")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Send message for the drone to return to the launch point
 def set_return(the_connection): #done.
