@@ -3,7 +3,7 @@
 #seq 0. else invalid seq.
 #wp0123. else no wp1.
 
-
+#seq 0. wp0123. wp3 not. count 4. wp3 alt 0.
 
 
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
@@ -264,7 +264,7 @@ def add(addrList=None): #done.
   tups = [(33.643335, -117.842163, 500), # a place 
           (33.643633, -117.841689, 10), #wp1
           (33.642831,-117.841283, 10), #wp2
-          (33.643633, -117.841689, 10)]
+          (33.643633, -117.841689, 0)]
           #(33.642919,-117.839280, 5)] #wp3
   #try wp0. 2. 
   #seq 1 didn't work. - invalid seq num.
