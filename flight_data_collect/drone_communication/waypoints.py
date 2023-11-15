@@ -275,7 +275,7 @@ def add(addrList=None): #done.
     #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     #free map api timed out. #No.
     lat, lon, alt = tups[n]
-    alt = 5
+    alt = 500
     #"""
     
     """
