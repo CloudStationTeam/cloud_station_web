@@ -81,7 +81,7 @@ def takeoff(the_connection): #done.
 
 # Upload the mission items to the drone
 def upload_mission1(the_connection, mission_items): #done.
-  n=len(mission_items)-1
+  n=len(mission_items)
   print("wp. n. ", n)
   print("Sending Message out")
 
@@ -263,8 +263,8 @@ def add(addrList=None): #done.
   #"""
   tups = [(33.643335, -117.842163, 500), # a place 
           (33.643633, -117.841689, 10), #wp1
-          (33.642831,-117.841283, 10), #wp2
-          (33.642919,-117.839280, 5)] #wp3
+          (33.642831,-117.841283, 10)] #wp2
+          #(33.642919,-117.839280, 5)] #wp3
   #try wp0. 2. 
   #seq 1 didn't work. - invalid seq num.
   #3 wps. no wp0. - goes to wp2, wp3 (skips wp1)
