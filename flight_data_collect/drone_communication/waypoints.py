@@ -259,6 +259,7 @@ def add(addrList=None): #done.
           (33.642831,-117.841283, 10),
           (33.642919,-117.839280, 5)]
   #try wp0. 2. 
+  #seq 1 didn't work.
   #addrList = [address1, address2] #n=2
   #"""
   count = len(tups)
