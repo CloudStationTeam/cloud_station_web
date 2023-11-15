@@ -122,15 +122,21 @@ def upload_mission1(the_connection, mission_items): #done.
 
 def upload_mission(the_connection, mission_items):
     n = len(mission_items)
-    print("Total waypoints: ", n)
+    print("wp. Total waypoints: ", n)
     print("Sending Mission Count")
 
     the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
   
     for waypoint in mission_items:
+        print("wp. No. num=",
+          waypoint.seq,
+          waypoint.param5, #local X
+          waypoint.param6, #Local Y
+          waypoint.param7) #local 2
+      
         req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
         if req and req.seq == waypoint.seq:
-            print("Sending waypoint", waypoint.seq)
+            print("wp. Sending waypoint", waypoint.seq)
             the_connection.mav.mission_item_send(
                 the_connection.target_system,
                 the_connection.target_component,
@@ -149,7 +155,7 @@ def upload_mission(the_connection, mission_items):
                 waypoint.mission_type
             )
         else:
-            print("Error: Waypoint request mismatch or timeout.")
+            print("wp. Error: Waypoint request mismatch or timeout.")
             break
 
     ack(the_connection, "MISSION_ACK")
