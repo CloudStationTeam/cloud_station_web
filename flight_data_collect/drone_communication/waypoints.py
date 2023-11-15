@@ -129,7 +129,7 @@ def upload_mission1(the_connection, mission_items): #done.
 
 
 def upload_mission(the_connection, mission_items):
-    n = len(mission_items)
+    n = len(mission_items)-1
     print("wp. Total waypoints: ", n)
     print("Sending Mission Count")
 
