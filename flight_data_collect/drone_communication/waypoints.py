@@ -252,6 +252,7 @@ def add(addrList=None): #done.
           #(33.642919,-117.839280, 5)]
   #addrList = [address1, address2] #n=2
   #"""
+  count = 2
   
   n = 0 # ??? #TODO
   """
@@ -261,11 +262,11 @@ def add(addrList=None): #done.
   """
   #"""
   #for addr in addrList:
-  for _ in range(3):
+  for _ in range(count):
     #"""
     #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     #free map api timed out. #No.
-    lat, lon, alt = tups[n-1]
+    lat, lon, alt = tups[n]
     alt = 5
     #"""
     
