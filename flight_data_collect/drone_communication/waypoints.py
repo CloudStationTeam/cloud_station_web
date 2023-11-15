@@ -81,7 +81,7 @@ def takeoff(the_connection): #done.
 
 # Upload the mission items to the drone
 def upload_mission1(the_connection, mission_items): #done.
-  n=len(mission_items)
+  n=len(mission_items)-1
   print("wp. n. ", n)
   print("Sending Message out")
 
