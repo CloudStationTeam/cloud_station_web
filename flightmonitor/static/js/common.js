@@ -1,4 +1,4 @@
-alert(11);
+alert(1);
 var SETMODE_CONST = '<select id = "mode">' +
     '<option value="MANUAL">MANUAL</option>' +
     '<option value="STABILIZE">STABILIZE</option>' +
