@@ -341,13 +341,13 @@ def add(addrList=None): #done.
     item_seq += 1
 
   #don't do it. otherwise it won't move.
-  '''
+  
   msg = set_return(the_connection)
 
   print("wp. set_return done")
 
   return msg
-  '''
+  
 
 #Ref: online webs.
 
