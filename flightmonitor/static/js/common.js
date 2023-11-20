@@ -30,6 +30,8 @@ var SETMODE_CONST = '<select id = "mode">' +
     '</select>' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
+alert(1);
+alert(var);
 var AVAILABLE_TELEMETRY = {}
 
 var browserSocket = new WebSocket(
