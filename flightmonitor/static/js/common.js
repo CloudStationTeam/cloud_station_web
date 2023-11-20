@@ -1,4 +1,3 @@
-alert(11);
 var SETMODE_CONST = '<select id = "mode">' +
     '<option value="MANUAL">MANUAL</option>' +
     '<option value="STABILIZE">STABILIZE</option>' +
@@ -31,8 +30,7 @@ var SETMODE_CONST = '<select id = "mode">' +
     '</select>' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
-alert(1);
-alert(SETMODE_CONST);
+//console.log(SETMODE_CONST);
 var AVAILABLE_TELEMETRY = {}
 
 var browserSocket = new WebSocket(
