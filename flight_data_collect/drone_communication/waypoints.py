@@ -289,7 +289,7 @@ def add(addrList=None): #done.
 
   item_seq = 1 # ???
   for mission_item1 in range(len(mission_waypoints)-1):
-    print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={1}'.format(item_seq), blocking =True))) #Ref: chatgpt.
+    print("Message Read" + str(the_connection.recv_match(type="MISSION_ITEM_REACHED", condition='MISSION_ITEM_REACHED.seq=={0}'.format(item_seq), blocking =True))) #Ref: chatgpt.
     item_seq += 1
 
   """
