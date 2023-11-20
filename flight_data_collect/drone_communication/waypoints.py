@@ -1,7 +1,8 @@
-#try. seq 0. wp0123. wp3 not wp0. count 4. - goes to wp1. wp2. (no wp3)
-#wp0123. try count 3. does not go.
+
 #seq 0. else invalid seq.
 #wp0123. else no wp1.
+#count 4. else no wp3.
+#wp3 away. alt low. Land. else does not Land.
 
 #seq 0. wp0123. wp3 not. count 4. wp3 alt 0.
 
