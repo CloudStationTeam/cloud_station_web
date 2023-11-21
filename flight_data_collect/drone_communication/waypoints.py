@@ -267,14 +267,14 @@ def add(addrList=None): #done.
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
-    msg = mc.change_mode(connect_address, "GUIDED")
+    msg = str(mc.change_mode(connect_address, "GUIDED"))
     attempts += 1
 
   #arm(the_connection)
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
-    msg = mc.set_arm(the_connection)
+    msg = str(mc.set_arm(the_connection))
     attempts += 1
 
   
@@ -304,7 +304,7 @@ def add(addrList=None): #done.
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
-    msg = mc.change_mode(connect_address, "AUTO")
+    msg = str(mc.change_mode(connect_address, "AUTO"))
     attempts += 1
 
   print("wp. start_mission done")
@@ -329,7 +329,7 @@ def add(addrList=None): #done.
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
-    msg = mc.change_mode(connect_address, "LAND")
+    msg = str(mc.change_mode(connect_address, "LAND"))
     attempts += 1
 
   print("wp. set_return done")
