@@ -263,12 +263,14 @@ def add(addrList=None): #done.
   
   #return
   print("wp.")
-    
+
+  mc.sETmode("GUIDED")
+  arm(the_connection)
   upload_mission(the_connection, mission_waypoints)
          
   print("wp. upload_mission done") #put whatever here, cuz log format didn't work.
 
-  arm(the_connection)
+
   '''
   msg = arm1(the_connection)
 
@@ -279,12 +281,13 @@ def add(addrList=None): #done.
     print("wp. cont.")
   '''
 
-  set_auto(the_connection)
+  
   takeoff(the_connection)
 
   print("wp. takeoff done")
 
   start_mission(the_connection)
+  set_auto(the_connection)
 
   print("wp. start_mission done")
 
