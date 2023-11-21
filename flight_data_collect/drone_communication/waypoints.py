@@ -264,7 +264,7 @@ def add(addrList=None): #done.
   #return
   print("wp.")
 
-  mc.sETmode("GUIDED")
+  mc.change_mode(14550, "GUIDED")
   arm(the_connection)
   upload_mission(the_connection, mission_waypoints)
          
