@@ -306,6 +306,7 @@ def add(addrList=None): #done.
   #don't do it. otherwise it won't move.
   """
   msg = set_return(the_connection)
+  mc.change_mode(14550, "LAND")
 
   print("wp. set_return done")
 
