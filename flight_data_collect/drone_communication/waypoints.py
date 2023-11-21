@@ -264,8 +264,20 @@ def add(addrList=None): #done.
   #return
   print("wp.")
 
-  mc.change_mode(14550, "GUIDED")
-  arm(the_connection)
+  msg = "ERROR"
+  attempts = 1
+  while msg[:5] == "ERROR" and attempts < 11:
+    msg = mc.change_mode(connect_address, "GUIDED")
+    attempts += 1
+
+  #arm(the_connection)
+  msg = "ERROR"
+  attempts = 1
+  while msg[:5] == "ERROR" and attempts < 11:
+    msg = mc.set_arm(the_connection)
+    attempts += 1
+
+  
   upload_mission(the_connection, mission_waypoints)
          
   print("wp. upload_mission done") #put whatever here, cuz log format didn't work.
@@ -287,7 +299,13 @@ def add(addrList=None): #done.
   print("wp. takeoff done")
 
   start_mission(the_connection)
-  set_auto(the_connection)
+  
+  #set_auto(the_connection)
+  msg = "ERROR"
+  attempts = 1
+  while msg[:5] == "ERROR" and attempts < 11:
+    msg = mc.change_mode(connect_address, "AUTO")
+    attempts += 1
 
   print("wp. start_mission done")
 
@@ -306,7 +324,13 @@ def add(addrList=None): #done.
   #don't do it. otherwise it won't move.
   """
   msg = set_return(the_connection)
-  mc.change_mode(14550, "LAND")
+  
+  #mc.change_mode(14550, "LAND")
+  msg = "ERROR"
+  attempts = 1
+  while msg[:5] == "ERROR" and attempts < 11:
+    msg = mc.change_mode(connect_address, "LAND")
+    attempts += 1
 
   print("wp. set_return done")
 
