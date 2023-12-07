@@ -264,11 +264,13 @@ def add(addrList=None): #done.
   #return
   print("wp.")
 
+  """1.2.
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
     msg = str(mc.change_mode(connect_address, "GUIDED"))
     attempts += 1
+  print("wp. guided. ", msg)
 
   #arm(the_connection)
   msg = "ERROR"
@@ -276,7 +278,8 @@ def add(addrList=None): #done.
   while msg[:5] == "ERROR" and attempts < 11:
     msg = str(mc.set_arm(the_connection))
     attempts += 1
-
+  print("wp. arm. ", msg)
+  """
   
   upload_mission(the_connection, mission_waypoints)
          
@@ -299,15 +302,18 @@ def add(addrList=None): #done.
   print("wp. takeoff done")
 
   start_mission(the_connection)
-  
+
+  print("wp. start_mission done")
+
   #set_auto(the_connection)
+  """3
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
     msg = str(mc.change_mode(connect_address, "AUTO"))
     attempts += 1
-
-  print("wp. start_mission done")
+  print("wp. auto. ", msg)
+  """
 
   """
   item_seq = 1 # ???
