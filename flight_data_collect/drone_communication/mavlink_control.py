@@ -138,8 +138,11 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 #addrList=[] #sql
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
+    print("wp. mavlink. ", SERVER_IP, ':', str(connect_address))
+    
     from .points import test 
     test()
+    
     try:
         logs.log(addr)
         addrList = [addr]
