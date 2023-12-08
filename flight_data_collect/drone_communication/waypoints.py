@@ -286,6 +286,7 @@ def add(addrList=None): #done.
   try:
         #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         mavlink = the_connection 
+        """
         msg = mavlink.wait_heartbeat(timeout=6)
         connect_address = int(connect_address)
         if not msg:
@@ -293,6 +294,7 @@ def add(addrList=None): #done.
         if mode not in mavlink.mode_mapping():
             return str({'ERROR': f'{mode} is not a valid mode. Try: {list(mavlink.mode_mapping().keys())}',
                         'droneid': connect_address})
+        """
         mavlink.set_mode(mode)
         ack_msg = mavlink.recv_match(type='COMMAND_ACK', condition=f'COMMAND_ACK.command=={MAVLINK_MSG_ID_SET_MODE}',
                                      blocking=True, timeout=6)
