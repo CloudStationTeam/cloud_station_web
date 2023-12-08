@@ -53,6 +53,7 @@ def set_arm(the_connection, arm=True):
             0,
             1 if arm else 0,
             0, 0, 0, 0, 0, 0)
+        time.sleep(6)
         return "Arm command sent." if arm else "Disarm command sent."
     except Exception as e:
         return f"Arm/Disarm command failed: {e}"
