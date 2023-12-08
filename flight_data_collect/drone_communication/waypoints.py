@@ -156,6 +156,7 @@ def upload_mission(the_connection, mission_items):
                 waypoint.mission_type
             )
         else:
+            print("wp. seq. ", req, req.seq, waypoint.seq)
             print("wp. Error: Waypoint request mismatch or timeout.")
             break
 
