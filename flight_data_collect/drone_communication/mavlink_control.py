@@ -25,6 +25,8 @@ def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, 
 
 def change_mode(connect_address: int, mode: str) -> str:
     try:
+        print("wp. mavlink??. ", SERVER_IP, ':', str(connect_address))
+    
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         connect_address = int(connect_address)
