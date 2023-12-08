@@ -21,10 +21,7 @@ import time
 from . import logs
 from . import points 
 
-from . import mavlink_control as mc
-
-
-
+#from . import mavlink_control as mc #didn't work 
 
 
 def set_mode(the_connection, mode):
@@ -42,7 +39,6 @@ def set_mode(the_connection, mode):
         return "Invalid mode."
 
 
-
 def set_arm(the_connection, arm=True):
     try:
         # Arming/Disarming the UAV
@@ -54,11 +50,10 @@ def set_arm(the_connection, arm=True):
             1 if arm else 0,
             0, 0, 0, 0, 0, 0)
         #time.sleep(6) #Do Not Wait 
+        #if wait too long, drone disarms; if wait too short, drone is not armed yet.
         return "Arm command sent." if arm else "Disarm command sent."
     except Exception as e:
         return f"Arm/Disarm command failed: {e}"
-
-
 
 
 
@@ -80,37 +75,6 @@ class mission_item: #done.
     self.param7 = z
     self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION 
 
-#set it to auto mode
-def set_auto(the_connection):
-  # Switch to auto mode
-  the_connection.mav.command_long_send(
-    the_connection.target_system,    # Target system ID (can be 1 for the autopilot itself)
-    the_connection.target_component, # Target component ID (can be 1 for the autopilot itself)
-    mavutil.mavlink.MAV_CMD_DO_SET_MODE, # MAVLink command to set mode
-    0,    # Confirmation
-    mavutil.mavlink.MAV_MODE_AUTO_ARMED, # Auto mode
-    0,    # Custom mode (not used for auto mode)
-    0, 0, 0, 0, 0 # Parameters (not used for auto mode)
-  )
-  ack(the_connection, "COMMAND_ACK")
-
-#Arm the Drone
-def arm(the_connection): #done.
-    print("Arming")
-    
-    the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component,
-mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0,0,0,0,0,0) # 0 conf, 1 arm, else irrelevant.
-    
-    ack(the_connection, "COMMAND_ACK")
-
-    """
-    n = 1
-    #while True:
-    while not mavlink.motors_armed() and n<10:
-      time.sleep(1)
-      print("wait arm"+str(n))
-      n+=1
-    """
         
 #Takeoff the Drone
 def takeoff(the_connection): #done.
@@ -119,6 +83,7 @@ def takeoff(the_connection): #done.
   the_connection.mav.command_long_send(the_connection.target_system, the_connection.target_component, mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, math.nan, 0, 0, 10)
 
   ack(the_connection, "COMMAND_ACK")
+
 
 # Upload the mission items to the drone
 def upload_mission(the_connection, mission_items):
@@ -185,6 +150,7 @@ def set_return(the_connection): #done.
 
   return str(the_connection.recv_match(type="COMMAND_ACK", blocking =True))
 
+
 # Start mission
 def start_mission(the_connection): #done.
   print("Mission Start")
@@ -194,9 +160,12 @@ mavutil.mavlink.MAV_CMD_MISSION_START, 0, 0, 0, 0, 0, 0, 0, 0)
         
   ack(the_connection, "COMMAND_ACK")
 
+
 # Acknoledgement from the Drone
 def ack(the_connection, keyword): #done.
   print("Message Read" + str(the_connection.recv_match(type=keyword, blocking =True)))
+
+
 
 
 # Main Function
@@ -305,23 +274,6 @@ def add(addrList=None): #done.
   #return
   print("wp.")
 
-  """1.2.
-  msg = "ERROR"
-  attempts = 1
-  while msg[:5] == "ERROR" and attempts < 100:
-    msg = str(mc.change_mode(int(connect_address), "GUIDED"))
-    attempts += 1
-  print("wp. guided. ", msg)
-
-  #arm(the_connection)
-  msg = "ERROR"
-  attempts = 1
-  while msg[:5] == "ERROR" and attempts < 6:
-    msg = str(mc.set_arm(connect_address))
-    time.sleep(6)
-    attempts += 1
-  print("wp. arm. ", msg)
-  """
   
   # Set mode
   msg = set_mode(the_connection, 'GUIDED')
@@ -346,15 +298,7 @@ def add(addrList=None): #done.
 
     
 
-  '''
-  msg = arm1(the_connection)
 
-  print("wp. arm1 done")
-
-  if msg != "done":
-    #return "no arm1" + str(msg)) 
-    print("wp. cont.")
-  '''
 
   
   takeoff(the_connection)
@@ -367,15 +311,7 @@ def add(addrList=None): #done.
 
   
 
-  #set_auto(the_connection)
-  """3
-  msg = "ERROR"
-  attempts = 1
-  while msg[:5] == "ERROR" and attempts < 6:
-    msg = str(mc.change_mode(connect_address, "AUTO"))
-    attempts += 1
-  print("wp. auto. ", msg)
-  #"""
+
 
   """
   item_seq = 1 # ???
