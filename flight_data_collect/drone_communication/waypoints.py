@@ -286,6 +286,7 @@ def add(addrList=None): #done.
   try:
         #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         mavlink = the_connection 
+        print("wp. mavlink?. ", SERVER_IP, ':', str(connect_address))
         """
         msg = mavlink.wait_heartbeat(timeout=6)
         connect_address = int(connect_address)
