@@ -23,6 +23,45 @@ from . import points
 
 from . import mavlink_control as mc
 
+
+
+
+
+def set_mode(the_connection, mode):
+    mode_id = the_connection.mode_mapping()[mode.upper()]
+
+    # Check if mode change is possible
+    if mode_id is not None:
+        # Send the command to change the mode
+        the_connection.mav.set_mode_send(
+            the_connection.target_system,
+            mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+            mode_id)
+        return f"Mode change to {mode} command sent."
+    else:
+        return "Invalid mode."
+
+
+
+def set_arm(the_connection, arm=True):
+    try:
+        # Arming/Disarming the UAV
+        the_connection.mav.command_long_send(
+            the_connection.target_system,
+            the_connection.target_component,
+            mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+            0,
+            1 if arm else 0,
+            0, 0, 0, 0, 0, 0)
+        return "Arm command sent." if arm else "Disarm command sent."
+    except Exception as e:
+        return f"Arm/Disarm command failed: {e}"
+
+
+
+
+
+
 # Class for formating the Mission Item.
 class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
@@ -282,35 +321,11 @@ def add(addrList=None): #done.
   print("wp. arm. ", msg)
   """
   
-  mode = "GUIDED"
-  try:
-        #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
-        mavlink = the_connection 
-        print("wp. mavlink?. ", SERVER_IP, ':', str(connect_address))
-        """
-        msg = mavlink.wait_heartbeat(timeout=6)
-        connect_address = int(connect_address)
-        if not msg:
-            return str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address})
-        if mode not in mavlink.mode_mapping():
-            return str({'ERROR': f'{mode} is not a valid mode. Try: {list(mavlink.mode_mapping().keys())}',
-                        'droneid': connect_address})
-        """
-        mavlink.set_mode(mode)
-        ack_msg = mavlink.recv_match(type='COMMAND_ACK', condition=f'COMMAND_ACK.command=={MAVLINK_MSG_ID_SET_MODE}',
-                                     blocking=True, timeout=6)
-        if ack_msg:
-            ack_msg = ack_msg.to_dict()
-            ack_msg['command'] = 'SET_MODE'
-            ack_msg['result_description'] = mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description
-            ack_msg['droneid'] = connect_address
-            return ack_msg
-        else:
-            return str({'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address})
-  except Exception as e:
-        print(e)
-        return str({'ERROR': 'Set Mode command failed!', 'droneid': connect_address})
+  # Set mode
+  print(set_mode(the_connection, 'GUIDED'))
 
+  # Arm the UAV
+  print(set_arm(the_connection))
 
 
   
@@ -340,7 +355,7 @@ def add(addrList=None): #done.
   print("wp. start_mission done")
 
   #set_auto(the_connection)
-  #"""3
+  """3
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 6:
