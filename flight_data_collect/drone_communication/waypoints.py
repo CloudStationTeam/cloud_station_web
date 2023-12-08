@@ -322,11 +322,13 @@ def add(addrList=None): #done.
   """
   
   # Set mode
-  print(set_mode(the_connection, 'GUIDED'))
+  msg = set_mode(the_connection, 'GUIDED')
+  print("wp. guided. ", msg)
+
 
   # Arm the UAV
-  print(set_arm(the_connection))
-
+  msg = set_arm(the_connection)
+  print("wp. arm. ", msg)
 
   
   
