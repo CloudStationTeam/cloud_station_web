@@ -267,7 +267,7 @@ def add(addrList=None): #done.
   #"""1.2.
   msg = "ERROR"
   attempts = 1
-  while msg[:5] == "ERROR" and attempts < 11:
+  while msg[:5] == "ERROR" and attempts < 6:
     msg = str(mc.change_mode(int(connect_address), "GUIDED"))
     attempts += 1
   print("wp. guided. ", msg)
@@ -275,8 +275,9 @@ def add(addrList=None): #done.
   #arm(the_connection)
   msg = "ERROR"
   attempts = 1
-  while msg[:5] == "ERROR" and attempts < 11:
+  while msg[:5] == "ERROR" and attempts < 6:
     msg = str(mc.set_arm(connect_address))
+    time.sleep(6)
     attempts += 1
   print("wp. arm. ", msg)
   #"""
@@ -309,7 +310,7 @@ def add(addrList=None): #done.
   #"""3
   msg = "ERROR"
   attempts = 1
-  while msg[:5] == "ERROR" and attempts < 11:
+  while msg[:5] == "ERROR" and attempts < 6:
     msg = str(mc.change_mode(connect_address, "AUTO"))
     attempts += 1
   print("wp. auto. ", msg)
