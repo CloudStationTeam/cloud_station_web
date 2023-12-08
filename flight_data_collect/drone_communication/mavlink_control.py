@@ -117,6 +117,21 @@ def set_arm(connect_address: int, is_disarm=False):
 
 def fly_to_point(connect_address: int, lat, lon, alt):
     try:
+        #addr = lat, lon, alt 
+        logs.log(addr)
+        addrList = [addr]
+        msg = waypoints.add(addrList) 
+        if not msg:
+            msg = "None"
+        print(msg)
+        return str(msg)
+    except Exception as e:
+        print(e)
+        return str({'ERROR': str(e), 'droneid': connect_address})
+
+    #didn't work.
+    """
+    try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
@@ -134,7 +149,8 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     except Exception as e:
         print(e)
         return {'ERROR': str(e), 'droneid': connect_address}
-
+    """
+    
 #addrList=[] #sql
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
