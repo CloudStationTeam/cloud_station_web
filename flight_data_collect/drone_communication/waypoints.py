@@ -23,6 +23,9 @@ from . import points
 
 #from . import mavlink_control as mc #didn't work 
 
+AUTO = False
+
+
 
 def set_mode(the_connection, mode):
     mode_id = the_connection.mode_mapping()[mode.upper()]
@@ -263,9 +266,8 @@ def add(addrList=None): #done.
     
     print("Now. ", lat, lon, alt)
 
-    #arm it, then
-    #def fly_to_point(connect_address: int, lat, lon, alt):
-    #mc.fly_to_point(the_connection, lat, lon, alt)
+    
+      
   
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
@@ -274,15 +276,17 @@ def add(addrList=None): #done.
   #return
   print("wp.")
 
-  
+
   # Set mode GUIDED. otherwise couldn't arm. 
-  msg = set_mode(the_connection, 'GUIDED')
-  print("wp. guided. ", msg)
+  if AUTO:
+      msg = set_mode(the_connection, 'GUIDED')
+      print("wp. guided. ", msg)
 
 
   # Arm the UAV
-  msg = set_arm(the_connection)
-  print("wp. arm. ", msg)
+  if AUTO:
+      msg = set_arm(the_connection)
+      print("wp. arm. ", msg)
 
   
   
@@ -292,8 +296,9 @@ def add(addrList=None): #done.
 
     
   # Set mode AUTO. after wps.    
-  msg = set_mode(the_connection, 'AUTO')
-  print("wp. auto. ", msg)
+  if AUTO:
+      msg = set_mode(the_connection, 'AUTO')
+      print("wp. auto. ", msg)
 
 
 
@@ -325,11 +330,12 @@ def add(addrList=None): #done.
   
   for mission_item1 in range(len(mission_waypoints)-1): #wp123
     ack(the_connection, "MISSION_ITEM_REACHED")
-    print("wp. to wp. ", mission_item1)
+    print("wp. to wp. ", mission_item1) #Does Not Show 
 
   # Set mode LAND. It disarms.  
-  msg = set_mode(the_connection, 'LAND')
-  print("wp. land. ", msg)
+  if AUTO:
+      msg = set_mode(the_connection, 'LAND')
+      print("wp. land. ", msg)
 
     
   #don't do it. otherwise it won't move.
