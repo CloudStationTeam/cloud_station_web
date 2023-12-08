@@ -267,7 +267,7 @@ def add(addrList=None): #done.
   #"""1.2.
   msg = "ERROR"
   attempts = 1
-  while msg[:5] == "ERROR" and attempts < 6:
+  while msg[:5] == "ERROR" and attempts < 100:
     msg = str(mc.change_mode(int(connect_address), "GUIDED"))
     attempts += 1
   print("wp. guided. ", msg)
