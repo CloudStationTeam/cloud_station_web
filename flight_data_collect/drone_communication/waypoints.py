@@ -332,24 +332,17 @@ def add(addrList=None): #done.
     ack(the_connection, "MISSION_ITEM_REACHED")
     print("wp. to wp. ", mission_item1) #Does Not Show 
 
+    
+  #Don't do it yet. otherwise it won't go to wps. 
+  """
+  msg = set_return(the_connection)
+
+  print("wp. set_return done")
+
   # Set mode LAND. It disarms.  
   if AUTO:
       msg = set_mode(the_connection, 'LAND')
       print("wp. land. ", msg)
-
-    
-  #don't do it. otherwise it won't move.
-  """
-  msg = set_return(the_connection)
-  
-  #mc.change_mode(14550, "LAND")
-  msg = "ERROR"
-  attempts = 1
-  while msg[:5] == "ERROR" and attempts < 11:
-    msg = str(mc.change_mode(connect_address, "LAND"))
-    attempts += 1
-
-  print("wp. set_return done")
 
   return msg
   """
