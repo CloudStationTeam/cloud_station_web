@@ -268,7 +268,6 @@ def add(addrList=None): #done.
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
-    print("WTFISDRONEID", connect_address)
     msg = str(mc.change_mode(int(connect_address), "GUIDED"))
     attempts += 1
   print("wp. guided. ", msg)
@@ -277,7 +276,7 @@ def add(addrList=None): #done.
   msg = "ERROR"
   attempts = 1
   while msg[:5] == "ERROR" and attempts < 11:
-    msg = str(mc.set_arm(the_connection))
+    msg = str(mc.set_arm(connect_address))
     attempts += 1
   print("wp. arm. ", msg)
   #"""
