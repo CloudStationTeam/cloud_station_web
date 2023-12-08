@@ -316,10 +316,7 @@ def add(addrList=None): #done.
 
   print("wp. start_mission done")
 
-  set_return(the_connection)
-
-
-
+    
   """
   item_seq = 1 # ???
   for mission_item1 in range(len(mission_waypoints)-1):
