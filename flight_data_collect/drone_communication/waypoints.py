@@ -173,7 +173,7 @@ def ack(the_connection, keyword): #done.
 
 # Main Function
 #if __name__ == "__main__":
-def add(addrList=None): #done.
+def add(addrList): #done.
   print("Program Started")
 
   SERVER_IP = socket.gethostbyname(socket.gethostname())
@@ -227,10 +227,14 @@ def add(addrList=None): #done.
   #"""
 
   #"""
+  """
   tups = [(33.643335, -117.842163, 500), # a place 
           (33.643633, -117.841689, 10), #wp1
           (33.642831,-117.841283, 10), #wp2
           (33.643659,-117.840579, 5)]
+  """
+
+    
           #(33.643633, -117.841689, 0),
           #(33.642919,-117.839280, 5)] #wp3
   #try wp0. 2. 
@@ -241,6 +245,31 @@ def add(addrList=None): #done.
   #2 wps.
   #addrList = [address1, address2] #n=2
   #"""
+
+
+
+
+
+
+  addr_1 = "Donald Bren Hall, Irvine, CA, USA"
+  addr1 = "Engineering Hall, Irvine, CA, USA"
+  addr2 = "University of California, Irvine, Calit2, Irvine, CA, USA"
+  addr3 = "RapidTech, Campus Drive, Irvine, CA, USA"
+  addr4 = addr2
+  addr5 = addr3
+  addrList = [addr_1, addr1, addr2, addr3, addr4] # DBH, ENG HALL, CALTELI2, RapidTech, CALTELI2, RapidTech 
+
+  tups = []
+
+  #from .points import test 
+  #test()
+
+  for addr in addrList:
+      lat, lon, alt = points.get_gps_and_altitude_by_location(addr)
+      tup = (lat, lon, alt)
+      tups.append(tup)
+  print("wp. tups.", tups)
+    
   count = len(tups)
   
   n = 0 # ??? #TODO
@@ -256,8 +285,14 @@ def add(addrList=None): #done.
     #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
     #free map api timed out. #No.
     lat, lon, alt = tups[n]
-    alt = 5
+    #alt = 5
     #"""
+
+    # Safety Checks
+    """
+    if alt > 100:
+        print("invalid alt.")
+    """
     
     """
     lat, lon = points.get_lat_lon(addr[3:])
