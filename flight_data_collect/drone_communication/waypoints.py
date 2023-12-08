@@ -325,8 +325,13 @@ def add(addrList=None): #done.
   
   for mission_item1 in range(len(mission_waypoints)-1): #wp123
     ack(the_connection, "MISSION_ITEM_REACHED")
-  
+    print("wp. to wp. ", mission_item1)
 
+  # Set mode LAND. It disarms.  
+  msg = set_mode(the_connection, 'LAND')
+  print("wp. land. ", msg)
+
+    
   #don't do it. otherwise it won't move.
   """
   msg = set_return(the_connection)
