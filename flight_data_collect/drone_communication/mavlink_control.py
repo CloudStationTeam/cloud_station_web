@@ -25,8 +25,6 @@ def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, 
 
 def change_mode(connect_address: int, mode: str) -> str:
     try:
-        print("wp. mavlink??. ", SERVER_IP, ':', str(connect_address))
-    
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         connect_address = int(connect_address)
@@ -140,7 +138,6 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 #addrList=[] #sql
 def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
-    print("wp. mavlink. ", SERVER_IP, ':', str(connect_address))
     
     from .points import test 
     test()
