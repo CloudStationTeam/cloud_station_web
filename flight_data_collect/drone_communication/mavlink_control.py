@@ -151,17 +151,19 @@ def fly_to_point(connect_address: int, lat, lon, alt):
         return {'ERROR': str(e), 'droneid': connect_address}
     """
     
-#addrList=[] #sql
-def update_waypoints(connect_address: int, addr: str):
+
+def update_waypoints(connect_address: int, addr: list):
     print("wp") #reached.
     
-    from .points import test 
-    test()
+    """waypoints should be given in this form:
+        [(lat0,lon10,alt0), (lat1,lon1,alt1), ...]"""
+
+    #Could use SQL or JS.
+    #Used JS for now.
     
     try:
-        logs.log(addr)
-        addrList = [addr]
-        msg = waypoints.add(addrList) #TODO
+        logs.log(addrList)
+        msg = waypoints.add(addrList) #TODO 
         if not msg:
             msg = "None"
         print(msg)
