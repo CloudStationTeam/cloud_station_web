@@ -257,7 +257,7 @@ def add(addrList): #done.
   addr3 = "RapidTech, Campus Drive, Irvine, CA, USA"
   addr4 = addr2
   addr5 = addr3
-  addrList = [addr_1, addr1, addr2, addr3, addr4] # DBH, ENG HALL, CALTELI2, RapidTech, CALTELI2, RapidTech 
+  addrList = [addr_1, addr1, addr2, addr3] # DBH, ENG HALL, CALTELI2, RapidTech, CALTELI2, RapidTech 
 
   tups = []
 
