@@ -316,7 +316,7 @@ def add(addrList=None): #done.
 
   print("wp. start_mission done")
 
-  
+  set_return(the_connection)
 
 
 
