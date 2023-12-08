@@ -338,6 +338,13 @@ def add(addrList=None): #done.
          
   print("wp. upload_mission done") #put whatever here, cuz log format didn't work.
 
+  msg = set_mode(the_connection, 'AUTO')
+  print("wp. auto. ", msg)
+
+
+
+
+    
 
   '''
   msg = arm1(the_connection)
@@ -358,8 +365,7 @@ def add(addrList=None): #done.
 
   print("wp. start_mission done")
 
-  msg = set_mode(the_connection, 'AUTO')
-  print("wp. auto. ", msg)
+  
 
   #set_auto(the_connection)
   """3
