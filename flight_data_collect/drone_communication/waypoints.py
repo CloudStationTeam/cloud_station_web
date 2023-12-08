@@ -275,7 +275,7 @@ def add(addrList=None): #done.
   print("wp.")
 
   
-  # Set mode
+  # Set mode GUIDED. otherwise couldn't arm. 
   msg = set_mode(the_connection, 'GUIDED')
   print("wp. guided. ", msg)
 
@@ -290,6 +290,8 @@ def add(addrList=None): #done.
          
   print("wp. upload_mission done") #put whatever here, cuz log format didn't work.
 
+    
+  # Set mode AUTO. after wps.    
   msg = set_mode(the_connection, 'AUTO')
   print("wp. auto. ", msg)
 
