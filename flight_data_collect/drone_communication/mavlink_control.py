@@ -8,7 +8,6 @@ from . import logs, waypoints, autocomplete, lidar_data
 
 SERVER_IP = socket.gethostbyname(socket.gethostname())
 
-
 def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, command_name=None):
     ack_msg = mavlink.recv_match(type=message_type, timeout=6, blocking=True)
     if ack_msg:
