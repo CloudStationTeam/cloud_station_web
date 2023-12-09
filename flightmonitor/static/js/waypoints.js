@@ -8,10 +8,8 @@ const droneid1 = document.getElementById("droneid1"); //WO
 const droneid2 = document.getElementById("droneid2"); //RO
 const update_droneid = document.getElementById("update-droneid");
 
-
 //alert("1");
 let wpLists = {}; //map
-//wpLists[n] = []; //wp list
 
 let droneid = null;
 
