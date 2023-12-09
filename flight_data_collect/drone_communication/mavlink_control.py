@@ -164,7 +164,8 @@ def update_waypoints(connect_address: int, addrs: str):
     try:
         addrList = [addrs]
         logs.log(addrList)
-        msg = waypoints.add(addrList) #TODO 
+        msg = waypoints.add(connect_address, addrList) #TODO 
+        
         if not msg:
             msg = "None"
         print(msg)
