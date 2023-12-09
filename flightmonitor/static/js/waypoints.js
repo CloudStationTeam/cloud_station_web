@@ -165,14 +165,42 @@ addressInput.addEventListener("input", async () => {
 });
 
 
-//2. Send wps 
+//3. Send wps
+//wpLists[droneid]
+send_droneid.addEventListener("click", () => {
+  //check
+  const droneid = filterit(droneid2.value);
+  if (!(droneid in wpLists)) {
+    alert("No such droneid.");
+    return;
+  }
+  
+  //filter
+  let addrs = "";
+  let lst = wpLists[droneid];
+  for (item in lst) { //1. 1 Shields Ave. 
+    let addr = item.split(".", 2)[1]; // Split the string into two parts // 1 Shields Ave. 
+    addrs += addr.substring(1) + "?"; //delim. //1 Shields Ave.? 
+  }
+  
+  //send
+  send_waypoint(droneid, addrs);
+  
+  //clear
+  clearAllButton.click();
+})
+
+
+  
+
+//2. Show wps 
 update_droneid.addEventListener("click", () => {
   const droneid = filterit(droneid2.value);
   if (!(droneid in wpLists)) {
     alert("No such droneid.");
     return;
   }
-  //clearAllButton.click();
+  //clearAllButton.click(); //do Not do it. it removes other addrs. 
   waypointListContainer.innerHTML = "";
   //for (addr in wpLists[droneid]) {
   for (var i = 0; i < wpLists[droneid].length; i++) {
@@ -195,6 +223,7 @@ return;
   if (!(droneid in wpLists)) {
     wpLists[droneid] = [];
 }
+  //checks for duplicates 
   address = (wpLists[droneid].length+1).toString() + ". " + address;
   wpLists[droneid].push(address);
   //send_waypoint(droneid, address);
