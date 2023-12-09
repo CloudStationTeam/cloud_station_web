@@ -123,8 +123,13 @@ def upload_mission(the_connection, mission_items):
           waypoint.param5, #local X
           waypoint.param6, #Local Y
           waypoint.param7) #local 2
-      
-        req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
+
+        attempts = 1
+        while not req and attempts < 4:
+            req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
+            print("wp. attempts. ", attempts)
+            attempts += 1
+        
         if req and req.seq == waypoint.seq:
             print("wp. Sending waypoint", waypoint.seq)
             the_connection.mav.mission_item_send(
