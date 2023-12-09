@@ -7,6 +7,8 @@ const waypointListContainer = document.getElementById("waypoint-list-container")
 const droneid1 = document.getElementById("droneid1"); //WO / For Write. 
 const droneid2 = document.getElementById("droneid2"); //RO / For Read. 
 const update_droneid = document.getElementById("update-droneid");
+const send_droneid = document.getElementById("send-droneid");
+
 
 //alert("1");
 let wpLists = {}; //map
@@ -184,7 +186,7 @@ send_droneid.addEventListener("click", () => {
   }
   
   //send
-  send_waypoint(droneid, addrs);
+  send_waypoints(droneid, addrs);
   
   //clear
   clearAllButton.click();
