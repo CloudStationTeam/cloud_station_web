@@ -176,6 +176,10 @@ send_droneid.addEventListener("click", () => {
     alert("No such droneid.");
     return;
   }
+  if (wpLists[droneid].length < 2) {
+    alert("WPs less than 2.");
+    return;
+  }
   
   //filter
   let addrs = [];
@@ -200,7 +204,8 @@ send_droneid.addEventListener("click", () => {
 update_droneid.addEventListener("click", () => {
   const droneid = filterit(droneid2.value);
   if (!(droneid in wpLists)) {
-    alert("No such droneid.");
+    //alert("No such droneid.");
+    waypointListContainer.innerHTML = "";
     return;
   }
   //clearAllButton.click(); //do Not do it. it removes other addrs. 
