@@ -4,6 +4,12 @@ const addAddressButton = document.getElementById("add-address");
 const clearAllButton = document.getElementById("clear-all");
 const waypointListContainer = document.getElementById("waypoint-list-container");
 
+
+const showAllWPsButton = document.getElementById("show-all-wps");
+const clearAllWPsButton = document.getElementById("clear-all-wps");
+const waypointListsContainer = document.getElementById("waypoint-lists-container");
+
+
 const droneid1 = document.getElementById("droneid1"); //WO / For Write. 
 const droneid2 = document.getElementById("droneid2"); //RO / For Read. 
 const update_droneid = document.getElementById("update-droneid");
@@ -14,6 +20,34 @@ const send_droneid = document.getElementById("send-droneid");
 let wpLists = {}; //map
 
 let droneid = null; //tmp. 
+
+
+
+// Function to display all waypoint lists
+function showAllWaypoints() {
+  waypointListsContainer.innerHTML = ''; // Clear all existing content
+
+  wpLists.forEach((list, droneID) => {
+    const listDiv = document.createElement('div');
+    listDiv.textContent = `droneID: ${droneID}\nWaypoint List: ${list.join('\n')}`;
+    waypointListsContainer.appendChild(listDiv);
+  });
+}
+
+// Function to clear all waypoint lists
+function clearAllWaypoints() {
+  wpLists = {}; // Clear the map
+  waypointListsContainer.innerHTML = ''; // Clear the display container
+  
+  clearAllButton.click();
+}
+
+// Event listener for the "Show All Waypoint Lists" button
+document.getElementById('show-all-wps').addEventListener('click', showAllWaypoints);
+
+// Event listener for the "Clear All Waypoint Lists" button
+document.getElementById('clear-all-wps').addEventListener('click', clearAllWaypoints);
+
 
 
 async function getPoints(query) {
@@ -243,6 +277,8 @@ return;
   if (droneid == droneid2.value) {
     renderWaypointList(address);
   }
+  
+  showAllWaypoints();
 });
 
 clearAllButton.addEventListener("click", () => {
@@ -254,6 +290,8 @@ clearAllButton.addEventListener("click", () => {
   } 
   wpLists[droneid] = [];
   waypointListContainer.innerHTML = "";
+  
+  showAllWaypoints();
 });
 
 function renderWaypointList(address) {
@@ -300,6 +338,8 @@ if (idx !== -1) {
       seq += 1;
     }
     update_droneid.click();
+
+    showAllWaypoints();
   });
   
   // Append the address and remove button to the <div> element
