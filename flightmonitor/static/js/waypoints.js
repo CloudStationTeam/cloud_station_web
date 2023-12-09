@@ -288,7 +288,9 @@ if (idx !== -1) {
     
     let seq = 1;
     for (let item of tmp) {
-      let item1 = [seq.toString() ...(item.split(". ").slice(1))].join(". "); 
+      //let item1 = [seq.toString() ...(item.split(". ").slice(1))].join(". "); 
+      let parts = item.split(". ").slice(1); 
+      let item1 = [seq.toString(), ...parts].join(". "); 
       wpLists[droneid].push(item1);
       seq += 1;
     }
