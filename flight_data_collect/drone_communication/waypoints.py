@@ -75,6 +75,7 @@ def set_arm(the_connection, arm=True):
             0, 0, 0, 0, 0, 0)
         #time.sleep(1) #Do Not Wait #Again, do Not wait even 1s. otherwise it won't work. 
         #if wait too long, drone disarms; if wait too short, drone is not armed yet.
+        #1s is too long for it to wait for. 
         return "Arm command sent." if arm else "Disarm command sent."
     except Exception as e:
         return f"Arm/Disarm command failed: {e}"
