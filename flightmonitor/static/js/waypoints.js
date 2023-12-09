@@ -4,8 +4,8 @@ const addAddressButton = document.getElementById("add-address");
 const clearAllButton = document.getElementById("clear-all");
 const waypointListContainer = document.getElementById("waypoint-list-container");
 
-const droneid1 = document.getElementById("droneid1"); //WO
-const droneid2 = document.getElementById("droneid2"); //RO
+const droneid1 = document.getElementById("droneid1"); //WO / For Write. 
+const droneid2 = document.getElementById("droneid2"); //RO / For Read. 
 const update_droneid = document.getElementById("update-droneid");
 
 //alert("1");
