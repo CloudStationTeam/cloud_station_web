@@ -182,7 +182,7 @@ send_droneid.addEventListener("click", () => {
   let lst = wpLists[droneid];
   for (let item of lst) { //1. 1 Shields Ave. 
     //https://logfetch.com/js-split-string-first-occurrence/
-    let addr = str.split(". ").slice(1).join(". "); // 1 Shields Ave.
+    let addr = item.split(". ").slice(1).join(". "); // 1 Shields Ave.
     addrs += addr + "?"; //delim. //1 Shields Ave.? 
   }
   
