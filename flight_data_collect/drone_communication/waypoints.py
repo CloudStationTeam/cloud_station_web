@@ -1,7 +1,7 @@
 
 # Notes to wps. 
 """
-example wp:
+example wps:
 wp seq=0,1,2,3. else invalid seq num.
 wp0,1,2,3. wp0=start_loc. else no wp1. 
 wp3 not too far off. else does not go to wp3. 
