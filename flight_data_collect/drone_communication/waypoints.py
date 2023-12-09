@@ -286,11 +286,13 @@ def add(addrList): #done.
     print("wp. to wp. ", mission_item1) #Does Not Show 
 
     
+  """
   # Set mode LAND. It disarms.  
   if AUTO:
       msg = set_mode(the_connection, 'LAND')
       print("wp. land. ", msg)
-    
+  """  
+
     
   #Don't do it yet. otherwise it won't go to wps. 
   """
