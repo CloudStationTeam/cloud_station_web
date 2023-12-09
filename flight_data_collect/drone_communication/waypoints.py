@@ -125,6 +125,7 @@ def upload_mission(the_connection, mission_items):
           waypoint.param7) #local 2
 
         attempts = 1
+        req = None
         while not req and attempts < 4:
             req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
             print("wp. attempts. ", attempts)
