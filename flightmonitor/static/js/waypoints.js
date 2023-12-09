@@ -279,6 +279,7 @@ function send_waypoint(droneId, addr) {
 
 
 function autocomplete(addr) {
+    //JS sends a GET req to PY. It waits for PY to send a GET req to API. 
     return new Promise((resolve, reject) => {
         //alert("auto");
         let xmlHttp = new XMLHttpRequest();
