@@ -164,6 +164,8 @@ addressInput.addEventListener("input", async () => {
   });
 });
 
+
+//2. Send wps 
 update_droneid.addEventListener("click", () => {
   const droneid = filterit(droneid2.value);
   if (!(droneid in wpLists)) {
@@ -179,6 +181,8 @@ update_droneid.addEventListener("click", () => {
   }
 });
 
+
+// 1. Add a wp 
 addAddressButton.addEventListener("click", () => {
   var address = filterit(addressInput.value); //ref.
   const droneid = filterit(droneid1.value);
