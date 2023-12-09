@@ -235,7 +235,7 @@ def add(connect_address: int, addrList: list): #done.
   print("wp. tups.", tups)
 
   # Wait for the API reqs.
-  while len(tups) < 4:
+  while len(tups) < len(addrList):
       print("wp. wait. ", tups)
       #time.sleep(1)
     
