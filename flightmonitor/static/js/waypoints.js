@@ -281,6 +281,17 @@ if (idx !== -1) {
   wpLists[droneid].splice(idx, 1);
 }
     divElement.remove();
+
+    //sort the rest 
+    let tmp = wpLists[droneid];
+    wpLists[droneid] = [];
+    
+    let seq = 1;
+    for (let item of tmp) {
+      let item1 = [seq.toString() ...(item.split(". ").slice(1))].join(". "); 
+      wpLists[droneid].push(item1);
+      seq += 1;
+    }
   });
   
   // Append the address and remove button to the <div> element
