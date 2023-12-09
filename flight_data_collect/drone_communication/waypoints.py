@@ -129,7 +129,7 @@ def upload_mission(the_connection, mission_items):
         while not req and attempts < 10:
             req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
             print("wp. attempts. ", attempts)
-            attempts += 11
+            attempts += 1
             
             # Arm the UAV Again
             if AUTO:
