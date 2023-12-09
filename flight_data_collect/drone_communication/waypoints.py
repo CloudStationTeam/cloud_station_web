@@ -12,8 +12,16 @@ Land it. else does not Land.
 
 """
 example process:
+
+If Not AUTO: 
 mode GUIDED,
 arm the drone and wait for it to be armed, 
+send waypoints,
+mode AUTO,
+goto waypoints,
+mode LAND.
+
+If AUTO: 
 send waypoints,
 mode AUTO,
 goto waypoints,
@@ -21,11 +29,11 @@ mode LAND.
 """
 
 
-
 """
 bug to remove:
 does not print when it reaches to a wp. 
 """
+
 
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
 #!/usr/bin/env python3
@@ -43,8 +51,7 @@ from . import points
 
 #from . import mavlink_control as mc #didn't work 
 
-AUTO = 1 #1
-
+AUTO = 1 # False
 
 
 
