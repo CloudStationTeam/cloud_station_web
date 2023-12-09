@@ -1,6 +1,6 @@
 import logging
 
-def log(*arg, **kwargs): # logs.log(1, 2, 3, a=4, b=5) 
+def log(*args, **kwargs): # logs.log(1, 2, 3, a=4, b=5) 
   s = ""
   for item in args:
     s += str(item)
