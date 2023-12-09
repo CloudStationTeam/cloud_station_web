@@ -270,6 +270,12 @@ def add(addrList): #done.
       tup = (lat, lon, alt)
       tups.append(tup)
   print("wp. tups.", tups)
+
+  # Wait for the API reqs.
+  while len(tups) < 4:
+      print("wp. wait. ", tups)
+      #time.sleep(1)
+
     
   count = len(tups)
   
