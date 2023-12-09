@@ -2,10 +2,10 @@
 # Notes to wps. 
 """
 example wps:
-seq=0,1,2,3. else invalid seq num.
+wp seq=0,1,2,3. else invalid seq num.
 wp0,1,2,3. wp0=start_loc. else no wp1. 
 wp3 not too far off. else does not go to wp3. 
-count=4. else no wp3. 
+wps count=4. else no wp3. 
 Land it. else does not Land.
 """
 
