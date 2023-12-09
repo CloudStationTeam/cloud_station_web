@@ -43,10 +43,10 @@ function clearAllWaypoints() {
 }
 
 // Event listener for the "Show All Waypoint Lists" button
-document.getElementById('show-all-wps').addEventListener('click', showAllWaypoints);
+showAllWPsButton.addEventListener('click', showAllWaypoints);
 
 // Event listener for the "Clear All Waypoint Lists" button
-document.getElementById('clear-all-wps').addEventListener('click', clearAllWaypoints);
+clearAllWPsButton.addEventListener('click', clearAllWaypoints);
 
 
 
