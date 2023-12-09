@@ -180,7 +180,10 @@ send_droneid.addEventListener("click", () => {
   //filter
   let addrs = "";
   let lst = wpLists[droneid];
+  alert(lst);
   for (item in lst) { //1. 1 Shields Ave. 
+    alert(item);
+    alert(item.split(".", 2));
     let addr = item.split(".", 2)[1]; // Split the string into two parts // 1 Shields Ave. 
     addrs += addr.substring(1) + "?"; //delim. //1 Shields Ave.? 
   }
