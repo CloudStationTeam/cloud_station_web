@@ -197,7 +197,6 @@ def add(addrList): #done.
 
   #TODO: map pins.
   '''
-  mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10).wt("2 whatever")
   mission_waypoints.append(mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10)) # Above takeoff point
 
   mission_waypoints.append(mission_item(1, 0, 42.43432724637685, -83.98613425948624, 10)) # Above Destination Point
@@ -205,53 +204,8 @@ def add(addrList): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
-  """
-  #n=1
-  mission_waypoints.append(mission_item(0, 0, 33.643633, -117.841689, 10)) # Above takeoff point
-  #mission_waypoints.append(mission_item(2
-
-  mission_waypoints.append(mission_item(1, 0, 33.642831,-117.841283, 10)) # Above Destination Point
-
-  mission_waypoints.append(mission_item(2, 0, 33.642919,-117.839280, 5)) # Destination Point
-  """
-
-  #"""
-  #ex.
-  address1 = '1. 5200 Engineering Service Rd, Irvine, CA 92617'
-  address2 = '2. 5001 Newport Coast Dr, Irvine, CA 92603'
-  address3 = '3. 401 E. Peltason Drive, Irvine, CA 92617'
-  #addrList = [address1, address2, address3]
-  if not addrList:
-    addrList = [address2]
-  addrList = [address1] + addrList
-  print(addrList)
-  #"""
-
-  #"""
-  """
-  tups = [(33.643335, -117.842163, 500), # a place 
-          (33.643633, -117.841689, 10), #wp1
-          (33.642831,-117.841283, 10), #wp2
-          (33.643659,-117.840579, 5)]
-  """
 
     
-          #(33.643633, -117.841689, 0),
-          #(33.642919,-117.839280, 5)] #wp3
-  #try wp0. 2. 
-  #seq 1 didn't work. - invalid seq num.
-  #3 wps. no wp0. - goes to wp2, wp3 (skips wp1)
-  #4 wps. wp0. - goes to wp1, wp2 
-  #3 wps. count 2.
-  #2 wps.
-  #addrList = [address1, address2] #n=2
-  #"""
-
-
-
-
-
-
   addr_1 = "Donald Bren Hall, Irvine, CA, USA"
   addr1 = "Engineering Hall, Irvine, CA, USA"
   addr2 = "University of California, Irvine, Calit2, Irvine, CA, USA"
