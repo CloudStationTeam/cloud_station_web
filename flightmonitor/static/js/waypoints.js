@@ -294,6 +294,7 @@ if (idx !== -1) {
       wpLists[droneid].push(item1);
       seq += 1;
     }
+    update_droneid.click();
   });
   
   // Append the address and remove button to the <div> element
