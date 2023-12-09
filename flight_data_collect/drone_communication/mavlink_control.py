@@ -152,7 +152,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     """
     
 
-def update_waypoints(connect_address: int, addr: list):
+def update_waypoints(connect_address: int, addr: str):
     print("wp") #reached.
     
     """waypoints should be given in this form:
