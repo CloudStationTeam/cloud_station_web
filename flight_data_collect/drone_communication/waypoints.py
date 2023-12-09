@@ -183,11 +183,11 @@ def ack(the_connection, keyword): #done.
 
 # Main Function
 #if __name__ == "__main__":
-def add(addrList): #done.
+def add(connect_address, addrList): #done.
   print("Program Started")
 
   SERVER_IP = socket.gethostbyname(socket.gethostname())
-  connect_address = 14550
+  #connect_address = 14550
   the_connection = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
   print(str(SERVER_IP)+" "+str(connect_address))
   
