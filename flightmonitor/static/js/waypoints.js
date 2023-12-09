@@ -111,7 +111,7 @@ let url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(que
 
 
 addressInput.addEventListener("input", async () => {
-  const value = addressInput.value.trim();
+  const value = filterit(addressInput.value.trim());
   //alert(value);
   console.log(value);
   
