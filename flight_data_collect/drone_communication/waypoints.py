@@ -126,7 +126,7 @@ def upload_mission(the_connection, mission_items):
 
         attempts = 1
         req = None
-        while not req and attempts <= 10:
+        while not req and attempts < 4:
             req = the_connection.recv_match(type="MISSION_REQUEST", blocking=True, timeout=6)
             print("wp. attempts. ", attempts)
             attempts += 1
