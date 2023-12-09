@@ -11,7 +11,7 @@ const update_droneid = document.getElementById("update-droneid");
 //alert("1");
 let wpLists = {}; //map
 
-let droneid = null;
+let droneid = null; //tmp. 
 
 
 async function getPoints(query) {
