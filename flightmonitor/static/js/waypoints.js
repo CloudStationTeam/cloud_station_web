@@ -1,3 +1,5 @@
+
+
 const addressInput = document.getElementById("address-input");
 const suggestedAddressesContainer = document.getElementById("suggested-addresses-container");
 const addAddressButton = document.getElementById("add-address");
