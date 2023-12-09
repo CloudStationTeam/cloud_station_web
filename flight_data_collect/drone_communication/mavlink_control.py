@@ -1,6 +1,7 @@
 from pymavlink import mavutil, mavwp
 import socket
 import json
+import urllib.parse
 from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MSG_ID_SET_MODE
 from flightmonitor.consumers import send_message_to_clients
 
@@ -158,12 +159,14 @@ def update_waypoints(connect_address: int, addrs: str):
     #Used JS for now.
     
     try:
-        #addrs = "addr1, city1?addr2, city2?addr3, city3"
-        addrList = [] #[addr1, addr2, addr2]
-        addrList1 = addrs.split("?")
+        #addrs = "a1%b1|a2%b2"
+        addrList = [] #[addr1, addr2, addr3]
+        addrList1 = addrs.split("|") #["a1%b1", "a2%b2"]
         from .sanitize_text import sanitize_text
         for item in addrList1:
-            addr = sanitize_text(item)
+            decoded_str = urllib.parse.unquote(item) #"a1%b1"
+            #print(decoded_str) #"a1 b1"
+            addr = sanitize_text(decoded_str)
             addrList.append(addr)        
 
         connect_address = int(sanitize_text(str(connect_address)))
