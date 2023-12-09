@@ -181,7 +181,7 @@ send_droneid.addEventListener("click", () => {
   let addrs = "";
   let lst = wpLists[droneid];
   alert(lst);
-  for (item in lst) { //1. 1 Shields Ave. 
+  for (let item of lst) { //1. 1 Shields Ave. 
     alert(item);
     alert(item.split(". "));
 
