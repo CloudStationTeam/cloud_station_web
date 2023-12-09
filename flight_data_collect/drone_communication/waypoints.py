@@ -132,18 +132,6 @@ def upload_mission(the_connection, mission_items):
     ack(the_connection, "MISSION_ACK")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 # Send message for the drone to return to the launch point
 def set_return(the_connection): #done.
   print("Set Return To launch")
@@ -195,7 +183,6 @@ def add(addrList): #done.
 
   mission_waypoints = []
 
-  #TODO: map pins.
   '''
   mission_waypoints.append(mission_item(0, 0, 42.434193622721835, -83.98098183753619, 10)) # Above takeoff point
 
@@ -204,8 +191,6 @@ def add(addrList): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
-
-    
   addr_1 = "Donald Bren Hall, Irvine, CA, USA"
   addr1 = "Engineering Hall, Irvine, CA, USA"
   addr2 = "University of California, Irvine, Calit2, Irvine, CA, USA"
@@ -220,7 +205,7 @@ def add(addrList): #done.
   #test()
 
   for addr in addrList:
-      lat, lon, alt = points.get_gps_and_altitude_by_location(addr)
+      lat, lon, alt = points.get_gps_and_altitude_by_location(addr) # send API reqs before wps. 
       tup = (lat, lon, alt)
       tups.append(tup)
   print("wp. tups.", tups)
@@ -229,25 +214,18 @@ def add(addrList): #done.
   while len(tups) < 4:
       print("wp. wait. ", tups)
       #time.sleep(1)
-
     
   count = len(tups)
   
-  n = 0 # ??? #TODO
+  n = 0 
   """
   Therefore, if you explicitly want to set the home position yourself, you would typically include a waypoint with sequence 0. If you don't include it, the system may automatically create one for you, depending on the specifics of your autopilot system.
   
-  That's why it flights around.
+  That's why it skipped wp1.
   """
-  #"""
-  #for addr in addrList:
+
   for _ in range(count):
-    #"""
-    #lat, lon, alt = points.get_lat_lon_alt(addr[3:])
-    #free map api timed out. #No.
     lat, lon, alt = tups[n]
-    #alt = 5
-    #"""
 
     # Safety Checks
     """
@@ -255,21 +233,11 @@ def add(addrList): #done.
         print("invalid alt.")
     """
     
-    """
-    lat, lon = points.get_lat_lon(addr[3:])
-    alt = 5
-    """
-    
     print("Now. ", lat, lon, alt)
 
-    
-      
-  
     mission_waypoints.append(mission_item(n, 0, float(lat), float(lon), int(alt)))
     n += 1
-  #"""
-  
-  #return
+
   print("wp.")
 
 
@@ -285,7 +253,6 @@ def add(addrList): #done.
       print("wp. arm. ", msg)
 
   
-  
   upload_mission(the_connection, mission_waypoints)
          
   print("wp. upload_mission done") #put whatever here, cuz log format didn't work.
@@ -297,13 +264,6 @@ def add(addrList): #done.
       print("wp. auto. ", msg)
 
 
-
-
-    
-
-
-
-  
   takeoff(the_connection)
 
   print("wp. takeoff done")
@@ -325,6 +285,7 @@ def add(addrList): #done.
     ack(the_connection, "MISSION_ITEM_REACHED")
     print("wp. to wp. ", mission_item1) #Does Not Show 
 
+    
   # Set mode LAND. It disarms.  
   if AUTO:
       msg = set_mode(the_connection, 'LAND')
