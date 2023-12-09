@@ -212,6 +212,7 @@ def add(connect_address: int, addrList: list): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
+  # example addrs 
   """
   addr_1 = "Donald Bren Hall, Irvine, CA, USA"
   addr1 = "Engineering Hall, Irvine, CA, USA"
