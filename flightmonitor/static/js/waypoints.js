@@ -183,9 +183,12 @@ send_droneid.addEventListener("click", () => {
   alert(lst);
   for (item in lst) { //1. 1 Shields Ave. 
     alert(item);
-    alert(item.split(".", 2));
-    let addr = item.split(".", 2)[1]; // Split the string into two parts // 1 Shields Ave. 
-    addrs += addr.substring(1) + "?"; //delim. //1 Shields Ave.? 
+    alert(item.split(". "));
+
+    //https://logfetch.com/js-split-string-first-occurrence/
+    let addr = str.split(". ").slice(1).join(" "); // 1 Shields Ave.
+    
+    addrs += addr + "?"; //delim. //1 Shields Ave.? 
   }
   
   //send
