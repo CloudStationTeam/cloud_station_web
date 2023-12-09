@@ -10,6 +10,17 @@ Land it. else does not Land.
 """
 
 
+"""
+example process:
+mode GUIDED,
+arm the drone and wait for it to be armed, 
+send waypoints,
+mode AUTO,
+goto waypoints,
+mode LAND.
+"""
+
+
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
 #!/usr/bin/env python3
 
