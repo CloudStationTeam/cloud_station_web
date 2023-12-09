@@ -1,5 +1,4 @@
 
-
 # Notes to wps. 
 """
 example wps:
@@ -44,7 +43,7 @@ from . import points
 
 #from . import mavlink_control as mc #didn't work 
 
-AUTO = False
+AUTO = 1 #1
 
 
 
@@ -217,7 +216,7 @@ def add(connect_address: int, addrList: list): #done.
   """
   addr_1 = "Donald Bren Hall, Irvine, CA, USA"
   addr1 = "Engineering Hall, Irvine, CA, USA"
-  addr2 = "University of California, Irvine, Calit2, Irvine, CA, USA"
+  addr2 = "Calit2, Irvine, CA, USA"
   addr3 = "RapidTech, Campus Drive, Irvine, CA, USA"
   addr4 = addr2
   addr5 = addr3
