@@ -1,10 +1,13 @@
 
-#seq 0. else invalid seq.
-#wp0123. else no wp1.
-#count 4. else no wp3.
-#wp3 away. alt low. Land. else does not Land.
-
-#seq 0. wp0123. wp3 not. count 4. wp3 alt 0.
+# Notes to wps. 
+"""
+example wps:
+seq=0,1,2,3. else invalid seq num.
+wp0,1,2,3. else no wp1. 
+wp3 not too far off. else does not go to wp3. 
+count=4. else no wp3. 
+Land it. else does not Land.
+"""
 
 
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
