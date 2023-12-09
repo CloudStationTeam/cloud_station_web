@@ -295,7 +295,7 @@ function filterit(input) {
   var sanitizedInput = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return sanitizedInput;
 } //avoid XSS.
-//1. Add it to py. avoid sql.
+
 
 function send_waypoints(droneId, addrs) {
     alert("Send Waypoints. \n" + 
@@ -311,7 +311,6 @@ function send_waypoints(droneId, addrs) {
     xmlHttp.open("GET", url, true); // asynchronous 
     xmlHttp.send(null);
 }
-//2. remove. clearall. TODO.
 
 
 function autocomplete(addr) {
