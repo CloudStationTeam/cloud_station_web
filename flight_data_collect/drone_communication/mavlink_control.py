@@ -154,17 +154,21 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 
 def update_waypoints(connect_address: int, addrs: str):
     print("wp") #reached.
-
+    
     #Could use SQL or JS.
     #Used JS for now.
     
     try:
         #addrs = "addr1, city1?addr2, city2?addr3, city3"
-        #addrList = [] #[addr1, addr2, addr2]
-        addrList = addrs.split("?")
+        addrList = [] #[addr1, addr2, addr2]
+        addrList1 = addrs.split("?")
+        from .sanitize_text import sanitize_text
+        for item in addrList1:
+            addr = sanitize_text(item)
+            addrList.append(addr)        
 
         logs.log(addrList)
-        msg = waypoints.add(connect_address, addrList) 
+        msg = waypoints.add(sanitize_text(connect_address), addrList) 
         
         if not msg:
             msg = "None"
@@ -177,9 +181,11 @@ def update_waypoints(connect_address: int, addrs: str):
 def autocomplete_field(addr: str):
     print("auto") #reached.
     from .autocomplete import autocomplete_view 
+    from .sanitize_text import sanitize_text
+    
     try:
-        msg = autocomplete_view(addr)
-        return msg
+        msg = autocomplete_view(sanitize_text(addr))
+        return sanitize_text(msg)
     except Exception as e:
         print(e)
         return {'ERROR': str(e)}
