@@ -183,6 +183,7 @@ send_droneid.addEventListener("click", () => {
   alert(lst);
   for (let item of lst) { //1. 1 Shields Ave. 
     alert(item);
+    clearAllButton.click();
     alert(item.split(". "));
 
     //https://logfetch.com/js-split-string-first-occurrence/
