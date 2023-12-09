@@ -178,12 +178,12 @@ send_droneid.addEventListener("click", () => {
   }
   
   //filter
-  let addrs = "";
+  let addrs = [];
   let lst = wpLists[droneid];
   for (let item of lst) { //1. 1 Shields Ave. 
     //https://logfetch.com/js-split-string-first-occurrence/
     let addr = item.split(". ").slice(1).join(". "); // 1 Shields Ave.
-    addrs += addr + "?"; //delim. //1 Shields Ave.? 
+    addrs.push(addr); //1 Shields Ave.
   }
   
   //send
@@ -301,14 +301,16 @@ function filterit(input) {
 function send_waypoints(droneId, addrs) {
     alert("Send Waypoints. \n" + 
           "DrondID: " + droneId.toString() + "\n" + 
-          "Waypoints: " + addrs.split("?").toString());
+          "Waypoints: " + addrs.toString());
           
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () { //on_click(). 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
     };
-    let url = '/flight_data_collect/control/waypoints/' + droneId.toString() + '/' + addrs.toString() + '/';
+    let addrs1 = addrs.map(encodeURIComponent).join('|'); // Process the addrs array //["a1, b1", "a2, b2"] 
+    console.log(addrs1); //a1%b1|a2%b2 
+    let url = '/flight_data_collect/control/waypoints/' + droneId.toString() + '/' + addrs1 + '/';
     xmlHttp.open("GET", url, true); // asynchronous 
     xmlHttp.send(null);
 }
