@@ -167,8 +167,10 @@ def update_waypoints(connect_address: int, addrs: str):
             addr = sanitize_text(item)
             addrList.append(addr)        
 
-        logs.log(addrList)
-        msg = waypoints.add(sanitize_text(connect_address), addrList) 
+        connect_address = int(sanitize_text(str(connect_address)))
+
+        logs.log(connect_address + addrList)
+        msg = waypoints.add(connect_address, addrList) 
         
         if not msg:
             msg = "None"
