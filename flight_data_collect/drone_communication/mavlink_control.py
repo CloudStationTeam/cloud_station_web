@@ -154,17 +154,17 @@ def fly_to_point(connect_address: int, lat, lon, alt):
 
 def update_waypoints(connect_address: int, addrs: str):
     print("wp") #reached.
-    
-    """waypoints should be given in this form:
-        [(lat0,lon10,alt0), (lat1,lon1,alt1), ...]"""
 
     #Could use SQL or JS.
     #Used JS for now.
     
     try:
-        addrList = [addrs]
+        #addrs = "addr1, city1?addr2, city2?addr3, city3"
+        #addrList = [] #[addr1, addr2, addr2]
+        addrList = addrs.split("?")
+
         logs.log(addrList)
-        msg = waypoints.add(connect_address, addrList) #TODO 
+        msg = waypoints.add(connect_address, addrList) 
         
         if not msg:
             msg = "None"
