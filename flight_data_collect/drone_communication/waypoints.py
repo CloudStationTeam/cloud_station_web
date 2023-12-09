@@ -183,7 +183,7 @@ def ack(the_connection, keyword): #done.
 
 # Main Function
 #if __name__ == "__main__":
-def add(connect_address, addrList): #done.
+def add(connect_address: int, addrList: list): #done.
   print("Program Started")
 
   SERVER_IP = socket.gethostbyname(socket.gethostname())
@@ -212,6 +212,7 @@ def add(connect_address, addrList): #done.
   mission_waypoints.append(mission_item(2, 0, 42.43432724637685, -83.98613425948624, 5)) # Destination Point
   '''
 
+  """
   addr_1 = "Donald Bren Hall, Irvine, CA, USA"
   addr1 = "Engineering Hall, Irvine, CA, USA"
   addr2 = "University of California, Irvine, Calit2, Irvine, CA, USA"
@@ -219,7 +220,8 @@ def add(connect_address, addrList): #done.
   addr4 = addr2
   addr5 = addr3
   addrList = [addr_1, addr1, addr2, addr3] # DBH, ENG HALL, CALTELI2, RapidTech, CALTELI2, RapidTech 
-
+  """
+    
   tups = []
 
   #from .points import test 
