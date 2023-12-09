@@ -21,6 +21,12 @@ mode LAND.
 """
 
 
+
+"""
+bug to remove:
+does not print when it reaches to a wp. 
+"""
+
 #Ref: https://www.google.com/url?sa=t&source=web&rct=j&url=https://m.youtube.com/watch%3Fv%3DpAAN055XCxA&ved=2ahUKEwj03caIgOD_AhUsFzQIHVINBBAQwqsBegQIDRAG&usg=AOvVaw2Au-9lEOkDjD9Yx4806mrN
 #!/usr/bin/env python3
 
@@ -38,6 +44,7 @@ from . import points
 #from . import mavlink_control as mc #didn't work 
 
 AUTO = False
+
 
 
 
