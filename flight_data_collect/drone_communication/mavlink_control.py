@@ -185,7 +185,7 @@ def autocomplete_field(addr: str):
     
     try:
         msg = autocomplete_view(sanitize_text(addr))
-        return sanitize_text(msg)
+        return msg 
     except Exception as e:
         print(e)
         return {'ERROR': str(e)}
