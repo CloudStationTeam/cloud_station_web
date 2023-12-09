@@ -298,7 +298,10 @@ function filterit(input) {
 //1. Add it to py. avoid sql.
 
 function send_waypoints(droneId, addrs) {
-    alert("wp");
+    alert("Send Waypoints. \n" + 
+          "DrondID: " + droneId.toString() + "\n" + 
+          "Waypoints: " + addrs.split("?").toString());
+          
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () { //on_click(). 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
