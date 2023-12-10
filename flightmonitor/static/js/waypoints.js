@@ -56,9 +56,6 @@ droneid2.addEventListener("input", () => {
     update_droneid.click();
   }
 });
-
-
-
 addressInput.addEventListener("input", async () => {
   const value = filterit(addressInput.value.trim());
   console.log(value);
