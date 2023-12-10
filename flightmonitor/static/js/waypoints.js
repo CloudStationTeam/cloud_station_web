@@ -16,7 +16,7 @@ const update_droneid = document.getElementById("update-droneid");
 const send_droneid = document.getElementById("send-droneid");
 
 
-//alert("1");
+alert("1");
 let wpLists = {}; //map
 
 let droneid = null; //tmp. 
