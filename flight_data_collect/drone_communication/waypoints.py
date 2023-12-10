@@ -280,7 +280,7 @@ def add(connect_address: int, addrList: list, is_points=False): #done.
   #test()
 
   for addr in addrList:
-      lst = addr.replace(' ', '').split(',') #["1.1,2,3","1.1,2,3"] 
+      lst = addr.replace(' ', '').split(',') #addr=["1.1,2,3","1.1,2,3"] 
       #all_ints = all(isinstance(item, int) for item in lst)
       all_ints = all(item.replace('.', '', 1).isdigit() for item in lst)
       if len(lst)>=2 and len(lst)<=3 and all_ints: #everything are ints. 
@@ -290,7 +290,7 @@ def add(connect_address: int, addrList: list, is_points=False): #done.
               alt = points.get_alt(lst)
               tup = (lst[0], lst[1], alt)
 
-      else: #"1 Shields Ave., Davis, CA." 
+      else: #addr="1 Shields Ave., Davis, CA." 
           lat, lon, alt = points.get_gps_and_altitude_by_location(addr) # send API reqs before wps. 
           tup = (lat, lon, alt)
       
