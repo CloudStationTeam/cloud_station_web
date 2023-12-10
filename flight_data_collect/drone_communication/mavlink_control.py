@@ -155,7 +155,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     try:
         addr = (lat, lon, alt)
         logs.log(addr)
-        addrList = [addr]
+        addrList = [addr, addr]
         msg = waypoints.add(connect_address, addrList, 1) 
         if not msg:
             msg = "None"
