@@ -145,7 +145,7 @@ update_droneid.addEventListener("click", () => {
 });
 
 
-// 1. Add a wp 
+//1. Add a wp 
 addAddressButton.addEventListener("click", () => {
   var address = filterit(addressInput.value); //ref.
   const droneid = filterit(droneid1.value);
