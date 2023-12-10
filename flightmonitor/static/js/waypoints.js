@@ -281,6 +281,7 @@ return;
 
   // Clear the input field
   addressInput.value = "";
+  suggestedAddressesContainer = "";
 
   // Update the waypoint list display
   if (droneid == droneid2.value) {
