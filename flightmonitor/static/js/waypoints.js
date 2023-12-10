@@ -31,7 +31,7 @@ function showAllWaypoints() {
     let list = wpLists[droneID];
     
     const listDiv = document.createElement('div');
-    listDiv.innerHTML = `droneID: ${droneID}<br>Waypoint List: ${list.join('<br>')}`;
+    listDiv.innerHTML = `droneID: ${droneID}<br>Waypoint List:<br>${list.join('<br>')}<br>`;
     waypointListsContainer.appendChild(listDiv);
   }
 }
