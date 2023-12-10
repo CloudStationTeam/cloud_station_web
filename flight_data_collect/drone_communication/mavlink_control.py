@@ -117,6 +117,7 @@ def set_arm(connect_address: int, is_disarm=False):
 
 
 def fly_to_point(connect_address: int, lat, lon, alt):
+    """
     # Set mode GUIDED 
     # Arm the drone 
     try:
@@ -140,6 +141,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     except Exception as e:
         print(e)
         return {'ERROR': str(e), 'droneid': connect_address}
+    """
 
     
    
@@ -149,12 +151,12 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     
     
     
-    """
+    
     try:
-        #addr = lat, lon, alt 
+        addr = (lat, lon, alt)
         logs.log(addr)
         addrList = [addr]
-        msg = waypoints.add(addrList) 
+        msg = waypoints.add(connect_address, addrList, 1) 
         if not msg:
             msg = "None"
         print(msg)
@@ -162,7 +164,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     except Exception as e:
         print(e)
         return str({'ERROR': str(e), 'droneid': connect_address})
-    """
+    
     
     #didn't work.
     """
