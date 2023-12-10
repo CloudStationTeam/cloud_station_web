@@ -30,6 +30,8 @@ function showAllWaypoints() {
   wpLists.forEach((list, droneID) => {
     const listDiv = document.createElement('div');
     listDiv.textContent = `droneID: ${droneID}\nWaypoint List: ${list.join('\n')}`;
+    alert(list);
+    alert(listDiv.textContent);
     waypointListsContainer.appendChild(listDiv);
   });
 }
@@ -39,7 +41,7 @@ function clearAllWaypoints() {
   wpLists = {}; // Clear the map
   waypointListsContainer.innerHTML = ''; // Clear the display container
   
-  clearAllButton.click();
+  waypointListContainer.innerHTML = '';
 }
 
 // Event listener for the "Show All Waypoint Lists" button
