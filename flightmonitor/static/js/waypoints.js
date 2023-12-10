@@ -27,13 +27,15 @@ let droneid = null; //tmp.
 function showAllWaypoints() {
   waypointListsContainer.innerHTML = ''; // Clear all existing content
 
-  wpLists.forEach((list, droneID) => {
+  for (let droneID in wpLists) {
+    let list = wpLists[droneID];
+    
     const listDiv = document.createElement('div');
     listDiv.innerHTML = `droneID: ${droneID}<br>Waypoint List: ${list.join('<br>')}`;
     alert(list);
     alert(listDiv.textContent);
     waypointListsContainer.appendChild(listDiv);
-  });
+  }
 }
 
 // Function to clear all waypoint lists
