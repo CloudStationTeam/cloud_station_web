@@ -117,7 +117,7 @@ def set_arm(connect_address: int, is_disarm=False):
 
 
 def fly_to_point(connect_address: int, lat, lon, alt):
-    try:
+    tr:
         addr = (lat, lon, alt)
         logs.log(addr)
         addrList = [addr, addr]
