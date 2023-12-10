@@ -32,8 +32,6 @@ function showAllWaypoints() {
     
     const listDiv = document.createElement('div');
     listDiv.innerHTML = `droneID: ${droneID}<br>Waypoint List: ${list.join('<br>')}`;
-    alert(list);
-    alert(listDiv.textContent);
     waypointListsContainer.appendChild(listDiv);
   }
 }
