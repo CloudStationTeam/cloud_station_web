@@ -389,7 +389,7 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
           print(f"No {keyword} message received within timeout period.")
           return None
           
-  for mission_item in range(len(mission_waypoints)-1): #wp123 
+  for mission_item1 in range(len(mission_waypoints)-1): #wp123 
       msg = None
       while not msg:
           msg = ack_wp()
