@@ -29,7 +29,7 @@ function showAllWaypoints() {
 
   wpLists.forEach((list, droneID) => {
     const listDiv = document.createElement('div');
-    listDiv.textContent = `droneID: ${droneID}\nWaypoint List: ${list.join('\n')}`;
+    listDiv.innerHTML = `droneID: ${droneID}<br>Waypoint List: ${list.join('<br>')}`;
     alert(list);
     alert(listDiv.textContent);
     waypointListsContainer.appendChild(listDiv);
