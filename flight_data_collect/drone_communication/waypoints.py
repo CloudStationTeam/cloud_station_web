@@ -269,17 +269,31 @@ def add(connect_address: int, addrList: list, is_points=False): #done.
   """
     
   tups = []
-    
-  if is_points:
+
+  """
+  if is_points: #[(1,2,3),(1,2,3)] 
       tups = addrList
       addrList = []
+  """
 
   #from .points import test 
   #test()
 
   for addr in addrList:
-      lat, lon, alt = points.get_gps_and_altitude_by_location(addr) # send API reqs before wps. 
-      tup = (lat, lon, alt)
+      lst = addr.replace(' ', '').split(',') #["1.1,2,3","1.1,2,3"] 
+      #all_ints = all(isinstance(item, int) for item in lst)
+      all_ints = all(item.replace('.', '', 1).isdigit() for item in lst)
+      if len(lst)>=2 and len(lst)<=3 and all_ints: #everything are ints. 
+          if len(lst)==3:
+              tup = tuple([float(i) for i in lst])
+          else:
+              alt = points.get_alt(lst)
+              tup = (lst[0], lst[1], alt)
+
+      else: #"1 Shields Ave., Davis, CA." 
+          lat, lon, alt = points.get_gps_and_altitude_by_location(addr) # send API reqs before wps. 
+          tup = (lat, lon, alt)
+      
       tups.append(tup)
   print("wp. tups.", tups)
 
