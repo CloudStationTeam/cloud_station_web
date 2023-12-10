@@ -50,6 +50,13 @@ showAllWPsButton.addEventListener('click', showAllWaypoints);
 // Event listener for the "Clear All Waypoint Lists" button
 clearAllWPsButton.addEventListener('click', clearAllWaypoints);
 
+droneid2.addEventListener("input", () => {
+  const droneid = filterit(droneid2.value);
+  if (!droneid) {
+    update_droneid.click();
+  }
+});
+
 
 
 async function getPoints(query) {
