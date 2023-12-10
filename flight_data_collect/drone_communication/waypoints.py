@@ -228,7 +228,7 @@ def ack(the_connection, keyword): #done.
 
 # Main Function
 #if __name__ == "__main__":
-def add(connect_address: int, addrList: list, is_points=False): #done.
+def add(connect_address: int, addrList: list): #done. #(, is_points=False) 
   print("Program Started")
 
   SERVER_IP = socket.gethostbyname(socket.gethostname())
