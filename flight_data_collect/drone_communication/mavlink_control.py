@@ -117,8 +117,8 @@ def set_arm(connect_address: int, is_disarm=False):
 
 
 def fly_to_point(connect_address: int, lat, lon, alt):
-    # Set the mode to GUIDED
-    # Arm the vehicle
+    # Set mode GUIDED 
+    # Arm the drone 
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
