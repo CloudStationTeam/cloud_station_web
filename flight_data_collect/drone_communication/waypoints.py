@@ -380,10 +380,7 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
     print("wp. to wp. ", mission_item1) #Does Not Show 
   """
 
-
-
-
-    
+  """
   def ack_wp(): 
       nonlocal the_connection 
       keyword = "MISSION_ITEM_REACHED"
@@ -401,9 +398,23 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
       while not msg:
           msg = ack_wp()
       print(f"wp. to wp. {mission_item1}", msg)
+  """
 
 
+    
+  while 1:
+    # Receive messages
+    msg = the_connection.recv_match(blocking=True)
 
+    # Check if the message is 'MISSION_ITEM_REACHED'
+    if msg and msg.get_type() == 'MISSION_ITEM_REACHED':
+        # Print the sequence number of the waypoint reached
+        print(f"Reached waypoint: {msg.seq}")
+        if msg.seq == len(mission_waypoints)-1:
+            break 
+
+    elif msg:
+        print("wp. msg.", msg)
 
     
 
