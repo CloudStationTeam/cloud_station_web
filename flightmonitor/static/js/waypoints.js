@@ -37,7 +37,7 @@ function getGps() { // (an easier) Callback-based Asynchronous Handling, instead
     }
 }
 
-getGps();
+//getGps();
 ///*
 
 
