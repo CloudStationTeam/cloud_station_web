@@ -130,7 +130,35 @@ def fly_to_point(connect_address: int, lat, lon, alt):
         print(e)
         return str({'ERROR': str(e), 'droneid': connect_address})
 
+
+    #didn't work, either. 
+    """
+    # Set mode GUIDED 
+    # Arm the drone 
+    try:
+        mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+        msg = mavlink.wait_heartbeat(timeout=6)
+        if not msg:
+            return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}
+       
+        # Specify the target position
+        mavlink.mav.mission_item_send(mavlink.target_system, mavlink.target_component,
+                                      0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,
+                                      mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 2, 0,
+                                      0, 0, 0, 0,
+                                      lat, lon, alt)
     
+        ack_msg = get_ack_msg(connect_address, mavlink, 'MISSION_ACK')
+        if ack_msg:
+            return ack_msg
+        else:
+            return {'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address}
+    except Exception as e:
+        print(e)
+        return {'ERROR': str(e), 'droneid': connect_address}
+    """
+
+
     #didn't work.
     """
     try:
