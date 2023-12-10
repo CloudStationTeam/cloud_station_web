@@ -131,7 +131,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
         return str({'ERROR': str(e), 'droneid': connect_address})
 
 
-    #didn't work, either. 
+    #didn't work, either. (By Team 3.)
     """
     # Set mode GUIDED 
     # Arm the drone 
@@ -159,7 +159,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     """
 
 
-    #didn't work.
+    #didn't work. (By Team 2.)
     """
     try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
