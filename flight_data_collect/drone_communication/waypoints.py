@@ -366,10 +366,39 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
     item_seq += 1
   """
 
-  
+    
+  """
   for mission_item1 in range(len(mission_waypoints)-1): #wp123
     ack(the_connection, "MISSION_ITEM_REACHED")
     print("wp. to wp. ", mission_item1) #Does Not Show 
+  """
+
+
+
+
+    
+  def ack_wp(): 
+      nonlocal the_connection 
+      keyword = "MISSION_ITEM_REACHED"
+      print(f"Waiting for {keyword} message...")
+      message = the_connection.recv_match(type=keyword, blocking=True, timeout=6) # otherwise auto times out. 
+      if message:
+          print("Message Received:", message)
+          return message 
+      else:
+          print(f"No {keyword} message received within timeout period.")
+          return None
+          
+  for mission_item1 in range(len(mission_waypoints)-1): #wp123 
+      msg = None
+      while not msg:
+          msg = ack_wp()
+      print(f"wp. to wp. {mission_item1}", msg)
+
+
+
+
+    
 
     
   """
