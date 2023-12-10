@@ -286,6 +286,8 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
       if len(lst)>=2 and len(lst)<=3 and all_ints: #everything are ints. 
           if len(lst)<3:
               alt = points.get_alt(lst)
+              if not alt:
+                  alt = 10
               lst.append(alt)
           tup = tuple(float(i) for i in lst)
           
