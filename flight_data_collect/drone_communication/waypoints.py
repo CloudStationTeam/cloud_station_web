@@ -94,7 +94,7 @@ def set_arm(the_connection, arm=True):
 class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
     self.seq = i
-    self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL # MAV_FRAME_GLOBAL_RELATIVE_ALT # Use Global Latitude and Longitude for position data
+    self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL 
     self.command = mavutil.mavlink.MAV_CMD_NAV_WAYPOINT # Move to the waypoint
     self.current = current
     self.auto = 1 #auto cont.
@@ -107,7 +107,26 @@ class mission_item: #done.
     self.param7 = z
     self.mission_type = 0 # The MAV MISSION TYPE value for MAV MISSION TYPE MISSION 
 
-        
+
+"""
+Notes about frames.
+
+#Ref.
+#online webs 
+#https://ardupilot.org/copter/docs/common-mavlink-mission-command-messages-mav_cmd.html
+    
+If you're trying to set a waypoint using lat, lon, and alt, you'd typically specify the frame of reference. Common frames in MAVLink (which PyMavLink uses) include:
+
+MAV_FRAME_GLOBAL: For global coordinates (latitude and longitude). This frame uses the WGS84 coordinate system where altitude is relative to mean sea level.
+MAV_FRAME_GLOBAL_RELATIVE_ALT: For global coordinates with relative altitude.
+MAV_FRAME_LOCAL_NED: For local coordinates (North, East, Down).
+
+The choice of frame depends on your specific application and the coordinate system you want to use.
+
+Google Maps API generally provides the absolute latitude and longitude, and the altitude is often at sea level, which aligns well with MAV_FRAME_GLOBAL. However, if your application involves relative altitude (e.g., flying a certain height above the ground or a structure), MAV_FRAME_GLOBAL_RELATIVE_ALT would be more appropriate.
+"""
+
+
 #Takeoff the Drone
 def takeoff(the_connection): #done.
   print("Takeoff Initaited")
@@ -146,7 +165,7 @@ def upload_mission(the_connection, mission_items):
         
         if req and req.seq == waypoint.seq:
             print("wp. Sending waypoint", waypoint.seq)
-            the_connection.mav.mission_item_send(
+            the_connection.mav.mission_item_send( # Send a waypoint to the drone. 
                 the_connection.target_system,
                 the_connection.target_component,
                 waypoint.seq, # Sequence number of the waypoint 
