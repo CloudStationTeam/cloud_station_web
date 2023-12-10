@@ -149,16 +149,16 @@ def upload_mission(the_connection, mission_items):
             the_connection.mav.mission_item_send(
                 the_connection.target_system,
                 the_connection.target_component,
-                waypoint.seq,
-                waypoint.frame,
-                waypoint.command,
-                waypoint.current,
-                waypoint.auto,
-                waypoint.param1,
+                waypoint.seq, # Sequence number of the waypoint 
+                waypoint.frame, # The frame of reference 
+                waypoint.command, # The command, in this case, to navigate to a waypoint 
+                waypoint.current, # Current waypoint 
+                waypoint.auto, # Autocontinue to next waypoint 
+                waypoint.param1, # Parameters 1-4 not used 
                 waypoint.param2,
                 waypoint.param3,
                 waypoint.param4,
-                waypoint.param5,
+                waypoint.param5, # Parameters 5-7 are latitude, longitude, altitude 
                 waypoint.param6,
                 waypoint.param7,
                 waypoint.mission_type
