@@ -23,9 +23,7 @@ let droneid = null; //tmp.
 
 
 ///*
-function getGps() { // Callback-based Asynchronous Handling, instead of a Promise-based Asynchronous Handling (
-    for .then() / async/await
-). 
+function getGps() { // Callback-based Asynchronous Handling, instead of a (more modern) Promise-based Asynchronous Handling (for chaining(.then(), .catch()) / async/await). 
     // Check if Geolocation is supported
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
