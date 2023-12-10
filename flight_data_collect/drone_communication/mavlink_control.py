@@ -1,6 +1,6 @@
 from pymavlink import mavutil, mavwp
 import socket
-import json
+import json 
 import urllib.parse
 from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MSG_ID_SET_MODE
 from flightmonitor.consumers import send_message_to_clients
