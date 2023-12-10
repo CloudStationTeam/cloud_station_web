@@ -121,7 +121,7 @@ def fly_to_point(connect_address: int, lat, lon, alt):
         addr = ",".join(list(map(str, [lat,lon,alt])))
         logs.log(addr) #"1,2,3"
         addrList = [addr, addr] #["1,2,3", "1,2,3"]
-        msg = waypoints.add(connect_address, addrList, 1) 
+        msg = waypoints.add(connect_address, addrList) 
         if not msg:
             msg = "None"
         print(msg)
