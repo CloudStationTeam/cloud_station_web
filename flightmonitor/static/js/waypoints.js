@@ -22,6 +22,24 @@ let wpLists = {}; //map
 let droneid = null; //tmp. 
 
 
+///*
+function getGps() { // Callback-based Asynchronous Handling, instead of a Promise-based Asynchronous Handling. 
+    // Check if Geolocation is supported
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("Latitude: " + position.coords.latitude);
+            console.log("Longitude: " + position.coords.longitude);
+        }, function(error) {
+            console.error("Error Code = " + error.code + " - " + error.message);
+        });
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+}
+
+getGps();
+///*
+
 
 // Function to display all waypoint lists
 function showAllWaypoints() {
