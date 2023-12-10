@@ -94,7 +94,7 @@ def set_arm(the_connection, arm=True):
 class mission_item: #done.
   def __init__ (self, i, current, x,y,z):
     self.seq = i
-    self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL 
+    self.frame = mavutil.mavlink.MAV_FRAME_GLOBAL # For Google Maps API 
     self.command = mavutil.mavlink.MAV_CMD_NAV_WAYPOINT # Move to the waypoint
     self.current = current
     self.auto = 1 #auto cont.
