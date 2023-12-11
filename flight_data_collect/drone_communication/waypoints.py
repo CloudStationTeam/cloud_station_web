@@ -1,5 +1,4 @@
 
-
 # Notes to wps. 
 """
 example wps:
@@ -380,6 +379,7 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
     print("wp. to wp. ", mission_item1) #Does Not Show 
   """
 
+    
   """
   def ack_wp(): 
       nonlocal the_connection 
@@ -401,7 +401,6 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
   """
 
 
-    
   while 1:
     # Receive messages
     msg = the_connection.recv_match(blocking=True)
@@ -414,9 +413,7 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
             break 
 
     elif msg:
-        print("wp. msg.", msg)
-
-    
+        print("wp. msg.", msg) # It doesn't send a wp reached msg. 
 
     
   """
