@@ -10,14 +10,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet'/>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet'/>
+
     {% load static %}
     <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
-
+    <link href="{% static 'css/waypoints.css' %}" rel="stylesheet">
 </head>
+	
 <input type="hidden" id="mapboxId" name="mapbox" value="{{MAPBOX_KEY}}">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
@@ -72,6 +73,7 @@
 
 <body>
 {% if user.is_authenticated %}
+
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link
             rel="stylesheet"
@@ -80,7 +82,7 @@
             href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
             type="text/css"
     />
-    
+	
     <div class="container-fluid">
 	    <div class="row">
 		 
@@ -118,6 +120,35 @@
                 </div>
 
             </div>
+
+        <div id="waypoints">
+  <h3>Waypoint</h3>
+  <div id="waypoints-container">
+      <div class="address-input">
+  <input type="text" id="address-input" placeholder="Enter address / points (lat, lon, alt (optional))" style="width: 400px;">
+  <div id="suggested-addresses-container" class="suggested-addresses-container"></div>
+  <input type="text" id="droneid1" placeholder="droneid">
+  <button id="add-address">Add</button>
+    </div>
+  </div>
+
+  <div>
+    <h3>Waypoint List</h3>
+    <input type="text" id="droneid2" placeholder="droneid">
+    <button id="update-droneid">update</button>
+    <button id="send-droneid">send</button> 
+    <div id="waypoint-list-container"></div>
+    <button id="clear-all">Clear All</button>
+  </div>
+
+  <div>
+    <h3>Waypoint Lists</h3>
+    <button id="show-all-wps">Show All Waypoint Lists</button>
+    <div id="waypoint-lists-container"></div>
+    <button id="clear-all-wps">Clear All Waypoint Lists</button>
+  </div>
+        </div>
+		    
             <div class="col-sm-7">
                 <div class="row" id="mapLayout">
                     <div class="col-sm-12" id="map">
@@ -169,6 +200,7 @@
         </div>
     </div>
 {% else %}
+    
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
     <link
             rel="stylesheet"
@@ -176,13 +208,15 @@
             type="text/css"
     />
     <div id='map'></div>
+	
 {% endif %}
-
+	
 <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/globalVariables.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/waypoints.js' %}"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
