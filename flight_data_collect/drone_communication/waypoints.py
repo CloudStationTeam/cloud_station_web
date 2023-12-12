@@ -158,10 +158,15 @@ def upload_mission(the_connection, mission_items):
     # Listening for the acknowledgment
     ack_msg = None
     attempts = 1
-    while not ack_msg and attempts<4:
+    while not ack_msg and attempts<24: 
         ack_msg = the_connection.recv_match(type='MISSION_ACK', blocking=True, timeout=6)
         attempts += 1
         print("wp. count. ", attempts)
+
+        # Arm the UAV Again
+        if AUTO:
+            msg = set_arm(the_connection)
+            print("wp. arm. ", msg)        
         
     # Analyzing the acknowledgment message
     if ack_msg is not None:
