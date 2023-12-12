@@ -160,6 +160,7 @@ def upload_mission(the_connection, mission_items):
     attempts = 1
     while not ack_msg and attempts<24: 
         ack_msg = the_connection.recv_match(type='MISSION_ACK', blocking=True, timeout=6)
+        the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0) # Resend it 
         attempts += 1
         print("wp. count. ", attempts)
 
