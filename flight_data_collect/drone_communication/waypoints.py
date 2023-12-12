@@ -151,7 +151,7 @@ def upload_mission(the_connection, mission_items):
 
     the_connection.mav.mission_count_send(the_connection.target_system, the_connection.target_component, n, 0)
 
-
+    """ Bug. Do Not do. 
     # Listening for the acknowledgment
     ack_msg = None
     attempts = 1
@@ -172,14 +172,8 @@ def upload_mission(the_connection, mission_items):
             print("Mission count accepted.")
         else:
             print("Mission count not accepted, error type:", ack_msg.type)
-            
+    """
 
-
-
-
-
-
-    
     for waypoint in mission_items:
         print("wp. No. num=",
           waypoint.seq,
