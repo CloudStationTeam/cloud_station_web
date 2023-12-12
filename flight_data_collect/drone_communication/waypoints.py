@@ -402,7 +402,7 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
 
     
   attempts = 1
-  while attempts < 1: 
+  while attempts < 1: # Not a bug. 
     # Receive messages
     msg = the_connection.recv_match(blocking=True)
     attempts += 1
