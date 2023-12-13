@@ -399,8 +399,8 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
           msg = ack_wp()
       print(f"wp. to wp. {mission_item1}", msg)
   """
-
-    
+  
+  
   attempts = 1
   while attempts < 1: # Not a bug. 
     # Receive messages
@@ -440,5 +440,5 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
   return msg
   """
 
-#Ref: online webs. 
+#Ref: online webs.
 
