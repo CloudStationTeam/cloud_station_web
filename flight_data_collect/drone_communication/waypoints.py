@@ -399,11 +399,13 @@ def add(connect_address: int, addrList: list): #done. #(, is_points=False)
           msg = ack_wp()
       print(f"wp. to wp. {mission_item1}", msg)
   """
-
-
-  while 1:
+  
+  
+  attempts = 1
+  while attempts < 1: # Not a bug. 
     # Receive messages
     msg = the_connection.recv_match(blocking=True)
+    attempts += 1
 
     # Check if the message is 'MISSION_ITEM_REACHED'
     if msg and msg.get_type() == 'MISSION_ITEM_REACHED':
