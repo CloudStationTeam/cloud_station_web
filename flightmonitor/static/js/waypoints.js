@@ -5,6 +5,7 @@ const clearAllButton = document.getElementById("clear-all");
 const waypointListContainer = document.getElementById("waypoint-list-container");
 
 
+
 const showAllWPsButton = document.getElementById("show-all-wps");
 const clearAllWPsButton = document.getElementById("clear-all-wps");
 const waypointListsContainer = document.getElementById("waypoint-lists-container");
