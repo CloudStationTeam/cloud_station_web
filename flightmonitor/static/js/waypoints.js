@@ -20,7 +20,7 @@ const takeoff_droneid = document.getElementById("takeoff-droneid");
 const alt_droneid = document.getElementById("alt-droneid");
 const mav_cmds = document.getElementById("mav-droneid");
 
-//alert("1");
+alert("1");
 let wpLists = {}; //map
 
 let droneid = null; //tmp. 
