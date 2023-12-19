@@ -122,8 +122,8 @@ addressInput.addEventListener("input", async () => {
 //3. Send wps
 //wpLists[droneid]
 send_droneid.addEventListener("click", () => {
-    mav_cmds.value = mav_cmds.value + "= mission_item_send";
-    alert(mav_cmds.value);
+    mav_cmds.textContent = mav_cmds.textContent + "= mission_item_send";
+    alert(mav_cmds.textContent);
 })
 takeoff.addEventListener("click", () => {
   let alt1 = filterit(alt_droneid.value);
