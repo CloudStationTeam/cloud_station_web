@@ -16,10 +16,15 @@ const update_droneid = document.getElementById("update-droneid");
 const send_droneid = document.getElementById("send-droneid");
 
 
+const takeoff_droneid = document.getElementById("takeoff-droneid");
+const alt_droneid = document.getElementById("alt-droneid");
+const mav_cmds = document.getElementById("mav-droneid");
+
 //alert("1");
 let wpLists = {}; //map
 
 let droneid = null; //tmp. 
+
 
 
 ///*
@@ -116,7 +121,9 @@ addressInput.addEventListener("input", async () => {
 
 //3. Send wps
 //wpLists[droneid]
-send_droneid.addEventListener("click", () => {
+//send_droneid.addEventListener("click", () => {
+takeoff.addEventListener("click", () => {
+  let alt1 = filterit(alt_droneid.value);
   //check
   const droneid = filterit(droneid2.value);
   if (!(droneid in wpLists)) {
