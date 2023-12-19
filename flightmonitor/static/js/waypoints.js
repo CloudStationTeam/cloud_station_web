@@ -123,11 +123,11 @@ addressInput.addEventListener("input", async () => {
 //wpLists[droneid]
 send_droneid.addEventListener("click", () => {
     mav_cmds.textContent = mav_cmds.textContent + "= mission_item_send";
-    alert(mav_cmds.textContent);
+    //alert(mav_cmds.textContent);
 })
 takeoff.addEventListener("click", () => {
   let alt1 = filterit(alt_droneid.value);
-
+  mav_cmds.textContent = "Sent";
     
   //check
   const droneid = filterit(droneid2.value);
