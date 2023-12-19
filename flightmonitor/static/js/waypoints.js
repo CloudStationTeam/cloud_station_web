@@ -125,7 +125,7 @@ send_droneid.addEventListener("click", () => {
     mav_cmds.textContent = mav_cmds.textContent + "= mission_item_send";
     //alert(mav_cmds.textContent);
 })
-takeoff_droneid.adEventListener("click", () => {
+takeoff_droneid.addEventListener("click", () => {
   let alt1 = filterit(alt_droneid.value);
   mav_cmds.textContent = "Sent";
     
