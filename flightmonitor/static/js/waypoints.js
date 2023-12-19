@@ -121,9 +121,13 @@ addressInput.addEventListener("input", async () => {
 
 //3. Send wps
 //wpLists[droneid]
-//send_droneid.addEventListener("click", () => {
+send_droneid.addEventListener("click", () => {
+    mav_cmds.value = mav_cmds.value + "= mission_item_send";
+})
 takeoff.addEventListener("click", () => {
   let alt1 = filterit(alt_droneid.value);
+
+    
   //check
   const droneid = filterit(droneid2.value);
   if (!(droneid in wpLists)) {
