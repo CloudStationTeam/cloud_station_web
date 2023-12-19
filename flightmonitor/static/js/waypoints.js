@@ -20,7 +20,7 @@ const takeoff_droneid = document.getElementById("takeoff-droneid");
 const alt_droneid = document.getElementById("alt-droneid");
 const mav_cmds = document.getElementById("mav-droneid");
 
-alert("1");
+//alert("1");
 let wpLists = {}; //map
 
 let droneid = null; //tmp. 
@@ -123,6 +123,7 @@ addressInput.addEventListener("input", async () => {
 //wpLists[droneid]
 send_droneid.addEventListener("click", () => {
     mav_cmds.value = mav_cmds.value + "= mission_item_send";
+    alert(mav_cmds.value);
 })
 takeoff.addEventListener("click", () => {
   let alt1 = filterit(alt_droneid.value);
