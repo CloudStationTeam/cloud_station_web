@@ -1,11 +1,14 @@
 from pymavlink import mavutil, mavwp
 import socket
-import json
+import json 
+import urllib.parse
 from flight_data_collect.drone_communication.mavlink_constants import MAVLINK_MSG_ID_SET_MODE
 from flightmonitor.consumers import send_message_to_clients
 
-SERVER_IP = socket.gethostbyname(socket.gethostname())
+from . import logs, waypoints, autocomplete, lidar_data
 
+
+SERVER_IP = socket.gethostbyname(socket.gethostname())
 
 def get_ack_msg(connect_address: int, mavlink, message_type, should_send=False, command_name=None):
     ack_msg = mavlink.recv_match(type=message_type, timeout=6, blocking=True)
@@ -115,6 +118,52 @@ def set_arm(connect_address: int, is_disarm=False):
 
 def fly_to_point(connect_address: int, lat, lon, alt):
     try:
+        if not alt:
+            alt = 10 
+        addr = ",".join(list(map(str, [lat,lon,alt])))
+        logs.log(addr) #"1,2,3"
+        addrList = [addr, addr] #["1,2,3", "1,2,3"]
+        msg = waypoints.add(connect_address, addrList) 
+        if not msg:
+            msg = "None"
+        print(msg)
+        return str(msg)
+    except Exception as e:
+        print(e)
+        return str({'ERROR': str(e), 'droneid': connect_address})
+
+
+    #didn't work, either. (By Team 3.)
+    """
+    # Set mode GUIDED 
+    # Arm the drone 
+    try:
+        mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+        msg = mavlink.wait_heartbeat(timeout=6)
+        if not msg:
+            return {'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address}
+       
+        # Specify the target position
+        mavlink.mav.mission_item_send(mavlink.target_system, mavlink.target_component,
+                                      0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,
+                                      mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 2, 0,
+                                      0, 0, 0, 0,
+                                      lat, lon, alt)
+    
+        ack_msg = get_ack_msg(connect_address, mavlink, 'MISSION_ACK')
+        if ack_msg:
+            return ack_msg
+        else:
+            return {'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address}
+    except Exception as e:
+        print(e)
+        return {'ERROR': str(e), 'droneid': connect_address}
+    """
+
+
+    #didn't work. (By Team 2.)
+    """
+    try:
         mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
         msg = mavlink.wait_heartbeat(timeout=6)
         if not msg:
@@ -132,3 +181,48 @@ def fly_to_point(connect_address: int, lat, lon, alt):
     except Exception as e:
         print(e)
         return {'ERROR': str(e), 'droneid': connect_address}
+    """
+
+
+def update_waypoints(connect_address: int, addrs: str):
+    print("wp") #reached.
+    
+    #Could use SQL or JS.
+    #Used JS for now.
+    
+    try:
+        #addrs = "a1%b1|a2%b2"
+        addrList = [] #[addr1, addr2, addr3]
+        addrList1 = addrs.split("|") #["a1%b1", "a2%b2"]
+        from .sanitize_text import sanitize_text
+        for item in addrList1:
+            decoded_str = urllib.parse.unquote(item) #"a1%b1"
+            #print(decoded_str) #"a1 b1"
+            addr = sanitize_text(decoded_str)
+            addrList.append(addr)        
+
+        connect_address = int(sanitize_text(str(connect_address)))
+
+        logs.log(connect_address, addrList)
+        msg = waypoints.add(connect_address, addrList) 
+        
+        if not msg:
+            msg = "None"
+        print(msg)
+        return "// // // // " + str(msg)
+    except Exception as e:
+        print(e)
+        return str({'// // // // ERROR': str(e), 'droneid': connect_address})
+
+def autocomplete_field(addr: str):
+    print("auto") #reached.
+    from .autocomplete import autocomplete_view 
+    from .sanitize_text import sanitize_text
+    
+    try:
+        msg = autocomplete_view(sanitize_text(addr))
+        return msg 
+    except Exception as e:
+        print(e)
+        return {'ERROR': str(e)}
+

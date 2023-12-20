@@ -1,20 +1,36 @@
 var SETMODE_CONST = '<select id = "mode">' +
     '<option value="MANUAL">MANUAL</option>' +
+    '<option value="STABILIZE">STABILIZE</option>' +
     '<option value="ACRO">ACRO</option>' +
-    '<option value="LEARNING">LEARNING</option>' +
-    '<option value="STEERING">STEERING</option>' +
-    '<option value="HOLD">HOLD</option>' +
-    '<option value="LOITER">LOITER</option>' +
-    '<option value="FOLLOW">FOLLOW</option>' +
-    '<option value="SIMPLE">SIMPLE</option>' +
+    '<option value="ALT_HOLD">ALT_HOLD</option>' +
     '<option value="AUTO">AUTO</option>' +
-    '<option value="RTL">RTL</option>' +
-    '<option value="SMART_RTL">SMART_RTL</option>' +
     '<option value="GUIDED">GUIDED</option>' +
-    '<option value="INITIALISING">INITIALISING</option>' +
+    '<option value="LOITER">LOITER</option>' +
+    '<option value="RTL">RTL</option>' +
+    '<option value="CIRCLE">CIRCLE</option>' +
+    '<option value="POSITION">POSITION</option>' +
+    '<option value="LAND">LAND</option>' +
+    '<option value="OF_LOITER">OF_LOITER</option>' +
+    '<option value="DRIFT">DRIFT</option>' +
+    '<option value="SPORT">SPORT</option>' +
+    '<option value="FLIP">FLIP</option>' +
+    '<option value="AUTOTUNE">AUTOTUNE</option>' +
+    '<option value="POSHOLD">POSHOLD</option>' +
+    '<option value="BRAKE">BRAKE</option>' +
+    '<option value="THROW">THROW</option>' +
+    '<option value="AVOID_ADSB">AVOID_ADSB</option>' +
+    '<option value="GUIDED_NOGPS">GUIDED_NOGPS</option>' +
+    '<option value="SMART_RTL">SMART_RTL</option>' +
+    '<option value="FLOWHOLD">FLOWHOLD</option>' +
+    '<option value="FOLLOW">FOLLOW</option>' +
+    '<option value="ZIGZAG">ZIGZAG</option>' +
+    '<option value="SYSTEMID">SYSTEMID</option>' +
+    '<option value="AUTOROTATE">AUTOROTATE</option>' +
+    '<option value="AUTO_RTL">AUTO_RTL</option>' +
     '</select>' +
     '<input type="submit" value="SET MODE">' +
     '</form>';
+//console.log(SETMODE_CONST)
 var AVAILABLE_TELEMETRY = {}
 
 var browserSocket = new WebSocket(

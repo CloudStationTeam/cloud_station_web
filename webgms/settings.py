@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+import sys
+import logging.config
+
+import environ
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,6 +32,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = []  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xxx.us-west-1.compute.amazonaws.com")
 
+# Refs.
+#https://docs.djangoproject.com/en/4.2/howto/logging/#logging-how-to
+#https://stackoverflow.com/questions/38709115/why-doesnt-this-django-logging-work
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+        },
+    },
+    "loggers": {
+        "": { #all
+            "level": "INFO",
+            "handlers": ["console"],
+        },
+    },
+}
+logging.config.dictConfig(LOGGING)
+print("Logging configuration loaded")
 
 # Application definition
 
@@ -146,3 +173,9 @@ CHANNEL_LAYERS = {
 }
 
 MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here 
+
+env = environ.Env()
+#environ.Env.read_env(env_file='../.env')
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
+GOOGLE_MAP_API_KEY = env('GOOGLE_MAP_API_KEY')
+
