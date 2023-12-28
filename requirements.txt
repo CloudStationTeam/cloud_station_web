@@ -20,7 +20,7 @@ future==0.18.3
 hiredis==2.3.2
 hyperlink==21.0.0
 idna==3.6
-incremental==21.0.0
+incremental==22.10.0
 lxml==4.9.4
 msgpack==1.0.7
 pip==22.0.2
