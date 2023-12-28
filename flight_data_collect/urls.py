@@ -1,17 +1,30 @@
-from django.urls import path
-from . import views
-from django.conf.urls import url
+# change from old Django to new Django
+# https://stackoverflow.com/questions/70319606/importerror-cannot-import-name-url-from-django-conf-urls-after-upgrading-to
+
+from django.urls import include, re_path
+
+#from myapp.views import home
 
 urlpatterns = [
-    url(r'^connect/(?P<connect_address>[^/]+)/$', views.connect_vehicle, name='connect-vehicle'),
-    url(r'disconnect/(?P<connect_address>[^/]+)/$', views.disconnect_vehicle, name='disconnect-vehicle'),
-    url(r'control/setmode/(?P<droneid>[^/]+)/(?P<mode>[^/]+)/$', views.set_mode, name='set-mode'),
-    url(r'control/setwaypoint/(?P<droneid>[^/]+)/(?P<lat>[^/]+)/(?P<lon>[^/]+)/(?P<alt>[^/]+)/$', views.set_waypoint,
+    re_path(r'^$', home, name='home'),
+    re_path(r'^myapp/', include('myapp.urls'),
+]
+
+
+#from django.urls import path
+from . import views
+#from django.conf.urls import url
+
+urlpatterns = [
+    re_path(r'^connect/(?P<connect_address>[^/]+)/$', views.connect_vehicle, name='connect-vehicle'),
+    re_path(r'disconnect/(?P<connect_address>[^/]+)/$', views.disconnect_vehicle, name='disconnect-vehicle'),
+    re_path(r'control/setmode/(?P<droneid>[^/]+)/(?P<mode>[^/]+)/$', views.set_mode, name='set-mode'),
+    re_path(r'control/setwaypoint/(?P<droneid>[^/]+)/(?P<lat>[^/]+)/(?P<lon>[^/]+)/(?P<alt>[^/]+)/$', views.set_waypoint,
         name='set-waypoint'),
-    url(r'control/arm/(?P<droneid>[^/]+)/$', views.arm, name='arm'),
-    url(r'control/disarm/(?P<droneid>[^/]+)/$', views.disarm, name='arm'),
-    url(r'control/flyto/(?P<droneid>[^/]+)/(?P<lat>[^/]+)/(?P<lon>[^/]+)/(?P<alt>[^/]+)/$', views.fly_to,
+    re_path(r'control/arm/(?P<droneid>[^/]+)/$', views.arm, name='arm'),
+    re_path(r'control/disarm/(?P<droneid>[^/]+)/$', views.disarm, name='arm'),
+    re_path(r'control/flyto/(?P<droneid>[^/]+)/(?P<lat>[^/]+)/(?P<lon>[^/]+)/(?P<alt>[^/]+)/$', views.fly_to,
         name='fly-to'),
-    url(r'update-fields/$', views.update_fields, name='update-fields'),
-    url(r'get-available-fields/$', views.get_available_fields, name='get-available-fields')
+    re_path(r'update-fields/$', views.update_fields, name='update-fields'),
+    re_path(r'get-available-fields/$', views.get_available_fields, name='get-available-fields')
 ]
