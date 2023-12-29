@@ -4,9 +4,9 @@
 from django.urls import include, re_path
 
 
-#from django.urls import path
+# from django.urls import path
 from . import views
-#from django.conf.urls import url
+# from django.conf.urls import url
 
 urlpatterns = [
     re_path(r'^connect/(?P<connect_address>[^/]+)/$', views.connect_vehicle, name='connect-vehicle'),
