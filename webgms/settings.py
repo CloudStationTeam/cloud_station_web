@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'channels',
     'flightmonitor',
     'flight_data_collect',
-    'background_task',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
