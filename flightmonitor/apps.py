@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-
 class FlightmonitorConfig(AppConfig):
-    name = 'flightmonitor'
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'Flightmonitor'
