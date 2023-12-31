@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from dataclasses import field
-from turtle import textinput
+
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -21,10 +21,7 @@ from django.forms.widgets import PasswordInput, TextInput
  #      model = User
  #     fields = ('username', 'first_name', 'last_name', 'email', 'vehicle', 'password1', 'password2', )
 
-# may not need...
-class LoginForm(AuthenticationForm):
-    username = forms.CharField(widget=TextInput())
-    password = forms.CharField(widget=PasswordInput())
+
 
 class CreateUserForm(UserCreationForm):
     class Meta:
