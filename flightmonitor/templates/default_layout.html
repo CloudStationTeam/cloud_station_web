@@ -51,16 +51,14 @@
                     </a>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Account</a>
+                    <div class="dropdown-menu" aria-labelledby=""navbarDropdown">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/accounts/logout">Log out</a>
+                        <a class="dropdown-item" href="{% url 'm_logout' %}">Log out</a>
                     </div>
                 {% else %}
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Account</a>
                         <a class="dropdown-item" href="/accounts/login">Log in</a>
-                        <a class="dropdown-item" href="{% url 'signup' %}">Sign up</a>
+                        <a class="dropdown-item" href="{% url 'register' %}">Sign up</a>
                     </div>
 
                 {% endif %}
