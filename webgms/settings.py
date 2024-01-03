@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xx
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'channels',
     'flightmonitor',
     'flight_data_collect',
@@ -145,3 +146,4 @@ CHANNEL_LAYERS = {
 }
 
 MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here 
+
