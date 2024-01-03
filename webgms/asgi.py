@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 """
 import os
 import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'my_crazy_service.settings')
+django.setup()
 #from channels.routing import get_default_application
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
@@ -19,10 +22,10 @@ from flightmonitor.routing import websocket_urlpatterns
 
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webgms.settings")
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webgms.settings")
 # Initialize Django ASGI application early to ensure the AppRegistry
 # is populated before importing code that may import ORM models.
-django.setup()
+# django.setup()
 django_asgi_app = get_asgi_application()
 
 import flightmonitor.routing
