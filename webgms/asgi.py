@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'my_crazy_service.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webgms.settings')
 django.setup()
 #from channels.routing import get_default_application
 from channels.auth import AuthMiddlewareStack
