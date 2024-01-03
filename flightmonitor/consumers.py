@@ -1,7 +1,7 @@
 # flightmonitor/consumers.py
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
 import json
+from channels.generic.websocket import WebsocketConsumer
 from flight_data_collect.models import Telemetry_log
 import channels.layers
 from django.db.models.signals import post_save
