@@ -21,6 +21,8 @@ var browserSocket = new WebSocket(
     'ws://' + window.location.host +
     '/ws/flightmonitor/');
 document.querySelector('#telemetry-log').value += ('Successfully connected to server.\n');
+console.log("Test console log: Successfully connected to server.\nonnected");
+
 
 var tempPin = new Map();
 var tempPop = new Map();

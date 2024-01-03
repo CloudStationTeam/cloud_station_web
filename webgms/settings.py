@@ -135,7 +135,7 @@ LOGOUT_REDIRECT_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Channels
-ASGI_APPLICATION = 'webgms.routing.application'
+ASGI_APPLICATION = 'webgms.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
