@@ -14,5 +14,5 @@ def restart_docker()->str:
     results = []
     results.append(subprocess.run(["sudo", "systemctl", "start", "docker"],stdout=subprocess.PIPE, text=True, check=True))
     results.append(subprocess.run(["sudo", "systemctl", "enable", "docker"], stdout=subprocess.PIPE, text=True, check=True))
-    results.append(subprocess.run(["sudo", "docker", "run", "-p", "6379:6379", "-d", "redis:2.8"], stdout=subprocess.PIPE, text=True, check=True))
+    results.append(subprocess.run(["sudo", "docker", "run", "-p", "6379:6379", "-d", "redis:7.2.3"], stdout=subprocess.PIPE, text=True, check=True))
     return results

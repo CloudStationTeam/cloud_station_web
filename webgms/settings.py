@@ -145,5 +145,7 @@ CHANNEL_LAYERS = {
     },
 }
 
+
+
 MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here 
 
