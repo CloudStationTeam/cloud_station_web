@@ -1,4 +1,5 @@
 # flightmonitor/consumers.py
+from pymavlink import mavutil
 from asgiref.sync import async_to_sync
 import json
 from channels.generic.websocket import WebsocketConsumer
@@ -8,6 +9,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from flight_data_collect.models import Telemetry_log, Location_log
 from asgiref.sync import async_to_sync
+#from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
+
 
 class UserActionsConsumer(WebsocketConsumer):
     def connect(self):
@@ -30,7 +33,41 @@ class UserActionsConsumer(WebsocketConsumer):
         print('sent:', message)
         self.send(text_data=json.dumps({
             'message': message
-        })) 
+        }))
+
+    def receive(self, text_data):
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json["message"]
+        # self.send(text_data=json.dumps({"message": message}))
+        print('[LOG] message received in Django!')
+        print(text_data)
+        if(text_data=='CONNECT123'):
+            print('going to connect to drone now!')
+            # do something, like call connect to mavlink            
+            connect_address='14559';
+            #SERVER_IP = socket.gethostbyname(socket.gethostname())
+            #SERVER_IP = '127.0.0.1'
+            SERVER_IP = '192.168.1.124'
+            mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
+            msg = mavlink.wait_heartbeat(timeout=6)
+            if msg:
+                # connection succeded
+                print('[LOG] Mavlink connection successful!')
+            else:
+                print('LOG] ERROR Mavlink connection NOT successful!')
+            # now get all messages and log to terminal
+            while True:
+                msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
+                print(msg)
+                # send websocket message back to browser
+                #self.send('message recd')
+                #self.send(msg)
+                tosend = {"name":"John"}
+                # self.send(tosend) # has to be json....
+                #self.send({'x','y'})
+                #self.send(f"Hello world!")
+                self.send({"name":"John"},"utf8")
+                
 
 # send flight log update to client (browser)
 @receiver(post_save, sender=Telemetry_log)

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CloudStation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet'/>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet'/>
+    {% load static %}
+    <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
+
+</head>
+<input type="hidden" id="mapboxId" name="mapbox" value="{{MAPBOX_KEY}}">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" href="/flightmonitor">CloudStation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/flightmonitor">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" rel="noopener noreferrer" class="nav-link" href="https://cloud-station-docs.readthedocs.io/en/latest/">Docs</a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" rel="noopener noreferrer" class="nav-link" href="/admin">Admin</a>
+            </li>
+            <li class="nav-item dropdown ">
+                {% if user.is_authenticated %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                {% else %}
+                    <a class="nav-link dropdown-toggle" href="/accounts/login" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Log in/Sign up
+                    </a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <div class="dropdown-menu" aria-labelledby=""navbarDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'm_logout' %}">Log out</a>
+                    </div>
+                {% else %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/accounts/login">Log in</a>
+                        <a class="dropdown-item" href="{% url 'register' %}">Sign up</a>
+                    </div>
+
+                {% endif %}
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+<body>
+{% if user.is_authenticated %}
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+    <link
+            rel="stylesheet"
+    <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
+            type="text/css"
+    />
+    
+    <div class="container-fluid">
+	    <div class="row">
+		 
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="vehicleID">Connect to Vehicle via ID:</label>
+                    <input type="text" class="form-control" id="vehicleID">
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10" id="connectbtnDIS">
+                        <button type="button" class="btn btn-success" id="connectbtn" onclick="connectVehicle()">
+                            Connect
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="disVID">Disconnect Vehicle via ID:</label>
+                    <input type="text" class="form-control" id="disVID">
+
+                </div>
+                <div class="col-sm-10" id="disconnectbtn">
+                    <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
+                </div>
+
+                <div class="col-sm-10" id="connectV">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Connected Vehicles</th>
+                        </tr>
+                        </thead>
+                        <table id="dyTable">
+                        </table>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-sm-7">
+                <div class="row" id="mapLayout">
+                    <div class="col-sm-12" id="map">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="telemetry-log">Received telemetry data: </label>
+                            <p><textarea id="telemetry-log" class="form-control" rows="8"></textarea><br/></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="row">
+                    <div class="row-sm-7" id="tabcontent">
+			<!-- The Modal--> 
+			<div id="myModal" class="modal">
+			  <!-- Modal content--> 
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <h2>Telemetry Customization Form</h2>
+			      <span class="close" onclick="closeForm()">&times;</span>
+			    </div>
+			    <div class="modal-body" id="formBody">
+			    </div>
+			    <div class="modal-footer">
+			    </div>
+			  </div>
+
+			</div>
+ 
+			<ul id="tab-list" class="nav nav-tabs" role="tablist">
+                        </ul>
+
+                        <div id="tab-content" class="tab-content">
+
+                        </div>
+
+                    </div>
+                    <div class="row-sm-5">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% else %}
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+    <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css"
+            type="text/css"
+    />
+    <div id='map'></div>
+{% endif %}
+
+<script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+<script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
