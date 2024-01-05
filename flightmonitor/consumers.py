@@ -11,6 +11,7 @@ from flight_data_collect.models import Telemetry_log, Location_log
 from asgiref.sync import async_to_sync
 import time
 from datetime import datetime
+import socket
 
 #from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
 
@@ -48,9 +49,10 @@ class UserActionsConsumer(WebsocketConsumer):
             print('going to connect to drone now!')
             # do something, like call connect to mavlink            
             connect_address='14559';
-            #SERVER_IP = socket.gethostbyname(socket.gethostname())
+            SERVER_IP = socket.gethostbyname(socket.gethostname())
+#            print('[LOG] SERVER_IP_TEST='+SERVER_IP_TEST)
             #SERVER_IP = '127.0.0.1'
-            SERVER_IP = '192.168.1.124'
+            #SERVER_IP = '192.168.1.124'
             mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
             msg = mavlink.wait_heartbeat(timeout=6)
             if msg:
