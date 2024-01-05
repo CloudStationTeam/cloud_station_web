@@ -9,6 +9,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from flight_data_collect.models import Telemetry_log, Location_log
 from asgiref.sync import async_to_sync
+import time
+from datetime import datetime
+
 #from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
 
 
@@ -62,11 +65,19 @@ class UserActionsConsumer(WebsocketConsumer):
                 # send websocket message back to browser
                 #self.send('message recd')
                 #self.send(msg)
-                tosend = {"name":"John"}
-                # self.send(tosend) # has to be json....
-                #self.send({'x','y'})
-                #self.send(f"Hello world!")
-                self.send({"name":"John"},"utf8")
+                #self.send("Hello world!")
+                x=10.0
+                # Get the current date and time
+                current_datetime = datetime.now()
+                # Format the date and time as a string
+                formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                # Print the formatted date and time
+                print("Current Date and Time:", formatted_datetime)
+                self.send(f"Hello world at time " + formatted_datetime)
+                # You can call:
+                #self.send(text_data="Hello world!")
+                # Or, to send a binary frame:
+                #self.send(bytes_data="Hello world!")
                 
 
 # send flight log update to client (browser)
