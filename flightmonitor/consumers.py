@@ -62,18 +62,21 @@ class UserActionsConsumer(WebsocketConsumer):
             while True:
                 msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
                 print(msg)
+                # Convert MAVLink message to a dictionary
+                msg_dict = msg.to_dict()
+                # Send MAVLink message as a JSON string to the WebSocket client
+                self.send(msg.to_json())
                 # send websocket message back to browser
                 #self.send('message recd')
                 #self.send(msg)
                 #self.send("Hello world!")
-                x=10.0
                 # Get the current date and time
                 current_datetime = datetime.now()
                 # Format the date and time as a string
                 formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
                 # Print the formatted date and time
                 print("Current Date and Time:", formatted_datetime)
-                self.send(f"Hello world at time " + formatted_datetime)
+                self.send(f"Message sent at time " + formatted_datetime)
                 # You can call:
                 #self.send(text_data="Hello world!")
                 # Or, to send a binary frame:
