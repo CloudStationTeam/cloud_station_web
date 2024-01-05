@@ -48,12 +48,22 @@ class UserActionsConsumer(WebsocketConsumer):
         if(text_data=='CONNECT123'):
             print('going to connect to drone now!')
             # do something, like call connect to mavlink            
-            connect_address='14559';
+            connect_address='14559'
+            # PRIVATE IP
+            # Create a socket to get the local machine's hostname
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
+            # Get the local IP address
+            private_ip = s.getsockname()[0]
+            # Close the socket
+            s.close()
+            print('[LOG] PRIVATE IP = ' + private_ip)
             SERVER_IP = socket.gethostbyname(socket.gethostname())
 #            print('[LOG] SERVER_IP_TEST='+SERVER_IP_TEST)
             #SERVER_IP = '127.0.0.1'
             #SERVER_IP = '192.168.1.124'
-            mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
+            #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
+            mavlink = mavutil.mavlink_connection(private_ip + ':' + connect_address)
             msg = mavlink.wait_heartbeat(timeout=6)
             if msg:
                 # connection succeded
