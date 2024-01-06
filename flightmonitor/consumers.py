@@ -12,6 +12,7 @@ from asgiref.sync import async_to_sync
 import time
 from datetime import datetime
 import socket
+from channels.generic.websocket import WebsocketConsumer
 
 #from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
 
@@ -34,30 +35,95 @@ USEFUL_MESSAGES_V4_0_PYTHON = [
       VFR_HUD
      ]
 
+# helper functions
+
 class UserActionsConsumer(WebsocketConsumer):
-    def connect(self):
-        async_to_sync(self.channel_layer.group_add)(
+     def connect(self):
+         self.channel_layer.group_add(
             "users_group", 
             self.channel_name
         )
-        self.accept()
+         self.accept()
 
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
+     def disconnect(self, close_code):
+         self.channel_layer.group_discard(
             "users_group", 
             self.channel_name
         )
-        # self.send(text_data='connection closed')
 
-    def send_message(self, event):
-        # Send message to WebSocket
-        message = event['message']
+     def send_message(self, event):
+        message = event['message'] # Send message to WebSocket
         print('sent:', message)
         self.send(text_data=json.dumps({
             'message': message
         }))
 
-    def receive(self, text_data):
+
+    # Receive message from WebSocket
+     def example_receive(self, text_data):
+        print(text_data)
+        # Send message to room group
+        self.send(text_data)
+
+     def receive(self, text_data):
+        print('[LOG] message received in Django!')
+        print(text_data)
+        print('[LOG] running   self.send(text_data)')
+        self.send(text_data) # Send MAVLink message as a JSON string to the WebSocket client
+        print('[LOG] did run   self.send(text_data)')
+        if(text_data=='CONNECT123'):
+            print('going to connect to drone now!')
+            connect_address='14559'
+
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
+            private_ip = s.getsockname()[0] # Get the local IP address
+            s.close() # Close the socket
+            print('[LOG] PRIVATE IP = ' + private_ip)
+
+            SERVER_IP = socket.gethostbyname(socket.gethostname())
+            #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
+            mavlink = mavutil.mavlink_connection(private_ip + ':' + connect_address)
+            connect_msg = mavlink.wait_heartbeat(timeout=6)
+
+            if connect_msg: # connection succeded
+                print('[LOG] Mavlink connection successful!')
+
+                while True: # now get all messages and log to terminal
+
+                    msg = mavlink.recv_match( blocking=True)
+                    #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
+                    message_type = msg.get_type() # parse message type
+
+                    if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
+                        print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                        print('msg = ',msg)
+                        self.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
+            else:
+                print('LOG] ERROR Mavlink connection NOT successful!')
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     def old_receive(self, text_data):
         # text_data_json = json.loads(text_data)
         # message = text_data_json["message"]
         # self.send(text_data=json.dumps({"message": message}))
@@ -68,18 +134,12 @@ class UserActionsConsumer(WebsocketConsumer):
             # do something, like call connect to mavlink            
             connect_address='14559'
             # PRIVATE IP
-            # Create a socket to get the local machine's hostname
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
-            # Get the local IP address
-            private_ip = s.getsockname()[0]
-            # Close the socket
-            s.close()
+            private_ip = s.getsockname()[0] # Get the local IP address
+            s.close() # Close the socket
             print('[LOG] PRIVATE IP = ' + private_ip)
             SERVER_IP = socket.gethostbyname(socket.gethostname())
-#            print('[LOG] SERVER_IP_TEST='+SERVER_IP_TEST)
-            #SERVER_IP = '127.0.0.1'
-            #SERVER_IP = '192.168.1.124'
             #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
             mavlink = mavutil.mavlink_connection(private_ip + ':' + connect_address)
             msg = mavlink.wait_heartbeat(timeout=6)
