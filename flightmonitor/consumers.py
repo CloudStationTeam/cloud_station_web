@@ -15,6 +15,24 @@ import socket
 
 #from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
 
+HEARTBEAT = "HEARTBEAT"
+SYS_STATUS='SYS_STATUS'
+SYSTEM_TIME='SYSTEM_TIME'
+LOCAL_POSITION_NED='LOCAL_POSITION_NED'
+VFR_HUD='VFR_HUD'
+POWER_STATUS = 'POWER_STATUS'
+GLOBAL_POSITION_INT = 'GLOBAL_POSITION_INT'
+MISSION_CURRENT='MISSION_CURRENT'
+
+USEFUL_MESSAGES_V4_0_PYTHON = [
+      HEARTBEAT,
+      SYS_STATUS,
+      SYSTEM_TIME,
+      LOCAL_POSITION_NED,
+      GLOBAL_POSITION_INT,
+      MISSION_CURRENT,
+      VFR_HUD
+     ]
 
 class UserActionsConsumer(WebsocketConsumer):
     def connect(self):
@@ -72,27 +90,24 @@ class UserActionsConsumer(WebsocketConsumer):
                 print('LOG] ERROR Mavlink connection NOT successful!')
             # now get all messages and log to terminal
             while True:
-                msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
-                print(msg)
-                # Convert MAVLink message to a dictionary
-                msg_dict = msg.to_dict()
-                # Send MAVLink message as a JSON string to the WebSocket client
-                self.send(msg.to_json())
-                # send websocket message back to browser
-                #self.send('message recd')
-                #self.send(msg)
-                #self.send("Hello world!")
-                # Get the current date and time
-                current_datetime = datetime.now()
-                # Format the date and time as a string
-                formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-                # Print the formatted date and time
-                print("Current Date and Time:", formatted_datetime)
-                #self.send(f"Message sent at time " + formatted_datetime)
-                # You can call:
-                #self.send(text_data="Hello world!")
-                # Or, to send a binary frame:
-                #self.send(bytes_data="Hello world!")
+                msg = mavlink.recv_match( blocking=True)
+                #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
+                # parse message type
+                message_type = msg.get_type()
+                if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
+                    print('[LOG][consumers.py] message_type in USEFUL_MESSAGES_V4_0_PYTHON')
+                    print(msg)
+                    # Convert MAVLink message to a dictionary
+                    msg_dict = msg.to_dict()
+                    # Send MAVLink message as a JSON string to the WebSocket client
+                    self.send(msg.to_json())
+                    # Get the current date and time
+                    current_datetime = datetime.now()
+                    # Format the date and time as a string
+                    formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                    # Print the formatted date and time
+                    print("Current Date and Time:", formatted_datetime)
+                    #self.send(f"Message sent at time " + formatted_datetime)
                 
 
 # send flight log update to client (browser)
