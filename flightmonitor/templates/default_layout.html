@@ -7,6 +7,17 @@
 </head>
 
 <body>
+    <style>
+        /* Apply styles to the paragraph */
+        p {
+          border: 2px solid #3498db; /* Border color is light blue (#3498db) */
+          background-color: #f2f7ff; /* Light blue background color (#f2f7ff) */
+          padding: 10px; /* Add some padding for better visual appearance */
+          max-width: 200px; /* Limit the width to approximately 20 characters (assuming an average character width) */
+          word-wrap: break-word; /* Allow words to break onto the next line if they exceed the max-width */
+        }
+      </style>
+      </style>
     <h1>Vehicle</h1>
     <h2>Connect</h2>
         <label for="vehicleID">Connect to Vehicle via ID:</label>
@@ -22,16 +33,16 @@
         <br>
         <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
     <h2>Telemetry</h2>
-    <p>lat:</p>
-    <p id="dynamicTextlat">This text can be updated dynamically.</p>
-   <p>lon:</p>
+    <h3>lat:</h3>
+    <p id="dynamicTextlat">This text can be updated dynamically. </p>
+   <h3>lon:</h3>
    <p id="dynamicTextlon">This text can be updated dynamically.</p>
-   <p>alt:</p>
+   <h3>alt:</h3>
    <p id="dynamicTextalt">This text can be updated dynamically.</p>
-   <p>time_usec:</p>
+   <h3>time:</h3>
    <p id="dynamicTexttime_usec">This text can be updated dynamically.</p>
 
-   <p>debugmsg:</p>
+   <h3>debugmsg:</h3>
    <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p>
 
    
