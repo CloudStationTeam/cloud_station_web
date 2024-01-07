@@ -19,23 +19,64 @@ from channels.generic.websocket import WebsocketConsumer
 HEARTBEAT = "HEARTBEAT"
 SYS_STATUS='SYS_STATUS'
 SYSTEM_TIME='SYSTEM_TIME'
-LOCAL_POSITION_NED='LOCAL_POSITION_NED'
 VFR_HUD='VFR_HUD'
-POWER_STATUS = 'POWER_STATUS'
 GLOBAL_POSITION_INT = 'GLOBAL_POSITION_INT'
-MISSION_CURRENT='MISSION_CURRENT'
 
 USEFUL_MESSAGES_V4_0_PYTHON = [
       HEARTBEAT,
       SYS_STATUS,
       SYSTEM_TIME,
-      LOCAL_POSITION_NED,
-      GLOBAL_POSITION_INT,
-      MISSION_CURRENT,
       VFR_HUD
      ]
 
 # helper functions
+
+def handle_mavlink_message_to_update_Django_drone_object(msg):
+    message_type = msg.get_type() # parse message type
+    if(message_type == HEARTBEAT):
+        pass
+        # MAV_TYPE 	Vehicle or component type. 
+        # base_mode	uint8_t	MAV_MODE_FLAG	System mode bitmap.
+        # base_mode:
+        # Value	Field Name	Description
+        # 128	MAV_MODE_FLAG_SAFETY_ARMED
+        # custom_mode	uint32_t		A bitfield for use for autopilot-specific flags
+        # print(f"Flight Mode: {msg.custom_mode}")
+    if(message_type == SYS_STATUS):
+        pass
+        # voltage_battery	uint16_t	mV		Battery voltage, UINT16_MAX: Voltage not sent by autopilot
+        # current_battery	int16_t	cA		Battery current, -1: Current not sent by autopilot
+        # battery_remaining	int8_t	%		Battery energy remaining, -1: Battery remaining energy not sent by autopilot
+    if(message_type == SYSTEM_TIME):
+        pass
+        #Field Name	Type	Units	Description
+        #time_unix_usec	uint64_t	us	Timestamp (UNIX epoch time).
+        #time_boot_ms	uint32_t	ms	Timestamp (time since system boot)
+    if(message_type == GLOBAL_POSITION_INT):
+        #time_boot_ms	# uint32_t	ms	Timestamp (time since system boot).
+        #lat	# int32_t	degE7	Latitude, expressed
+        #lon	# int32_t	degE7	Longitude, expressed
+        #alt	# int32_t	mm	Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.
+        #relative_alt #	int32_t	mm	Altitude above ground
+        #vx	# int16_t	cm/s	Ground X Speed (Latitude, positive north)
+        #vy	# int16_t	cm/s	Ground Y Speed (Longitude, positive east)
+        #vz	# int16_t	cm/s	Ground Z Speed (Altitude, positive down)
+        #hdg	# uint16_t	cdeg	Vehicle heading (yaw angle), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
+        pass
+    if(message_type == VFR_HUD):
+        pass
+        # Field Name	Type	Units	Description
+        # airspeed	float	m/s	Vehicle speed in form appropriate for vehicle type. For standard aircraft this is typically calibrated airspeed (CAS) or indicated airspeed (IAS) - either of which can be used by a pilot to estimate stall speed.
+        # groundspeed	float	m/s	Current ground speed.
+        # heading	int16_t	deg	Current heading in compass units (0-360, 0=north).
+        # throttle	uint16_t	%	Current throttle setting (0 to 100).
+        # alt	float	m	Current altitude (MSL).
+        # climb	float	m/s	Current climb rate.
+
+
+
+# consumer functions
+
 
 class UserActionsConsumer(WebsocketConsumer):
      def connect(self):
@@ -66,11 +107,7 @@ class UserActionsConsumer(WebsocketConsumer):
         self.send(text_data)
 
      def receive(self, text_data):
-        print('[LOG] message received in Django!')
-        print(text_data)
-        print('[LOG] running   self.send(text_data)')
-        self.send(text_data) # Send MAVLink message as a JSON string to the WebSocket client
-        print('[LOG] did run   self.send(text_data)')
+        print('[LOG] message received in Django!: ',text_data)  
         if(text_data=='CONNECT123'):
             print('going to connect to drone now!')
             connect_address='14559'
@@ -93,6 +130,7 @@ class UserActionsConsumer(WebsocketConsumer):
 
                     msg = mavlink.recv_match( blocking=True)
                     #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
+                    handle_mavlink_message_to_update_Django_drone_object(msg)
                     message_type = msg.get_type() # parse message type
 
                     if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):

@@ -26,6 +26,18 @@ class Vehicle(models.Model):
     last_seen = models.DateTimeField(auto_now=True)    
     # owner = models.ManyToManyField('User', help_text='Users who have access to the vehicle data')
     is_connected = models.BooleanField(default=False)
+
+
+    
+
+    mode = models.IntegerField(default=0)
+    lat = models.FloatField(default=0)
+    lon = models.FloatField(default=0)
+    alt = models.FloatField(default=0)
+    airspeed = models.FloatField(default=0)
+    groundspeed = models.FloatField(default=0)
+    horizontal_speed = models.FloatField(default=0)
+    heading = models.FloatField(default=0)
     
     def __str__(self):
         """String for representing the Model object."""
