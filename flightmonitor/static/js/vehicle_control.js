@@ -18,33 +18,19 @@ function connectVehicle() {
 
 
 function disconnectVehicle() {
-    var message = document.getElementById("disVID").value;
-    let droneId = parseInt(message);
-    if (droneMap.has(droneId)) {
-        disconnectedDrones.add(droneId);
-
-        if(droneMap.get(droneId).hasMarker())
-            droneMap.get(droneId).getMarker().remove();
-        droneMap.delete(droneId);
-        // remove tablist on the right and set another drone info if delete the current displayed drone
-        var titleID = document.getElementById('title'+message);
-        var contentID = document.getElementById('content'+message);
-        $(titleID).parents('li').remove();
-        $(contentID).remove();
-        setDefaultTab(droneId);
-        // remove the connected ID list left bottom
-        let dyID = document.getElementById('dyTableID'+message);
-        $(dyID).remove();
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                document.querySelector('#telemetry-log').value += (xmlHttp.responseText + '\n');
-        };
-        let url = '/flight_data_collect/disconnect/' + message + '/';
-        xmlHttp.open("GET", url, true); // asynchronize
-        xmlHttp.send(null);
-    } else {
-        alert("Vehicle " + message + " does not exist!");
-    }
-    return false;
+    // psuedo code:
+    // 1.) create websocket message: disconnect + 14550 (JSON)
+    // 2.) send websocket message.
+    // TO DO: Check if it's in list of connnected already.
+    var port_to_disconnect_text = document.getElementById("disVID").value;
+    var port_to_disconnect_int=port_to_disconnect_text;
+    const jsonObject = {
+    command: 'DISCONNECT',
+    droneid: port_to_disconnect_int
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
 }
+

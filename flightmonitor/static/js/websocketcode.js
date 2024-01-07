@@ -24,9 +24,9 @@ MISSION_CURRENT='MISSION_CURRENT'
      ]
      
 browserSocket.onmessage = function (e) {
-  console.log("[LOG] Websocket messaage received.")
-  console.log("e.data:")
-  console.log(e.data)
+  //console.log("[LOG] Websocket messaage received.")
+  //console.log("e.data:")
+  //console.log(e.data)
 //    if (msg["mavpackettype"] == "GLOBAL_POSITION_INT") {//create html element for the new marker [only initialize if the first data has location]
 //        console.log("[LOG] message type is GPS.")  }
 //  Parse
@@ -48,7 +48,7 @@ browserSocket.onmessage = function (e) {
 
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
-  console.log('[LOG][websocketcode.js] mavpackettype = ' + mavpackettype);
+//  console.log('[LOG][websocketcode.js] mavpackettype = ' + mavpackettype);
   // if mavpackettype == "GLOBAL_POSITION_INT":
   if (mavpackettype == "GLOBAL_POSITION_INT") {
     // parse the GPS message:
@@ -57,11 +57,11 @@ browserSocket.onmessage = function (e) {
     var alt = parsedData.alt;
     var time_usec = parsedData.time_usec;
     // Log the values:
-    console.log("mavpackettype: " + mavpackettype);
-    console.log("lat: " + lat);
-    console.log("lon: " + lon);
-    console.log("alt: " + alt);
-    console.log("time_usec: " + time_usec);
+  //  console.log("mavpackettype: " + mavpackettype);
+   // console.log("lat: " + lat);
+   // console.log("lon: " + lon);
+   // console.log("alt: " + alt);
+   // console.log("time_usec: " + time_usec);
     // Display the values in html page:
     // Get the element with the id "dynamicText"
     const dynamicTextElementlat = document.getElementById('dynamicTextlat');

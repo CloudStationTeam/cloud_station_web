@@ -134,15 +134,20 @@ class UserActionsConsumer(WebsocketConsumer):
         print("Command:", data['command'])
         print("Drone ID:", data['droneid'])
 
-
-
-
+        if(command_to_execute=='DISCONNECT'):
+            # check if drone in database
+            # if so, mark as disconnected
+            if(is_vehicle_in_database(drone_id_to_connect_to)):
+                #this it the drone we want to connect to:
+                vehicle_to_disconnect = Vehicle.objects.get(droneid=drone_id_to_connect_to)
+                vehicle_to_disconnect.is_connected=False
+                vehicle_to_disconnect.save()
+                
 
         list_of_vehicles_in_database = Vehicle.objects.all()
         # print the list
-        for obj in list_of_vehicles_in_database:
-        # Access the attributes of the object as needed
-            print(obj)
+#        for obj in list_of_vehicles_in_database: # Access the attributes of the object as needed
+#            print(obj)
         # pseudo code, need to code it properly:
         # If text_data is a connect command
             # Get the ID of the drone to connect from text_data
@@ -162,6 +167,7 @@ class UserActionsConsumer(WebsocketConsumer):
             vehicle_to_listen_to.droneid=drone_id_to_connect_to
             vehicle_to_listen_to.is_connected=False
             vehicle_to_listen_to.save()
+            #print('disconnected  '+vehicle_to_listen_to)
 
         if(command_to_execute=='CONNECT'):
             print('going to connect to drone now!')
@@ -183,8 +189,10 @@ class UserActionsConsumer(WebsocketConsumer):
 
             if connect_msg: # connection succeded
                 print('[LOG] Mavlink connection successful!')
+                vehicle_to_listen_to.is_connected=True
+                vehicle_to_listen_to.save()
 
-                while True: # now get all messages and log to terminal
+                while vehicle_to_listen_to.is_connected: # now get all messages and log to terminal
 
                     msg = mavlink.recv_match( blocking=True)
                     #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
@@ -192,8 +200,8 @@ class UserActionsConsumer(WebsocketConsumer):
                     message_type = msg.get_type() # parse message type
 
                     if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
-                        print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-                        print('msg = ',msg)
+                        #print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                        #print('msg = ',msg)
                         self.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
             else:
                 print('LOG] ERROR Mavlink connection NOT successful!')
