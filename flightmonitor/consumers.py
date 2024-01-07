@@ -4,6 +4,7 @@ from asgiref.sync import async_to_sync
 import json
 from channels.generic.websocket import WebsocketConsumer
 from flight_data_collect.models import Telemetry_log
+from flight_data_collect.models import Vehicle
 import channels.layers
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -26,14 +27,31 @@ USEFUL_MESSAGES_V4_0_PYTHON = [
       HEARTBEAT,
       SYS_STATUS,
       SYSTEM_TIME,
-      VFR_HUD
+      VFR_HUD,
+      GLOBAL_POSITION_INT
      ]
 
 # helper functions
+def is_vehicle_in_database(vehicle_id_to_check):
+    try:
+        # Attempt to get an object with the specified attribute value
+        Vehicle.objects.get(droneid=vehicle_id_to_check)
+        return True  # Object found in the database
+    except Vehicle.DoesNotExist:
+        return False  # Object not found in the database
 
-def handle_mavlink_message_to_update_Django_drone_object(msg):
+
+def handle_mavlink_message_to_update_Django_drone_object(msg, connect_address):
+    v = Vehicle.objects.get(droneid=connect_address)
+
     message_type = msg.get_type() # parse message type
     if(message_type == HEARTBEAT):
+
+    # MAV_TYPE 	Vehicle or component type. 
+    #v.MAV_TYPE = ... heartbeat_message.get_type()
+        print('heartbeat_message.get_type() = ' + msg.get_type())
+    
+
         pass
         # MAV_TYPE 	Vehicle or component type. 
         # base_mode	uint8_t	MAV_MODE_FLAG	System mode bitmap.
@@ -108,6 +126,32 @@ class UserActionsConsumer(WebsocketConsumer):
 
      def receive(self, text_data):
         print('[LOG] message received in Django!: ',text_data)  
+        # create list of vehicles in database
+        list_of_vehicles_in_database = Vehicle.objects.all()
+        # print the list
+        for obj in list_of_vehicles_in_database:
+        # Access the attributes of the object as needed
+            print(obj)
+        # pseudo code, need to code it properly:
+        # If text_data is a connect command
+            # Get the ID of the drone to connect from text_data
+            # See if that ID exists in the SQL database
+                # If it doesn't exist, create it.
+                # If it does exist, connect and set status as connected in the database.
+                # For now call it ID 14559.
+        drone_id_in_use=14559
+        # Is this drone in database?
+        print("Is ", drone_id_in_use," in database:", is_vehicle_in_database(drone_id_in_use))
+        if(is_vehicle_in_database(drone_id_in_use)):
+            #this it the drone we want to connect to:
+            vehicle_to_listen_to = Vehicle.objects.get(droneid=drone_id_in_use)
+        if(is_vehicle_in_database(drone_id_in_use)==False):
+            #create drone
+            vehicle_to_listen_to = Vehicle()
+            vehicle_to_listen_to.droneid=drone_id_in_use
+            vehicle_to_listen_to.is_connected=False
+            vehicle_to_listen_to.save()
+
         if(text_data=='CONNECT123'):
             print('going to connect to drone now!')
             connect_address='14559'
@@ -130,7 +174,7 @@ class UserActionsConsumer(WebsocketConsumer):
 
                     msg = mavlink.recv_match( blocking=True)
                     #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
-                    handle_mavlink_message_to_update_Django_drone_object(msg)
+                    handle_mavlink_message_to_update_Django_drone_object(msg, connect_address)
                     message_type = msg.get_type() # parse message type
 
                     if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
