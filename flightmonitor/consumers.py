@@ -14,6 +14,8 @@ import time
 from datetime import datetime
 import socket
 from channels.generic.websocket import WebsocketConsumer
+from flightmonitor.listen import listenfunction,listenfunction_example
+import threading
 
 #from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
 
@@ -191,18 +193,13 @@ class UserActionsConsumer(WebsocketConsumer):
                 print('[LOG] Mavlink connection successful!')
                 vehicle_to_listen_to.is_connected=True
                 vehicle_to_listen_to.save()
+                # Create a thread
+                my_thread = threading.Thread(target=listenfunction, args=(connect_address, mavlink, self))
+                #my_thread = threading.Thread(target=listenfunction)
+                # Start the thread
+                my_thread.start()
 
-                while vehicle_to_listen_to.is_connected: # now get all messages and log to terminal
-
-                    msg = mavlink.recv_match( blocking=True)
-                    #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
-                    handle_mavlink_message_to_update_Django_drone_object(msg, connect_address)
-                    message_type = msg.get_type() # parse message type
-
-                    if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
-                        #print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-                        #print('msg = ',msg)
-                        self.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
+               
             else:
                 print('LOG] ERROR Mavlink connection NOT successful!')
 
