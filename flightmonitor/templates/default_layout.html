@@ -18,13 +18,7 @@
         }
       </style>
     <h1>Vehicle</h1>
-    <h2>Connect old way</h2>
-        <label for="vehicleID">Connect to Vehicle via ID:</label>
-        <input type="text" class="form-control" id="vehicleID">
-        <button type="button" class="btn btn-success" id="connectbtn" onclick="connectVehicle()">
-            Connect
-        </button>
-        <h2>Connect new way</h2>
+        <h2>Connect</h2>
         <div>Leave IP at 0.0.0.0 or blank if not known.</div>
         <br>
         <form>
@@ -37,7 +31,7 @@
             <input type="button" value="Submit"  onclick="connectVehicle_by_IP_and_PORT()">
           </form>
           <h2>Disconnect</h2>
-        <label for="disVID">Disconnect Vehicle via ID:</label>
+        <label for="disVID">DRONE_PORT:</label>
         <input type="text" class="form-control" id="disVID">
         <br>
         <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>

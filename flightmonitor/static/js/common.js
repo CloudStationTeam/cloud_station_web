@@ -120,12 +120,12 @@ function updateOther(data, droneID){
 
 
 
-document.querySelector('#vehicleID').focus();
-document.querySelector('#vehicleID').onkeyup = function (e) {
-    if (e.keyCode === 13) {  // enter, return
-        document.querySelector('#connectbtn').click();
-    }
-};
+// document.querySelector('#vehicleID').focus();
+// document.querySelector('#vehicleID').onkeyup = function (e) {
+//    if (e.keyCode === 13) {  // enter, return
+//        document.querySelector('#connectbtn').click();
+//    }
+//};
 
 /* HTTP REQUESTS TO BACKEND */
 

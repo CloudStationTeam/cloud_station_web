@@ -1,20 +1,4 @@
-function connectVehicle() {
-    // psuedo code:
-    // 1.) create websocket message: connect + 14550
-    // 2.) send websocket message.
-    // 3.) await websocket response
-    var port_to_connect_text = document.getElementById("vehicleID").value;
-    var port_to_connect_int=port_to_connect_text;
-    //var messagetosend = 'CONNECT' + port_to_connect_int;
-    const jsonObject = {
-    command: 'CONNECT',
-    droneid: port_to_connect_int
-    };
-    const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
-    // send message to websocket
-    doSend(messagetosend);
-}
+
 
 function connectVehicle_by_IP_and_PORT() {
     // psuedo code:

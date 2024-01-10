@@ -134,28 +134,6 @@ class UserActionsConsumer(WebsocketConsumer):
         print("Command:", data['command'])
   
 
-        if(command_to_execute=='CONNECT'):
-            drone_id_to_connect_to = data['droneid']
-            print("Drone ID:", data['droneid'])
-            # Don't connect if it's already connected....
-            if(is_vehicle_in_database(drone_id_to_connect_to)):
-                #this it the drone we want to connect to:
-                vehicle_to_test_if_already_connected = Vehicle.objects.get(droneid=drone_id_to_connect_to)
-                if(vehicle_to_test_if_already_connected.is_connected==True):
-                    print('Drone already connected in database!')
-                    print('But cannot trust database, so checking threads...')
-                    #return
-                
-                 # List all running threads and check if they are connected....      
-                running_threads = threading.enumerate()
-                # Display thread information
-                #print('droneidtoconnectto = ',drone_id_to_connect_to)
-                #print("Running threads:")
-                for thread in running_threads:
-                    #print('threadname = ',thread.name)
-                    if(thread.name==drone_id_to_connect_to):
-                        print('Drone already connected! by checking threads')
-                        return
 
 
 
