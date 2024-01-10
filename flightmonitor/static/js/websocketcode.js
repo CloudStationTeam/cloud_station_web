@@ -24,7 +24,7 @@ MISSION_CURRENT='MISSION_CURRENT'
      ]
      
 browserSocket.onmessage = function (e) {
-  //console.log("[LOG] Websocket messaage received.")
+  console.log("[LOG] Websocket messaage received: ",e.data )
   //console.log("e.data:")
   //console.log(e.data)
 //    if (msg["mavpackettype"] == "GLOBAL_POSITION_INT") {//create html element for the new marker [only initialize if the first data has location]

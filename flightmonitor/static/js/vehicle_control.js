@@ -16,6 +16,28 @@ function connectVehicle() {
     doSend(messagetosend);
 }
 
+function connectVehicle_by_IP_and_PORT() {
+    // psuedo code:
+    // 1.) create websocket message: connect + IP:PORT
+    // 2.) send websocket message.
+    // 3.) await websocket response
+    var port_to_connect_text = document.getElementById("DRONE_PORT").value;
+    var port_to_connect_int=port_to_connect_text;
+
+    var IP_to_connect_text = document.getElementById("DRONE_IP").value;
+    
+    //var messagetosend = 'CONNECT' + port_to_connect_int;
+    const jsonObject = {
+    command: 'CONNECT_BY_IP_AND_PORT',
+    DRONE_IP: IP_to_connect_text,
+    DRONE_PORT: port_to_connect_int
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
+}
+
 
 function disconnectVehicle() {
     // psuedo code:

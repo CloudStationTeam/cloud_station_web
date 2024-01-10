@@ -17,17 +17,26 @@
           word-wrap: break-word; /* Allow words to break onto the next line if they exceed the max-width */
         }
       </style>
-      </style>
     <h1>Vehicle</h1>
-    <h2>Connect</h2>
+    <h2>Connect old way</h2>
         <label for="vehicleID">Connect to Vehicle via ID:</label>
         <input type="text" class="form-control" id="vehicleID">
-        <br>
         <button type="button" class="btn btn-success" id="connectbtn" onclick="connectVehicle()">
             Connect
         </button>
+        <h2>Connect new way</h2>
+        <div>Leave IP at 0.0.0.0 or blank if not known.</div>
         <br>
-    <h2>Disconnect</h2>
+        <form>
+            <label for="DRONE_IP">DRONE_IP </label>
+            <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
+        
+            <label for="DRONE_PORT">DRONE_PORT </label>
+            <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14558">
+        
+            <input type="button" value="Submit"  onclick="connectVehicle_by_IP_and_PORT()">
+          </form>
+          <h2>Disconnect</h2>
         <label for="disVID">Disconnect Vehicle via ID:</label>
         <input type="text" class="form-control" id="disVID">
         <br>

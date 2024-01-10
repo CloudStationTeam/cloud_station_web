@@ -49,7 +49,7 @@ def listenfunction(droneid_to_listen_to, mavlinkconnection, websocket_to_send_to
             #print('msg = ',msg)
             websocket_to_send_to.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
         vehicle_to_listen_to.refresh_from_db()
-        print(' vehicle_to_listen_to.is_connected= ',droneid_to_listen_to,vehicle_to_listen_to.is_connected,vehicle_to_listen_to)
+        #print(' vehicle_to_listen_to.is_connected= ',droneid_to_listen_to,vehicle_to_listen_to.is_connected,vehicle_to_listen_to)
         # if it is disconnect now, close mavlink
         if(vehicle_to_listen_to.is_connected==False):
             mavlinkconnection.close()
