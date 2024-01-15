@@ -46,6 +46,7 @@ browserSocket.onmessage = function (e) {
 
   var parsedData = JSON.parse(e.data);
 
+
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
 //  console.log('[LOG][websocketcode.js] mavpackettype = ' + mavpackettype);

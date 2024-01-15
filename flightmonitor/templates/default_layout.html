@@ -2,60 +2,73 @@
 <html lang="en">
 
 <head>
-    <title>CloudStation</title>
-    {% load static %}
+  <title>CloudStation</title>
+  {% load static %}
 </head>
 
 <body>
-    <style>
-        /* Apply styles to the paragraph */
-        p {
-          border: 2px solid #3498db; /* Border color is light blue (#3498db) */
-          background-color: #f2f7ff; /* Light blue background color (#f2f7ff) */
-          padding: 10px; /* Add some padding for better visual appearance */
-          max-width: 200px; /* Limit the width to approximately 20 characters (assuming an average character width) */
-          word-wrap: break-word; /* Allow words to break onto the next line if they exceed the max-width */
-        }
-      </style>
-    <h1>Vehicle</h1>
-        <h2>Connect</h2>
-        <div>Leave IP at 0.0.0.0 or blank if not known.</div>
-        <br>
-        <form>
-            <label for="DRONE_IP">DRONE_IP </label>
-            <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
-        
-            <label for="DRONE_PORT">DRONE_PORT </label>
-            <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14558">
-        
-            <input type="button" value="Submit"  onclick="connectVehicle_by_IP_and_PORT()">
-          </form>
-          <h2>Disconnect</h2>
-        <label for="disVID">DRONE_PORT:</label>
-        <input type="text" class="form-control" id="disVID">
-        <br>
-        <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
-    <h2>Telemetry</h2>
-    <h3>lat:</h3>
-    <p id="dynamicTextlat">This text can be updated dynamically. </p>
-   <h3>lon:</h3>
-   <p id="dynamicTextlon">This text can be updated dynamically.</p>
-   <h3>alt:</h3>
-   <p id="dynamicTextalt">This text can be updated dynamically.</p>
-   <h3>time:</h3>
-   <p id="dynamicTexttime_usec">This text can be updated dynamically.</p>
+  <style>
+    /* Apply styles to the paragraph */
+    p {
+      border: 2px solid #3498db;
+      /* Border color is light blue (#3498db) */
+      background-color: #f2f7ff;
+      /* Light blue background color (#f2f7ff) */
+      padding: 10px;
+      /* Add some padding for better visual appearance */
+      max-width: 200px;
+      /* Limit the width to approximately 20 characters (assuming an average character width) */
+      word-wrap: break-word;
+      /* Allow words to break onto the next line if they exceed the max-width */
+    }
+  </style>
+  <h1>Vehicle</h1>
+  <h2>Connect</h2>
+  <div>Leave IP at 0.0.0.0 or blank if not known.</div>
+  <br>
+  <form>
+    <label for="DRONE_IP">DRONE_IP </label>
+    <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
 
-   <h3>debugmsg:</h3>
-   <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p>
+    <label for="DRONE_PORT">DRONE_PORT </label>
+    <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14558">
 
-   
+    <input type="button" value="Submit" onclick="connectVehicle_by_IP_and_PORT()">
+  </form>
+  <h2>Disconnect</h2>
+  <label for="disVID">DRONE_PORT:</label>
+  <input type="text" class="form-control" id="disVID">
+  <br>
+  <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
 
-<script type='text/javascript' src="{% static 'js/websocketcode.js' %}"></script>
+  <h2>Comms</h2>
+  <h3>local ip:</h3>
+  <p id="drone_local_IP">This text can be updated dynamically. </p>
+  <h3>drone ip:</h3>
+  <p id="drone_remote_IP">This text can be updated dynamically.</p>
 
-<script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
-<script type='text/javascript' src="{% static 'js/common.js' %}"></script>
-<script type='text/javascript' src="{% static 'js/vehicle_control.js' %}"></script>
+
+  <h2>Telemetry</h2>
+  <h3>lat:</h3>
+  <p id="dynamicTextlat">This text can be updated dynamically. </p>
+  <h3>lon:</h3>
+  <p id="dynamicTextlon">This text can be updated dynamically.</p>
+  <h3>alt:</h3>
+  <p id="dynamicTextalt">This text can be updated dynamically.</p>
+  <h3>time:</h3>
+  <p id="dynamicTexttime_usec">This text can be updated dynamically.</p>
+
+  <h3>debugmsg:</h3>
+  <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p>
+
+
+
+  <script type='text/javascript' src="{% static 'js/websocketcode.js' %}"></script>
+
+  <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+  <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+  <script type='text/javascript' src="{% static 'js/vehicle_control.js' %}"></script>
 
 
 </body>

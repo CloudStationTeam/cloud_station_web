@@ -238,6 +238,10 @@ class UserActionsConsumer(WebsocketConsumer):
                 self.send(json.dumps(ip_address_dict))
                 ip_address_dict = {'drone_local_IP': str(private_ip)}
                 self.send(json.dumps(ip_address_dict))
+                # Usurp mavlink and create a new API for this project... DRONECOMM
+                comms_msg={"mavpackettype": "DRONECOMM",  "drone_remote_IP": str(sending_ip_address), "drone_local_IP": str(private_ip)}
+                self.send(json.dumps(comms_msg))
+                # {"mavpackettype": "GLOBAL_POSITION_INT",  "lat": 336458608, "lon": -1178427497}
                 # ** Connect to drone
                 print('calling mavlink to connect to IP: ' ,DRONE_IP_TO_CONNECT_TO,'PORT: ',DRONE_PORT_TO_CONNECT_TO)
                 mavlink = mavutil.mavlink_connection(DRONE_IP_TO_CONNECT_TO + ':' + DRONE_PORT_TO_CONNECT_TO)
