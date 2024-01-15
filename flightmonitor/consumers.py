@@ -54,6 +54,48 @@ def is_drone_id_is_in_a_thread(drone_id_to_connect_to):
             return True
     return False
 
+def find_IP_ADDRESS_sending_to_port(port_to_receive_on):
+    # Set the UDP port to listen on
+    udp_port = port_to_receive_on
+
+    # Create a UDP socket
+    udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    udp_socket.bind(('0.0.0.0', udp_port))
+    IP_RECEIVED_ON='0.0.0.0'
+
+    # Set a timeout for the socket
+    timeout_seconds = 1
+    udp_socket.settimeout(timeout_seconds)
+
+    try:
+        # Receive data and address
+        data, addr = udp_socket.recvfrom(1024)
+        IP_RECEIVED_ON=addr[0]
+
+    except socket.timeout:
+        print(f"Timeout ({timeout_seconds} seconds) reached. No data received.")
+        udp_socket.close()
+        return IP_RECEIVED_ON
+
+    except Exception as e:
+        print(f"Error receiving data: {e}")
+        udp_socket.close()
+        return IP_RECEIVED_ON
+
+    finally:
+        # Close the socket
+        udp_socket.close()
+
+    return IP_RECEIVED_ON
+
+def get_local_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
+    local_ip = s.getsockname()[0] # Get the local IP address
+    s.close() # Close the socket
+    print('[LOG] local ip = ' + local_ip)
+    return local_ip
+
 
 
 def handle_mavlink_message_to_update_Django_drone_object(msg, connect_address):
@@ -159,15 +201,12 @@ class UserActionsConsumer(WebsocketConsumer):
             DRONE_PORT_TO_CONNECT_TO=str(data['DRONE_PORT']) # string
             print("DRONE_PORT_TO_CONNECT_TO", data['DRONE_PORT']) 
             drone_id_to_connect_to = data['DRONE_PORT'] # Note that DRONE_PORT is drone ID for now....
+            private_ip=get_local_ip()
+            print('[LOG] PRIVATE IP = ' + private_ip)
             DRONE_IP_TO_CONNECT_TO=data['DRONE_IP'] # string
             if(DRONE_IP_TO_CONNECT_TO=='' or DRONE_IP_TO_CONNECT_TO=='0.0.0.0'): # or zero
-                # DRONE_IP_TO_CONNECT_TO='127.0.0.1' # need to get private IP also
-                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
-                private_ip = s.getsockname()[0] # Get the local IP address
-                s.close() # Close the socket
-                print('[LOG] PRIVATE IP = ' + private_ip)
                 DRONE_IP_TO_CONNECT_TO=private_ip
+            print('[LOG] DRONE_IP_TO_CONNECT_TO  = ' + DRONE_IP_TO_CONNECT_TO)
 
             # * if drone does not exist in database, create it
             if(is_vehicle_in_database(drone_id_to_connect_to)==False): # i.e. need to create entry into database
@@ -178,7 +217,6 @@ class UserActionsConsumer(WebsocketConsumer):
                 vehicle_to_listen_to.save() 
             else: # drone is in database, get its object as vehicle_to_listen_to
                 vehicle_to_listen_to=Vehicle.objects.get(droneid=drone_id_to_connect_to)
-
 
             # * if drone listed as connected in database and in thread, return
             if vehicle_to_listen_to.is_connected==True and is_drone_id_is_in_a_thread(drone_id_to_connect_to)==True:
@@ -192,6 +230,15 @@ class UserActionsConsumer(WebsocketConsumer):
 
             # * if drone is not in thread ...
             if  is_drone_id_is_in_a_thread(drone_id_to_connect_to)==False: # create thread and mark as connected in database
+                # ** Find sinding IP
+                print('calling find_IP_ADDRESS_sending_to_port')
+                sending_ip_address=find_IP_ADDRESS_sending_to_port(int(DRONE_PORT_TO_CONNECT_TO))
+                print('found sending IP address = ', sending_ip_address)
+                ip_address_dict = {'drone_remote_IP': str(sending_ip_address)}
+                self.send(json.dumps(ip_address_dict))
+                ip_address_dict = {'drone_local_IP': str(private_ip)}
+                self.send(json.dumps(ip_address_dict))
+                # ** Connect to drone
                 print('calling mavlink to connect to IP: ' ,DRONE_IP_TO_CONNECT_TO,'PORT: ',DRONE_PORT_TO_CONNECT_TO)
                 mavlink = mavutil.mavlink_connection(DRONE_IP_TO_CONNECT_TO + ':' + DRONE_PORT_TO_CONNECT_TO)
                 print('working...')
@@ -209,7 +256,7 @@ class UserActionsConsumer(WebsocketConsumer):
                     my_thread.start()
                 else:
                     print('LOG] ERROR Mavlink connection NOT successful!')
-
+                    mavlink.close()
 
 
 
@@ -251,23 +298,6 @@ class UserActionsConsumer(WebsocketConsumer):
             else:
                 print('LOG] ERROR Mavlink connection NOT successful!')
 
-
-#       Extra code
-#        print("Is ", drone_id_to_connect_to," in database:", is_vehicle_in_database(drone_id_to_connect_to))
-                
-        list_of_vehicles_in_database = Vehicle.objects.all()
-        # print the list
-#        for obj in list_of_vehicles_in_database: # Access the attributes of the object as needed
-#            print(obj)
-        # pseudo code, need to code it properly:
-        # If text_data is a connect command
-            # Get the ID of the drone to connect from text_data
-            # See if that ID exists in the SQL database
-                # If it doesn't exist, create it.
-                # If it does exist, connect and set status as connected in the database.
-                # For now call it ID 14559.
-        #drone_id_to_connect_to=14559
-        # Is this drone in database?
 
 
 
