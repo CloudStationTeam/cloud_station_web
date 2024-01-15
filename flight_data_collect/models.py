@@ -5,7 +5,13 @@ import uuid
 import json
 
 class Vehicle(models.Model):
-    droneid = models.IntegerField(primary_key=True)
+    droneid = models.IntegerField(primary_key=True) # this is the port, typically 14550 and up; Want to change name to drone_port later
+    drone_local_IP = models.GenericIPAddressField(protocol='both', unpack_ipv4=True,default='127.0.0.1') # local IP address of Django server machine
+    drone_remote_IP = models.GenericIPAddressField(protocol='both', unpack_ipv4=True,default='127.0.0.1') # local IP address of Django server machine
+    #drone_local_IP = models.GenericIPAddressField(null=True) # local IP address of Django server machine
+    #drone_local_IP = models.GenericIPAddressField(default='',null=True) # local IP address of Django server machine
+    #drone_remote_IP = models.GenericIPAddressField(default='',null=True) # remote IP address that is sending the mavlink packets to Django
+    # An IPv4 or IPv6 address, in string format (e.g. 192.0.2.30)
     
     VEHICLE_TYPES = (  # will need to include all vehicles
         ('c', 'Copter'),
