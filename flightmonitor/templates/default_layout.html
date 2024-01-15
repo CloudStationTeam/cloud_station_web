@@ -10,11 +10,11 @@
   <style>
     /* Apply styles to the paragraph */
     p {
-      border: 2px solid #3498db;
+      border: 1px solid #3498db;
       /* Border color is light blue (#3498db) */
       background-color: #f2f7ff;
       /* Light blue background color (#f2f7ff) */
-      padding: 10px;
+      padding: 2px;
       /* Add some padding for better visual appearance */
       max-width: 200px;
       /* Limit the width to approximately 20 characters (assuming an average character width) */
@@ -22,6 +22,8 @@
       /* Allow words to break onto the next line if they exceed the max-width */
     }
   </style>
+
+
   <h1>Vehicle</h1>
   <h2>Connect</h2>
   <div>Leave IP at 0.0.0.0 or blank if not known.</div>
@@ -57,6 +59,67 @@
   <p id="dynamicTextalt">This text can be updated dynamically.</p>
   <h3>time:</h3>
   <p id="dynamicTexttime_usec">This text can be updated dynamically.</p>
+
+  <h2>Mavlink fields</h2>
+  <h3>HEARTBEAT</h3>
+  <h4>MAV_TYPE</h4>
+  <p id="MAV_TYPE">This text can be updated dynamically. </p>
+  <h4>base_mode</h4>
+  <p id="base_mode">This text can be updated dynamically. </p>
+  <h4>custom_mode</h4>
+  <p id="custom_mode">This text can be updated dynamically. </p>
+
+
+  <h3>SYS_STATUS</h3>
+  <h4>voltage_battery</h4>
+  <p id="voltage_battery">This text can be updated dynamically. </p>
+  <h4>current_battery</h4>
+  <p id="current_battery">This text can be updated dynamically. </p>
+  <h4>battery_remaining</h4>
+  <p id="battery_remaining">This text can be updated dynamically. </p>
+
+  <h3>SYSTEM_TIME</h3>
+  <h4>time_unix_usec</h4>
+  <p id="time_unix_usec">This text can be updated dynamically. </p>
+  <h4>VARIABLE</h4>
+  <p id="VARIABLE">This text can be updated dynamically. </p>
+  <h4>VARIABLE</h4>
+  <p id="VARIABLE">This text can be updated dynamically. </p>
+
+  <h3>GLOBAL_POSITION_INT</h3>
+  <h4>time_boot_ms</h4>
+  <p id="time_boot_ms">This text can be updated dynamically. </p>
+  <h4>lat</h4>
+  <p id="lat">This text can be updated dynamically. </p>
+  <h4>lon</h4>
+  <p id="lon">This text can be updated dynamically. </p>
+  <h4>alt</h4>
+  <p id="alt">This text can be updated dynamically. </p>
+  <h4>relative_alt</h4>
+  <p id="relative_alt">This text can be updated dynamically. </p>
+  <h4>vx</h4>
+  <p id="vx">This text can be updated dynamically. </p>
+  <h4>vy</h4>
+  <p id="vy">This text can be updated dynamically. </p>
+  <h4>vz</h4>
+  <p id="vz">This text can be updated dynamically. </p>
+  <h4>hdg</h4>
+  <p id="hdg">This text can be updated dynamically. </p>
+  
+  
+  <h3>VFR_HUD</h3>
+  <h4>airspeed</h4>
+  <p id="airspeed">This text can be updated dynamically. </p>
+  <h4>groundspeed</h4>
+  <p id="groundspeed">This text can be updated dynamically. </p>
+  <h4>heading</h4>
+  <p id="heading">This text can be updated dynamically. </p>
+  <h4>throttle</h4>
+  <p id="throttle">This text can be updated dynamically. </p>
+  <h4>climb</h4>
+  <p id="climb">This text can be updated dynamically. </p>
+  
+
 
   <h3>debugmsg:</h3>
   <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p>

@@ -4,7 +4,7 @@ var browserSocket = new WebSocket(
 
     console.log("Test console log: Javascript in browser successfully connected to websocket server.\n");
 
-    HEARTBEAT = "HEARTBEAT"
+HEARTBEAT = "HEARTBEAT"
 SYS_STATUS='SYS_STATUS'
 SYSTEM_TIME='SYSTEM_TIME'
 LOCAL_POSITION_NED='LOCAL_POSITION_NED'
@@ -46,6 +46,8 @@ browserSocket.onmessage = function (e) {
 
   var parsedData = JSON.parse(e.data);
 
+  handle_mavlink_message(parsedData)
+
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
 
@@ -63,29 +65,7 @@ browserSocket.onmessage = function (e) {
 
 //  console.log('[LOG][websocketcode.js] mavpackettype = ' + mavpackettype);
   // if mavpackettype == "GLOBAL_POSITION_INT":
-  if (mavpackettype == "GLOBAL_POSITION_INT") {
-    // parse the GPS message:
-    var lat = parsedData.lat;
-    var lon = parsedData.lon;
-    var alt = parsedData.alt;
-    var time_usec = parsedData.time_usec;
-    // Log the values:
-  //  console.log("mavpackettype: " + mavpackettype);
-   // console.log("lat: " + lat);
-   // console.log("lon: " + lon);
-   // console.log("alt: " + alt);
-   // console.log("time_usec: " + time_usec);
-    // Display the values in html page:
-    // Get the element with the id "dynamicText"
-    const dynamicTextElementlat = document.getElementById('dynamicTextlat');
-    dynamicTextElementlat.textContent = lat;
-    const dynamicTextElementlon = document.getElementById('dynamicTextlon');
-    dynamicTextElementlon.textContent = lon;
-    const dynamicTextElementalt = document.getElementById('dynamicTextalt');
-    dynamicTextElementalt.textContent = alt;
-    const dynamicTextElementtime_usec = document.getElementById('dynamicTexttime_usec');
-    dynamicTextElementtime_usec.textContent = time_usec;
-};
+
 
 
 };
@@ -100,3 +80,94 @@ function doSend(message) {
     browserSocket.send(message);
 }
 
+function handle_mavlink_message(parsedData) {
+    // Access the values in the object
+    var mavpackettype = parsedData.mavpackettype;
+    if (mavpackettype == "GLOBAL_POSITION_INT") {
+      // parse the GPS message:
+      var lat = parsedData.lat;
+      var lon = parsedData.lon;
+      var alt = parsedData.alt;
+      var time_usec = parsedData.time_usec;
+      var time_boot_ms = parsedData.time_boot_ms;
+      var relative_alt = parsedData.relative_alt;
+      var vx = parsedData.vx;
+      var vy = parsedData.vy;
+      var vz = parsedData.vz;
+      var hdg = parsedData.hdg;
+
+      // Display the values in html page:
+      const dynamicTextElementlat = document.getElementById('dynamicTextlat');
+      dynamicTextElementlat.textContent = lat;
+      const dynamicTextElementlon = document.getElementById('dynamicTextlon');
+      dynamicTextElementlon.textContent = lon;
+      const dynamicTextElementalt = document.getElementById('dynamicTextalt');
+      dynamicTextElementalt.textContent = alt;
+      const dynamicTextElementtime_usec = document.getElementById('dynamicTexttime_usec');
+      dynamicTextElementtime_usec.textContent = time_usec;
+
+      const dynamicTextElementlat2 = document.getElementById('lat');
+      dynamicTextElementlat2.textContent = lat;
+      const dynamicTextElementlon2 = document.getElementById('lon');
+      dynamicTextElementlon2.textContent = lon;
+      const dynamicTextElementalt2 = document.getElementById('alt');
+      dynamicTextElementalt2.textContent = alt;
+      const dynamicTextElementtime_boot_ms = document.getElementById('time_boot_ms');
+      dynamicTextElementtime_boot_ms.textContent = time_boot_ms;
+
+      const dynamicTextElementrelative_alt = document.getElementById('relative_alt');
+      dynamicTextElementrelative_alt.textContent = relative_alt;
+      const dynamicTextElementvx = document.getElementById('vx');
+      dynamicTextElementvx.textContent = vx;
+      const dynamicTextElementvy = document.getElementById('vy');
+      dynamicTextElementvy.textContent = vy;
+      const dynamicTextElementvz = document.getElementById('vz');
+      dynamicTextElementvz.textContent = vz;
+      const dynamicTextElementhdg = document.getElementById('hdg');
+      dynamicTextElementhdg.textContent = hdg;
+
+
+
+
+
+
+    };
+  if (mavpackettype == "VFR_HUD") {
+    // Parse the VFR_HUD message:
+    var airspeed = parsedData.airspeed;
+    var groundspeed = parsedData.groundspeed;
+    var heading = parsedData.heading;
+    var throttle = parsedData.throttle;
+    var climb = parsedData.climb;
+    // Update the display:
+    const dynamicTextElementairspeed = document.getElementById('airspeed');
+    dynamicTextElementairspeed.textContent = airspeed;
+    const dynamicTextElementgroundspeed = document.getElementById('groundspeed');
+    dynamicTextElementgroundspeed.textContent = groundspeed;
+    const dynamicTextElementheading = document.getElementById('heading');
+    dynamicTextElementheading.textContent = heading;
+    const dynamicTextElementthrottle = document.getElementById('throttle');
+    dynamicTextElementthrottle.textContent = throttle;
+    const dynamicTextElementclimb = document.getElementById('climb');
+    dynamicTextElementclimb.textContent = climb;
+};
+if (mavpackettype == "VFR_HUD") {
+  // Parse the VFR_HUD message:
+  var airspeed = parsedData.airspeed;
+  var groundspeed = parsedData.groundspeed;
+  var heading = parsedData.heading;
+  var throttle = parsedData.throttle;
+  var climb = parsedData.climb;
+  // Update the display:
+  const dynamicTextElementairspeed = document.getElementById('airspeed');
+  dynamicTextElementairspeed.textContent = airspeed;
+  const dynamicTextElementgroundspeed = document.getElementById('groundspeed');
+  dynamicTextElementgroundspeed.textContent = groundspeed;
+  const dynamicTextElementheading = document.getElementById('heading');
+  dynamicTextElementheading.textContent = heading;
+  const dynamicTextElementthrottle = document.getElementById('throttle');
+  dynamicTextElementthrottle.textContent = throttle;
+  const dynamicTextElementclimb = document.getElementById('climb');
+  dynamicTextElementclimb.textContent = climb;
+};
+}
