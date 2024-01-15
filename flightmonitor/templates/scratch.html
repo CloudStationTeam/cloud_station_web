@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+  <div class="switch-container">
+    <label class="switch-label" for="toggleSwitch">Run JavaScript Function:</label>
+    <label class="switch">
+      <input type="checkbox" id="toggleSwitch" onchange="toggleFunction()">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <script>
+    function toggleFunction() {
+      var toggleSwitch = document.getElementById("toggleSwitch");
+      
+      if (toggleSwitch.checked) {
+        // Run your JavaScript function when the switch is checked
+        alert("JavaScript function is running!");
+      } else {
+        // Optionally, do something else when the switch is unchecked
+        alert("JavaScript function is not running.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resizable Text Field</title>
+  <style>
+    /* Optional: Add some basic styling */
+    textarea {
+      width: 300px;
+      height: 100px;
+      resize: both; /* Enables both horizontal and vertical resizing */
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <textarea placeholder="Type here..."></textarea>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resizable Text Field with Sequential Text Addition</title>
+  <style>
+    /* Optional: Add some basic styling */
+    textarea {
+      width: 300px;
+      height: 100px;
+      resize: both;
+      padding: 10px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <textarea id="resizableTextarea" placeholder="Type here..."></textarea>
+  <button onclick="addText()">Add Text</button>
+
+  <script>
+    function addText() {
+      var textarea = document.getElementById("resizableTextarea");
+      var newText = "New Text "; // You can replace this with the desired text
+
+      // Append the new text to the existing content in the textarea
+      textarea.value += newText;
+    }
+  </script>
+
+</body>
+</html>
+
+

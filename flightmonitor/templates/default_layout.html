@@ -21,6 +21,23 @@
       word-wrap: break-word;
       /* Allow words to break onto the next line if they exceed the max-width */
     }
+
+        /* Optional: Add some basic styling */
+        .switch-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .switch-label {
+      margin-right: 10px;
+    }
+    textarea {
+      width: 300px;
+      height: 100px;
+      resize: both; /* Enables both horizontal and vertical resizing */
+      padding: 10px;
+      box-sizing: border-box;
+    }
   </style>
 
 
@@ -117,12 +134,19 @@
   <h4>climb</h4>
   <p id="climb">This text can be updated dynamically. </p>
   
-
-
   <h3>debugmsg:</h3>
-  <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p>
 
+  <div class="switch-container">
+    <label class="switch-label" for="toggleSwitch">Debug </label>
+    <label class="switch">
+      <input type="checkbox" id="toggleSwitch" onchange="toggleFunction()"">
+      <span class="slider"></span>
+    </label>
+  </div>
 
+  <textarea id="dynamicTextdebugmsg" placeholder="Debug message..."></textarea>
+
+ <!-- <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p> -->
 
   <script type='text/javascript' src="{% static 'js/websocketcode.js' %}"></script>
 

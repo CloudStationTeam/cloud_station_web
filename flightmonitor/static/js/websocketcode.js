@@ -25,12 +25,17 @@ USEFUL_MESSAGES_V4_0 = [
 
 browserSocket.onmessage = function (e) {
   // * dump message to console
-  console.log("[LOG] Websocket messaage received: ", e.data) 
+  // console.log("[LOG] Websocket messaage received: ", e.data) 
 
   // * Dump message to broswer
-  debugmsg = e.data;
-  const dynamicTextElementdebugmsg = document.getElementById('dynamicTextdebugmsg');
-  dynamicTextElementdebugmsg.textContent = debugmsg;
+  var toggleSwitch = document.getElementById("toggleSwitch");
+  if (toggleSwitch.checked) {
+    // dump message to browswer
+    debugmsg = e.data;
+    var textarea = document.getElementById("dynamicTextdebugmsg");
+    textarea.value += "\n";
+    textarea.value += debugmsg;
+ }
 
   // * Parse mavlink message and update browser
   var parsedData = JSON.parse(e.data);
@@ -158,3 +163,20 @@ function handle_mavlink_message(parsedData) {
 
   }
 }
+
+function toggleFunction() {
+  var toggleSwitch = document.getElementById("toggleSwitch");
+  var textarea = document.getElementById("dynamicTextdebugmsg");
+  //textarea.style.visibility = toggleSwitch.checked ? "visible" : "hidden";
+
+  if (toggleSwitch.checked) {
+      // Run your JavaScript function when the switch is checked
+      console.log('toggle switch turned on');
+      textarea.value = "";
+      // make text area visible
+    } else {
+    console.log('toggle switch turned off');
+    // make text area invisible
+    // clear text field
+  }
+} 
