@@ -28,7 +28,41 @@ class Vehicle(models.Model):
     
 #
 
+# fields direct from mavlink messages:
+    # HEARTBEAT:
 
+    # MAV_TYPE 	Vehicle or component type. 
+    MAV_TYPE = models.IntegerField(default=0)
+
+    # base_mode	uint8_t	MAV_MODE_FLAG	System mode bitmap.
+    base_mode = models.IntegerField(default=0)
+    # base_mode:
+    # Value	Field Name	Description
+    # 128	MAV_MODE_FLAG_SAFETY_ARMED
+
+    # custom_mode	uint32_t		A bitfield for use for autopilot-specific flags
+    custom_mode = models.IntegerField(default=0)
+    # print(f"Flight Mode: {msg.custom_mode}")
+
+    # SYS_STATUS:
+
+    # voltage_battery	uint16_t	mV		Battery voltage, UINT16_MAX: Voltage not sent by autopilot
+    voltage_battery = models.IntegerField(default=0)
+
+    # current_battery	int16_t	cA		Battery current, -1: Current not sent by autopilot
+    current_battery = models.IntegerField(default=0)
+
+    # battery_remaining	int8_t	%		Battery energy remaining, -1: Battery remaining energy not sent by autopilot
+    battery_remaining = models.IntegerField(default=0)
+
+    # SYSTEM_TIME:
+
+    #time_unix_usec	uint64_t	us	Timestamp (UNIX epoch time).
+    time_unix_usec = models.BigIntegerField(default=0)
+
+    #time_boot_ms	uint32_t	ms	Timestamp (time since system boot)
+    # time_boot_ms = models.IntegerField(default=0)
+    # Redundant with GPS 
 
     # GLOBAL_POSITION_INT
     #time_boot_ms	# uint32_t	ms	Timestamp (time since system boot).
@@ -80,4 +114,3 @@ class Vehicle(models.Model):
 
     # climb	float	m/s	Current climb rate.
     climb = models.FloatField(default=0)
-
