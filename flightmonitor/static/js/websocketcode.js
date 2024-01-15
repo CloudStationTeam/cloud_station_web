@@ -46,9 +46,21 @@ browserSocket.onmessage = function (e) {
 
   var parsedData = JSON.parse(e.data);
 
-
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
+
+  if (mavpackettype == "DRONECOMM") {
+    // parse the GPS message:
+    var drone_remote_IP = parsedData.drone_remote_IP;
+    var drone_local_IP = parsedData.drone_local_IP;
+
+    const dynamicTextElementlat = document.getElementById('drone_local_IP');
+    dynamicTextElementlat.textContent = drone_local_IP;
+    const dynamicTextElementlon = document.getElementById('drone_remote_IP');
+    dynamicTextElementlon.textContent = drone_remote_IP;
+
+  }
+
 //  console.log('[LOG][websocketcode.js] mavpackettype = ' + mavpackettype);
   // if mavpackettype == "GLOBAL_POSITION_INT":
   if (mavpackettype == "GLOBAL_POSITION_INT") {
