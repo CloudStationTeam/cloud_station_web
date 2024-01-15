@@ -24,49 +24,17 @@ USEFUL_MESSAGES_V4_0 = [
 ]
 
 browserSocket.onmessage = function (e) {
-  console.log("[LOG] Websocket messaage received: ", e.data)
-  //console.log("e.data:")
-  //console.log(e.data)
-  //    if (msg["mavpackettype"] == "GLOBAL_POSITION_INT") {//create html element for the new marker [only initialize if the first data has location]
-  //        console.log("[LOG] message type is GPS.")  }
-  //  Parse
-  //  Pseudo code:
-  //  1. Parse out the mavlinkg type (GPS INT)
-  //  2. Parse out the lat lon
-  //  3. Change text on webpage dynamically.
-  // JSON string representing a dictionary
-  //  var jsonString = '{"name": "John", "age": 30, "city": "New York"}';
+  // * dump message to console
+  console.log("[LOG] Websocket messaage received: ", e.data) 
 
-  // Parse JSON string into a JavaScript object
-  //  var parsedData = JSON.parse(jsonString);
+  // * Dump message to broswer
   debugmsg = e.data;
   const dynamicTextElementdebugmsg = document.getElementById('dynamicTextdebugmsg');
   dynamicTextElementdebugmsg.textContent = debugmsg;
 
-
+  // * Parse mavlink message and update browser
   var parsedData = JSON.parse(e.data);
-
   handle_mavlink_message(parsedData)
-
-  // Access the values in the object
-  var mavpackettype = parsedData.mavpackettype;
-
-  if (mavpackettype == "DRONECOMM") {
-    // parse the GPS message:
-    var drone_remote_IP = parsedData.drone_remote_IP;
-    var drone_local_IP = parsedData.drone_local_IP;
-
-    const dynamicTextElementlat = document.getElementById('drone_local_IP');
-    dynamicTextElementlat.textContent = drone_local_IP;
-    const dynamicTextElementlon = document.getElementById('drone_remote_IP');
-    dynamicTextElementlon.textContent = drone_remote_IP;
-
-  }
-
-  //  console.log('[LOG][websocketcode.js] mavpackettype = ' + mavpackettype);
-  // if mavpackettype == "GLOBAL_POSITION_INT":
-
-
 
 };
 
@@ -158,7 +126,6 @@ function handle_mavlink_message(parsedData) {
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     dynamicTextElementcustom_mode.textContent = custom_mode;
   };
-
   if (mavpackettype == "SYS_STATUS") {
     // Parse the SYS_STATUS message:
     var voltage_battery = parsedData.voltage_battery;
@@ -172,7 +139,6 @@ function handle_mavlink_message(parsedData) {
     const dynamicTextElementbattery_remaining = document.getElementById('battery_remaining');
     dynamicTextElementbattery_remaining.textContent = battery_remaining;
   };
-
   if (mavpackettype == "SYSTEM_TIME") {
     // Parse the SYSTEM_TIME message:
     var time_unix_usec = parsedData.time_unix_usec;
@@ -180,10 +146,15 @@ function handle_mavlink_message(parsedData) {
     const dynamicTextElementtime_unix_usec = document.getElementById('time_unix_usec');
     dynamicTextElementtime_unix_usec.textContent = time_unix_usec;
   };
+  if (mavpackettype == "DRONECOMM") {
+    // parse the GPS message:
+    var drone_remote_IP = parsedData.drone_remote_IP;
+    var drone_local_IP = parsedData.drone_local_IP;
 
+    const dynamicTextElementlat = document.getElementById('drone_local_IP');
+    dynamicTextElementlat.textContent = drone_local_IP;
+    const dynamicTextElementlon = document.getElementById('drone_remote_IP');
+    dynamicTextElementlon.textContent = drone_remote_IP;
 
-
-
-
-
+  }
 }
