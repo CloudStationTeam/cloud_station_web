@@ -149,16 +149,7 @@ function handle_mavlink_message(parsedData) {
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     dynamicTextElementcustom_mode.textContent = custom_mode;
 
-    // Need to flag the webdrone object as connected
 
-    // Property value to search for
-    let targetId = 2; // Change this to the value you want to search for
-
-    // Use Array.find() to get the object based on the property
-    let foundObject = window.m_Array_of_WebDrone_objects.find(obj => obj.droneid === targetId);
-
-    m_WebDrone_object=
-    m_WebDrone_object.is_connected = true;
 
   };
   if (mavpackettype == "SYS_STATUS") {
@@ -185,11 +176,20 @@ function handle_mavlink_message(parsedData) {
     // parse the GPS message:
     var drone_remote_IP = parsedData.drone_remote_IP;
     var drone_local_IP = parsedData.drone_local_IP;
+    var drone_id_to_connect_to = parsedData.drone_id_to_connect_to; // need to flag webdrone ojbect as connected...
 
     const dynamicTextElementlat = document.getElementById('drone_local_IP');
     dynamicTextElementlat.textContent = drone_local_IP;
     const dynamicTextElementlon = document.getElementById('drone_remote_IP');
     dynamicTextElementlon.textContent = drone_remote_IP;
+    
+  
+    // Use Array.find() to get the object based on the property
+    let m_WebDrone_object = window.m_Array_of_WebDrone_objects.find(obj => obj.droneid === drone_id_to_connect_to);
+    m_WebDrone_object.is_connected = true;
+    console.log('flaggins connecte this object: m_WebDrone_object: ');
+    console.log(m_WebDrone_object);
+
 
   }
 }
