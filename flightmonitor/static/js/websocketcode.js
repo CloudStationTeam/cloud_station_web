@@ -38,33 +38,26 @@ browserSocket.onmessage = function (e) {
  }
 
   // * Parse mavlink message and update browser
-  // xxx var parsedData = JSON.parse(e.data);
-  // xxx handle_mavlink_message(parsedData)
+  var parsedData = JSON.parse(e.data);
+  handle_mavlink_message(parsedData)
 
-  // Parse alternative message structure that contains both mavlink message and port: and handle incoming messages
-    const m_data = JSON.parse(e.data);
-    console.log('m_data =: '+ m_data);
-    console.log('e.data =: '+ e.data);
-
-    const msg = m_data.msg;
-    console.log('msg =: '+ msg);
-    const port = m_data.port;
-    console.log('port =: '+ port);
-
-    // const jsonObject = JSON.parse(jsonString);
-    // const msgPart = jsonObject.msg;
-    
-    // console.log('msgPart =' + msgPart);
-
+  //xxx Parse alternative message structure that contains both mavlink message and port: and handle incoming messages
+  //xxx  const m_data = JSON.parse(e.data);
+   //xxx const msgAsJSON = JSON.stringify(m_data.msg);
+    //xxxconsole.log(' msgAsJSON  = '   + msgAsJSON);
+   //xxx const port = m_data.port;
+  //xxx  console.log('port =: '+ port);
 
 
 
 
 
     // Assuming 'messageType' is a property in your msg object
-    const messageType = data.msg.messageType;
-
-    console.log(`Received message on port ${port}. Message Type: ${messageType}`);
+    // const messageType = parsedData.msg.messageType;
+    //const messageType = m_data.msgAsJSON.messageType;
+    // const messageType = m_data.msgAsJSON.mavpackettype;
+    
+//    console.log(`Received message on port ${port}. Message Type: ${messageType}`);
 
 };
 

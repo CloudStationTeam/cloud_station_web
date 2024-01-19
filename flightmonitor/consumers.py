@@ -232,9 +232,6 @@ class UserActionsConsumer(WebsocketConsumer):
             if  is_drone_id_is_in_a_thread(drone_id_to_connect_to)==False: # create thread and mark as connected in database
                 # ** Find sinding IP
                 sending_ip_address=find_IP_ADDRESS_sending_to_port(int(DRONE_PORT_TO_CONNECT_TO))
-                # Usurp mavlink and create a new API for this project... DRONECOMM
-                comms_msg={"mavpackettype": "DRONECOMM",  "drone_remote_IP": str(sending_ip_address), "drone_local_IP": str(private_ip)}
-                self.send(json.dumps(comms_msg))
                 # ** Connect to drone
                 print('calling mavlink to connect to IP: ' ,DRONE_IP_TO_CONNECT_TO,'PORT: ',DRONE_PORT_TO_CONNECT_TO)
                 mavlink = mavutil.mavlink_connection(DRONE_IP_TO_CONNECT_TO + ':' + DRONE_PORT_TO_CONNECT_TO)
@@ -243,6 +240,9 @@ class UserActionsConsumer(WebsocketConsumer):
                 print('did call mavlink to connect')
                 if connect_msg: # connection succeded
                     print('[LOG] Mavlink connection successful!')
+                    # Usurp mavlink and create a new API for this project... DRONECOMM
+                    comms_msg={"mavpackettype": "DRONECOMM",  "drone_remote_IP": str(sending_ip_address), "drone_local_IP": str(private_ip),"drone_port": str(drone_id_to_connect_to)}
+                    self.send(json.dumps(comms_msg))
                     vehicle_to_listen_to.is_connected=True
                     vehicle_to_listen_to.save()
                     # Create a thread

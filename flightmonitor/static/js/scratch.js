@@ -34,3 +34,44 @@ ws.onmessage = (event) => {
 
     console.log(`Received message on port ${port}. Message Type: ${messageType}`);
 };
+
+
+
+// Assuming wsMessage is the WebSocket message string
+const wsMessage = '{"msg":{"mavpackettype":"VFR_HUD","airspeed":0.023421762511134148,"groundspeed":0.0234217569231987,"heading":1,"throttle":0,"alt":25.06999969482422,"climb":-1.662250178924296e-05},"port":"14558"}';
+
+// Parse the WebSocket message
+const parsedMessage = JSON.parse(wsMessage);
+
+// Accessing properties
+const mavpackettype = parsedMessage.msg.mavpackettype;
+const airspeed = parsedMessage.msg.airspeed;
+const groundspeed = parsedMessage.msg.groundspeed;
+const heading = parsedMessage.msg.heading;
+const throttle = parsedMessage.msg.throttle;
+const altitude = parsedMessage.msg.alt;
+const climb = parsedMessage.msg.climb;
+const port = parsedMessage.port;
+
+// Example usage
+console.log(`Mavpackettype: ${mavpackettype}`);
+console.log(`Airspeed: ${airspeed}`);
+console.log(`Groundspeed: ${groundspeed}`);
+console.log(`Heading: ${heading}`);
+console.log(`Throttle: ${throttle}`);
+console.log(`Altitude: ${altitude}`);
+console.log(`Climb: ${climb}`);
+console.log(`Port: ${port}`);
+
+
+// Assuming wsMessage is the WebSocket message string
+const wsMessage = '{"msg":{"mavpackettype":"VFR_HUD","airspeed":0.023421762511134148,"groundspeed":0.0234217569231987,"heading":1,"throttle":0,"alt":25.06999969482422,"climb":-1.662250178924296e-05},"port":"14558"}';
+
+// Parse the WebSocket message
+const parsedMessage = JSON.parse(wsMessage);
+
+// Extract the 'msg' part
+const msgAsJSON = JSON.stringify(parsedMessage.msg);
+
+// Example usage
+console.log(msgAsJSON);

@@ -45,20 +45,24 @@ def listenfunction(droneid_to_listen_to, mavlinkconnection, websocket_to_send_to
 
 
         if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
-            #print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            #print('msg = ',msg)
-            #websocket_to_send_to.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
+            print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            print('msg = ',msg)
+            websocket_to_send_to.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
 
             ## An alternative message structure that sends mavlink message and port of websocket to browswer:
             # Get the port information from mavlinkconnection
             #port = mavlinkconnection.get_port()
-            port = droneid_to_listen_to;
+            # xxxport = droneid_to_listen_to;
             # Create a dictionary containing msg and port information
-            data = {
-                'msg': msg.to_dict(),  # Assuming msg has a to_dict() method to convert it to a dictionary
-                'port': port
-            }
-            websocket_to_send_to.send(json.dumps(data))
+#            data = {
+#                'msg': msg.to_dict(),  # Assuming msg has a to_dict() method to convert it to a dictionary
+#                'port': port
+#            }
+#            data = {
+#                'msg': msg.to_json(),  # Assuming msg has a to_dict() method to convert it to a dictionary
+#                'port': port
+#            }
+            #websocket_to_send_to.send(json.dumps(data))
 
 
 
