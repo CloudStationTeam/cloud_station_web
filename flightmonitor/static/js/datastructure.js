@@ -1,6 +1,41 @@
+class WebDrone { // Cloudstation 4.0
+    // mirrors models.py in Django for ease of management....
+    constructor(droneID) {
+        this.droneID = droneID; // droneID is the same as the port for now
+        this.drone_local_IP = null;
+        this.drone_remote_IP = null;
+        this.drone_is_connected = false;
+        this.vehicle_type = null;
+        this.last_seen = null;
+        this.is_connected = null;
+        this.MAV_TYPE = null;
+        this.base_mode = null;
+        this.custom_mode = null;
+        this.voltage_battery = null;
+        this.current_battery = null;
+        this.battery_remaining = null;
+        this.time_unix_usec = null;
+        this.time_boot_ms = null;
+        this.lat = null;
+        this.lon = null;
+        this.alt = null;
+        this.relative_alt = null;
+        this.vx = null;
+        this.vy = null;
+        this.vz = null;
+        this.hdg = null;
+        this.airspeed = null;
+        this.groundspeed = null;
+        this.heading = null;
+        this.throttle = null;
+        this.climb = null;
+    }
 
+    // we can just use code in js like xyzvariable = m_webdrone_object.lat for example to get the lat
+    // we can use m_webdrone_object.lat = 32.777 for example to set the lat
+}
 
-class Drone {
+class Drone { // Cloudstation 2.0
     constructor(droneID) {
         this.droneID = droneID;
         this.longitude = null;

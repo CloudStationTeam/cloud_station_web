@@ -25,7 +25,7 @@ USEFUL_MESSAGES_V4_0 = [
 
 browserSocket.onmessage = function (e) {
   // * dump message to console
-  // console.log("[LOG] Websocket messaage received: ", e.data) 
+   console.log("[LOG] Websocket messaage received: ", e.data) 
 
   // * Dump message to broswer
   var toggleSwitch = document.getElementById("toggleSwitch");
@@ -38,8 +38,33 @@ browserSocket.onmessage = function (e) {
  }
 
   // * Parse mavlink message and update browser
-  var parsedData = JSON.parse(e.data);
-  handle_mavlink_message(parsedData)
+  // xxx var parsedData = JSON.parse(e.data);
+  // xxx handle_mavlink_message(parsedData)
+
+  // Parse alternative message structure that contains both mavlink message and port: and handle incoming messages
+    const m_data = JSON.parse(e.data);
+    console.log('m_data =: '+ m_data);
+    console.log('e.data =: '+ e.data);
+
+    const msg = m_data.msg;
+    console.log('msg =: '+ msg);
+    const port = m_data.port;
+    console.log('port =: '+ port);
+
+    // const jsonObject = JSON.parse(jsonString);
+    // const msgPart = jsonObject.msg;
+    
+    // console.log('msgPart =' + msgPart);
+
+
+
+
+
+
+    // Assuming 'messageType' is a property in your msg object
+    const messageType = data.msg.messageType;
+
+    console.log(`Received message on port ${port}. Message Type: ${messageType}`);
 
 };
 
@@ -130,6 +155,18 @@ function handle_mavlink_message(parsedData) {
 
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     dynamicTextElementcustom_mode.textContent = custom_mode;
+
+    // Need to flag the webdrone object as connected
+
+    // Property value to search for
+    let targetId = 2; // Change this to the value you want to search for
+
+    // Use Array.find() to get the object based on the property
+    let foundObject = window.m_Array_of_WebDrone_objects.find(obj => obj.droneid === targetId);
+
+    m_WebDrone_object=
+    m_WebDrone_object.is_connected = true;
+
   };
   if (mavpackettype == "SYS_STATUS") {
     // Parse the SYS_STATUS message:
