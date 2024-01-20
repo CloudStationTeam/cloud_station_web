@@ -43,51 +43,13 @@ browserSocket.onmessage = function (e) {
   msg_to_handle = parsedData.msg;
   droneport=parsedData.port;
 
-  console.log('[PARSE LOG]');
-  console.log('msg_to_handle = ');
-  console.log(msg_to_handle);
-  console.log('droneport = ');
-  console.log(droneport);
+  //console.log('[PARSE LOG]');
+  //console.log('msg_to_handle = ');
+  //console.log(msg_to_handle);
+  //console.log('droneport = ');
+  //console.log(droneport);
 
   handle_mavlink_message(msg_to_handle)
-
-  // console.log('[LOG]');
-  // console.log('parsedData = ');
-  // console.log(parsedData);
-
-  // test_parsedData = {"msg": {"mavpackettype": "GLOBAL_POSITION_INT", "time_boot_ms": 8020057, "lat": 336458610, "lon": -1178427499, "alt": 25070, "relative_alt": -23, "vx": -1, "vy": 1, "vz": 0, "hdg": 135}, "port": "14558"};
-
-  // console.log('test_parsedData = ');
-  // console.log(test_parsedData);
-
-  // console.log('test_parsedData.msg = ');
-  // console.log(test_parsedData.msg);
-
-  // var test_parsedmessage = test_parsedData['msg'];
-  // console.log('test_parsedmessage=')
-  // console.log(test_parsedmessage)
-  // var parsedmessage = parsedData['msg'];
-  // console.log('parsedData=')
-  // console.log(parsedData)
-
-
-  // xxx handle_mavlink_message(parsedData)
-
-  //xxx Parse alternative message structure that contains both mavlink message and port: and handle incoming messages
-  //xxx  const m_data = JSON.parse(e.data);
-   //xxx const msgAsJSON = JSON.stringify(m_data.msg);
-    //xxxconsole.log(' msgAsJSON  = '   + msgAsJSON);
-   //xxx const port = m_data.port;
-  //xxx  console.log('port =: '+ port);
-
-
-
-
-
-    // Assuming 'messageType' is a property in your msg object
-    // const messageType = parsedData.msg.messageType;
-    //const messageType = m_data.msgAsJSON.messageType;
-    // const messageType = m_data.msgAsJSON.mavpackettype;
     
 //    console.log(`Received message on port ${port}. Message Type: ${messageType}`);
 
