@@ -2,10 +2,10 @@ class WebDrone { // Cloudstation 4.0
     // mirrors models.py in Django for ease of management....
     constructor(droneID) {
         this.droneID = droneID; // droneID is the same as the port for now
-        this.drone_local_IP = null;
+        this.drone_local_IP = null; 
         this.drone_remote_IP = null;
         this.vehicle_type = null;
-        this.last_seen = null;
+        this.last_seen = null; // number of milliseconds since January 1, 1970
         this.is_connected = null;
         this.MAV_TYPE = null;
         this.base_mode = null;

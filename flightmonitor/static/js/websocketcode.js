@@ -1,3 +1,4 @@
+
 var browserSocket = new WebSocket(
   'ws://' + window.location.host +
   '/ws/flightmonitor/');
@@ -43,7 +44,8 @@ browserSocket.onmessage = function (e) {
   droneport=parsedData.port;
 
   // console.log("[LOG] callling handle_mavlink_message(msg_to_handle) ", msg_to_handle) 
-  handle_mavlink_message(msg_to_handle)
+  // handle_mavlink_message(msg_to_handle)
+  handle_mavlink_message(msg_to_handle, droneport)
 
 };
 
@@ -57,12 +59,19 @@ function doSend(message) {
   browserSocket.send(message);
 }
 
-function handle_mavlink_message(parsedData) {
+function handle_mavlink_message(parsedData,droneport) {
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
   // console.log("[LOG] handle_mavlink_message(parsedData) called with the following parseddata ")
   // console.log(parsedData)
   // console.log("mavpackettype= ",mavpackettype)
+
+  // find webdrone object based on droneport:
+  console.log("handle_mavlink_message(parsedData,droneport) called ");
+  let m_webdrone_object_to_update = window.m_Array_of_WebDrone_objects.find(item => item['droneID'] === droneport);
+  console.log("m_webdrone_object_to_update =  ",m_webdrone_object_to_update);
+  m_webdrone_object_to_update.last_seen=Date.now();  
+
 
 
   if (mavpackettype == "GLOBAL_POSITION_INT") {
@@ -99,7 +108,16 @@ function handle_mavlink_message(parsedData) {
     const dynamicTextElementhdg = document.getElementById('hdg');
     dynamicTextElementhdg.textContent = hdg;
 
-
+    // Update webdrone object:
+    m_webdrone_object_to_update.time_boot_ms = time_boot_ms;
+    m_webdrone_object_to_update.lat = lat;
+    m_webdrone_object_to_update.lon = lon;
+    m_webdrone_object_to_update.alt = alt;
+    m_webdrone_object_to_update.relative_alt = relative_alt;
+    m_webdrone_object_to_update.vx = vx;
+    m_webdrone_object_to_update.vy = vy;
+    m_webdrone_object_to_update.vz = vz;
+    m_webdrone_object_to_update.hdg = hdg;
 
 
 
@@ -123,6 +141,16 @@ function handle_mavlink_message(parsedData) {
     dynamicTextElementthrottle.textContent = throttle;
     const dynamicTextElementclimb = document.getElementById('climb');
     dynamicTextElementclimb.textContent = climb;
+
+        // Update webdrone object:
+    m_webdrone_object_to_update.airspeed = airspeed;
+    m_webdrone_object_to_update.groundspeed = groundspeed;
+    m_webdrone_object_to_update.heading = heading;
+    m_webdrone_object_to_update.throttle = throttle;
+    m_webdrone_object_to_update.throttle = throttle;
+    m_webdrone_object_to_update.climb = climb;
+
+
   };
   if (mavpackettype == "HEARTBEAT") {
     // Parse the HEARTBEAT message:
@@ -140,6 +168,12 @@ function handle_mavlink_message(parsedData) {
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     dynamicTextElementcustom_mode.textContent = custom_mode;
 
+    // Update webdrone object:
+    m_webdrone_object_to_update.MAV_TYPE = type;
+    m_webdrone_object_to_update.base_mode = base_mode;
+    m_webdrone_object_to_update.custom_mode = custom_mode;
+
+
 
 
   };
@@ -155,6 +189,12 @@ function handle_mavlink_message(parsedData) {
     dynamicTextElementcurrent_battery.textContent = current_battery;
     const dynamicTextElementbattery_remaining = document.getElementById('battery_remaining');
     dynamicTextElementbattery_remaining.textContent = battery_remaining;
+
+    // Update webdrone object:
+    m_webdrone_object_to_update.voltage_battery = voltage_battery;
+    m_webdrone_object_to_update.current_battery = current_battery;
+    m_webdrone_object_to_update.battery_remaining = battery_remaining;
+
   };
   if (mavpackettype == "SYSTEM_TIME") {
     // Parse the SYSTEM_TIME message:
@@ -162,6 +202,10 @@ function handle_mavlink_message(parsedData) {
     // Update the display:
     const dynamicTextElementtime_unix_usec = document.getElementById('time_unix_usec');
     dynamicTextElementtime_unix_usec.textContent = time_unix_usec;
+
+    // Update webdrone object:
+    m_webdrone_object_to_update.time_unix_usec = time_unix_usec;
+
   };
   if (mavpackettype == "DRONECOMM") {
     // parse the GPS message:
@@ -180,6 +224,12 @@ function handle_mavlink_message(parsedData) {
     m_WebDrone_object.is_connected = true;
     console.log('flaggins connecte this object: m_WebDrone_object: ');
     console.log(m_WebDrone_object);
+
+    // Update webdrone object:
+    m_webdrone_object_to_update.drone_local_IP = drone_local_IP;
+    m_webdrone_object_to_update.drone_remote_IP = drone_remote_IP;
+
+
 
 
   }

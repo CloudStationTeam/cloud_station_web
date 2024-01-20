@@ -75,3 +75,38 @@ const msgAsJSON = JSON.stringify(parsedMessage.msg);
 
 // Example usage
 console.log(msgAsJSON);
+
+
+
+
+
+
+
+
+
+
+
+// chatgpt javascript find object in array from one of its properties
+// Sample array of objects
+const arrayOfObjects = [
+    { id: 1, name: 'John' },
+    { id: 2, name: 'Jane' },
+    { id: 3, name: 'Doe' }
+  ];
+  
+  // Function to find an object by property value
+  function findObjectByProperty(array, propertyName, propertyValue) {
+    return array.find(item => item[propertyName] === propertyValue);
+  }
+  
+  // Example usage
+  const foundObject = findObjectByProperty(arrayOfObjects, 'id', 2);
+  
+  if (foundObject) {
+    console.log('Object found:', foundObject);
+  } else {
+    console.log('Object not found');
+  }
+
+
+  foundObject = array.find(item => item[propertyName] === propertyValue);
