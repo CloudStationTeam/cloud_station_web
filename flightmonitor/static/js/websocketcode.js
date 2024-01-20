@@ -24,11 +24,10 @@ USEFUL_MESSAGES_V4_0 = [
 ]
 
 browserSocket.onmessage = function (e) {
-  // * dump message to console
-   console.log("[LOG] Websocket messaage received: e.data ", e.data) 
+  // console.log("[LOG] Websocket messaage received: e.data ", e.data) // * dump message to console
   // e.data is the payload of the message. e means event.
 
-  // * Dump message to broswer
+  // * Dump message to broswer if user wants to see it
   var toggleSwitch = document.getElementById("toggleSwitch");
   if (toggleSwitch.checked) {
     // dump message to browswer
@@ -43,15 +42,8 @@ browserSocket.onmessage = function (e) {
   msg_to_handle = parsedData.msg;
   droneport=parsedData.port;
 
-  //console.log('[PARSE LOG]');
-  //console.log('msg_to_handle = ');
-  //console.log(msg_to_handle);
-  //console.log('droneport = ');
-  //console.log(droneport);
-
+  // console.log("[LOG] callling handle_mavlink_message(msg_to_handle) ", msg_to_handle) 
   handle_mavlink_message(msg_to_handle)
-    
-//    console.log(`Received message on port ${port}. Message Type: ${messageType}`);
 
 };
 
@@ -68,6 +60,11 @@ function doSend(message) {
 function handle_mavlink_message(parsedData) {
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
+  // console.log("[LOG] handle_mavlink_message(parsedData) called with the following parseddata ")
+  // console.log(parsedData)
+  // console.log("mavpackettype= ",mavpackettype)
+
+
   if (mavpackettype == "GLOBAL_POSITION_INT") {
     // parse the GPS message:
     var lat = parsedData.lat;
