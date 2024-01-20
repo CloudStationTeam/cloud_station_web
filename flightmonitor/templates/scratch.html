@@ -109,3 +109,128 @@
   </div>
 </div>
 
+
+
+
+<div class="col-6">
+  <!-- Text Boxes 1-12 with Small Fonts -->
+  <label for="textbox1" class="small-label">Text Box 1:</label>
+  <input type="text" id="textbox1" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 1">
+  
+  <label for="textbox2" class="small-label">Text Box 2:</label>
+  <input type="text" id="textbox2" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 2">
+  
+  <label for="textbox3" class="small-label">Text Box 3:</label>
+  <input type="text" id="textbox3" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 3">
+  
+  <label for="textbox4" class="small-label">Text Box 4:</label>
+  <input type="text" id="textbox4" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 4">
+  
+  <label for="textbox5" class="small-label">Text Box 5:</label>
+  <input type="text" id="textbox5" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 5">
+  
+  <label for="textbox6" class="small-label">Text Box 6:</label>
+  <input type="text" id="textbox6" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 6">
+  
+  <label for="textbox7" class="small-label">Text Box 7:</label>
+  <input type="text" id="textbox7" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 7">
+  
+  <label for="textbox8" class="small-label">Text Box 8:</label>
+  <input type="text" id="textbox8" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 8">
+  
+  <label for="textbox9" class="small-label">Text Box 9:</label>
+  <input type="text" id="textbox9" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 9">
+  
+  <label for="textbox10" class="small-label">Text Box 10:</label>
+  <input type="text" id="textbox10" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 10">
+  
+  <label for="textbox11" class="small-label">Text Box 11:</label>
+  <input type="text" id="textbox11" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 11">
+  
+  <label for="textbox12" class="small-label">Text Box 12:</label>
+  <input type="text" id="textbox12" class="form-control form-control-sm mb-2" placeholder="Enter value for Text Box 12">
+</div>
+ 
+<h1>Vehicle output</h1>
+<h2>Comms</h2>
+<h3>local ip:</h3>
+<p id="drone_local_IP">This text can be updated dynamically. </p>
+<h3>drone ip:</h3>
+<p id="drone_remote_IP">This text can be updated dynamically.</p>
+
+
+
+<h2>Mavlink fields</h2>
+<h3>HEARTBEAT</h3>
+<h4>type</h4>
+<p id="type">This text can be updated dynamically. </p>
+<h4>base_mode</h4>
+<p id="base_mode">This text can be updated dynamically. </p>
+<h4>custom_mode</h4>
+<p id="custom_mode">This text can be updated dynamically. </p>
+
+
+<h3>SYS_STATUS</h3>
+<h4>voltage_battery</h4>
+<p id="voltage_battery">This text can be updated dynamically. </p>
+<h4>current_battery</h4>
+<p id="current_battery">This text can be updated dynamically. </p>
+<h4>battery_remaining</h4>
+<p id="battery_remaining">This text can be updated dynamically. </p>
+
+<h3>SYSTEM_TIME</h3>
+<h4>time_unix_usec</h4>
+<p id="time_unix_usec">This text can be updated dynamically. </p>
+
+<h3>GLOBAL_POSITION_INT</h3>
+<h4>time_boot_ms</h4>
+<p id="time_boot_ms">This text can be updated dynamically. </p>
+<h4>lat</h4>
+<p id="lat">This text can be updated dynamically. </p>
+<h4>lon</h4>
+<p id="lon">This text can be updated dynamically. </p>
+<h4>alt</h4>
+<p id="alt">This text can be updated dynamically. </p>
+<h4>relative_alt</h4>
+<p id="relative_alt">This text can be updated dynamically. </p>
+<h4>vx</h4>
+<p id="vx">This text can be updated dynamically. </p>
+<h4>vy</h4>
+<p id="vy">This text can be updated dynamically. </p>
+<h4>vz</h4>
+<p id="vz">This text can be updated dynamically. </p>
+<h4>hdg</h4>
+<p id="hdg">This text can be updated dynamically. </p>
+
+
+<h3>VFR_HUD</h3>
+<h4>airspeed</h4>
+<p id="airspeed">This text can be updated dynamically. </p>
+<h4>groundspeed</h4>
+<p id="groundspeed">This text can be updated dynamically. </p>
+<h4>heading</h4>
+<p id="heading">This text can be updated dynamically. </p>
+<h4>throttle</h4>
+<p id="throttle">This text can be updated dynamically. </p>
+<h4>climb</h4>
+<p id="climb">This text can be updated dynamically. </p>
+
+
+<h1>Vehicle input</h1>
+<h2>Connect</h2>
+<div>Leave IP at 0.0.0.0 or blank if not known.</div>
+<br>
+<form>
+  <label for="DRONE_IP">DRONE_IP </label>
+  <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
+
+  <label for="DRONE_PORT">DRONE_PORT </label>
+  <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14559">
+
+  <input type="button" value="Submit" onclick="connectVehicle_by_IP_and_PORT()">
+</form>
+<h2>Disconnect</h2>
+<label for="disVID">DRONE_PORT:</label>
+<input type="text" class="form-control" id="disVID" required value="14559">
+<br>
+<button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>

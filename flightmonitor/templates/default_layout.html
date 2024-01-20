@@ -22,6 +22,35 @@
     window.m_Array_of_WebDrone_objects = []; // empty array of webdrone objects
   </script>
 
+  <style>
+    .text-box {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1px;
+      padding: 1px;
+      font-size: x-small;
+      background-position: white;
+      border: 1px solid grey;
+      border-radius: 1px;
+    }
+
+    .value-box {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1px;
+      padding: 1px;
+      font-size: x-small;
+      background-position: red;
+      border: 1px solid blue;
+      border-radius: 1px;
+    }
+
+    .label {
+      font-size: x-small;
+      margin-bottom: 1px;
+    }
+  </style>
+
   {% load static %}
   <!-- 
   <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
@@ -30,12 +59,36 @@
 </head>
 
 <body>
-
+  <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="container">
     <div class="row">
       <!-- First Column -->
-      <div class="col-md-4" style="border: 2px solid red;">
+      <div class="col-md-2">
         <div class="row">
           <div class="col-6" style="background-color: #3498db;">Sub Column 1</div>
           <div class="col-6" style="background-color: #2ecc71;">Sub Column 2</div>
@@ -43,134 +96,169 @@
       </div>
 
       <!-- Second Column -->
-      <div class="col-md-4" style="border: 2px solid red;">
+      <div class="col-md-6">
         <div class="row">
           <div class="col-6" style="background-color: #e74c3c;">Sub Column 1</div>
           <div class="col-6" style="background-color: #f39c12;">Sub Column 2</div>
         </div>
       </div>
 
-      <!-- Third Column -->
-      <div class="col-md-4" style="border: 2px solid red;">
+      <!-- Third Column with 2 Sub-Columns -->
+      <div class="col-md-4" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+        Telemetry
         <div class="row">
-          <div class="col-6" style="background-color: #9b59b6;">Sub Column 1
+          <!-- Sub-Column 1 -->
+          <div class="col-6">
+            <!-- Text Boxes 1-12 with Small Fonts -->
+
+
+            <div class="text-box">
+              <label for="voltage_battery"><b>voltage_battery</b></label>
+              <div class="value-box" id="voltage_battery">
+               pending
+              </div>
+            </div>
+
+            <div class="text-box">
+              <label for="current_battery"><b>current_battery</b></label>
+              <div class="value-box" id="current_battery">
+               pending
+              </div>
+            </div>
+
+            <div class="text-box">
+              <label for="battery_remaining"><b>battery_remaining</b></label>
+              <div class="value-box" id="battery_remaining">
+               pending
+              </div>
+            </div>
 
           </div>
-          <div class="col-6" style="background-color: #34495e;">Sub Column 2</div>
+
+          <!-- Sub-Column 2 -->
+          <div class="col-6">
+            <div class="text-box">
+              <p><strong>Label 3</strong></p>
+              <div>Text 3</div>
+              <!-- Repeat the above structure for the remaining 11 text boxes -->
+            </div>
+
+
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div>Telemetry
-    <h1>Vehicle</h1>
-    <h2>Connect</h2>
-    <div>Leave IP at 0.0.0.0 or blank if not known.</div>
-    <br>
-    <form>
-      <label for="DRONE_IP">DRONE_IP </label>
-      <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
 
-      <label for="DRONE_PORT">DRONE_PORT </label>
-      <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14559">
 
-      <input type="button" value="Submit" onclick="connectVehicle_by_IP_and_PORT()">
-    </form>
-    <h2>Disconnect</h2>
-    <label for="disVID">DRONE_PORT:</label>
-    <input type="text" class="form-control" id="disVID" required value="14559">
-    <br>
-    <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
-
-    <h2>Comms</h2>
-    <h3>local ip:</h3>
-    <p id="drone_local_IP">This text can be updated dynamically. </p>
-    <h3>drone ip:</h3>
-    <p id="drone_remote_IP">This text can be updated dynamically.</p>
+      <h1>Vehicle output</h1>
+      <h2>Comms</h2>
+      <h3>local ip:</h3>
+      <p id="drone_local_IP">This text can be updated dynamically. </p>
+      <h3>drone ip:</h3>
+      <p id="drone_remote_IP">This text can be updated dynamically.</p>
 
 
 
-    <h2>Mavlink fields</h2>
-    <h3>HEARTBEAT</h3>
-    <h4>type</h4>
-    <p id="type">This text can be updated dynamically. </p>
-    <h4>base_mode</h4>
-    <p id="base_mode">This text can be updated dynamically. </p>
-    <h4>custom_mode</h4>
-    <p id="custom_mode">This text can be updated dynamically. </p>
+      <h2>Mavlink fields</h2>
+      <h3>HEARTBEAT</h3>
+      <h4>type</h4>
+      <p id="type">This text can be updated dynamically. </p>
+      <h4>base_mode</h4>
+      <p id="base_mode">This text can be updated dynamically. </p>
+      <h4>custom_mode</h4>
+      <p id="custom_mode">This text can be updated dynamically. </p>
 
 
-    <h3>SYS_STATUS</h3>
-    <h4>voltage_battery</h4>
-    <p id="voltage_battery">This text can be updated dynamically. </p>
-    <h4>current_battery</h4>
-    <p id="current_battery">This text can be updated dynamically. </p>
-    <h4>battery_remaining</h4>
-    <p id="battery_remaining">This text can be updated dynamically. </p>
+      <h3>SYS_STATUS</h3>
+      <h4>voltage_battery</h4>
+      <p id="voltage_battery">This text can be updated dynamically. </p>
+      <h4>current_battery</h4>
+      <p id="current_battery">This text can be updated dynamically. </p>
+      <h4>battery_remaining</h4>
+      <p id="battery_remaining">This text can be updated dynamically. </p>
 
-    <h3>SYSTEM_TIME</h3>
-    <h4>time_unix_usec</h4>
-    <p id="time_unix_usec">This text can be updated dynamically. </p>
+      <h3>SYSTEM_TIME</h3>
+      <h4>time_unix_usec</h4>
+      <p id="time_unix_usec">This text can be updated dynamically. </p>
 
-    <h3>GLOBAL_POSITION_INT</h3>
-    <h4>time_boot_ms</h4>
-    <p id="time_boot_ms">This text can be updated dynamically. </p>
-    <h4>lat</h4>
-    <p id="lat">This text can be updated dynamically. </p>
-    <h4>lon</h4>
-    <p id="lon">This text can be updated dynamically. </p>
-    <h4>alt</h4>
-    <p id="alt">This text can be updated dynamically. </p>
-    <h4>relative_alt</h4>
-    <p id="relative_alt">This text can be updated dynamically. </p>
-    <h4>vx</h4>
-    <p id="vx">This text can be updated dynamically. </p>
-    <h4>vy</h4>
-    <p id="vy">This text can be updated dynamically. </p>
-    <h4>vz</h4>
-    <p id="vz">This text can be updated dynamically. </p>
-    <h4>hdg</h4>
-    <p id="hdg">This text can be updated dynamically. </p>
+      <h3>GLOBAL_POSITION_INT</h3>
+      <h4>time_boot_ms</h4>
+      <p id="time_boot_ms">This text can be updated dynamically. </p>
+      <h4>lat</h4>
+      <p id="lat">This text can be updated dynamically. </p>
+      <h4>lon</h4>
+      <p id="lon">This text can be updated dynamically. </p>
+      <h4>alt</h4>
+      <p id="alt">This text can be updated dynamically. </p>
+      <h4>relative_alt</h4>
+      <p id="relative_alt">This text can be updated dynamically. </p>
+      <h4>vx</h4>
+      <p id="vx">This text can be updated dynamically. </p>
+      <h4>vy</h4>
+      <p id="vy">This text can be updated dynamically. </p>
+      <h4>vz</h4>
+      <p id="vz">This text can be updated dynamically. </p>
+      <h4>hdg</h4>
+      <p id="hdg">This text can be updated dynamically. </p>
 
 
-    <h3>VFR_HUD</h3>
-    <h4>airspeed</h4>
-    <p id="airspeed">This text can be updated dynamically. </p>
-    <h4>groundspeed</h4>
-    <p id="groundspeed">This text can be updated dynamically. </p>
-    <h4>heading</h4>
-    <p id="heading">This text can be updated dynamically. </p>
-    <h4>throttle</h4>
-    <p id="throttle">This text can be updated dynamically. </p>
-    <h4>climb</h4>
-    <p id="climb">This text can be updated dynamically. </p>
-  </div>
+      <h3>VFR_HUD</h3>
+      <h4>airspeed</h4>
+      <p id="airspeed">This text can be updated dynamically. </p>
+      <h4>groundspeed</h4>
+      <p id="groundspeed">This text can be updated dynamically. </p>
+      <h4>heading</h4>
+      <p id="heading">This text can be updated dynamically. </p>
+      <h4>throttle</h4>
+      <p id="throttle">This text can be updated dynamically. </p>
+      <h4>climb</h4>
+      <p id="climb">This text can be updated dynamically. </p>
 
-  <h3>debugmsg:</h3>
 
-  <div class="switch-container">
-    <label class="switch-label" for="toggleSwitch">Debug </label>
-    <label class="switch">
-      <input type="checkbox" id="toggleSwitch" onchange="toggleFunction()"">
+      <h1>Vehicle input</h1>
+      <h2>Connect</h2>
+      <div>Leave IP at 0.0.0.0 or blank if not known.</div>
+      <br>
+      <form>
+        <label for="DRONE_IP">DRONE_IP </label>
+        <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
+
+        <label for="DRONE_PORT">DRONE_PORT </label>
+        <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14559">
+
+        <input type="button" value="Submit" onclick="connectVehicle_by_IP_and_PORT()">
+      </form>
+      <h2>Disconnect</h2>
+      <label for="disVID">DRONE_PORT:</label>
+      <input type="text" class="form-control" id="disVID" required value="14559">
+      <br>
+      <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
+
+      <h3>debugmsg:</h3>
+
+      <div class="switch-container">
+        <label class="switch-label" for="toggleSwitch">Debug </label>
+        <label class="switch">
+          <input type="checkbox" id="toggleSwitch" onchange="toggleFunction()"">
       <span class=" slider"></span>
-    </label>
-  </div>
+        </label>
+      </div>
 
-  <textarea id="dynamicTextdebugmsg" placeholder="Debug message..."></textarea>
+      <textarea id="dynamicTextdebugmsg" placeholder="Debug message..."></textarea>
 
-  <!-- <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p> -->
+      <!-- <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p> -->
 
-  <!-- Bootstrap scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
+      <!-- Bootstrap scripts -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 
-  <!-- User defined scripts -->
-  <script type='text/javascript' src="{% static 'js/websocketcode.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
-  <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
-  <script type='text/javascript' src="{% static 'js/vehicle_control.js' %}"></script>
+      <!-- User defined scripts -->
+      <script type='text/javascript' src="{% static 'js/websocketcode.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+      <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+      <script type='text/javascript' src="{% static 'js/vehicle_control.js' %}"></script>
 
 
 </body>
