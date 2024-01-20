@@ -25,7 +25,8 @@ USEFUL_MESSAGES_V4_0 = [
 
 browserSocket.onmessage = function (e) {
   // * dump message to console
-   console.log("[LOG] Websocket messaage received: ", e.data) 
+   console.log("[LOG] Websocket messaage received: e.data ", e.data) 
+  // e.data is the payload of the message. e means event.
 
   // * Dump message to broswer
   var toggleSwitch = document.getElementById("toggleSwitch");
@@ -38,8 +39,39 @@ browserSocket.onmessage = function (e) {
  }
 
   // * Parse mavlink message and update browser
-  var parsedData = JSON.parse(e.data);
-  handle_mavlink_message(parsedData)
+  var parsedData = JSON.parse(e.data); // this is the json object now.
+  msg_to_handle = parsedData.msg;
+  droneport=parsedData.port;
+
+  console.log('[PARSE LOG]');
+  console.log('msg_to_handle = ');
+  console.log(msg_to_handle);
+  console.log('droneport = ');
+  console.log(droneport);
+
+  handle_mavlink_message(msg_to_handle)
+
+  // console.log('[LOG]');
+  // console.log('parsedData = ');
+  // console.log(parsedData);
+
+  // test_parsedData = {"msg": {"mavpackettype": "GLOBAL_POSITION_INT", "time_boot_ms": 8020057, "lat": 336458610, "lon": -1178427499, "alt": 25070, "relative_alt": -23, "vx": -1, "vy": 1, "vz": 0, "hdg": 135}, "port": "14558"};
+
+  // console.log('test_parsedData = ');
+  // console.log(test_parsedData);
+
+  // console.log('test_parsedData.msg = ');
+  // console.log(test_parsedData.msg);
+
+  // var test_parsedmessage = test_parsedData['msg'];
+  // console.log('test_parsedmessage=')
+  // console.log(test_parsedmessage)
+  // var parsedmessage = parsedData['msg'];
+  // console.log('parsedData=')
+  // console.log(parsedData)
+
+
+  // xxx handle_mavlink_message(parsedData)
 
   //xxx Parse alternative message structure that contains both mavlink message and port: and handle incoming messages
   //xxx  const m_data = JSON.parse(e.data);
