@@ -88,10 +88,10 @@
   <div class="container">
     <div class="row">
       <!-- First Column -->
-      <div class="col-md-2">
+      <div class="col-md-2" style="background-color: skyblue;">
         <div class="row">
-          <div class="col-6" style="background-color: #3498db;">Sub Column 1</div>
-          <div class="col-6" style="background-color: #2ecc71;">Sub Column 2</div>
+          <div>Vehicle control</div>
+
         </div>
       </div>
 
@@ -105,113 +105,136 @@
 
       <!-- Third Column with 2 Sub-Columns -->
       <div class="col-md-4" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
-        Telemetry
+        
         <div class="row">
+          <div>Vehicle telemetry </div>
+
           <!-- Sub-Column 1 -->
           <div class="col-6">
-            <!-- Text Boxes 1-12 with Small Fonts -->
-
-
+            <div>SYS_STATUS</div>
+            
             <div class="text-box">
               <label for="voltage_battery"><b>voltage_battery</b></label>
-              <div class="value-box" id="voltage_battery">
-               pending
-              </div>
+              <div class="value-box" id="voltage_battery">pending</div>
             </div>
-
             <div class="text-box">
               <label for="current_battery"><b>current_battery</b></label>
-              <div class="value-box" id="current_battery">
-               pending
-              </div>
+              <div class="value-box" id="current_battery">pending</div>
             </div>
 
             <div class="text-box">
               <label for="battery_remaining"><b>battery_remaining</b></label>
-              <div class="value-box" id="battery_remaining">
-               pending
-              </div>
+              <div class="value-box" id="battery_remaining">pending</div>
             </div>
 
           </div>
-
           <!-- Sub-Column 2 -->
           <div class="col-6">
+            SYSTEM_TIME
             <div class="text-box">
-              <p><strong>Label 3</strong></p>
-              <div>Text 3</div>
-              <!-- Repeat the above structure for the remaining 11 text boxes -->
+              <label for="drone_local_IP"><b>drone_local_IP</b></label>
+              <div class="value-box" id="drone_local_IP">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="drone_remote_IP"><b>drone_remote_IP</b></label>
+              <div class="value-box" id="drone_remote_IP">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="time_unix_usec"><b>time_unix_usec</b></label>
+              <div class="value-box" id="time_unix_usec">pending</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Sub-Column 1 -->
+          <div class="col-6">
+            HEARTBEAT & HUD
+            <div class="text-box">
+              <label for="type"><b>type</b></label>
+              <div class="value-box" id="type">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="base_mode"><b>base_mode</b></label>
+              <div class="value-box" id="base_mode">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="custom_mode"><b>custom_mode</b></label>
+              <div class="value-box" id="custom_mode">pending</div>
             </div>
 
 
+            <div class="text-box">
+              <label for="airspeed"><b>airspeed</b></label>
+              <div class="value-box" id="airspeed">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="groundspeed"><b>groundspeed</b></label>
+              <div class="value-box" id="groundspeed">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="heading"><b>heading</b></label>
+              <div class="value-box" id="heading">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="throttle"><b>throttle</b></label>
+              <div class="value-box" id="throttle">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="climb"><b>climb</b></label>
+              <div class="value-box" id="climb">pending</div>
+            </div>
+
+
+          </div>
+          <!-- Sub-Column 2 -->
+          <div class="col-6">
+            GLOBAL_POSITION_INT
+            <div class="text-box">
+              <label for="lat"><b>lat</b></label>
+              <div class="value-box" id="lat">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="lon"><b>lon</b></label>
+              <div class="value-box" id="lon">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="alt"><b>alt</b></label>
+              <div class="value-box" id="alt">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="relative_alt"><b>relative_alt</b></label>
+              <div class="value-box" id="relative_alt">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="hdg"><b>hdg</b></label>
+              <div class="value-box" id="hdg">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="vx"><b>vx</b></label>
+              <div class="value-box" id="vx">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="vy"><b>vy</b></label>
+              <div class="value-box" id="vy">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="vz"><b>vz</b></label>
+              <div class="value-box" id="vz">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="time_boot_ms"><b>time_boot_ms</b></label>
+              <div class="value-box" id="time_boot_ms">pending</div>
+            </div>
           </div>
         </div>
       </div>
 
 
-      <h1>Vehicle output</h1>
-      <h2>Comms</h2>
-      <h3>local ip:</h3>
-      <p id="drone_local_IP">This text can be updated dynamically. </p>
-      <h3>drone ip:</h3>
-      <p id="drone_remote_IP">This text can be updated dynamically.</p>
-
-
-
-      <h2>Mavlink fields</h2>
-      <h3>HEARTBEAT</h3>
-      <h4>type</h4>
-      <p id="type">This text can be updated dynamically. </p>
-      <h4>base_mode</h4>
-      <p id="base_mode">This text can be updated dynamically. </p>
-      <h4>custom_mode</h4>
-      <p id="custom_mode">This text can be updated dynamically. </p>
-
-
-      <h3>SYS_STATUS</h3>
-      <h4>voltage_battery</h4>
-      <p id="voltage_battery">This text can be updated dynamically. </p>
-      <h4>current_battery</h4>
-      <p id="current_battery">This text can be updated dynamically. </p>
-      <h4>battery_remaining</h4>
-      <p id="battery_remaining">This text can be updated dynamically. </p>
-
-      <h3>SYSTEM_TIME</h3>
-      <h4>time_unix_usec</h4>
-      <p id="time_unix_usec">This text can be updated dynamically. </p>
-
-      <h3>GLOBAL_POSITION_INT</h3>
-      <h4>time_boot_ms</h4>
-      <p id="time_boot_ms">This text can be updated dynamically. </p>
-      <h4>lat</h4>
-      <p id="lat">This text can be updated dynamically. </p>
-      <h4>lon</h4>
-      <p id="lon">This text can be updated dynamically. </p>
-      <h4>alt</h4>
-      <p id="alt">This text can be updated dynamically. </p>
-      <h4>relative_alt</h4>
-      <p id="relative_alt">This text can be updated dynamically. </p>
-      <h4>vx</h4>
-      <p id="vx">This text can be updated dynamically. </p>
-      <h4>vy</h4>
-      <p id="vy">This text can be updated dynamically. </p>
-      <h4>vz</h4>
-      <p id="vz">This text can be updated dynamically. </p>
-      <h4>hdg</h4>
-      <p id="hdg">This text can be updated dynamically. </p>
-
-
-      <h3>VFR_HUD</h3>
-      <h4>airspeed</h4>
-      <p id="airspeed">This text can be updated dynamically. </p>
-      <h4>groundspeed</h4>
-      <p id="groundspeed">This text can be updated dynamically. </p>
-      <h4>heading</h4>
-      <p id="heading">This text can be updated dynamically. </p>
-      <h4>throttle</h4>
-      <p id="throttle">This text can be updated dynamically. </p>
-      <h4>climb</h4>
-      <p id="climb">This text can be updated dynamically. </p>
 
 
       <h1>Vehicle input</h1>
