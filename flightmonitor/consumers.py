@@ -241,8 +241,31 @@ class UserActionsConsumer(WebsocketConsumer):
                 if connect_msg: # connection succeded
                     print('[LOG] Mavlink connection successful!')
                     # Usurp mavlink and create a new API for this project... DRONECOMM
-                    comms_msg={"mavpackettype": "DRONECOMM",  "drone_remote_IP": str(sending_ip_address), "drone_local_IP": str(private_ip),"drone_port": str(drone_id_to_connect_to)}
-                    self.send(json.dumps(comms_msg))
+                    comms_msg={"mavpackettype": "DRONECOMM",  "drone_remote_IP": str(sending_ip_address), "drone_local_IP": str(private_ip),"drone_port": str(drone_id_to_connect_to)} # json string
+                    # Parse the JSON string into a Python dictionary
+                    
+                    # xxx  comms_msg_dict = json.loads(comms_msg)
+                    # Create two dictionaries
+                    # xxx inner_dict = comms_msg_dict;
+                    # xxx outer_dict = {'msg': inner_dict, 'port': droneid_to_listen_to}
+
+                    # Convert the outer dictionary to a JSON-formatted string
+                    # xxx json_string = json.dumps(outer_dict)
+
+                    # xxx print("Nested JSON string:", json_string)
+
+
+                    json_string = json.dumps({"msg": comms_msg, "port": drone_id_to_connect_to})
+                    self.send(json_string) # need to update to send port also as per new format
+
+                    # self.send(json.dumps(comms_msg)) # need to update to send port also as per new format
+
+
+
+
+
+
+
                     vehicle_to_listen_to.is_connected=True
                     vehicle_to_listen_to.save()
                     # Create a thread
