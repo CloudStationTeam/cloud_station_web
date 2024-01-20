@@ -4,7 +4,6 @@ class WebDrone { // Cloudstation 4.0
         this.droneID = droneID; // droneID is the same as the port for now
         this.drone_local_IP = null;
         this.drone_remote_IP = null;
-        this.drone_is_connected = false;
         this.vehicle_type = null;
         this.last_seen = null;
         this.is_connected = null;
