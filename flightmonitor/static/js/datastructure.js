@@ -1,33 +1,33 @@
 class WebDrone { // Cloudstation 4.0
     // mirrors models.py in Django for ease of management....
     constructor(droneID) {
-        this.droneID = droneID; // droneID is the same as the port for now
-        this.drone_local_IP = null; 
-        this.drone_remote_IP = null;
+        this.droneID = droneID; // droneID is the same as the port for now; DRONECOMM
+        this.drone_local_IP = null; // DRONECOMM
+        this.drone_remote_IP = null; // DRONECOMM
         this.vehicle_type = null;
         this.last_seen = null; // number of milliseconds since January 1, 1970
         this.is_connected = null;
-        this.MAV_TYPE = null;
-        this.base_mode = null;
-        this.custom_mode = null;
-        this.voltage_battery = null;
-        this.current_battery = null;
-        this.battery_remaining = null;
-        this.time_unix_usec = null;
-        this.time_boot_ms = null;
-        this.lat = null;
-        this.lon = null;
-        this.alt = null;
-        this.relative_alt = null;
-        this.vx = null;
-        this.vy = null;
-        this.vz = null;
-        this.hdg = null;
-        this.airspeed = null;
-        this.groundspeed = null;
-        this.heading = null;
-        this.throttle = null;
-        this.climb = null;
+        this.MAV_TYPE = null;  // HEARTBEAT
+        this.base_mode = null;  // HEARTBEAT
+        this.custom_mode = null;  // HEARTBEAT
+        this.voltage_battery = null; // SYS_STATUS
+        this.current_battery = null; // SYS_STATUS
+        this.battery_remaining = null; // SYS_STATUS
+        this.time_unix_usec = null; // SYSTEM_TIME
+        this.time_boot_ms = null; // GLOBAL_POSITION_INT
+        this.lat = null; // GLOBAL_POSITION_INT
+        this.lon = null; // GLOBAL_POSITION_INT
+        this.alt = null; // GLOBAL_POSITION_INT
+        this.relative_alt = null; // GLOBAL_POSITION_INT
+        this.vx = null; // GLOBAL_POSITION_INT
+        this.vy = null; // GLOBAL_POSITION_INT
+        this.vz = null; // GLOBAL_POSITION_INT
+        this.hdg = null; // GLOBAL_POSITION_INT
+        this.airspeed = null; // VFR_HUD
+        this.groundspeed = null; // VFR_HUD
+        this.heading = null; // VFR_HUD
+        this.throttle = null; // VFR_HUD
+        this.climb = null; // VFR_HUD
     }
 
     // we can just use code in js like xyzvariable = m_webdrone_object.lat for example to get the lat
