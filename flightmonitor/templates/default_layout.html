@@ -86,20 +86,42 @@
   </nav>
 
   <div class="container">
-    <div class="row">
+    <div class="row" >
       <!-- First Column -->
-      <div class="col-md-2" style="background-color: skyblue;">
-        <div class="row">
+      <div class="col-md-2" style="background-color: skyblue;" >
+        <div class="row" >
           <div>Vehicle control</div>
+          <div style="font-size: small;">Connect</div>
+          <div style="font-size: x-small;">Leave IP at 0.0.0.0 or blank if not known.</div>
+
+   
+          <form>
+            <label for="DRONE_IP" style="font-size: x-small;">DRONE_IP </label>
+            <input style="font-size: x-small;" type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
+    
+            <label style="font-size: x-small;" for="DRONE_PORT">DRONE_PORT </label>
+            <input style="font-size: x-small;" type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14559">
+    
+            <input class="btn btn-success btn-sm"  type="button" value="Connect" onclick="connectVehicle_by_IP_and_PORT()">
+          </form>
+
+
+          <br>
+          <div style="font-size: x-small;">Disconnect</div>
+          <label style="font-size: x-small;" for="disVID">DRONE_PORT:</label>
+          <input style="font-size: x-small;" type="text" class="form-control" id="disVID" required value="14559">
+          <input class="btn btn-danger btn-sm"  type="button" value="Disconnect" onclick="disconnectVehicle()">
+
+
 
         </div>
       </div>
 
       <!-- Second Column -->
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-6" style="background-color: #e74c3c;">Sub Column 1</div>
-          <div class="col-6" style="background-color: #f39c12;">Sub Column 2</div>
+      <div class="col-md-6" >
+        <div class="row" style="background-color: #e74c3c;">
+          <div>Map</div>
+
         </div>
       </div>
 
@@ -234,29 +256,6 @@
         </div>
       </div>
 
-
-
-
-      <h1>Vehicle input</h1>
-      <h2>Connect</h2>
-      <div>Leave IP at 0.0.0.0 or blank if not known.</div>
-      <br>
-      <form>
-        <label for="DRONE_IP">DRONE_IP </label>
-        <input type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
-
-        <label for="DRONE_PORT">DRONE_PORT </label>
-        <input type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14559">
-
-        <input type="button" value="Submit" onclick="connectVehicle_by_IP_and_PORT()">
-      </form>
-      <h2>Disconnect</h2>
-      <label for="disVID">DRONE_PORT:</label>
-      <input type="text" class="form-control" id="disVID" required value="14559">
-      <br>
-      <button type="button" class="btn btn-danger" onclick="disconnectVehicle()">Disconnect</button>
-
-      <h3>debugmsg:</h3>
 
       <div class="switch-container">
         <label class="switch-label" for="toggleSwitch">Debug </label>
