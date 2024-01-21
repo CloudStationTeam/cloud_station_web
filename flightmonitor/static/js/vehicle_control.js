@@ -78,8 +78,8 @@ function connectVehicle_by_IP_and_PORT() {
     for (let webDroneObject of window.m_Array_of_WebDrone_objects) {
         // 'webDroneObject' will be the current object
         console.log('Object:', webDroneObject);
-        m_drone_id=webDroneObject.port_to_connect_int
-        m_array_of_webdrone_object_droneids.push(m_drone_id)
+        m_drone_id=webDroneObject.port_to_connect_int;
+        m_array_of_webdrone_object_droneids.push(m_drone_id);
     }
     if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) {
         console.log('Item is in the array.');
@@ -93,14 +93,27 @@ function connectVehicle_by_IP_and_PORT() {
 
     // 5.) Handle mapbox icon.
     // We now have a drone object: m_WebDrone
-    if(m_WebDrone.marker==null){ // add marker to map, and it is property of webdrone object also. When marker is updated, map updates...???
+    console.log('m_WebDrone.has_marker=',m_WebDrone.has_marker);
+    if(m_WebDrone.has_marker==false){ // add marker to map, and it is property of webdrone object also. When marker is updated, map updates...???
         // later write code to remove marker if drone is disconnected or whatever (cleanup, maybe on disconnect...)
         // create a marker now
+        console.log('m_WebDrone.has_marker==false')
         var el = document.createElement('div');
         el.className = 'marker';
         let feature = droneLocationGeoJson; // mapbox calls it feature
         m_WebDrone.marker=new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+        console.log('added marker: ',m_WebDrone.marker);
+        m_WebDrone.has_marker = true;
+        console.log('just set true, fact check: m_WebDrone.has_marker=',m_WebDrone.has_marker);
     }
+
+
+    setTimeout(function() {
+        console.log("One second later");
+        console.log('[VECHICLE CONNECT LOG] Finished, with m_WebDrone = ',m_WebDrone);
+    
+      }, 1000);
+    
 
 
 }
@@ -111,14 +124,38 @@ function disconnectVehicle() {
     // 1.) create websocket message: disconnect + 14550 (JSON)
     // 2.) send websocket message.
     // TO DO: Check if it's in list of connnected already.
+    // 3.) Mark as disconned in webdrone object
+    // 4.) Delete mapbox marker so icon goes away.
     var port_to_disconnect_text = document.getElementById("disVID").value;
     var port_to_disconnect_int = port_to_disconnect_text;
+    let m_WebDrone_object_to_disconnect = window.m_Array_of_WebDrone_objects.find(item => item['droneID'] === port_to_disconnect_int); // webdrone object to disconnect
     const jsonObject = {
         command: 'DISCONNECT',
         droneid: port_to_disconnect_int
     };
     const messagetosend = JSON.stringify(jsonObject);
     console.log(' messagetosend:', messagetosend);
+    // console.log(' m_WebDrone_object_to_disconnect:', m_WebDrone_object_to_disconnect);
+
+    // 2.) send websocket message.
     // send message to websocket
     doSend(messagetosend);
+    
+    // 3.) Mark as disconned in webdrone object
+    m_WebDrone_object_to_disconnect.is_connected = false;
+
+    // 4.) Remove mapbox marker so icon goes away. It might still exist in webdrone object but it will be removed.
+    // console.log('going to remove: ',m_WebDrone_object_to_disconnect.marker)
+    // console.log('from: ',m_WebDrone_object_to_disconnect)
+    console.log('m_WebDrone_object_to_disconnect.has_marker=',m_WebDrone_object_to_disconnect.has_marker);
+    m_WebDrone_object_to_disconnect.marker.remove();
+    console.log('m_WebDrone_object_to_disconnect: ',m_WebDrone_object_to_disconnect)
+
+
+
+
+
+
+
+
 }
