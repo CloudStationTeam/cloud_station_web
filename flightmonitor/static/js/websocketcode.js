@@ -67,9 +67,9 @@ function handle_mavlink_message(parsedData,droneport) {
   // console.log("mavpackettype= ",mavpackettype)
 
   // find webdrone object based on droneport:
-  console.log("handle_mavlink_message(parsedData,droneport) called ");
+  // console.log("handle_mavlink_message(parsedData,droneport) called ");
   let m_webdrone_object_to_update = window.m_Array_of_WebDrone_objects.find(item => item['droneID'] === droneport);
-  console.log("m_webdrone_object_to_update =  ",m_webdrone_object_to_update);
+  // console.log("m_webdrone_object_to_update =  ",m_webdrone_object_to_update);
   m_webdrone_object_to_update.last_seen=Date.now();  
 
 

@@ -45,8 +45,8 @@ def listenfunction(droneid_to_listen_to, mavlinkconnection, websocket_to_send_to
 
 
         if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
-            print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            print('msg = ',msg)
+            # print('[LOG][consumers.py] received message_type in USEFUL_MESSAGES_V4_0_PYTHON at time ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            # print('msg = ',msg)
             #xxx websocket_to_send_to.send(msg.to_json()) # Send MAVLink message as a JSON string to the WebSocket client
             # mavlink has a way to convert mavlink object to json:
                 # def to_json(self) -> str:
@@ -62,7 +62,7 @@ def listenfunction(droneid_to_listen_to, mavlinkconnection, websocket_to_send_to
             # Convert the outer dictionary to a JSON-formatted string
             json_string = json.dumps(outer_dict)
 
-            print("Nested JSON string:", json_string)
+            #print("Nested JSON string:", json_string)
             websocket_to_send_to.send(json_string)
 
             ## An alternative message structure that sends mavlink message and port of websocket to browswer:
