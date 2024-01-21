@@ -114,3 +114,60 @@ class Vehicle(models.Model):
 
     # climb	float	m/s	Current climb rate.
     climb = models.FloatField(default=0)
+
+
+    
+# CS 4.0 
+def change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set):
+    vehicle_to_send_setmode_to = Vehicle.objects.get(droneid=droneid_to_send_setmode_to)
+    try:
+        msg = mavlinkconnection.wait_heartbeat(timeout=3)
+        if not msg:
+            return str({'ERROR: No heartbeat from droneid: ', droneid_to_send_setmode_to})
+        if mode not in mavlink.mode_mapping():
+            return str({'ERROR': f'{mode} is not a valid mode. Try: {list(mavlink.mode_mapping().keys())}',
+                        'droneid': connect_address})
+        mavlinkconnection.set_mode(mode_to_set)
+        ack_msg = mavlinkconnection.recv_match(type='COMMAND_ACK', condition=f'COMMAND_ACK.command=={MAVLINK_MSG_ID_SET_MODE}',
+                                    blocking=True, timeout=3)
+        if ack_msg:
+            ack_msg = ack_msg.to_dict()
+            ack_msg['command'] = 'SET_MODE'
+            ack_msg['result_description'] = mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description
+            ack_msg['droneid'] = connect_address
+            return ack_msg
+        else:
+            return str({'ERROR': 'No ack_msg received (timeout 3s).', 'droneid': droneid_to_send_setmode_to})
+    except Exception as e:
+        print(e)
+        return str({'ERROR': 'Set Mode command failed!', 'droneid': droneid_to_send_setmode_to})
+    
+
+
+
+# CS 2.0 
+def change_mode(connect_address: int, mode: str) -> str:
+    try:
+        mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + str(connect_address))
+        msg = mavlink.wait_heartbeat(timeout=6)
+        connect_address = int(connect_address)
+        if not msg:
+            return str({'ERROR': f'No heartbeat from {connect_address} (timeout 6s)', 'droneid': connect_address})
+        if mode not in mavlink.mode_mapping():
+            return str({'ERROR': f'{mode} is not a valid mode. Try: {list(mavlink.mode_mapping().keys())}',
+                        'droneid': connect_address})
+        mavlink.set_mode(mode)
+        ack_msg = mavlink.recv_match(type='COMMAND_ACK', condition=f'COMMAND_ACK.command=={MAVLINK_MSG_ID_SET_MODE}',
+                                    blocking=True, timeout=6)
+        if ack_msg:
+            ack_msg = ack_msg.to_dict()
+            ack_msg['command'] = 'SET_MODE'
+            ack_msg['result_description'] = mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description
+            ack_msg['droneid'] = connect_address
+            return ack_msg
+        else:
+            return str({'ERROR': 'No ack_msg received (timeout 6s).', 'droneid': connect_address})
+    except Exception as e:
+        print(e)
+        return str({'ERROR': 'Set Mode command failed!', 'droneid': connect_address})
+

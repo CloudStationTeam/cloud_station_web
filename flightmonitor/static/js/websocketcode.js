@@ -166,7 +166,8 @@ function handle_mavlink_message(parsedData,droneport) {
     dynamicTextElementbase_mode.textContent = base_mode;
 
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
-    dynamicTextElementcustom_mode.textContent = custom_mode;
+    // dynamicTextElementcustom_mode.textContent = custom_mode;
+    dynamicTextElementcustom_mode.textContent = findModeFromNumber(custom_mode);
 
     // Update webdrone object:
     m_webdrone_object_to_update.MAV_TYPE = type;

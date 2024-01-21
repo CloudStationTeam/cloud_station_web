@@ -109,4 +109,41 @@ const arrayOfObjects = [
   }
 
 
+
   foundObject = array.find(item => item[propertyName] === propertyValue);
+
+
+// chatgpt prompt: write an enum in javascript for mavlink heartbeat custom_mode to take the input and log to the console the actual mode
+
+  const MAV_CUSTOM_MODE = {
+    MANUAL: 100,
+    ACRO: 120,
+    ALT_HOLD: 200,
+    AUTO: 220,
+    GUIDED: 230,
+    LOITER: 240,
+    RTL: 250,
+    CIRCLE: 110,
+    POSITION: 80,
+    MISSION: 90,
+    LAND: 110,
+  };
+  
+  function logActualMode(customModeInput) {
+    const actualMode = Object.keys(MAV_CUSTOM_MODE).find(
+      (key) => MAV_CUSTOM_MODE[key] === customModeInput
+    );
+  
+    if (actualMode) {
+      console.log("Actual Mode:", actualMode);
+    } else {
+      console.log("Unknown Mode");
+    }
+  }
+  
+  // Example usage:
+  const inputCustomMode = 220; // Replace this with your desired custom mode
+  logActualMode(inputCustomMode);
+  
+
+  
