@@ -28,6 +28,7 @@ class WebDrone { // Cloudstation 4.0
         this.heading = null; // VFR_HUD
         this.throttle = null; // VFR_HUD
         this.climb = null; // VFR_HUD
+        this.marker = null; // Mapbox marker for drone icon
     }
 
     // we can just use code in js like xyzvariable = m_webdrone_object.lat for example to get the lat

@@ -49,6 +49,7 @@ function connectVehicle_by_IP_and_PORT() {
     // 2.) send websocket message.
     // 3.) await websocket response
     // 4.) create instance in browser of webdrone class with port if it doesn't already exist
+    // 5.) Handle mapbox icon
     var port_to_connect_text = document.getElementById("DRONE_PORT").value;
     var port_to_connect_int = port_to_connect_text;
 
@@ -90,6 +91,16 @@ function connectVehicle_by_IP_and_PORT() {
         window.m_Array_of_WebDrone_objects.push(m_WebDrone);
     }
 
+    // 5.) Handle mapbox icon.
+    // We now have a drone object: m_WebDrone
+    if(m_WebDrone.marker==null){ // add marker to map, and it is property of webdrone object also. When marker is updated, map updates...???
+        // later write code to remove marker if drone is disconnected or whatever (cleanup, maybe on disconnect...)
+        // create a marker now
+        var el = document.createElement('div');
+        el.className = 'marker';
+        let feature = droneLocationGeoJson; // mapbox calls it feature
+        m_WebDrone.marker=new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+    }
 
 
 }
