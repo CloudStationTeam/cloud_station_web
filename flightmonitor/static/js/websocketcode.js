@@ -165,7 +165,13 @@ function handle_mavlink_message(parsedData,droneport) {
     dynamicTextElementtype.textContent = findMAV_TYPEFromNumber(type);
 
     const dynamicTextElementbase_mode = document.getElementById('base_mode');
-    dynamicTextElementbase_mode.textContent = base_mode;
+    //dynamicTextElementbase_mode.textContent = base_mode;
+    if(isArmed(base_mode)){
+      dynamicTextElementbase_mode.textContent = "ARMED";
+    }
+    else{
+      dynamicTextElementbase_mode.textContent = "DISARMED";
+    }
 
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     // dynamicTextElementcustom_mode.textContent = custom_mode;

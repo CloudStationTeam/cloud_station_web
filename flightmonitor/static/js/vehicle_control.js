@@ -160,6 +160,17 @@ function findRoverModeFromNumber(inputNumber) {
 }
 
 
+
+
+function isArmed(baseMode) {
+    // Check if the Most Significant Bit (MSB) is set (1) or unset (0)
+    const arm_status = (baseMode & 0b10000000) !== 0;
+    return arm_status;
+  }
+  
+
+  
+
 // helper functions:
 
 function get_list_of_existing_droneids() {
