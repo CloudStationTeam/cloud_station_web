@@ -159,15 +159,32 @@ function handle_mavlink_message(parsedData,droneport) {
     var base_mode = parsedData.base_mode;
     var custom_mode = parsedData.custom_mode;
     // Update the display:
+
     const dynamicTextElementtype = document.getElementById('type');
-    dynamicTextElementtype.textContent = type;
+    // dynamicTextElementtype.textContent = type;
+    dynamicTextElementtype.textContent = findMAV_TYPEFromNumber(type);
 
     const dynamicTextElementbase_mode = document.getElementById('base_mode');
     dynamicTextElementbase_mode.textContent = base_mode;
 
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     // dynamicTextElementcustom_mode.textContent = custom_mode;
-    dynamicTextElementcustom_mode.textContent = findModeFromNumber(custom_mode);
+    if(type==1){ // fixed wing
+      dynamicTextElementcustom_mode.textContent = findPlaneModeFromNumber(custom_mode);
+    }
+    else if(type==2){ // quadroter
+      dynamicTextElementcustom_mode.textContent = findCopterModeFromNumber(custom_mode);
+    }
+    else if(type==10){ // rover
+      dynamicTextElementcustom_mode.textContent = findRoverModeFromNumber(custom_mode);
+    }
+    else{ // generic
+      dynamicTextElementcustom_mode.textContent = custom_mode;
+
+    }
+
+    
+
 
     // Update webdrone object:
     m_webdrone_object_to_update.MAV_TYPE = type;
