@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox Marker Toggle</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 200px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <button onclick="addMarker()">Add Marker</button>
+    <button onclick="removeMarker()">Remove Marker</button>
+
+    <script>
+        mapboxgl.accessToken = 'MBKEY';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-74.5, 40],
+            zoom: 12
+        });
+
+        // Initial marker
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-74.5, 40])
+            .addTo(map);
+
+
+        // Function to toggle marker visibility
+        function addMarker() {
+            console.log('adding')
+
+            marker.addTo(map);
+        }
+
+        function removeMarker() {
+            console.log('removing')
+
+            marker.remove();
+        }
+
+    </script>
+
+</body>
+
+</html>

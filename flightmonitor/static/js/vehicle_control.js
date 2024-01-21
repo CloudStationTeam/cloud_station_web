@@ -106,6 +106,18 @@ function connectVehicle_by_IP_and_PORT() {
         m_WebDrone.has_marker = true;
         console.log('just set true, fact check: m_WebDrone.has_marker=',m_WebDrone.has_marker);
     }
+    if(m_WebDrone.has_marker==null){ // add marker to map, and it is property of webdrone object also. When marker is updated, map updates...???
+        // later write code to remove marker if drone is disconnected or whatever (cleanup, maybe on disconnect...)
+        // create a marker now
+        console.log('m_WebDrone.has_marker==false')
+        var el = document.createElement('div');
+        el.className = 'marker';
+        let feature = droneLocationGeoJson; // mapbox calls it feature
+        m_WebDrone.marker=new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+        console.log('added marker: ',m_WebDrone.marker);
+        m_WebDrone.has_marker = true;
+        console.log('just set true, fact check: m_WebDrone.has_marker=',m_WebDrone.has_marker);
+    }
 
 
     setTimeout(function() {
