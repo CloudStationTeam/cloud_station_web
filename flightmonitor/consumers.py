@@ -318,10 +318,17 @@ class UserActionsConsumer(WebsocketConsumer):
             else:
                 print('LOG] ERROR Mavlink connection NOT successful!')
 
+        if(command_to_execute=='SETMODE'): # set drone mode
+            print("SETMODE received in django")
+            
+
+        if(command_to_execute=='ARM'): # set drone mode
+            print("ARM received in django")
 
 
-
-
+        if(command_to_execute=='DISARM'): # set drone mode
+            print("DISARM received in django")
+            
 
 
 

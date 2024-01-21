@@ -131,6 +131,8 @@ function connectVehicle_by_IP_and_PORT() {
 }
 
 
+
+
 function disconnectVehicle() {
     // psuedo code:
     // 1.) create websocket message: disconnect + 14550 (JSON)
@@ -163,11 +165,49 @@ function disconnectVehicle() {
     m_WebDrone_object_to_disconnect.marker.remove();
     console.log('m_WebDrone_object_to_disconnect: ',m_WebDrone_object_to_disconnect)
 
+}
+
+function armVehicle() {
+    alert("armVehicle in vehicle_control.js called !");
+}
+
+function disarmVehicle() {
+    alert("disarmVehicle in vehicle_control.js called !");
+}
+
+function RTLVehicle() {
+    alert("RTLVehicle in vehicle_control.js called !");
+}
+
+function LANDVehicle() {
+    alert("LANDVehicle in vehicle_control.js called !");
+}
+
+function TAKEOFFVehicle() {
+    alert("TAKEOFFVehicle in vehicle_control.js called !");
+}
 
 
+function setmodeVehicle() {
+    alert("setmodeVehicle in vehicle_control.js called !");
+   // psuedo code:
+    // 1.) create websocket message: set mode + 14550 (JSON)
+    // 2.) send websocket message. // for now no response requested ???
+    var port_to_connect_text = document.getElementById("DRONE_PORT").value;
+    var port_to_connect_int = port_to_connect_text;
 
+    var IP_to_connect_text = document.getElementById("DRONE_IP").value;
 
-
-
-
+    let mode_to_set = 123;
+    //var messagetosend = 'CONNECT' + port_to_connect_int;
+    const jsonObject = {
+        command: 'SETMODE',
+        DRONE_IP: IP_to_connect_text,
+        DRONE_PORT: port_to_connect_int,
+        MODE: mode_to_set
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
 }
