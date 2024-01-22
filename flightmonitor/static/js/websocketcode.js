@@ -119,7 +119,13 @@ function handle_mavlink_message(parsedData,droneport) {
     m_webdrone_object_to_update.vz = vz;
     m_webdrone_object_to_update.hdg = hdg;
 
+    // update marker location on map
+    // pseudocode: m_webdrone_object_to_update.marker.location=lat/lon
+    updateDroneLoactionGeoJson(lat, lon); // function is in maps.js; droneLocationGeoJson is a variable in maps.js
 
+
+  }
+  
 
 
   };

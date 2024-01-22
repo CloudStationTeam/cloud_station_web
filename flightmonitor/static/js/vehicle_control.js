@@ -263,6 +263,7 @@ function connectVehicle_by_IP_and_PORT() {
         window.m_Array_of_WebDrone_objects.push(m_WebDrone);
     }
 
+    
     // 5.) Handle mapbox icon.
     // We now have a drone object: m_WebDrone
     console.log('m_WebDrone.has_marker=', m_WebDrone.has_marker);
