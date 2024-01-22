@@ -36,12 +36,12 @@ browserSocket.onmessage = function (e) {
     var textarea = document.getElementById("dynamicTextdebugmsg");
     textarea.value += "\n";
     textarea.value += debugmsg;
- }
+  }
 
   // * Parse mavlink message and update browser
   var parsedData = JSON.parse(e.data); // this is the json object now.
   msg_to_handle = parsedData.msg;
-  droneport=parsedData.port;
+  droneport = parsedData.port;
 
   // console.log("[LOG] callling handle_mavlink_message(msg_to_handle) ", msg_to_handle) 
   // handle_mavlink_message(msg_to_handle)
@@ -57,9 +57,9 @@ browserSocket.onclose = function (e) {
 function doSend(message) {
   console.log("Sending: " + message);
   browserSocket.send(message);
-}
+};
 
-function handle_mavlink_message(parsedData,droneport) {
+function handle_mavlink_message(parsedData, droneport) {
   // Access the values in the object
   var mavpackettype = parsedData.mavpackettype;
   // console.log("[LOG] handle_mavlink_message(parsedData) called with the following parseddata ")
@@ -70,7 +70,7 @@ function handle_mavlink_message(parsedData,droneport) {
   // console.log("handle_mavlink_message(parsedData,droneport) called ");
   let m_webdrone_object_to_update = window.m_Array_of_WebDrone_objects.find(item => item['droneID'] === droneport);
   // console.log("m_webdrone_object_to_update =  ",m_webdrone_object_to_update);
-  m_webdrone_object_to_update.last_seen=Date.now();  
+  m_webdrone_object_to_update.last_seen = Date.now();
 
 
 
@@ -124,11 +124,10 @@ function handle_mavlink_message(parsedData,droneport) {
     updateDroneLoactionGeoJson(lat, lon); // function is in maps.js; droneLocationGeoJson is a variable in maps.js
 
 
-  }
-  
-
-
   };
+
+
+
   if (mavpackettype == "VFR_HUD") {
     // Parse the VFR_HUD message:
     var airspeed = parsedData.airspeed;
@@ -148,7 +147,7 @@ function handle_mavlink_message(parsedData,droneport) {
     const dynamicTextElementclimb = document.getElementById('climb');
     dynamicTextElementclimb.textContent = climb;
 
-        // Update webdrone object:
+    // Update webdrone object:
     m_webdrone_object_to_update.airspeed = airspeed;
     m_webdrone_object_to_update.groundspeed = groundspeed;
     m_webdrone_object_to_update.heading = heading;
@@ -172,30 +171,30 @@ function handle_mavlink_message(parsedData,droneport) {
 
     const dynamicTextElementbase_mode = document.getElementById('base_mode');
     //dynamicTextElementbase_mode.textContent = base_mode;
-    if(isArmed(base_mode)){
+    if (isArmed(base_mode)) {
       dynamicTextElementbase_mode.textContent = "ARMED";
     }
-    else{
+    else {
       dynamicTextElementbase_mode.textContent = "DISARMED";
     }
 
     const dynamicTextElementcustom_mode = document.getElementById('custom_mode');
     // dynamicTextElementcustom_mode.textContent = custom_mode;
-    if(type==1){ // fixed wing
+    if (type == 1) { // fixed wing
       dynamicTextElementcustom_mode.textContent = findPlaneModeFromNumber(custom_mode);
     }
-    else if(type==2){ // quadroter
+    else if (type == 2) { // quadroter
       dynamicTextElementcustom_mode.textContent = findCopterModeFromNumber(custom_mode);
     }
-    else if(type==10){ // rover
+    else if (type == 10) { // rover
       dynamicTextElementcustom_mode.textContent = findRoverModeFromNumber(custom_mode);
     }
-    else{ // generic
+    else { // generic
       dynamicTextElementcustom_mode.textContent = custom_mode;
 
     }
 
-    
+
 
 
     // Update webdrone object:
@@ -247,8 +246,8 @@ function handle_mavlink_message(parsedData,droneport) {
     dynamicTextElementlat.textContent = drone_local_IP;
     const dynamicTextElementlon = document.getElementById('drone_remote_IP');
     dynamicTextElementlon.textContent = drone_remote_IP;
-    
-  
+
+
     // Use Array.find() to get the object based on the property
     let m_WebDrone_object = window.m_Array_of_WebDrone_objects.find(obj => obj.droneid === drone_id_to_connect_to);
     m_WebDrone_object.is_connected = true;
@@ -262,8 +261,9 @@ function handle_mavlink_message(parsedData,droneport) {
 
 
 
-  }
-}
+
+  };
+};
 
 function toggleFunction() {
   var toggleSwitch = document.getElementById("toggleSwitch");
@@ -271,13 +271,13 @@ function toggleFunction() {
   //textarea.style.visibility = toggleSwitch.checked ? "visible" : "hidden";
 
   if (toggleSwitch.checked) {
-      // Run your JavaScript function when the switch is checked
-      console.log('toggle switch turned on');
-      textarea.value = "";
-      // make text area visible
-    } else {
+    // Run your JavaScript function when the switch is checked
+    console.log('toggle switch turned on');
+    textarea.value = "";
+    // make text area visible
+  } else {
     console.log('toggle switch turned off');
     // make text area invisible
     // clear text field
   }
-} 
+};
