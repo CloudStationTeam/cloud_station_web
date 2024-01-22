@@ -329,7 +329,7 @@ class UserActionsConsumer(WebsocketConsumer):
                     mavlink.close()
 
 
-        if(command_to_execute=='SETMODE') or (command_to_execute=='ARM') or (command_to_execute=='DISARM') : # set drone mode
+        if(command_to_execute=='SETMODE') or (command_to_execute=='ARM') or (command_to_execute=='DISARM') or (command_to_execute=='TAKEOFF'): # set drone mode
             print("SETMODE received in django")
             # Psuedo code:
             # 1.) Parse mode to send and drone port.
@@ -399,6 +399,14 @@ class UserActionsConsumer(WebsocketConsumer):
                 arm_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
                 print(f"Disarm ACK:  {arm_msg}")
 
+            if (command_to_execute=='TAKEOFF') : # disarm
+                print('taking off!!!!!!!!!!!')
+                takeoff_altitude=mode_to_set_int
+                takeoff_altitude=40 # xxx hard coded for now
+                takeoff_params = [0, 0, 0, 0, 0, 0, takeoff_altitude]
+                mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, takeoff_params[0], takeoff_params[1], takeoff_params[2], takeoff_params[3], takeoff_params[4], takeoff_params[5], takeoff_params[6])
+                takeoff_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
+                print(f"Takeoff ACK:  {takeoff_msg}")
 
             # 7.) Close mavlink connection and wait 50 ms
             print('closing mavlink in setmode method')

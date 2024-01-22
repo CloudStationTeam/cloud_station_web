@@ -389,17 +389,46 @@ function disarmVehicle() {
 }
 
 
-function RTLVehicle() {
-    alert("RTLVehicle in vehicle_control.js called !");
-}
-
-function LANDVehicle() {
-    alert("LANDVehicle in vehicle_control.js called !");
-}
-
 function TAKEOFFVehicle() {
-    alert("TAKEOFFVehicle in vehicle_control.js called !");
+    // alert("TAKEOFFVehicle in vehicle_control.js called !");
+    takeoff_altitude=40
+    // psuedo code:
+    // 1.) create websocket message: set mode + 14550 (JSON)
+    // 2.) send websocket message. // for now no response requested ???
+    var port_to_connect_text = document.getElementById("DRONE_PORT").value;
+    var port_to_connect_int = port_to_connect_text;
+
+    var IP_to_connect_text = document.getElementById("DRONE_IP").value;
+
+    // mode_to_set = "GUIDED";
+    //var messagetosend = 'CONNECT' + port_to_connect_int;
+    const jsonObject = {
+        command: 'TAKEOFF',
+        DRONE_IP: IP_to_connect_text,
+        DRONE_PORT: port_to_connect_int,
+        MODE: takeoff_altitude // not used
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
+
 }
+
+
+function takeoff() {
+    var enteredNumber = document.getElementById('numberInput').value;
+    alert('Takeoff with Number: ' + enteredNumber);
+    // Perform additional actions with the enteredNumber here
+    $('#numberModal').modal('hide'); // Close the modal
+  }
+
+  // Function to handle cancel
+  function cancel() {
+    $('#numberModal').modal('hide'); // Close the modal
+  }
+
+
 
 
 function setmodeVehicle(mode_to_set_int) { 
