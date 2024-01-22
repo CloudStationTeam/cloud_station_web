@@ -391,7 +391,12 @@ function disarmVehicle() {
 
 function TAKEOFFVehicle() {
     // alert("TAKEOFFVehicle in vehicle_control.js called !");
-    takeoff_altitude=40
+    var enteredNumber = document.getElementById('numberInput').value;
+    //alert('Takeoff with Number: ' + enteredNumber);
+    // Perform additional actions with the enteredNumber here
+    $('#numberModal').modal('hide'); // Close the modal
+
+    takeoff_altitude=enteredNumber
     // psuedo code:
     // 1.) create websocket message: set mode + 14550 (JSON)
     // 2.) send websocket message. // for now no response requested ???
@@ -406,7 +411,7 @@ function TAKEOFFVehicle() {
         command: 'TAKEOFF',
         DRONE_IP: IP_to_connect_text,
         DRONE_PORT: port_to_connect_int,
-        MODE: takeoff_altitude // not used
+        MODE: takeoff_altitude 
     };
     const messagetosend = JSON.stringify(jsonObject);
     console.log(' messagetosend:', messagetosend);
