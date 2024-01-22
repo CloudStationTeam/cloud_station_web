@@ -119,14 +119,19 @@
 
   <div class="container">
     <div class="row">
-      <!-- First Column -->
-      <div class="col-md-2" style="background-color: skyblue;">
-        <div class="row">
-          <h6>Vehicle control</h6>
 
+
+
+
+      <!-- First Column -->
+      <div class="col-md-2" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+        <div>Vehicle Control</div>
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
           <div>Communications</div>
-          <div style="font-size: small;">Connect</div>
-          <div style="font-size: x-small;">Leave IP at 0.0.0.0 or blank if not known.</div>
+
+
+
+          <div style="font-size: xx-small;">Leave IP at 0.0.0.0 or blank if not known.</div>
 
 
           <form>
@@ -145,18 +150,33 @@
           <label style="font-size: x-small;" for="disVID">DRONE_PORT:</label>
           <input style="font-size: x-small;" type="text" class="form-control" id="disVID" required value="14559">
           <input class="btn btn-danger btn-sm" type="button" value="Disconnect" onclick="disconnectVehicle()">
+        </div>
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+
+          <div>Arming</div>
+
+          <div class="col-6 mx-auto" style="border: 2px solid #333; background-color: #f0f0f0; padding: 1px;">
+            <input class="btn btn-danger btn-sm " type="button" style=" padding: 3pt;" value="ARM"
+              onclick="armVehicle()">
+
+          </div>
+
+          <div class="col-6 mx-auto" style="border: 2px solid #333; background-color: #f0f0f0; padding: 1px;">
+            <input class="btn btn-danger btn-sm" type="button" style=" padding: 3pt;" value="DISARM"
+              onclick="disarmVehicle()">
+          </div>
+
+        </div>
 
 
-          <div>Modes</div>
-          <input class="btn btn-danger btn-sm" type="button" value="ARM" onclick="armVehicle()">
 
-          <input class="btn btn-danger btn-sm" type="button" value="DISARM" onclick="disarmVehicle()">
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
 
+          <div>Mode</div>
 
 
           <div class="dropdown">
-            Mode
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               Set mode
             </button>
@@ -205,17 +225,24 @@
               alert("Option " + option + " selected!");
             }
           </script>
+        </div>
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
 
-          
-          <input class="btn btn-danger btn-sm" type="button" value="RTL" onclick="setmodeVehicle(6) ">
+          <div>Tasks</div>
 
-          <input class="btn btn-danger btn-sm" type="button" value="LAND" onclick="setmodeVehicle(9) ">
-
-
+ 
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#numberModal">
-            Takeoff
-          </button>
+          <div class="row mt-1" style="border: 2px solid red; background-color: orange; padding: 2px;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#numberModal">
+              Takeoff
+            </button>
+          </div>
+          <div class="col-6 mt-1" style="border: 1px solid purple; background-color: pink; padding: 2px;">
+            <input class="btn btn-danger btn-sm" type="button" value="RTL" onclick="setmodeVehicle(6) ">
+          </div>
+          <div class="col-6 mt-1" style="border: 1px solid green; background-color: yellow; padding: 2px;">
+            <input class="btn btn-danger btn-sm mx-auto" type="button" value="LAND" onclick="setmodeVehicle(9) ">
+          </div>
 
           <!-- Modal -->
           <div class="modal fade" id="numberModal" tabindex="-1" role="dialog" aria-labelledby="numberModalLabel"

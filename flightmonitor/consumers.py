@@ -413,7 +413,7 @@ class UserActionsConsumer(WebsocketConsumer):
             mavlink.close()
             time.sleep(0.05)
 
-            # 7.) Restablish mavlink connection on listen.py
+            # 7.) Restablish mavlink connection on listen.
             print('Restablish mavlink connection on listen.py')
             connect_vehicle_by_ip_and_port(drone_id_to_connect_to,DRONE_IP_TO_CONNECT_TO,self)
  
