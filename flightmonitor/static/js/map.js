@@ -40,7 +40,6 @@ function updateDroneLoactionGeoJson(longitude, latitude) {
     droneLocationGeoJson["geometry"]["coordinates"] = [longitude, latitude];
 
 }
-
 map.addControl(new mapboxgl.NavigationControl());
 map.addControl(
     new mapboxgl.GeolocateControl({
@@ -51,8 +50,24 @@ map.addControl(
     })
 );
 
+
+
 map.on('contextmenu', function (e) { //right click
-    if (tempPop.size > 0) {
+
+    // Get the coordinates of the right-clicked point
+    const { lng, lat } = e.lngLat;
+
+    // Display an alert with the coordinates
+    alert(`Right-clicked at Latitude: ${lat}, Longitude: ${lng}`);
+
+    // make a popup window fly to
+    console.log('calling openModal');
+    // openModal();
+    console.log('did call openModal');
+
+
+
+    if (tempPop.size > 0) { // not gonna happen in CS 4.0 so can ignore
         let longitude = e.lngLat["lng"];
         let latitude = e.lngLat["lat"];
 
@@ -90,7 +105,8 @@ function clearPin() {
     }
 }
 
-function flyTo(droneID, long, lat, alt) {
+// CS 2.0
+function flyTo_old(droneID, long, lat, alt) {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -104,3 +120,8 @@ function flyTo(droneID, long, lat, alt) {
     return false;
 }
 
+// CS 4.0
+function flyTo(droneID, long, lat, alt) {
+    alert("flyTo callsed for droneID, long, lat, alt = ", droneID, long, lat, alt);
+    return false; // why return false???
+}

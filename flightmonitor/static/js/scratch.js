@@ -146,4 +146,17 @@ const arrayOfObjects = [
   logActualMode(inputCustomMode);
   
 
-  
+  // Add contextmenu (right-click) event listener to the map
+map.on('contextmenu', (e) => {
+  // Prevent the default context menu from appearing
+  e.preventDefault();
+
+  // Get the coordinates of the right-clicked point
+  const { lng, lat } = e.lngLat;
+
+  // Display an alert with the coordinates
+  alert(`Right-clicked at Latitude: ${lat}, Longitude: ${lng}`);
+});
+
+
+

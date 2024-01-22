@@ -121,9 +121,6 @@ function handle_mavlink_message(parsedData, droneport) {
 
     // update marker location on map
     // pseudocode: m_webdrone_object_to_update.marker.location=lat/lon
-    updateDroneLoactionGeoJson(lat, lon); // function is in maps.js; droneLocationGeoJson is a variable in maps.js
-    // seems geojson in CS 2.0 is unused code...
-    // need to update marker location using MB code  marker.setLngLat([lng, lat]);
     m_webdrone_object_to_update.marker.setLngLat([lon, lat]);
 
 
