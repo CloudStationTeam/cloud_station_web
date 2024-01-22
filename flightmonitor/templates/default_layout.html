@@ -70,15 +70,15 @@
       font-size: x-small;
       margin-bottom: 1px;
     }
-    .marker {
-    background-image: url('/static/img/plane2.png');
-    background-size: cover;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
+    .marker {
+      background-image: url('/static/img/plane2.png');
+      background-size: cover;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   </style>
 
   {% load static %}
@@ -88,7 +88,7 @@
 
 </head>
 <input type="hidden" id="mapboxId" name="mapbox"
-  value="">
+  value="MBKEY">
 
 <body>
   <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
@@ -151,8 +151,92 @@
           <div>DISARM</div>
           <input class="btn btn-danger btn-sm" type="button" value="DISARM" onclick="disarmVehicle()">
 
-          <div>SET MODE</div>
-          <input class="btn btn-danger btn-sm" type="button" value="MODE" onclick="setmodeVehicle()">
+
+
+          <div class="dropdown">
+            Mode
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Set mode
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" onclick="setmodeVehicle(0) ">STABILIZE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(1) ">ACRO</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(2) ">ALT_HOLD</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(3) ">AUTO</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(4) ">GUIDED</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(5) ">LOITER</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(6) ">RTL</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(7) ">CIRCLE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(8) ">POSITION</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(9) ">LAND</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(10) ">OF_LOITER</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(11) ">DRIFT</a></li>
+
+              <li><a class="dropdown-item" onclick="setmodeVehicle(13) ">SPORT</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(14) ">FLIP</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(15) ">AUTOTUNE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(16) ">POSHOLD</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(17) ">BRAKE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(18) ">THROW</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(19) ">AVOID_ADSB</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(20) ">GUIDED_NOGPS</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(21) ">SMART_RTL</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(22) ">FLOWHOLD</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(23) ">FOLLOW</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(24) ">ZIGZAG</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(25) ">SYSTEMID</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(26) ">AUTOROTATE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(27) ">AUTO_RTL</a></li>
+            </ul>
+          </div>
+
+          <!--
+          m_mode_map = {'STABILIZE': 0, 'ACRO': 1, 'ALT_HOLD': 2, 'AUTO': 3, 'GUIDED': 4, 'LOITER': 5, 'RTL': 6, 'CIRCLE': 7, 'POSITION': 8, 'LAND': 9, 'OF_LOITER': 10, 'DRIFT': 11, 'SPORT': 13, 'FLIP': 14, 'AUTOTUNE': 15, 'POSHOLD': 16, 'BRAKE': 17, 'THROW': 18, 'AVOID_ADSB': 19, 'GUIDED_NOGPS': 20, 'SMART_RTL': 21, 'FLOWHOLD': 22, 'FOLLOW': 23, 'ZIGZAG': 24, 'SYSTEMID': 25, 'AUTOROTATE': 26, 'AUTO_RTL': 27}
+          -->
+
+
+
+
+          <script>
+            function selectOption(option) {
+              // Your custom function logic based on the selected option
+              alert("Option " + option + " selected!");
+            }
+          </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

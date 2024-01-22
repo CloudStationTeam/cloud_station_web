@@ -167,72 +167,6 @@ def connect_vehicle_by_ip_and_port(drone_id_to_connect_to,DRONE_IP_TO_CONNECT_TO
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
 def handle_mavlink_message_to_update_Django_drone_object(msg, connect_address):
     v = Vehicle.objects.get(droneid=connect_address)
 
@@ -410,9 +344,9 @@ class UserActionsConsumer(WebsocketConsumer):
             # 1.) Parse mode to send and drone port.
             DRONE_PORT_TO_CONNECT_TO=str(data['DRONE_PORT']) # string
             drone_id_to_connect_to = data['DRONE_PORT'] # Note that DRONE_PORT is drone ID for now....
-            mode_to_set = data['MODE']
+            mode_to_set_int = data['MODE']
             print('drone_id_to_connect_to =', drone_id_to_connect_to)
-            print('mode_to_set =', mode_to_set)
+            print('mode_to_set_int =', mode_to_set_int)
 
             # 2.) Figure out IP addresses
             # * create DRONE_IP_TO_CONNECT_TO, DRONE_PORT = drone_id_to_connect_to
@@ -452,7 +386,7 @@ class UserActionsConsumer(WebsocketConsumer):
 
             # 6.) Call change mode function
             # change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set)
-            change_mode_CS4(DRONE_PORT_TO_CONNECT_TO, mavlink, 123, mode_to_set)                
+            change_mode_CS4(DRONE_PORT_TO_CONNECT_TO, mavlink, 123, mode_to_set_int)                
 
             # 7.) Close mavlink connection and wait 50 ms
             print('closing mavlink in setmode method')
@@ -476,21 +410,21 @@ class UserActionsConsumer(WebsocketConsumer):
             
 
 
-
-
-
 # Example usage
 # all_mavlink_connections = find_mavlink_connections()
 # print("All MAVLink connections:", all_mavlink_connections)
 
 # CS 4.0 
-def change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set):
+def change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set_int):
     vehicle_to_send_setmode_to = Vehicle.objects.get(droneid=droneid_to_send_setmode_to)
     try:
         # Change mode to guided (Ardupilot) 
         mode_id = mavlinkconnection.mode_mapping()["GUIDED"]
+        # mode_mapping = mavlinkconnection.mode_mapping()
+        # print(mode_mapping)
+        m_mode_map = {'STABILIZE': 0, 'ACRO': 1, 'ALT_HOLD': 2, 'AUTO': 3, 'GUIDED': 4, 'LOITER': 5, 'RTL': 6, 'CIRCLE': 7, 'POSITION': 8, 'LAND': 9, 'OF_LOITER': 10, 'DRIFT': 11, 'SPORT': 13, 'FLIP': 14, 'AUTOTUNE': 15, 'POSHOLD': 16, 'BRAKE': 17, 'THROW': 18, 'AVOID_ADSB': 19, 'GUIDED_NOGPS': 20, 'SMART_RTL': 21, 'FLOWHOLD': 22, 'FOLLOW': 23, 'ZIGZAG': 24, 'SYSTEMID': 25, 'AUTOROTATE': 26, 'AUTO_RTL': 27}
         mavlinkconnection.mav.command_long_send( 1, 1, mavutil.mavlink.MAV_CMD_DO_SET_MODE,
-                                    0, mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED, mode_id, 0, 0, 0, 0, 0)
+                                    0, mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED, mode_to_set_int, 0, 0, 0, 0, 0)
         ack_msg = mavlinkconnection.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
         print(f"Change Mode ACK:  {ack_msg}")
 
@@ -507,8 +441,6 @@ def change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_
         print(e)
         return str({'ERROR': 'Set Mode command failed!', 'droneid': droneid_to_send_setmode_to})
     
-
-
 
 
 

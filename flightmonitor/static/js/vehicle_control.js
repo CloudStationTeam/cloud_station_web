@@ -360,7 +360,7 @@ function TAKEOFFVehicle() {
 }
 
 
-function setmodeVehicle() {
+function setmodeVehicle(mode_to_set_int) { 
     // alert("setmodeVehicle in vehicle_control.js called !");
     // psuedo code:
     // 1.) create websocket message: set mode + 14550 (JSON)
@@ -370,13 +370,13 @@ function setmodeVehicle() {
 
     var IP_to_connect_text = document.getElementById("DRONE_IP").value;
 
-    let mode_to_set = 123;
+    // mode_to_set = "GUIDED";
     //var messagetosend = 'CONNECT' + port_to_connect_int;
     const jsonObject = {
         command: 'SETMODE',
         DRONE_IP: IP_to_connect_text,
         DRONE_PORT: port_to_connect_int,
-        MODE: mode_to_set
+        MODE: mode_to_set_int
     };
     const messagetosend = JSON.stringify(jsonObject);
     console.log(' messagetosend:', messagetosend);
