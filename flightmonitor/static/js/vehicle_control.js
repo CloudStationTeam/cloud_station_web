@@ -340,12 +340,54 @@ function disconnectVehicle() {
 }
 
 function armVehicle() {
-    alert("armVehicle in vehicle_control.js called !");
+    // alert("armVehicle in vehicle_control.js called !");
+    // psuedo code:
+    // 1.) create websocket message: set mode + 14550 (JSON)
+    // 2.) send websocket message. // for now no response requested ???
+    var port_to_connect_text = document.getElementById("DRONE_PORT").value;
+    var port_to_connect_int = port_to_connect_text;
+
+    var IP_to_connect_text = document.getElementById("DRONE_IP").value;
+
+    // mode_to_set = "GUIDED";
+    //var messagetosend = 'CONNECT' + port_to_connect_int;
+    const jsonObject = {
+        command: 'ARM',
+        DRONE_IP: IP_to_connect_text,
+        DRONE_PORT: port_to_connect_int,
+        MODE: 999 // not used
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
 }
 
 function disarmVehicle() {
-    alert("disarmVehicle in vehicle_control.js called !");
+    // alert("disarmVehicle in vehicle_control.js called !");
+
+    // psuedo code:
+    // 1.) create websocket message: set mode + 14550 (JSON)
+    // 2.) send websocket message. // for now no response requested ???
+    var port_to_connect_text = document.getElementById("DRONE_PORT").value;
+    var port_to_connect_int = port_to_connect_text;
+
+    var IP_to_connect_text = document.getElementById("DRONE_IP").value;
+
+    // mode_to_set = "GUIDED";
+    //var messagetosend = 'CONNECT' + port_to_connect_int;
+    const jsonObject = {
+        command: 'DISARM',
+        DRONE_IP: IP_to_connect_text,
+        DRONE_PORT: port_to_connect_int,
+        MODE: 999 // not used
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
 }
+
 
 function RTLVehicle() {
     alert("RTLVehicle in vehicle_control.js called !");

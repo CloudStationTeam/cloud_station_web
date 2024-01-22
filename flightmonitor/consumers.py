@@ -329,7 +329,7 @@ class UserActionsConsumer(WebsocketConsumer):
                     mavlink.close()
 
 
-        if(command_to_execute=='SETMODE'): # set drone mode
+        if(command_to_execute=='SETMODE') or (command_to_execute=='ARM') or (command_to_execute=='DISARM') : # set drone mode
             print("SETMODE received in django")
             # Psuedo code:
             # 1.) Parse mode to send and drone port.
@@ -337,7 +337,7 @@ class UserActionsConsumer(WebsocketConsumer):
             # 3.) Disconnect vehicle and wait 100 ms for listen.py thread to quit
             # 4.) Create drone in database if it doesn't already exist (unlikely)
             # 5.) Create mavlink connection
-            # 6.) Call change mode function
+            # 6.) Call change mode function or arm/disarm
             # 7.) Close mavlink connection and wait 50 ms
             # 7.) Restablish mavlink connection on listen.py
 
@@ -385,8 +385,20 @@ class UserActionsConsumer(WebsocketConsumer):
                 print('LOG] ERROR Mavlink connection NOT successful!')
 
             # 6.) Call change mode function
+            if(command_to_execute=='SETMODE')  : # set drone mode
             # change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set)
-            change_mode_CS4(DRONE_PORT_TO_CONNECT_TO, mavlink, 123, mode_to_set_int)                
+                change_mode_CS4(DRONE_PORT_TO_CONNECT_TO, mavlink, 123, mode_to_set_int)                
+            if (command_to_execute=='ARM')  : # arm
+                mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0, 0, 0, 0, 0, 0)
+                arm_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
+                print(f"Arm ACK:  {arm_msg}")
+
+
+            if (command_to_execute=='DISARM') : # disarm
+                mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 0, 0, 0, 0, 0, 0, 0)
+                arm_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
+                print(f"Disarm ACK:  {arm_msg}")
+
 
             # 7.) Close mavlink connection and wait 50 ms
             print('closing mavlink in setmode method')
@@ -404,6 +416,10 @@ class UserActionsConsumer(WebsocketConsumer):
             
         if(command_to_execute=='ARM'): # set drone mode
             print("ARM received in django")
+
+
+
+            
 
         if(command_to_execute=='DISARM'): # set drone mode
             print("DISARM received in django")
