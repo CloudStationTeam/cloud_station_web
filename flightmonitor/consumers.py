@@ -16,7 +16,7 @@ import socket
 from channels.generic.websocket import WebsocketConsumer
 from flightmonitor.listen import listenfunction,listenfunction_example
 import threading
-
+import gc
 #from flightmonitor.drone_communication.mavlink_utils import check_vehicle_heartbeat
 # test comment for commit from office desktop 1 19 2024
 HEARTBEAT = "HEARTBEAT"
@@ -95,6 +95,141 @@ def get_local_ip():
     s.close() # Close the socket
     print('[LOG] local ip = ' + local_ip)
     return local_ip
+
+
+def vechicle_disconnect(drone_id_to_connect_to):
+    if(is_vehicle_in_database(drone_id_to_connect_to)): # mark as disconnected if in database and return
+        vehicle_to_disconnect = Vehicle.objects.get(droneid=drone_id_to_connect_to)
+        vehicle_to_disconnect.is_connected=False
+        vehicle_to_disconnect.save()
+        return
+    else: # not in database, just return
+        return
+
+def connect_vehicle_by_ip_and_port(drone_id_to_connect_to,DRONE_IP_TO_CONNECT_TO,websocket_to_push_to):
+    #comment
+
+    # * is pseudo code:
+    # * create DRONE_IP_TO_CONNECT_TO, DRONE_PORT = drone_id_to_connect_to
+    DRONE_PORT_TO_CONNECT_TO=str(drone_id_to_connect_to) # string
+    private_ip=get_local_ip()
+    print('[LOG] PRIVATE IP = ' + private_ip)
+    if(DRONE_IP_TO_CONNECT_TO=='' or DRONE_IP_TO_CONNECT_TO=='0.0.0.0'): # or zero
+        DRONE_IP_TO_CONNECT_TO=private_ip
+    print('[LOG] DRONE_IP_TO_CONNECT_TO  = ' + DRONE_IP_TO_CONNECT_TO)
+
+    # * if drone does not exist in database, create it
+    if(is_vehicle_in_database(drone_id_to_connect_to)==False): # i.e. need to create entry into database
+        #create drone
+        vehicle_to_listen_to = Vehicle()
+        vehicle_to_listen_to.droneid=drone_id_to_connect_to
+        vehicle_to_listen_to.is_connected=False
+        vehicle_to_listen_to.save() 
+    else: # drone is in database, get its object as vehicle_to_listen_to
+        vehicle_to_listen_to=Vehicle.objects.get(droneid=drone_id_to_connect_to)
+
+    # * if drone listed as connected in database and in thread, return
+    if vehicle_to_listen_to.is_connected==True and is_drone_id_is_in_a_thread(drone_id_to_connect_to)==True:
+        print('drone listed as connected in database and in thread,')
+        return
+
+    # * if drone listed as not connected in database and in thread, mark as connected in database and return
+    if vehicle_to_listen_to.is_connected==False and is_drone_id_is_in_a_thread(drone_id_to_connect_to)==True:
+        print('drone listed as not connected in database and in thread,')
+        vehicle_to_listen_to.is_connected=True
+        vehicle_to_listen_to.save()
+        return
+
+    # * if drone is not in thread ...
+    if  is_drone_id_is_in_a_thread(drone_id_to_connect_to)==False: # create thread and mark as connected in database
+        # ** Find sinding IP
+        sending_ip_address=find_IP_ADDRESS_sending_to_port(int(DRONE_PORT_TO_CONNECT_TO))
+        # ** Connect to drone
+        print('calling mavlink to connect to IP: ' ,DRONE_IP_TO_CONNECT_TO,'PORT: ',DRONE_PORT_TO_CONNECT_TO)
+        mavlink = mavutil.mavlink_connection(DRONE_IP_TO_CONNECT_TO + ':' + DRONE_PORT_TO_CONNECT_TO)
+        print('working...')
+        connect_msg = mavlink.wait_heartbeat(timeout=6)
+        print('did call mavlink to connect')
+        if connect_msg: # connection succeded
+            print('[LOG] Mavlink connection successful!')
+            # Usurp mavlink and create a new API for this project... DRONECOMM
+            vehicle_to_listen_to.is_connected=True
+            vehicle_to_listen_to.save()
+            # Create a thread
+            threadname=str(DRONE_PORT_TO_CONNECT_TO)
+            my_thread = threading.Thread(target=listenfunction, args=(DRONE_PORT_TO_CONNECT_TO, mavlink, websocket_to_push_to),name=threadname)
+            #my_thread = threading.Thread(target=listenfunction)
+            # Start the thread
+            my_thread.start()
+        else:
+            print('LOG] ERROR Mavlink connection NOT successful!')
+            mavlink.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
 
 
@@ -243,28 +378,9 @@ class UserActionsConsumer(WebsocketConsumer):
                     # Usurp mavlink and create a new API for this project... DRONECOMM
                     comms_msg={"mavpackettype": "DRONECOMM",  "drone_remote_IP": str(sending_ip_address), "drone_local_IP": str(private_ip),"drone_port": str(drone_id_to_connect_to)} # json string
                     # Parse the JSON string into a Python dictionary
-                    
-                    # xxx  comms_msg_dict = json.loads(comms_msg)
-                    # Create two dictionaries
-                    # xxx inner_dict = comms_msg_dict;
-                    # xxx outer_dict = {'msg': inner_dict, 'port': droneid_to_listen_to}
-
-                    # Convert the outer dictionary to a JSON-formatted string
-                    # xxx json_string = json.dumps(outer_dict)
-
-                    # xxx print("Nested JSON string:", json_string)
-
 
                     json_string = json.dumps({"msg": comms_msg, "port": drone_id_to_connect_to})
                     self.send(json_string) # need to update to send port also as per new format
-
-                    # self.send(json.dumps(comms_msg)) # need to update to send port also as per new format
-
-
-
-
-
-
 
                     vehicle_to_listen_to.is_connected=True
                     vehicle_to_listen_to.save()
@@ -279,52 +395,81 @@ class UserActionsConsumer(WebsocketConsumer):
                     mavlink.close()
 
 
+        if(command_to_execute=='SETMODE'): # set drone mode
+            print("SETMODE received in django")
+            # Psuedo code:
+            # 1.) Parse mode to send and drone port.
+            # 2.) Figure out IP addresses
+            # 3.) Disconnect vehicle and wait 100 ms for listen.py thread to quit
+            # 4.) Create drone in database if it doesn't already exist (unlikely)
+            # 5.) Create mavlink connection
+            # 6.) Call change mode function
+            # 7.) Close mavlink connection and wait 50 ms
+            # 7.) Restablish mavlink connection on listen.py
 
-        if(command_to_execute=='CONNECT'): # obsolete
-            print('going to connect to drone now!')
-            #connect_address='14559'
-            connect_address=str(drone_id_to_connect_to)
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
-            private_ip = s.getsockname()[0] # Get the local IP address
-            s.close() # Close the socket
-            print('[LOG] PRIVATE IP = ' + private_ip)
+            # 1.) Parse mode to send and drone port.
+            DRONE_PORT_TO_CONNECT_TO=str(data['DRONE_PORT']) # string
+            drone_id_to_connect_to = data['DRONE_PORT'] # Note that DRONE_PORT is drone ID for now....
+            mode_to_set = data['MODE']
+            print('drone_id_to_connect_to =', drone_id_to_connect_to)
+            print('mode_to_set =', mode_to_set)
 
-            SERVER_IP = socket.gethostbyname(socket.gethostname())
-            #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
-            print('server_ip = ',SERVER_IP)
-            print('private _ip = ', private_ip)
-            #private_ip='52.13.24.228'
-            #private_ip='172.16.1.16'
+            # 2.) Figure out IP addresses
+            # * create DRONE_IP_TO_CONNECT_TO, DRONE_PORT = drone_id_to_connect_to
+            private_ip=get_local_ip()
+            DRONE_IP_TO_CONNECT_TO=data['DRONE_IP'] # string
+            if(DRONE_IP_TO_CONNECT_TO=='' or DRONE_IP_TO_CONNECT_TO=='0.0.0.0'): # or zero
+                DRONE_IP_TO_CONNECT_TO=private_ip
 
-            print('calling mavlink to connect to IP: ' ,private_ip,'PORT: ',connect_address)
-            mavlink = mavutil.mavlink_connection(private_ip + ':' + connect_address)
-            print('working...')
-            connect_msg = mavlink.wait_heartbeat(timeout=6)
+            # 3.) Disconnect vehicle and wait 100 ms for listen.py thread to quit
+            vechicle_disconnect(drone_id_to_connect_to)
+            time.sleep(0.1) # thread should stop during this 100 ms ...
+            #Check if thread is stopped:
+            sitrepthread=is_drone_id_is_in_a_thread(drone_id_to_connect_to);
+            print('is thread still around = ',sitrepthread)
+            print('should be false')
+
+            # 4.) Create drone in database if it doesn't already exist (unlikely)
+            if(is_vehicle_in_database(drone_id_to_connect_to)==False): # i.e. need to create entry into database
+            #create drone
+                print('inside setmode , drone not in database, adding to database (should never happen)')
+                vehicle_to_listen_to = Vehicle()
+                vehicle_to_listen_to.droneid=drone_id_to_connect_to
+                vehicle_to_listen_to.is_connected=False
+                vehicle_to_listen_to.save() 
+            else: # drone is in database, get its object as vehicle_to_listen_to
+                vehicle_to_listen_to=Vehicle.objects.get(droneid=drone_id_to_connect_to)
+
+            # 5.) Create mavlink connection
+            # Ideally would use existing mavlink connection object, but it is in a different thread on listen.py and I don't know how to get access to it.
+            mavlink = mavutil.mavlink_connection(DRONE_IP_TO_CONNECT_TO + ':' + DRONE_PORT_TO_CONNECT_TO)
+            connect_msg = mavlink.wait_heartbeat(timeout=3)
             print('did call mavlink to connect')
-
             if connect_msg: # connection succeded
                 print('[LOG] Mavlink connection successful!')
-                vehicle_to_listen_to.is_connected=True
-                vehicle_to_listen_to.save()
-                # Create a thread
-                threadname=str(connect_address)
-                my_thread = threading.Thread(target=listenfunction, args=(connect_address, mavlink, self),name=threadname)
-                #my_thread = threading.Thread(target=listenfunction)
-                # Start the thread
-                my_thread.start()
-
-               
             else:
                 print('LOG] ERROR Mavlink connection NOT successful!')
 
-        if(command_to_execute=='SETMODE'): # set drone mode
-            print("SETMODE received in django")
-            
+            # 6.) Call change mode function
+            # change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set)
+            change_mode_CS4(DRONE_PORT_TO_CONNECT_TO, mavlink, 123, mode_to_set)                
 
+            # 7.) Close mavlink connection and wait 50 ms
+            print('closing mavlink in setmode method')
+            mavlink.close()
+            time.sleep(0.05)
+
+            # 7.) Restablish mavlink connection on listen.py
+            print('Restablish mavlink connection on listen.py')
+            connect_vehicle_by_ip_and_port(drone_id_to_connect_to,DRONE_IP_TO_CONNECT_TO,self)
+ 
+
+
+
+
+            
         if(command_to_execute=='ARM'): # set drone mode
             print("ARM received in django")
-
 
         if(command_to_execute=='DISARM'): # set drone mode
             print("DISARM received in django")
@@ -334,59 +479,39 @@ class UserActionsConsumer(WebsocketConsumer):
 
 
 
+# Example usage
+# all_mavlink_connections = find_mavlink_connections()
+# print("All MAVLink connections:", all_mavlink_connections)
+
+# CS 4.0 
+def change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_send_response_to, mode_to_set):
+    vehicle_to_send_setmode_to = Vehicle.objects.get(droneid=droneid_to_send_setmode_to)
+    try:
+        # Change mode to guided (Ardupilot) 
+        mode_id = mavlinkconnection.mode_mapping()["GUIDED"]
+        mavlinkconnection.mav.command_long_send( 1, 1, mavutil.mavlink.MAV_CMD_DO_SET_MODE,
+                                    0, mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED, mode_id, 0, 0, 0, 0, 0)
+        ack_msg = mavlinkconnection.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
+        print(f"Change Mode ACK:  {ack_msg}")
+
+        if ack_msg:
+            ack_msg = ack_msg.to_dict()
+            ack_msg['command'] = 'SET_MODE'
+            ack_msg['result_description'] = mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description
+            ack_msg['droneid'] = droneid_to_send_setmode_to
+            print(' massaged ack_msg = ',ack_msg)
+            return ack_msg
+        else:
+            return str({'ERROR': 'No ack_msg received (timeout 3s).', 'droneid': droneid_to_send_setmode_to})
+    except Exception as e:
+        print(e)
+        return str({'ERROR': 'Set Mode command failed!', 'droneid': droneid_to_send_setmode_to})
+    
 
 
 
 
 
-
-
-     def old_receive(self, text_data):
-        # text_data_json = json.loads(text_data)
-        # message = text_data_json["message"]
-        # self.send(text_data=json.dumps({"message": message}))
-        print('[LOG] message received in Django!')
-        print(text_data)
-        if(text_data=='CONNECT123'):
-            print('going to connect to drone now!')
-            # do something, like call connect to mavlink            
-            connect_address='14559'
-            # PRIVATE IP
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('8.8.8.8', 80))  # Connect to a known external server (Google's public DNS)
-            private_ip = s.getsockname()[0] # Get the local IP address
-            s.close() # Close the socket
-            print('[LOG] PRIVATE IP = ' + private_ip)
-            SERVER_IP = socket.gethostbyname(socket.gethostname())
-            #mavlink = mavutil.mavlink_connection(SERVER_IP + ':' + connect_address)
-            mavlink = mavutil.mavlink_connection(private_ip + ':' + connect_address)
-            msg = mavlink.wait_heartbeat(timeout=6)
-            if msg:
-                # connection succeded
-                print('[LOG] Mavlink connection successful!')
-            else:
-                print('LOG] ERROR Mavlink connection NOT successful!')
-            # now get all messages and log to terminal
-            while True:
-                msg = mavlink.recv_match( blocking=True)
-                #msg = mavlink.recv_match(type='GPS_RAW_INT', blocking=True)
-                # parse message type
-                message_type = msg.get_type()
-                if(message_type in USEFUL_MESSAGES_V4_0_PYTHON):
-                    print('[LOG][consumers.py] message_type in USEFUL_MESSAGES_V4_0_PYTHON')
-                    print(msg)
-                    # Convert MAVLink message to a dictionary
-                    msg_dict = msg.to_dict()
-                    # Send MAVLink message as a JSON string to the WebSocket client
-                    self.send(msg.to_json())
-                    # Get the current date and time
-                    current_datetime = datetime.now()
-                    # Format the date and time as a string
-                    formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-                    # Print the formatted date and time
-                    print("Current Date and Time:", formatted_datetime)
-                    #self.send(f"Message sent at time " + formatted_datetime)
-                
 # send flight log update to client (browser)
 @receiver(post_save, sender=Telemetry_log)
 def telemetryLogUpdate_observer(sender, instance, **kwargs):

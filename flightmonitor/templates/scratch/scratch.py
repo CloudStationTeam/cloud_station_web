@@ -171,3 +171,16 @@ def change_mode(connect_address: int, mode: str) -> str:
         print(e)
         return str({'ERROR': 'Set Mode command failed!', 'droneid': connect_address})
 
+import gc
+from pymavlink import mavutil
+
+def find_mavlink_connections():
+    connections = []
+    for obj in gc.get_objects():
+        if isinstance(obj, mavutil.mavlink_connection):
+            connections.append(obj)
+    return connections
+
+# Example usage
+all_mavlink_connections = find_mavlink_connections()
+print("All MAVLink connections:", all_mavlink_connections)

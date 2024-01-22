@@ -361,7 +361,7 @@ function TAKEOFFVehicle() {
 
 
 function setmodeVehicle() {
-    alert("setmodeVehicle in vehicle_control.js called !");
+    // alert("setmodeVehicle in vehicle_control.js called !");
     // psuedo code:
     // 1.) create websocket message: set mode + 14550 (JSON)
     // 2.) send websocket message. // for now no response requested ???
