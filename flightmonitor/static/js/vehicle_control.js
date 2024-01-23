@@ -185,7 +185,7 @@ function get_webdrone_object_from_droneid(m_droneid_to_get) {
 
     for (let webDroneObject of window.m_Array_of_WebDrone_objects) {
         // 'webDroneObject' will be the current object
-        console.log('Object:', webDroneObject);
+        // console.log('Object:', webDroneObject);
         m_drone_id = webDroneObject.droneid;
         if (m_droneid_to_get==m_drone_id){
             return webDroneObject;
@@ -265,51 +265,33 @@ function connectVehicle_by_IP_and_PORT() {
     let m_array_of_webdrone_object_droneids = [];
     for (let webDroneObject of window.m_Array_of_WebDrone_objects) { // iterate over window.m_Array_of_WebDrone_objects which contains extant webDroneObjects
         // 'webDroneObject' will be the current object
-        console.log('Object:', webDroneObject);
+        // console.log('Object:', webDroneObject);
         m_drone_id = webDroneObject.droneID;
         m_array_of_webdrone_object_droneids.push(m_drone_id);
     } // now we have created array of existing droneids
     if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
-        console.log('Item is in the array.');
+        console.log('The drone we are trying to conenct to exists as a webdrone object already, as...');
         is_DRONE_PORT_in_webdrone_objects = true; // assume no
+        // xxx add the marker back to the map if it already exists
+        m_webdrone_object_to_add_marker=get_webdrone_object_from_droneid(port_to_connect_int);
+        console.log(' it is....', m_webdrone_object_to_add_marker);
+        m_webdrone_object_to_add_marker.marker.setLngLat(feature.geometry.coordinates).addTo(map);
     }
     if (!is_DRONE_PORT_in_webdrone_objects) { // create now WebDrone object and populate it's known fields
+        console.log('The drone we are trying to conenct does not exist as a webdrone object. Creating.....');
         m_WebDrone = new WebDrone(port_to_connect_int);
-        console.log("new webdrone object: ", m_WebDrone);
-        window.m_Array_of_WebDrone_objects.push(m_WebDrone);
-        m_WebDrone.m_popup = new mapboxgl.Popup({offset: 40});
+        // we just created it, give it a marker and put it on the map....
+        var el = document.createElement('div');
+        el.className = 'marker';
+        let feature = droneLocationGeoJson; // mapbox calls it feature
+        m_WebDrone.marker = new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+        console.log('added marker: ', m_WebDrone.marker);
+        console.log("Created new webdrone object: ", m_WebDrone);
+        window.m_Array_of_WebDrone_objects.push(m_WebDrone); // add to global set of WebDrone objects
         currSelectedDroneId = m_WebDrone.port_to_connect_int; // for now CS 4.0 until we got many drones, most recent connected drone is current drone id
 
     }
 
-    
-    // 5.) Handle mapbox icon.
-    // We now have a drone object: m_WebDrone
-    console.log('m_WebDrone.has_marker=', m_WebDrone.has_marker);
-    if (m_WebDrone.has_marker == false) { // add marker to map, and it is property of webdrone object also. When marker is updated, map updates...???
-        // later write code to remove marker if drone is disconnected or whatever (cleanup, maybe on disconnect...)
-        // create a marker now
-        console.log('m_WebDrone.has_marker==false')
-        var el = document.createElement('div');
-        el.className = 'marker';
-        let feature = droneLocationGeoJson; // mapbox calls it feature
-        m_WebDrone.marker = new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-        console.log('added marker: ', m_WebDrone.marker);
-        m_WebDrone.has_marker = true;
-        console.log('just set true, fact check: m_WebDrone.has_marker=', m_WebDrone.has_marker);
-    }
-    if (m_WebDrone.has_marker == null) { // add marker to map, and it is property of webdrone object also. When marker is updated, map updates...???
-        // later write code to remove marker if drone is disconnected or whatever (cleanup, maybe on disconnect...)
-        // create a marker now
-        console.log('m_WebDrone.has_marker==false')
-        var el = document.createElement('div');
-        el.className = 'marker';
-        let feature = droneLocationGeoJson; // mapbox calls it feature
-        m_WebDrone.marker = new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-        console.log('added marker: ', m_WebDrone.marker);
-        m_WebDrone.has_marker = true;
-        console.log('just set true, fact check: m_WebDrone.has_marker=', m_WebDrone.has_marker);
-    }
 
 
     setTimeout(function () {
@@ -331,7 +313,7 @@ function disconnectVehicle() {
     // 2.) send websocket message.
     // TO DO: Check if it's in list of connnected already.
     // 3.) Mark as disconned in webdrone object
-    // 4.) Delete mapbox marker so icon goes away.
+    // 4.) Remove mapbox marker from map ... xxx.
     var port_to_disconnect_text = document.getElementById("disVID").value;
     var port_to_disconnect_int = port_to_disconnect_text;
     let m_WebDrone_object_to_disconnect = window.m_Array_of_WebDrone_objects.find(item => item['droneID'] === port_to_disconnect_int); // webdrone object to disconnect

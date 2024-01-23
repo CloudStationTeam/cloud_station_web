@@ -90,7 +90,7 @@ function handle_mavlink_message(parsedData, droneport) {
     // Set the rotation angle of the marker (in degrees)
     var rotationAngle = hdg/100; // Change this to the desired angle
     m_webdrone_to_rotate=get_webdrone_object_from_droneid(droneport);
-    console.log('m_webdrone_object_to_update',m_webdrone_object_to_update)
+    // console.log('m_webdrone_object_to_update',m_webdrone_object_to_update)
     m_webdrone_object_to_update.marker.setRotation(rotationAngle);
 
     const dynamicTextElementlat = document.getElementById('lat');
