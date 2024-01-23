@@ -179,6 +179,22 @@ function get_list_of_existing_droneids() {
     return instancesOfWebDroneClass
 }
 
+function get_webdrone_object_from_droneid(m_droneid_to_get) {
+    // returns array of webdrone objects
+    let m_array_of_webdrone_object_droneids;
+
+    for (let webDroneObject of window.m_Array_of_WebDrone_objects) {
+        // 'webDroneObject' will be the current object
+        console.log('Object:', webDroneObject);
+        m_drone_id = webDroneObject.droneid;
+        if (m_droneid_to_get==m_drone_id){
+            return webDroneObject;
+        }
+    }
+    return null;
+}
+
+
 // Function to enumerate instances of a class
 function enumerateInstances(className) {
     const instances = [];
@@ -247,13 +263,13 @@ function connectVehicle_by_IP_and_PORT() {
     // Need to change to add check if mavlink connection worked 
     let is_DRONE_PORT_in_webdrone_objects = false; // assume no
     let m_array_of_webdrone_object_droneids = [];
-    for (let webDroneObject of window.m_Array_of_WebDrone_objects) {
+    for (let webDroneObject of window.m_Array_of_WebDrone_objects) { // iterate over window.m_Array_of_WebDrone_objects which contains extant webDroneObjects
         // 'webDroneObject' will be the current object
         console.log('Object:', webDroneObject);
-        m_drone_id = webDroneObject.port_to_connect_int;
+        m_drone_id = webDroneObject.droneID;
         m_array_of_webdrone_object_droneids.push(m_drone_id);
-    }
-    if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) {
+    } // now we have created array of existing droneids
+    if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
         console.log('Item is in the array.');
         is_DRONE_PORT_in_webdrone_objects = true; // assume no
     }
@@ -261,6 +277,9 @@ function connectVehicle_by_IP_and_PORT() {
         m_WebDrone = new WebDrone(port_to_connect_int);
         console.log("new webdrone object: ", m_WebDrone);
         window.m_Array_of_WebDrone_objects.push(m_WebDrone);
+        m_WebDrone.m_popup = new mapboxgl.Popup({offset: 40});
+        currSelectedDroneId = m_WebDrone.port_to_connect_int; // for now CS 4.0 until we got many drones, most recent connected drone is current drone id
+
     }
 
     
@@ -413,6 +432,31 @@ function TAKEOFFVehicle() {
         DRONE_IP: IP_to_connect_text,
         DRONE_PORT: port_to_connect_int,
         MODE: takeoff_altitude 
+    };
+    const messagetosend = JSON.stringify(jsonObject);
+    console.log(' messagetosend:', messagetosend);
+    // send message to websocket
+    doSend(messagetosend);
+
+}
+
+function FlyVehicleTo(destination_lat,destination_lon,destination_alt) {
+    // psuedo code:
+    // 1.) create websocket message: set mode + 14550 (JSON)
+    // 2.) send websocket message. // for now no response requested ???
+    var port_to_connect_text = document.getElementById("DRONE_PORT").value;
+    var port_to_connect_int = port_to_connect_text;
+    var IP_to_connect_text = document.getElementById("DRONE_IP").value;
+
+    //var messagetosend = 'CONNECT' + port_to_connect_int;
+    const jsonObject = {
+        command: 'FLYTO',
+        DRONE_IP: IP_to_connect_text,
+        DRONE_PORT: port_to_connect_int,
+        MODE: 4, // guided
+        LAT_DEST:destination_lat,
+        LON_DEST:destination_lon,
+        ALT_DEST:destination_alt,
     };
     const messagetosend = JSON.stringify(jsonObject);
     console.log(' messagetosend:', messagetosend);

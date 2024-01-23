@@ -19,11 +19,11 @@ var AVAILABLE_TELEMETRY = {}
 
 
 
-var tempPin = new Map();
-var tempPop = new Map();
+var tempPin = new Map(); // set of (droneID, marker) pairs // marker is the pin you will fly to on map
+var tempPop = new Map(); // set of (droneID, mapboxgl.popup object) pairs // popupobject is for adding to pin on map for fly to
 var currSelectedDroneId;
 var currDisplayedExtraData = {};
-var droneMap = new Map(); // initialize an empty map
+var droneMap = new Map(); // initialize an empty map // set of (droneID, drone) pairs, where drone is the object (WebDrone class in CS 4.0, not used)
 var disconnectedDrones = new Set(); //droneIds are text in this set
 
 

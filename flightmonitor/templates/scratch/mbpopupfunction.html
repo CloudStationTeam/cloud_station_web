@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Mapbox Popup Example</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+  mapboxgl.accessToken = 'MBKEY';
+
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-74.5, 40],
+    zoom: 9
+  });
+
+  var popup;
+
+  map.on('click', function(e) {
+    // Create a popup with a form to enter a number
+    popup = new mapboxgl.Popup({ closeOnClick: false })
+      .setLngLat(e.lngLat)
+      .setHTML('<form id="numberForm"><label for="number">Enter a number:</label><br><input type="number" id="number" name="number"><br><br><button type="button" onclick="submitNumber(' + e.lngLat.lng + ',' + e.lngLat.lat + ')">Submit</button> <button type="button" onclick="cancelPopup()">Cancel</button></form>')
+      .addTo(map);
+  });
+
+  function submitNumber(lon, lat) {
+    // Get the entered number from the form
+    var enteredNumber = parseInt(document.getElementById('number').value);
+
+    // Call your function with the entered number and coordinates as arguments
+    yourFunction(enteredNumber, lon, lat);
+
+    // Close the popup
+    popup.remove();
+  }
+
+  function cancelPopup() {
+    // Close the popup without submitting
+    popup.remove();
+  }
+
+  // Replace this function with your actual function
+  function yourFunction(number, lon, lat) {
+    console.log('Entered number:', number);
+    console.log('Coordinates:', { longitude: lon, latitude: lat });
+    // Do something with the entered number and coordinates
+  }
+</script>
+
+</body>
+</html>

@@ -160,3 +160,52 @@ map.on('contextmenu', (e) => {
 
 
 
+  // Function to handle left click on the map
+  function handleLeftClick(event) {
+    // Get the coordinates of the click
+    var coordinates = event.lngLat;
+    const { lng, lat } = event.lngLat;
+    alert(`Left-clicked at Latitude: ${lat}, Longitude: ${lng}`);
+    // Log the coordinates to the console (you can replace this with your custom logic)
+    console.log('Left click at:', coordinates);
+    m_webdroneobject_to_fly.m_pin.remove(map);
+    
+  }
+
+  // Add an event listener for the map's click event
+  map.on('click', handleLeftClick);
+
+  map.on('contextmenu', function (e) { //right click
+
+    // Get the coordinates of the right-clicked point
+    const { lng, lat } = e.lngLat;
+
+    // Display an alert with the coordinates
+    alert(`Right-clicked at Latitude: ${lat}, Longitude: ${lng}`);
+
+    // make a popup window fly to
+    m_webdroneobject_to_fly=get_webdrone_object_from_droneid(currSelectedDroneId);
+
+
+    m_webdroneobject_to_fly.m_popup= new  mapboxgl.Popup({offset: 40});
+    m_webdroneobject_to_fly.m_pin= new mapboxgl.Marker().setLngLat(e.lngLat).setPopup(m_webdroneobject_to_fly.m_popup);
+
+
+    m_webdroneobject_to_fly.m_pin.addTo(map);
+    let lon_to_fly_to = e.lngLat["lng"];
+    let lat_to_fly_to = e.lngLat["lat"];
+
+
+
+    if (tempPop.size > 0) { // not gonna happen in CS 4.0 so can ignore
+        let longitude = e.lngLat["lng"];
+        let latitude = e.lngLat["lat"];
+
+        if (!tempPin.has(currSelectedDroneId)) {
+            tempPin.set(currSelectedDroneId, new mapboxgl.Marker().setLngLat(e.lngLat).setPopup(tempPop.get(currSelectedDroneId)).addTo(map));
+        } else
+            tempPin.get(currSelectedDroneId).setLngLat(e.lngLat);
+        tempPop.get(currSelectedDroneId).setHTML(currSelectedDroneId.toString() + '<br>Longitude: ' + longitude + '<br>Latitude: ' + latitude +
+            '<br><button onclick="clearPin()">clear pin</button> <button onclick="flyTo(' + currSelectedDroneId + ',' + longitude + ',' + latitude + ',' + 0 + ')">Fly To</button>');
+    }
+})

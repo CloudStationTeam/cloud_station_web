@@ -329,7 +329,7 @@ class UserActionsConsumer(WebsocketConsumer):
                     mavlink.close()
 
 
-        if(command_to_execute=='SETMODE') or (command_to_execute=='ARM') or (command_to_execute=='DISARM') or (command_to_execute=='TAKEOFF'): # set drone mode
+        if(command_to_execute=='SETMODE') or (command_to_execute=='ARM') or (command_to_execute=='DISARM') or (command_to_execute=='TAKEOFF') or (command_to_execute=='FLYTO') : # set drone mode
             print("SETMODE received in django")
             # Psuedo code:
             # 1.) Parse mode to send and drone port.
@@ -407,6 +407,24 @@ class UserActionsConsumer(WebsocketConsumer):
                 mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, takeoff_params[0], takeoff_params[1], takeoff_params[2], takeoff_params[3], takeoff_params[4], takeoff_params[5], takeoff_params[6])
                 takeoff_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
                 print(f"Takeoff ACK:  {takeoff_msg}")
+
+
+            if (command_to_execute=='FLYTO') : 
+                print('flyting to!!!!!!!!!!!')
+                change_mode_CS4(DRONE_PORT_TO_CONNECT_TO, mavlink, 123, 4) # set to guided mode
+                destination_lat = data['LAT_DEST']
+                destination_lat_int = int(1e7*destination_lat)
+                destination_lon = data['LON_DEST']
+                destination_lon_int = int(1e7*destination_lon)
+                destination_alt = data['ALT_DEST']
+                print('calling flyto with ',destination_lat,destination_lon,destination_alt)
+
+                mavlink.mav.send(mavutil.mavlink.MAVLink_set_position_target_global_int_message(10, mavlink.target_system,
+                        mavlink.target_component, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, int(0b110111111000), destination_lat_int, destination_lon_int, destination_alt, 0, 0, 0, 0, 0, 0, 1.57, 0.5))
+
+                # mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, takeoff_params[0], takeoff_params[1], takeoff_params[2], takeoff_params[3], takeoff_params[4], takeoff_params[5], takeoff_params[6])
+                # takeoff_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
+                # print(f"Takeoff ACK:  {takeoff_msg}")
 
             # 7.) Close mavlink connection and wait 50 ms
             print('closing mavlink in setmode method')
