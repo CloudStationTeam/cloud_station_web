@@ -228,7 +228,30 @@ class UserActionsConsumer(WebsocketConsumer):
          self.accept()
 
      def disconnect(self, close_code):
-         self.channel_layer.group_discard(
+        print('[UserActionsConsumer:disconnect] disconnected websocket')
+        # typically this happens when user reloads webpage, maybe also internet loss
+        # in this case, mark drone is not connected so listen.py thread will stop; also wait 200 ms for it to stop
+        # actually do this for all threads, since we lost websocket to all of them
+
+        running_threads = threading.enumerate()  # List all running threads and check if they are connected....      
+            for thread in running_threads:
+                print('threadname = ',thread.name)
+                # droneid=threadname
+                # get drone object of droneid, and set its connected status to false
+                m_droneobject_to_disconnect=getdroneojbectfromdroneid(thread.name)
+                m_droneobject_to_disconnect.is_connected=false
+        time(0.2)
+        return
+
+
+
+
+
+
+
+
+
+        self.channel_layer.group_discard(
             "users_group", 
             self.channel_name
         )
