@@ -370,7 +370,7 @@ function armVehicle() {
         MODE: 999 // not used
     };
     const messagetosend = JSON.stringify(jsonObject);
-    / console.log(' messagetosend:', messagetosend);
+    // console.log(' messagetosend:', messagetosend);
     // send message to websocket
     doSend(messagetosend);
 }
