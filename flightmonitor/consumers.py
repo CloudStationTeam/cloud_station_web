@@ -34,6 +34,20 @@ USEFUL_MESSAGES_V4_0_PYTHON = [
      ]
 
 # helper functions
+
+def create_list_of_all_droneids_in_database():
+    # Retrieve all objects of YourModel
+    all_objects = Vehicle.objects.all()
+    list_of_all_droneids_in_database=[]
+    # Print or iterate through the objects
+    for obj in all_objects:
+        print('[create_list_of_all_droneids_in_database] vehicle =',obj)
+        droneid_str=str(obj.droneid)
+        list_of_all_droneids_in_database.append(droneid_str)
+    print('[create_list_of_all_droneids_in_database] list_of_all_droneids_in_database =', list_of_all_droneids_in_database)
+    return list_of_all_droneids_in_database
+
+
 def is_vehicle_in_database(vehicle_id_to_check):
     try:
         # Attempt to get an object with the specified attribute value
@@ -97,7 +111,7 @@ def get_local_ip():
     return local_ip
 
 
-def vechicle_disconnect(drone_id_to_connect_to):
+def vechicle_disconnect(drone_id_to_connect_to): 
     if(is_vehicle_in_database(drone_id_to_connect_to)): # mark as disconnected if in database and return
         vehicle_to_disconnect = Vehicle.objects.get(droneid=drone_id_to_connect_to)
         vehicle_to_disconnect.is_connected=False
@@ -165,8 +179,6 @@ def connect_vehicle_by_ip_and_port(drone_id_to_connect_to,DRONE_IP_TO_CONNECT_TO
             print('LOG] ERROR Mavlink connection NOT successful!')
             mavlink.close()
 
-
-
 def handle_mavlink_message_to_update_Django_drone_object(msg, connect_address):
     v = Vehicle.objects.get(droneid=connect_address)
 
@@ -227,20 +239,33 @@ class UserActionsConsumer(WebsocketConsumer):
         )
          self.accept()
 
-     def disconnect(self, close_code):
+     def disconnect(self, close_code): # 
         print('[UserActionsConsumer:disconnect] disconnected websocket')
         # typically this happens when user reloads webpage, maybe also internet loss
         # in this case, mark drone is not connected so listen.py thread will stop; also wait 200 ms for it to stop
         # actually do this for all threads, since we lost websocket to all of them
 
         running_threads = threading.enumerate()  # List all running threads and check if they are connected....      
-            for thread in running_threads:
-                print('threadname = ',thread.name)
-                # droneid=threadname
-                # get drone object of droneid, and set its connected status to false
-                m_droneobject_to_disconnect=getdroneojbectfromdroneid(thread.name)
-                m_droneobject_to_disconnect.is_connected=false
-        time(0.2)
+        m_list_of_droneids=create_list_of_all_droneids_in_database()
+        print('[disconnect] m_list_of_droneids = ',m_list_of_droneids)
+        for temp_id in m_list_of_droneids:
+            print('[disconnect]  temp_id = ',temp_id)
+            print('[disconnect] type(temp_id)  = ',type(temp_id)) # int
+        for thread in running_threads:
+            print('[UserActionsConsumer:disconnect] running threadname = ',thread.name)
+            m_threadname=thread.name
+            print('[disconnect] type(m_threadname) =',type(m_threadname)) # string
+            if m_threadname in m_list_of_droneids: # mark all drone objects as disconnected                
+                print('[UserActionsConsumer:disconnect] m_threadname in m_list_of_droneids; m_threadname = ',m_threadname)
+                m_droneobject_to_disconnect=Vehicle.objects.get(droneid=m_threadname)
+                print('[UserActionsConsumer:disconnect] found vehicle m_droneobject_to_disconnect= ',m_droneobject_to_disconnect)
+                print('[UserActionsConsumer:disconnect] calling m_droneobject_to_disconnect.is_connected=False on m_droneobject_to_disconnect=',m_droneobject_to_disconnect)
+                m_droneobject_to_disconnect.is_connected=False
+                m_droneobject_to_disconnect.save()
+
+                print('[UserActionsConsumer:disconnect] did call m_droneobject_to_disconnect.is_connected=False on m_droneobject_to_disconnect=',m_droneobject_to_disconnect)
+
+        time.sleep(0.2)
         return
 
 
@@ -316,11 +341,13 @@ class UserActionsConsumer(WebsocketConsumer):
                 vehicle_to_listen_to=Vehicle.objects.get(droneid=drone_id_to_connect_to)
 
             # 3.) If drone listed as connected in database and in thread, return
-            # xxx a problem is if everthing is connected, then user refreshes browser, the following happens:
-            # thread still runs on old websocket (maybe check if still active???)
-            # the django drone object is still listed as connected, even though it's not
-            # on browswer refresh, a whole new websocket connection is established
-            # but because this function thinks things are hunky dory, it quits, and the new websockect hence browser is left high and dry...
+            # A possible scenario is if everthing is connected, then user refreshes browser, the following happens:
+            # Thread still runs on old websocket 
+            # The django drone object is still listed as connected, even though it's not
+            # On browswer refresh, a whole new websocket connection is established
+            # But because this function thinks things are hunky dory, it quits, and the new websockect hence browser is left high and dry...
+            # To avoid this scenario, the websocket disconnect listener sets ALL drone objects to is_connected=false, which will terminate ALL listen.py threads
+            # effectively resetting Django to the origianl state (no listen.py threads, no drones listed as connected in database)
             if vehicle_to_listen_to.is_connected==True and is_drone_id_is_in_a_thread(drone_id_to_connect_to)==True:
                 print('[UserActionsConsumer:receive] drone listed as connected in database and in thread, returning...')
                 return
@@ -436,7 +463,7 @@ class UserActionsConsumer(WebsocketConsumer):
             if (command_to_execute=='TAKEOFF') : # disarm
                 print('taking off!!!!!!!!!!!')
                 takeoff_altitude=mode_to_set_int
-                takeoff_altitude=40 # xxx hard coded for now
+                # takeoff_altitude=40 #  hard coded for now
                 takeoff_params = [0, 0, 0, 0, 0, 0, takeoff_altitude]
                 mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, takeoff_params[0], takeoff_params[1], takeoff_params[2], takeoff_params[3], takeoff_params[4], takeoff_params[5], takeoff_params[6])
                 takeoff_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
@@ -484,8 +511,6 @@ class UserActionsConsumer(WebsocketConsumer):
         if(command_to_execute=='DISARM'): # set drone mode
             print("DISARM received in django")
             
-
-
 # Example usage
 # all_mavlink_connections = find_mavlink_connections()
 # print("All MAVLink connections:", all_mavlink_connections)
@@ -517,8 +542,6 @@ def change_mode_CS4(droneid_to_send_setmode_to, mavlinkconnection, websocket_to_
         print(e)
         return str({'ERROR': 'Set Mode command failed!', 'droneid': droneid_to_send_setmode_to})
     
-
-
 
 # send flight log update to client (browser)
 @receiver(post_save, sender=Telemetry_log)
