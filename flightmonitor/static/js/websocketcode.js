@@ -256,8 +256,8 @@ function handle_mavlink_message(parsedData, droneport) {
     // Use Array.find() to get the object based on the property
     let m_WebDrone_object = window.m_Array_of_WebDrone_objects.find(obj => obj.droneid === drone_id_to_connect_to);
     m_WebDrone_object.is_connected = true;
-    console.log('flaggins connecte this object: m_WebDrone_object: ');
-    console.log(m_WebDrone_object);
+    // console.log('flagginf connected this object: m_WebDrone_object: ');
+    // console.log(m_WebDrone_object);
 
     // Update webdrone object:
     m_webdrone_object_to_update.drone_local_IP = drone_local_IP;

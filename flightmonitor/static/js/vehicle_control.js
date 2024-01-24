@@ -183,10 +183,15 @@ function get_webdrone_object_from_droneid(m_droneid_to_get) {
     // returns array of webdrone objects
     let m_array_of_webdrone_object_droneids;
 
+    // console.log('[get_webdrone_object_from_droneid] Starting logging all objects')
     for (let webDroneObject of window.m_Array_of_WebDrone_objects) {
+        // console.log(' [get_webdrone_object_from_droneid] object: ',webDroneObject, 'droneid', webDroneObject.droneID)
+       //  console.log('[get_webdrone_object_from_droneid] Done logging all objects')
+
+
         // 'webDroneObject' will be the current object
         // console.log('Object:', webDroneObject);
-        m_drone_id = webDroneObject.droneid;
+        m_drone_id = webDroneObject.droneID;
         if (m_droneid_to_get==m_drone_id){
             return webDroneObject;
         }
@@ -236,12 +241,16 @@ function connectVehicle_by_IP_and_PORT() {
     // 1.) create websocket message: connect + IP:PORT
     // 2.) send websocket message.
     // 3.) await websocket response
-    // 4.) create instance in browser of webdrone class with port if it doesn't already exist
-    // 5.) Handle mapbox icon
+    // 4.) Check of webdrone object already exists
+    // 4.) A) if it does already exist, add marker to map (don't change connected status mark)
+    // 4.) B) if it doesn't already exist, create instance in browser of webdrone class with port  (marked as not connected)
+
+
+    // 1.) create websocket message: connect + IP:PORT
     var port_to_connect_text = document.getElementById("DRONE_PORT").value;
     var port_to_connect_int = port_to_connect_text;
-
     var IP_to_connect_text = document.getElementById("DRONE_IP").value;
+    currSelectedDroneId = port_to_connect_int; // for now CS 4.0 until we got many drones, most recent connected drone is current drone id
 
     //var messagetosend = 'CONNECT' + port_to_connect_int;
     const jsonObject = {
@@ -250,10 +259,13 @@ function connectVehicle_by_IP_and_PORT() {
         DRONE_PORT: port_to_connect_int
     };
     const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
+    // console.log(' messagetosend:', messagetosend);
     // send message to websocket
+
+    // 2.) send websocket message.
     doSend(messagetosend);
 
+    // 3.) await websocket response
     // we sent the message via websocket to connect, but we have no idea if it connected yet...
     //  with heartbeat we can toggle a connected flag in the object
 
@@ -261,22 +273,24 @@ function connectVehicle_by_IP_and_PORT() {
     // 4.) create instance in browser of webdrone class with port if it doesn't already exist
     // but don't flag it as connected yet, until a heartbeat is received.
     // Need to change to add check if mavlink connection worked 
-    let is_DRONE_PORT_in_webdrone_objects = false; // assume no
+    let is_DRONE_PORT_in_webdrone_objects = false; // assume no, does not exist
+    // 4.) A) Create array of droneids that exist as objects already
     let m_array_of_webdrone_object_droneids = [];
     for (let webDroneObject of window.m_Array_of_WebDrone_objects) { // iterate over window.m_Array_of_WebDrone_objects which contains extant webDroneObjects
         // 'webDroneObject' will be the current object
         // console.log('Object:', webDroneObject);
         m_drone_id = webDroneObject.droneID;
-        m_array_of_webdrone_object_droneids.push(m_drone_id);
+        m_array_of_webdrone_object_droneids.push(port_to_connect_text);
     } // now we have created array of existing droneids
+    // 4.) B) Check if drone we are tring to connect to exists as object already: if so add marker back to map
     if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
         console.log('The drone we are trying to conenct to exists as a webdrone object already, as...');
         is_DRONE_PORT_in_webdrone_objects = true; // assume no
-        // xxx add the marker back to the map if it already exists
         m_webdrone_object_to_add_marker=get_webdrone_object_from_droneid(port_to_connect_int);
         console.log(' it is....', m_webdrone_object_to_add_marker);
-        m_webdrone_object_to_add_marker.marker.setLngLat(feature.geometry.coordinates).addTo(map);
+        m_webdrone_object_to_add_marker.marker.addTo(map);
     }
+    // 4.) B) Check if drone we are tring to connect to exists as object already: If not, create it.
     if (!is_DRONE_PORT_in_webdrone_objects) { // create now WebDrone object and populate it's known fields
         console.log('The drone we are trying to conenct does not exist as a webdrone object. Creating.....');
         m_WebDrone = new WebDrone(port_to_connect_int);
@@ -285,20 +299,17 @@ function connectVehicle_by_IP_and_PORT() {
         el.className = 'marker';
         let feature = droneLocationGeoJson; // mapbox calls it feature
         m_WebDrone.marker = new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-        console.log('added marker: ', m_WebDrone.marker);
+        // console.log('added marker: ', m_WebDrone.marker);
         console.log("Created new webdrone object: ", m_WebDrone);
         window.m_Array_of_WebDrone_objects.push(m_WebDrone); // add to global set of WebDrone objects
-        currSelectedDroneId = m_WebDrone.port_to_connect_int; // for now CS 4.0 until we got many drones, most recent connected drone is current drone id
-
     }
 
 
 
-    setTimeout(function () {
-        console.log("One second later");
-        console.log('[VECHICLE CONNECT LOG] Finished, with m_WebDrone = ', m_WebDrone);
-
-    }, 1000);
+    // setTimeout(function () {
+    //    console.log("One second later");
+    //    console.log('[VECHICLE CONNECT LOG] Finished, with m_WebDrone = ', m_WebDrone);
+    //}, 1000);
 
 
 
@@ -322,7 +333,7 @@ function disconnectVehicle() {
         droneid: port_to_disconnect_int
     };
     const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
+    //console.log(' messagetosend:', messagetosend);
     // console.log(' m_WebDrone_object_to_disconnect:', m_WebDrone_object_to_disconnect);
 
     // 2.) send websocket message.
@@ -335,7 +346,6 @@ function disconnectVehicle() {
     // 4.) Remove mapbox marker so icon goes away. It might still exist in webdrone object but it will be removed.
     // console.log('going to remove: ',m_WebDrone_object_to_disconnect.marker)
     // console.log('from: ',m_WebDrone_object_to_disconnect)
-    console.log('m_WebDrone_object_to_disconnect.has_marker=', m_WebDrone_object_to_disconnect.has_marker);
     m_WebDrone_object_to_disconnect.marker.remove();
     console.log('m_WebDrone_object_to_disconnect: ', m_WebDrone_object_to_disconnect)
 
@@ -360,7 +370,7 @@ function armVehicle() {
         MODE: 999 // not used
     };
     const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
+    / console.log(' messagetosend:', messagetosend);
     // send message to websocket
     doSend(messagetosend);
 }
@@ -416,7 +426,7 @@ function TAKEOFFVehicle() {
         MODE: takeoff_altitude 
     };
     const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
+    // console.log(' messagetosend:', messagetosend);
     // send message to websocket
     doSend(messagetosend);
 
@@ -441,7 +451,7 @@ function FlyVehicleTo(destination_lat,destination_lon,destination_alt) {
         ALT_DEST:destination_alt,
     };
     const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
+    // console.log(' messagetosend:', messagetosend);
     // send message to websocket
     doSend(messagetosend);
 
@@ -482,7 +492,7 @@ function setmodeVehicle(mode_to_set_int) {
         MODE: mode_to_set_int
     };
     const messagetosend = JSON.stringify(jsonObject);
-    console.log(' messagetosend:', messagetosend);
+    // console.log(' messagetosend:', messagetosend);
     // send message to websocket
     doSend(messagetosend);
 }

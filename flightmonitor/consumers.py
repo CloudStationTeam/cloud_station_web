@@ -265,7 +265,12 @@ class UserActionsConsumer(WebsocketConsumer):
   
         if(command_to_execute=='CONNECT_BY_IP_AND_PORT'): 
             # * is pseudo code:
+            # 1.) Figure out droneid, IP addresses
+            # 2.) If drone object does not exist, create it, mark as not connected
+            # 3.) If drone listed as connected in database and in thread, return
 
+
+            # 1.) Figure out droneid, IP addresses
             # * create DRONE_IP_TO_CONNECT_TO, DRONE_PORT = drone_id_to_connect_to
             DRONE_PORT_TO_CONNECT_TO=str(data['DRONE_PORT']) # string
             print("DRONE_PORT_TO_CONNECT_TO", data['DRONE_PORT']) 
@@ -277,7 +282,7 @@ class UserActionsConsumer(WebsocketConsumer):
                 DRONE_IP_TO_CONNECT_TO=private_ip
             print('[LOG] DRONE_IP_TO_CONNECT_TO  = ' + DRONE_IP_TO_CONNECT_TO)
 
-            # * if drone does not exist in database, create it
+            # 2.) If drone object does not exist, create it, mark as not connected
             if(is_vehicle_in_database(drone_id_to_connect_to)==False): # i.e. need to create entry into database
                 #create drone
                 vehicle_to_listen_to = Vehicle()
@@ -287,8 +292,14 @@ class UserActionsConsumer(WebsocketConsumer):
             else: # drone is in database, get its object as vehicle_to_listen_to
                 vehicle_to_listen_to=Vehicle.objects.get(droneid=drone_id_to_connect_to)
 
-            # * if drone listed as connected in database and in thread, return
+            # 3.) If drone listed as connected in database and in thread, return
+            # xxx a problem is if everthing is connected, then user refreshes browser, the following happens:
+            # thread still runs on old websocket (maybe check if still active???)
+            # the django drone object is still listed as connected, even though it's not
+            # on browswer refresh, a whole new websocket connection is established
+            # but because this function thinks things are hunky dory, it quits, and the new websockect hence browser is left high and dry...
             if vehicle_to_listen_to.is_connected==True and is_drone_id_is_in_a_thread(drone_id_to_connect_to)==True:
+                print('[UserActionsConsumer:receive] drone listed as connected in database and in thread, returning...')
                 return
 
             # * if drone listed as not connected in database and in thread, mark as connected in database and return
@@ -357,7 +368,7 @@ class UserActionsConsumer(WebsocketConsumer):
 
             # 3.) Disconnect vehicle and wait 100 ms for listen.py thread to quit
             vechicle_disconnect(drone_id_to_connect_to)
-            time.sleep(0.1) # thread should stop during this 100 ms ...
+            time.sleep(0.2) # thread should stop during this 100 ms ...
             #Check if thread is stopped:
             sitrepthread=is_drone_id_is_in_a_thread(drone_id_to_connect_to);
             print('is thread still around = ',sitrepthread)

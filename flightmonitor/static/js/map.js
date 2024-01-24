@@ -85,8 +85,8 @@ function cancelPopup() {
 
 // Replace this function with your actual function
 function yourFunction(number, lon, lat) {
-  console.log('Entered number:', number);
-  console.log('Coordinates:', { longitude: lon, latitude: lat });
+  // console.log('Entered number:', number);
+  // console.log('Coordinates:', { longitude: lon, latitude: lat });
   // Do something with the entered number and coordinates
   FlyVehicleTo(lat,lon,number);
 }
