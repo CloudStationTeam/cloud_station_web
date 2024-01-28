@@ -88,7 +88,7 @@
 
 </head>
 <input type="hidden" id="mapboxId" name="mapbox"
-  value="pk.eyJ1IjoicGpiY2EiLCJhIjoiY2lpaGZqMDFwMDA3YXRya244djYyYzJsbiJ9.SH_TxcgkflhzVTyR6PdtGQ">
+  value="MBKEY">
   <nav class="navbar navbar-expand-md navbar-dark  bg-dark sticky-top">
 
 
@@ -484,7 +484,9 @@
 
       <textarea id="dynamicTextdebugmsg" placeholder="Debug message..."></textarea>
       {% else %}
-    <h1>Please login</h1>
+
+      <div id='map'></div>
+  
   {% endif %}
       <!-- <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p> -->
 
