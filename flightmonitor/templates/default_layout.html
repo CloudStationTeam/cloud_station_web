@@ -88,7 +88,7 @@
 
 </head>
 <input type="hidden" id="mapboxId" name="mapbox"
-  value="MBKEY">
+  value="pk.eyJ1IjoicGpiY2EiLCJhIjoiY2lpaGZqMDFwMDA3YXRya244djYyYzJsbiJ9.SH_TxcgkflhzVTyR6PdtGQ">
   <nav class="navbar navbar-expand-md navbar-dark  bg-dark sticky-top">
 
 
@@ -142,11 +142,11 @@
                         <li><a class="dropdown-item" href="{% url 'm_logout' %}">Log out</a></li>
                     </ul>
                     {% else %}
-                    <a class="nav-link dropdown-toggle" href="/accounts/login" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-item" href="/accounts/login" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Log in
                     </a>
-                    <a class="nav-link dropdown-toggle" href="{% url 'register' %}" id="navbarDropdown"
+                    <a class="nav-link dropdown-item" href="{% url 'register' %}" id="navbarDropdown"
                         role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sign up
                     </a>
