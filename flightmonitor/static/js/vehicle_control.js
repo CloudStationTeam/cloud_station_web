@@ -286,6 +286,8 @@ function connectVehicle_by_IP_and_PORT() {
     if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
         console.log('The drone we are trying to conenct to exists as a webdrone object already, as...');
         is_DRONE_PORT_in_webdrone_objects = true; // assume no
+        console.log('m_array_of_webdrone_object_droneids=',m_array_of_webdrone_object_droneids);
+
         m_webdrone_object_to_add_marker=get_webdrone_object_from_droneid(port_to_connect_int);
         console.log(' it is....', m_webdrone_object_to_add_marker);
         m_webdrone_object_to_add_marker.marker.addTo(map);
