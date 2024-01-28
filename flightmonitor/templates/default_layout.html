@@ -142,14 +142,13 @@
                         <li><a class="dropdown-item" href="{% url 'm_logout' %}">Log out</a></li>
                     </ul>
                     {% else %}
-                    <a class="nav-link dropdown-item" href="/accounts/login" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Log in
-                    </a>
-                    <a class="nav-link dropdown-item" href="{% url 'register' %}" id="navbarDropdown"
-                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sign up
-                    </a>
+
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/accounts/login">Log in</a></li>
+                      <li><a class="dropdown-item" href="{% url 'register' %}">Sign up</a></li>
+                    </ul>
+
+
                     {% endif %}
                     
                 </li>
