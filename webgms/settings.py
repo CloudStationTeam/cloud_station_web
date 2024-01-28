@@ -54,6 +54,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY="none";
+# https://stackoverflow.com/questions/72496666/the-cross-origin-opener-policy-header-has-been-ignored-django
+
+
 ROOT_URLCONF = 'webgms.urls'
 
 TEMPLATES = [

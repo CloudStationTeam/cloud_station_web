@@ -463,8 +463,9 @@ class UserActionsConsumer(WebsocketConsumer):
             if (command_to_execute=='TAKEOFF') : # disarm
                 print('taking off!!!!!!!!!!!')
                 takeoff_altitude=mode_to_set_int
+                float_takeoff_altitude=float(mode_to_set_int)
                 # takeoff_altitude=40 #  hard coded for now
-                takeoff_params = [0, 0, 0, 0, 0, 0, takeoff_altitude]
+                takeoff_params = [0, 0, 0, 0, 0, 0, float_takeoff_altitude]
                 mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, takeoff_params[0], takeoff_params[1], takeoff_params[2], takeoff_params[3], takeoff_params[4], takeoff_params[5], takeoff_params[6])
                 takeoff_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
                 print(f"Takeoff ACK:  {takeoff_msg}")
@@ -478,10 +479,11 @@ class UserActionsConsumer(WebsocketConsumer):
                 destination_lon = data['LON_DEST']
                 destination_lon_int = int(1e7*destination_lon)
                 destination_alt = data['ALT_DEST']
+                float_destination_alt=float(destination_alt)
                 print('calling flyto with ',destination_lat,destination_lon,destination_alt)
 
                 mavlink.mav.send(mavutil.mavlink.MAVLink_set_position_target_global_int_message(10, mavlink.target_system,
-                        mavlink.target_component, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, int(0b110111111000), destination_lat_int, destination_lon_int, destination_alt, 0, 0, 0, 0, 0, 0, 1.57, 0.5))
+                        mavlink.target_component, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, int(0b110111111000), destination_lat_int, destination_lon_int, float_destination_alt, 0, 0, 0, 0, 0, 0, 1.57, 0.5))
 
                 # mavlink.mav.command_long_send(1, 1,mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, takeoff_params[0], takeoff_params[1], takeoff_params[2], takeoff_params[3], takeoff_params[4], takeoff_params[5], takeoff_params[6])
                 # takeoff_msg = mavlink.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
