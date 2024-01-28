@@ -58,7 +58,9 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
 #    "http://localhost:3000",  # Example: React development server
-    "*",
+#    "*",
+    'http://*',
+    'https://*',
 ]
 
 # SECURE_CROSS_ORIGIN_OPENER_POLICY="None";
