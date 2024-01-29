@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML sandbox</title>
+
+    <script>
+    class MyClass {
+        constructor(name) {
+          this.name = name;
+          this.serial_number=null;
+        }
+        // You can add methods to your class here
+      }
+      
+    </script>
+
+    <script>
+        // This script will run when the page is loaded
+        window.m_array_of_objects = [];
+        window.onload = function () {
+            console.log("Page loaded!");
+            // Create an array
+            //let window.m_array_of_objects = [];
+            //const myArray = [];
+
+            // Now you can use 'myArray' in your JavaScript code
+            console.log(m_array_of_objects);
+        };
+
+    </script>
+
+
+</head>
+
+<body>
+    <h1>Hello world.</h1>
+    <p>This is a pragraph.</p>
+
+
+    <button onclick="myFunction()">Click me to create array of objects!</button>
+    <br>
+    <br>
+    <script>
+        function myFunction() {
+            alert("Button 1 clicked!");
+
+            // You can add more JavaScript code here to handle the click event
+            // Create 10 instances of MyClass and add them to the array
+            for (let i = 0; i < 10; i++) {
+                const instance = new MyClass(`Instance ${i + 1}`);
+                instance.serial_number=1000+i;
+                addObjectToArray(instance);
+                // window.m_array_of_objects.push(instance);
+            }
+
+            // Now 'instances' array contains 10 instances of MyClass
+            console.log(m_array_of_objects);
+
+
+
+
+        }
+
+        function addObjectToArray(newObj) {
+            // Check if the array already exists in the window object
+            if (!window.m_array_of_objects) {
+                console.log('m_array_of_objects DNE');
+            }
+
+            // Adding the new object to the array
+            if (Array.isArray(window.m_array_of_objects)) {
+                window.m_array_of_objects.push(newObj);
+            } else {
+                console.error('m_array_of_objects is not an array.');
+            }
+
+            // Log the updated array
+            console.log(window.m_array_of_objects);
+        }
+
+
+
+    </script>
+    <button onclick="myFunction2()">Click me to list the objects and their properties!</button>
+
+    <script>
+        function myFunction2() {
+            alert("Button 2 clicked!");
+
+
+            for (let element of window.m_array_of_objects) {
+                console.log(element);
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>

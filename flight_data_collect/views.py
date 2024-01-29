@@ -12,6 +12,7 @@ import datetime
 def connect_vehicle(request, connect_address):
     is_successful = check_vehicle_heartbeat(connect_address)
     if is_successful:
+        print('[connect_vehicle] setting is_connected=True ')
         v = Vehicle(droneid=connect_address, is_connected=True)
         v.save()
         get_mavlink_messages(connect_address)

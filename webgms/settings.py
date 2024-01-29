@@ -31,10 +31,11 @@ ALLOWED_HOSTS = []  # TODO add server IP/DNS address (example: "ec2-xx-xx-xxx-xx
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'channels',
+    'corsheaders',
     'flightmonitor',
     'flight_data_collect',
-    'background_task',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +55,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+#    "http://localhost:3000",  # Example: React development server
+#    "*",
+    'http://*',
+    'https://*',
+]
+
+# SECURE_CROSS_ORIGIN_OPENER_POLICY="None";
+# https://stackoverflow.com/questions/72496666/the-cross-origin-opener-policy-header-has-been-ignored-django
+
 
 ROOT_URLCONF = 'webgms.urls'
 
@@ -135,7 +148,7 @@ LOGOUT_REDIRECT_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Channels
-ASGI_APPLICATION = 'webgms.routing.application'
+ASGI_APPLICATION = 'webgms.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -145,4 +158,7 @@ CHANNEL_LAYERS = {
     },
 }
 
+
+
 MAPBOX_PUBLIC_KEY ="" #TODO enter personal Mapbox key here 
+

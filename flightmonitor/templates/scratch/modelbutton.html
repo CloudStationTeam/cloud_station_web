@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Button with Modal and Number Input</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#numberModal">
+  Open Modal with Number Input
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="numberModal" tabindex="-1" role="dialog" aria-labelledby="numberModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="numberModalLabel">Enter a Number</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Number Input -->
+        <div class="form-group">
+          <label for="numberInput">Number:</label>
+          <input type="number" class="form-control" id="numberInput" placeholder="Enter a number">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="takeoff()">Takeoff</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  // Function to handle takeoff
+  function takeoff() {
+    var enteredNumber = document.getElementById('numberInput').value;
+    alert('Takeoff with Number: ' + enteredNumber);
+    // Perform additional actions with the enteredNumber here
+    $('#numberModal').modal('hide'); // Close the modal
+  }
+
+  // Function to handle cancel
+  function cancel() {
+    $('#numberModal').modal('hide'); // Close the modal
+  }
+</script>
+
+</body>
+</html>

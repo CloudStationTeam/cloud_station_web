@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>CloudStation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <!-- Bootstrap styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <!-- Mapbox styles -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js"></script>
+  <!-- Load the `mapbox-gl-geocoder` plugin. -->
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+
+  <!-- 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+-->
+
+
+  <!-- Create emtpy array of instances of WebDrones class every time page loads -->
+
+  <script>
+    // This script will run when the page is loaded
+    window.m_Array_of_WebDrone_objects = []; // empty array of webdrone objects
+  </script>
+
+
+  <!-- Mapbox styles 
+      <!-- 
+        width: 100%;
+        -->
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+
+  <style>
+    .text-box {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1px;
+      padding: 1px;
+      font-size: x-small;
+      background-position: white;
+      border: 1px solid grey;
+      border-radius: 1px;
+    }
+
+    .value-box {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 1px;
+      padding: 1px;
+      font-size: x-small;
+      background-position: red;
+      border: 1px solid blue;
+      border-radius: 1px;
+    }
+
+    .label {
+      font-size: x-small;
+      margin-bottom: 1px;
+    }
+
+    .marker {
+      background-image: url('/static/img/icons8-plane-90.png');
+      background-size: cover;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+
+  {% load static %}
+  <!-- 
+  <link href="{% static 'css/layoutstyle.css' %}" rel="stylesheet">
+//-->
+
+</head>
+<input type="hidden" id="mapboxId" name="mapbox"
+  value="MBKEY">
+
+<body>
+  <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+
+
+
+
+      <!-- First Column -->
+      <div class="col-md-2" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+        <div>Vehicle Control</div>
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+          <div>Communications</div>
+
+
+
+          <div style="font-size: xx-small;">Leave IP at 0.0.0.0 or blank if not known.</div>
+
+
+          <form>
+            <label for="DRONE_IP" style="font-size: x-small;">DRONE_IP </label>
+            <input style="font-size: x-small;" type="text" id="DRONE_IP" name="DRONE_IP" value="0.0.0.0">
+
+            <label style="font-size: x-small;" for="DRONE_PORT">DRONE_PORT </label>
+            <input style="font-size: x-small;" type="text" id="DRONE_PORT" name="DRONE_PORT" required value="14559">
+
+            <input class="btn btn-success btn-sm" type="button" value="Connect"
+              onclick="connectVehicle_by_IP_and_PORT()">
+          </form>
+
+
+          <div style="font-size: x-small;">Disconnect</div>
+          <label style="font-size: x-small;" for="disVID">DRONE_PORT:</label>
+          <input style="font-size: x-small;" type="text" class="form-control" id="disVID" required value="14559">
+          <input class="btn btn-danger btn-sm" type="button" value="Disconnect" onclick="disconnectVehicle()">
+        </div>
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+
+          <div>Arming</div>
+
+          <div class="col-6 mx-auto" style="border: 2px solid #333; background-color: #f0f0f0; padding: 1px;">
+            <input class="btn btn-danger btn-sm " type="button" style=" padding: 3pt;" value="ARM"
+              onclick="armVehicle()">
+
+          </div>
+
+          <div class="col-6 mx-auto" style="border: 2px solid #333; background-color: #f0f0f0; padding: 1px;">
+            <input class="btn btn-danger btn-sm" type="button" style=" padding: 3pt;" value="DISARM"
+              onclick="disarmVehicle()">
+          </div>
+
+        </div>
+
+
+<!-- The Overlay -->
+<div id="overlay" class="overlay"></div>
+
+
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+
+          <div>Mode</div>
+
+
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Set mode
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" onclick="setmodeVehicle(0) ">STABILIZE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(1) ">ACRO</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(2) ">ALT_HOLD</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(3) ">AUTO</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(4) ">GUIDED</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(5) ">LOITER</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(6) ">RTL</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(7) ">CIRCLE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(8) ">POSITION</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(9) ">LAND</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(10) ">OF_LOITER</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(11) ">DRIFT</a></li>
+
+              <li><a class="dropdown-item" onclick="setmodeVehicle(13) ">SPORT</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(14) ">FLIP</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(15) ">AUTOTUNE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(16) ">POSHOLD</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(17) ">BRAKE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(18) ">THROW</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(19) ">AVOID_ADSB</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(20) ">GUIDED_NOGPS</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(21) ">SMART_RTL</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(22) ">FLOWHOLD</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(23) ">FOLLOW</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(24) ">ZIGZAG</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(25) ">SYSTEMID</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(26) ">AUTOROTATE</a></li>
+              <li><a class="dropdown-item" onclick="setmodeVehicle(27) ">AUTO_RTL</a></li>
+            </ul>
+          </div>
+
+          <!--
+          m_mode_map = {'STABILIZE': 0, 'ACRO': 1, 'ALT_HOLD': 2, 'AUTO': 3, 'GUIDED': 4, 'LOITER': 5, 'RTL': 6, 'CIRCLE': 7, 'POSITION': 8, 'LAND': 9, 'OF_LOITER': 10, 'DRIFT': 11, 'SPORT': 13, 'FLIP': 14, 'AUTOTUNE': 15, 'POSHOLD': 16, 'BRAKE': 17, 'THROW': 18, 'AVOID_ADSB': 19, 'GUIDED_NOGPS': 20, 'SMART_RTL': 21, 'FLOWHOLD': 22, 'FOLLOW': 23, 'ZIGZAG': 24, 'SYSTEMID': 25, 'AUTOROTATE': 26, 'AUTO_RTL': 27}
+          -->
+
+
+
+
+          <script>
+            function selectOption(option) {
+              // Your custom function logic based on the selected option
+              alert("Option " + option + " selected!");
+            }
+          </script>
+        </div>
+        <div class="row" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+
+          <div>Tasks</div>
+
+ 
+          <!-- Button trigger modal -->
+          <div class="row mt-1" style="border: 2px solid red; background-color: orange; padding: 2px;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#numberModal">
+              Takeoff
+            </button>
+          </div>
+          <div class="col-6 mt-1" style="border: 1px solid purple; background-color: pink; padding: 2px;">
+            <input class="btn btn-danger btn-sm" type="button" value="RTL" onclick="setmodeVehicle(6) ">
+          </div>
+          <div class="col-6 mt-1" style="border: 1px solid green; background-color: yellow; padding: 2px;">
+            <input class="btn btn-danger btn-sm mx-auto" type="button" value="LAND" onclick="setmodeVehicle(9) ">
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="numberModal" tabindex="-1" role="dialog" aria-labelledby="numberModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="numberModalLabel">Enter a Number</h5>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <!-- Number Input --> number input
+                  <div class="form-group">
+                    <label for="numberInput">Number:</label>
+                    <input type="number" class="form-control" id="numberInput" placeholder="Enter a number">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" onclick="TAKEOFFVehicle()">Takeoff</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- Second Column -->
+      <div class="col-md-6">
+        <div class="row" style="background-color: #e74c3c;">
+
+          <div id="map"></div> <!-- maps.js creates the map object and puts it into this div -->
+        </div>
+      </div>
+
+      <!-- Third Column with 2 Sub-Columns -->
+      <div class="col-md-4" style="border: 2px solid #333; background-color: #f0f0f0; padding: 10px;">
+
+        <div class="row">
+          <div>Vehicle telemetry </div>
+
+          <!-- Sub-Column 1 -->
+          <div class="col-6">
+            <div>SYS_STATUS</div>
+
+            <div class="text-box">
+              <label for="voltage_battery"><b>voltage_battery</b></label>
+              <div class="value-box" id="voltage_battery">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="current_battery"><b>current_battery</b></label>
+              <div class="value-box" id="current_battery">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="battery_remaining"><b>battery_remaining</b></label>
+              <div class="value-box" id="battery_remaining">pending</div>
+            </div>
+
+          </div>
+          <!-- Sub-Column 2 -->
+          <div class="col-6">
+            SYSTEM_TIME
+            <div class="text-box">
+              <label for="drone_local_IP"><b>drone_local_IP</b></label>
+              <div class="value-box" id="drone_local_IP">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="drone_remote_IP"><b>drone_remote_IP</b></label>
+              <div class="value-box" id="drone_remote_IP">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="time_unix_usec"><b>time_unix_usec</b></label>
+              <div class="value-box" id="time_unix_usec">pending</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Sub-Column 1 -->
+          <div class="col-6">
+            HEARTBEAT & HUD
+            <div class="text-box">
+              <label for="type"><b>type</b></label>
+              <div class="value-box" id="type">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="base_mode"><b>base_mode</b></label>
+              <div class="value-box" id="base_mode">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="custom_mode"><b>custom_mode</b></label>
+              <div class="value-box" id="custom_mode">pending</div>
+            </div>
+
+
+            <div class="text-box">
+              <label for="airspeed"><b>airspeed</b></label>
+              <div class="value-box" id="airspeed">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="groundspeed"><b>groundspeed</b></label>
+              <div class="value-box" id="groundspeed">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="heading"><b>heading</b></label>
+              <div class="value-box" id="heading">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="throttle"><b>throttle</b></label>
+              <div class="value-box" id="throttle">pending</div>
+            </div>
+
+            <div class="text-box">
+              <label for="climb"><b>climb</b></label>
+              <div class="value-box" id="climb">pending</div>
+            </div>
+
+
+          </div>
+          <!-- Sub-Column 2 -->
+          <div class="col-6">
+            GLOBAL_POSITION_INT
+            <div class="text-box">
+              <label for="lat"><b>lat</b></label>
+              <div class="value-box" id="lat">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="lon"><b>lon</b></label>
+              <div class="value-box" id="lon">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="alt"><b>alt</b></label>
+              <div class="value-box" id="alt">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="relative_alt"><b>relative_alt</b></label>
+              <div class="value-box" id="relative_alt">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="hdg"><b>hdg</b></label>
+              <div class="value-box" id="hdg">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="vx"><b>vx</b></label>
+              <div class="value-box" id="vx">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="vy"><b>vy</b></label>
+              <div class="value-box" id="vy">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="vz"><b>vz</b></label>
+              <div class="value-box" id="vz">pending</div>
+            </div>
+            <div class="text-box">
+              <label for="time_boot_ms"><b>time_boot_ms</b></label>
+              <div class="value-box" id="time_boot_ms">pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="switch-container">
+        <label class="switch-label" for="toggleSwitch">Debug </label>
+        <label class="switch">
+          <input type="checkbox" id="toggleSwitch" onchange="toggleFunction()"">
+      <span class=" slider"></span>
+        </label>
+      </div>
+
+      <textarea id="dynamicTextdebugmsg" placeholder="Debug message..."></textarea>
+
+      <!-- <p id="dynamicTextdebugmsg">This text can be updated dynamically.</p> -->
+
+      <!-- Bootstrap scripts -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+      <!-- Include Bootstrap JS and Popper.js -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+
+
+      <!-- User defined scripts -->
+      <script type='text/javascript' src="{% static 'js/websocketcode.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/datastructure.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/layout.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+      <script type='text/javascript' src="{% static 'js/common.js' %}"></script>
+      <script type='text/javascript' src="{% static 'js/vehicle_control.js' %}"></script>
+
+
+</body>
+
+</html>
