@@ -269,6 +269,8 @@ function get_array_of_webdrone_object_droneids() {
 
 function connectVehicle_by_IP_and_PORT() {
     // psuedo code:
+    // 0.) log situation to console
+    // 0.5) only continue if drone is not already connected...
     // 1.) create websocket message: connect + IP:PORT
     // 2.) send websocket message.
     // 3.) await websocket response
@@ -278,7 +280,35 @@ function connectVehicle_by_IP_and_PORT() {
 
     // 0.) log situation to console
     console.log('[connectVehicle_by_IP_and_PORT] User pressed connect, starting...')
-    sitrep();
+    //sitrep();
+
+    // 0.5) only continue if drone is not already connected...
+    //console.log('[connectVehicle_by_IP_and_PORT]...only continue if drone is not already connected...')
+    var strdroneidtocheck = String(document.getElementById("DRONE_PORT").value);
+    //console.log('checking some things...')
+    //console.log('strdroneidtocheck=',strdroneidtocheck);
+    //console.log('get_array_of_webdrone_object_droneids()=',get_array_of_webdrone_object_droneids())
+    //console.log('type of strdroneidtocheck =',typeof(strdroneidtocheck))
+
+    //for (var tochecktype of get_array_of_webdrone_object_droneids()){
+    //    console.log('tochecktype=',tochecktype)
+    //    console.log('type of tochecktype =',typeof(tochecktype))
+    //    console.log('comparing....tochecktype to strdroneidtocheck',tochecktype , strdroneidtocheck)
+    //    console.log('are they equal?')
+    //    if(tochecktype==strdroneidtocheck){
+    //        console.log('YES they are equal')
+    //    }
+    // }
+
+    if (  get_array_of_webdrone_object_droneids().includes(strdroneidtocheck)){ // vehicle exists in database
+        console.log('vehicle exists in database')
+        console.log('strdroneidtocheck in get_array_of_webdrone_object_droneids()')
+        if(get_webdrone_object_from_droneid(strdroneidtocheck).is_connected){ // vehicle already connected! ABORT
+            alert('vehicle already connected!');
+            return;
+        }
+    }
+    console.log('[connectVehicle_by_IP_and_PORT]... drone is not already connected...continuing...')
 
 
     // 1.) create websocket message: connect + IP:PORT
@@ -318,10 +348,8 @@ function connectVehicle_by_IP_and_PORT() {
         m_array_of_webdrone_object_droneids_in_connect_vehicle.push(m_drone_id);
     } // now we have created array of existing droneids
     // 4.) B) Check if drone we are tring to connect to exists as object already: if so add marker back to map
-    console.log('xxx1 checking')
-    sitrep();
-    console.log('xxx2 checking')
-    console.log('m_array_of_webdrone_object_droneids_in_connect_vehicle=',m_array_of_webdrone_object_droneids_in_connect_vehicle)
+    //sitrep();
+    //console.log('m_array_of_webdrone_object_droneids_in_connect_vehicle=',m_array_of_webdrone_object_droneids_in_connect_vehicle)
     if (m_array_of_webdrone_object_droneids_in_connect_vehicle.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
         console.log('The drone we are trying to conenct to exists as a webdrone object already, as...');
         is_DRONE_PORT_in_webdrone_objects = true; // assume no
@@ -344,7 +372,7 @@ function connectVehicle_by_IP_and_PORT() {
         console.log("Created new webdrone object: ", m_WebDrone);
         window.m_Array_of_WebDrone_objects.push(m_WebDrone); // add to global set of WebDrone objects
         console.log(' window.m_Array_of_WebDrone_objects=', window.m_Array_of_WebDrone_objects);
-        sitrep();
+        //sitrep();
     }
 
 
@@ -370,7 +398,7 @@ function disconnectVehicle() {
     // 4.) Remove mapbox marker from map ... xxx.
     // 0.) log situation to console
     console.log('[disconnectVehicle] User pressed disconnect, starting...')
-    sitrep();
+    //sitrep();
 
 
     var port_to_disconnect_text = document.getElementById("disVID").value;
