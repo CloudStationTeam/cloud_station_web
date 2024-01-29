@@ -211,6 +211,37 @@ function enumerateInstances(className) {
     return instances;
 }
 
+function sitrep() { // log all drone objects to console
+    console.log('-----------------')
+    console.log('[sitrep] prepare for sitrep....')
+
+    m_array_to_log=get_array_of_webdrone_objects();
+    console.log('[sitrep] get_array_of_webdrone_objects....')
+    console.log('[sitrep] get_array_of_webdrone_objects.length=',m_array_to_log.length)
+    console.log('m_array_to_log=',m_array_to_log)
+
+    for (var m_webdrone_object_to_log of m_array_to_log) {
+        console.log('[sitrep] webdroneobject = ',m_webdrone_object_to_log)
+    }
+    
+    m_array__droneids_to_log=get_array_of_webdrone_object_droneids();
+    console.log('[sitrep] get_array_of_webdrone_object_droneids....')
+    console.log('[sitrep] get_array_of_webdrone_object_droneids.length=',m_array__droneids_to_log.length)
+
+    console.log('m_array__droneids_to_log=',m_array__droneids_to_log)
+
+
+    for (var webdroneObject of m_array__droneids_to_log) {
+        console.log('[sitrep] webdroneobject id = ', webdroneObject);
+    }
+
+
+    console.log('[sitrep] EOM....')
+    console.log('-----------------')
+
+}
+
+
 
 function get_array_of_webdrone_objects() {
     // returns array of webdrone objects
@@ -219,18 +250,18 @@ function get_array_of_webdrone_objects() {
 
 function get_array_of_webdrone_object_droneids() {
     // returns array of webdrone objects
-    let m_array_of_webdrone_object_droneids;
+    //console.log('get_array_of_webdrone_object_droneids called')
+    let m_array_of_webdrone_object_droneids=[]  ;
 
     for (let webDroneObject of window.m_Array_of_WebDrone_objects) {
         // 'webDroneObject' will be the current object
-        console.log('Object:', webDroneObject);
-        m_drone_id = webDroneObject.droneid;
+        //console.log('Object:', webDroneObject);
+        m_drone_id = webDroneObject.droneID;
+        //console.log('pushing m_drone_id=',m_drone_id)
         m_array_of_webdrone_object_droneids.push(m_drone_id);
 
-        return m_array_of_webdrone_object_droneids;
-
     }
-
+    return m_array_of_webdrone_object_droneids;
 
 }
 
@@ -244,6 +275,10 @@ function connectVehicle_by_IP_and_PORT() {
     // 4.) Check of webdrone object already exists
     // 4.) A) if it does already exist, add marker to map (don't change connected status mark)
     // 4.) B) if it doesn't already exist, create instance in browser of webdrone class with port  (marked as not connected)
+
+    // 0.) log situation to console
+    console.log('[connectVehicle_by_IP_and_PORT] User pressed connect, starting...')
+    sitrep();
 
 
     // 1.) create websocket message: connect + IP:PORT
@@ -275,18 +310,22 @@ function connectVehicle_by_IP_and_PORT() {
     // Need to change to add check if mavlink connection worked 
     let is_DRONE_PORT_in_webdrone_objects = false; // assume no, does not exist
     // 4.) A) Create array of droneids that exist as objects already
-    let m_array_of_webdrone_object_droneids = [];
-    for (let webDroneObject of window.m_Array_of_WebDrone_objects) { // iterate over window.m_Array_of_WebDrone_objects which contains extant webDroneObjects
+    let m_array_of_webdrone_object_droneids_in_connect_vehicle = [];
+    for (var webDroneObject of window.m_Array_of_WebDrone_objects) { // iterate over window.m_Array_of_WebDrone_objects which contains extant webDroneObjects
         // 'webDroneObject' will be the current object
-        // console.log('Object:', webDroneObject);
+        //console.log('Object:', webDroneObject);
         m_drone_id = webDroneObject.droneID;
-        m_array_of_webdrone_object_droneids.push(port_to_connect_text);
+        m_array_of_webdrone_object_droneids_in_connect_vehicle.push(m_drone_id);
     } // now we have created array of existing droneids
     // 4.) B) Check if drone we are tring to connect to exists as object already: if so add marker back to map
-    if (m_array_of_webdrone_object_droneids.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
+    console.log('xxx1 checking')
+    sitrep();
+    console.log('xxx2 checking')
+    console.log('m_array_of_webdrone_object_droneids_in_connect_vehicle=',m_array_of_webdrone_object_droneids_in_connect_vehicle)
+    if (m_array_of_webdrone_object_droneids_in_connect_vehicle.includes(port_to_connect_int)) { // if the drone we are trying to conenct to exists as an object already
         console.log('The drone we are trying to conenct to exists as a webdrone object already, as...');
         is_DRONE_PORT_in_webdrone_objects = true; // assume no
-        console.log('m_array_of_webdrone_object_droneids=',m_array_of_webdrone_object_droneids);
+        console.log('m_array_of_webdrone_object_droneids_in_connect_vehicle=',m_array_of_webdrone_object_droneids_in_connect_vehicle);
 
         m_webdrone_object_to_add_marker=get_webdrone_object_from_droneid(port_to_connect_int);
         console.log(' it is....', m_webdrone_object_to_add_marker);
@@ -304,6 +343,8 @@ function connectVehicle_by_IP_and_PORT() {
         // console.log('added marker: ', m_WebDrone.marker);
         console.log("Created new webdrone object: ", m_WebDrone);
         window.m_Array_of_WebDrone_objects.push(m_WebDrone); // add to global set of WebDrone objects
+        console.log(' window.m_Array_of_WebDrone_objects=', window.m_Array_of_WebDrone_objects);
+        sitrep();
     }
 
 
@@ -327,6 +368,11 @@ function disconnectVehicle() {
     // TO DO: Check if it's in list of connnected already.
     // 3.) Mark as disconned in webdrone object
     // 4.) Remove mapbox marker from map ... xxx.
+    // 0.) log situation to console
+    console.log('[disconnectVehicle] User pressed disconnect, starting...')
+    sitrep();
+
+
     var port_to_disconnect_text = document.getElementById("disVID").value;
     var port_to_disconnect_int = port_to_disconnect_text;
     let m_WebDrone_object_to_disconnect = window.m_Array_of_WebDrone_objects.find(item => item['droneID'] === port_to_disconnect_int); // webdrone object to disconnect
